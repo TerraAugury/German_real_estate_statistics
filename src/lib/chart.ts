@@ -1,6 +1,6 @@
 import * as Plot from '@observablehq/plot';
 import { JSDOM } from 'jsdom';
-import { fmt } from './i18n';
+import { fmt, period } from './i18n';
 import type { Lang } from './routes';
 import type { Series } from './series';
 
@@ -22,7 +22,7 @@ export function lineChart(s: Series, lang: Lang): string {
     width: 720, height: 320, marginLeft: 50,
     x: { tickFormat: (d: number) => (Number.isInteger(d) ? String(d) : ''), label: null },
     y: { grid: true, label: s.unit[lang], tickFormat: (d: number) => fmt(lang, d) },
-    marks: [Plot.lineY(points, { x: 'x', y: 'value' }), Plot.dot(points, { x: 'x', y: 'value', title: (d) => `${d.period}: ${fmt(lang, d.value, { maximumFractionDigits: 2 })}` })],
+    marks: [Plot.lineY(points, { x: 'x', y: 'value' }), Plot.dot(points, { x: 'x', y: 'value', title: (d) => `${period(lang, d.period)}: ${fmt(lang, d.value, { maximumFractionDigits: 2 })}` })],
   }, s.title[lang]);
 }
 

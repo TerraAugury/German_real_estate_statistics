@@ -46,3 +46,7 @@ link.small_sample:
   en_hash: e3703571e54d2cef
   reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
   reviewed_on: 2026-11-01
+kpi.not_available.licence:
+  en_hash: cf27aa873246ec4e
+  reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
+  reviewed_on: 2026-11-01
