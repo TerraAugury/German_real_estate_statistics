@@ -1302,7 +1302,24 @@
     3.15,
     3,
     2.9
-   ]
+   ],
+   "dimensions": {
+    "BBK_SEIS_BEARER_REG": "I",
+    "BBK_SEIS_CERTIFICATE": "_Z",
+    "BBK_SEIS_COVERAGE": "_Z",
+    "BBK_SEIS_INTEREST_RATE": "A",
+    "BBK_SEIS_INTEREST_TYPE": "R",
+    "BBK_SEIS_ISSUER_CLASS": "S1311",
+    "BBK_SEIS_ITEM": "ZAR",
+    "BBK_SEIS_LISTED_SUB": "B",
+    "BBK_SEIS_MATURITY": "R10XX",
+    "BBK_SEIS_RATING": "A",
+    "BBK_SEIS_REDEMPTION": "A",
+    "BBK_SEIS_SECURITY_CLASS": "A604",
+    "BBK_SEIS_VALUATION": "ZI",
+    "BBK_STD_CURRENCY": "EUR",
+    "BBK_STD_FREQ": "M"
+   }
   }
  }
 }

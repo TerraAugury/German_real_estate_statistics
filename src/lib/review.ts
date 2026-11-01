@@ -3,38 +3,34 @@ import { createHash } from 'node:crypto';
 import { parse, stringify } from 'yaml';
 import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 
-export const hash = (s: string) => createHash('sha256').update(s).digest('hex').slice(0, 16);
-/** Review record per file: who, when, and the hash of each English string at review time. */
-export interface Lock { reviewed_by: string; reviewed_on: string; hashes: Record<string, string> }
-export interface Prose { en: string; de?: { en_hash?: string; reviewed_by?: string; reviewed_on?: string } }
+/** Short SHA-256 of an English string or file: what the German was reviewed against. */
+export const enHash = (s: string) => createHash('sha256').update(s).digest('hex').slice(0, 16);
+/** Review record: the English hash at review time, who reviewed, when. */
+export interface Review { en_hash: string; reviewed_by: string; reviewed_on: string }
+/** Interface strings: one Review per key. */
+export type Lock = Record<string, Review>;
+/** A prose page: English file text and the German file's front matter (undefined = no German file). */
+export interface Prose { en: string; de?: Partial<Review> }
+
+const isReviewed = (r: Partial<Review> | undefined, en: string) => !!r?.reviewed_by && !!r.reviewed_on && r.en_hash === enHash(en);
 
 /** Keys whose German is unreviewed: no record, or the English changed since review. */
-export function unreviewedKeys(en: Record<string, string>, lock: Lock): string[] {
-  const named = !!lock.reviewed_by && !!lock.reviewed_on;
-  return Object.keys(en).filter((k) => !named || lock.hashes?.[k] !== hash(en[k]));
-}
-
-/** Prose pages (by name) whose German front matter lacks a review record or whose en_hash differs from the English body. */
-export function unreviewedProse(pages: Record<string, Prose>): string[] {
-  return Object.keys(pages).filter((n) => {
-    const { en, de } = pages[n];
-    return !de || !de.reviewed_by || !de.reviewed_on || de.en_hash !== hash(en);
-  });
-}
+export const unreviewedKeys = (en: Record<string, string>, lock: Lock) => Object.keys(en).filter((k) => !isReviewed(lock[k], en[k]));
+/** Prose pages (by name) with no German file, no review record, or an en_hash that no longer matches. */
+export const unreviewedProse = (pages: Record<string, Prose>) => Object.keys(pages).filter((n) => !isReviewed(pages[n].de, pages[n].en));
+/** Prose pages with no German file at all: nothing to mark [DRAFT], and English never stands in, so every build fails. */
+export const missingGerman = (pages: Record<string, Prose>) => Object.keys(pages).filter((n) => !pages[n].de);
 
 /** Production build fails on unreviewed German. Preview builds pass and show the [DRAFT] marker. */
 export function assertReviewed(unreviewed: string[], production: boolean): void {
   if (production && unreviewed.length) throw new Error(`review: unreviewed German (${unreviewed.length}): ${unreviewed.join(', ')}`);
 }
 export const draft = (text: string, unreviewed: boolean) => (unreviewed ? `[DRAFT] ${text}` : text);
-/** Production is the default; INCLUDE_PROVISIONAL=1 marks a preview build. */
-export const isProduction = () => process.env.INCLUDE_PROVISIONAL !== '1';
 
-export const LOCK = 'src/i18n/de.reviewed.lock';
-export const readLock = (): Lock => (existsSync(LOCK) ? parse(readFileSync(LOCK, 'utf8')) : { reviewed_by: '', reviewed_on: '', hashes: {} });
-export const writeLock = (l: Lock) => writeFileSync(LOCK, stringify(l));
+export const LOCK_PATH = 'src/i18n/de.reviewed.lock';
+export const readLock = (path = LOCK_PATH): Lock => (existsSync(path) ? parse(readFileSync(path, 'utf8')) ?? {} : {});
 
-const split = (raw: string): [Record<string, string>, string] => {
+const frontMatter = (raw: string): [Record<string, string>, string] => {
   const m = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
   return m ? [parse(m[1]) ?? {}, m[2]] : [{}, raw];
 };
@@ -43,27 +39,36 @@ export function readProse(dir = 'content'): Record<string, Prose> {
   const out: Record<string, Prose> = {};
   if (!existsSync(`${dir}/en`)) return out;
   for (const f of readdirSync(`${dir}/en`).filter((f) => f.endsWith('.md'))) {
-    const de = existsSync(`${dir}/de/${f}`) ? (split(readFileSync(`${dir}/de/${f}`, 'utf8'))[0] as Prose['de']) : undefined;
+    const de = existsSync(`${dir}/de/${f}`) ? frontMatter(readFileSync(`${dir}/de/${f}`, 'utf8'))[0] : undefined;
     out[f.slice(0, -3)] = { en: readFileSync(`${dir}/en/${f}`, 'utf8'), de };
   }
   return out;
 }
 
 /** Everything unreviewed right now: interface strings as `key`, prose pages as `page:<name>`. */
-export function allUnreviewed(en: Record<string, string>): string[] {
-  return [...unreviewedKeys(en, readLock()), ...unreviewedProse(readProse()).map((n) => `page:${n}`)];
-}
+export const allUnreviewed = (en: Record<string, string>, pages = readProse()) =>
+  [...unreviewedKeys(en, readLock()), ...unreviewedProse(pages).map((n) => `page:${n}`)];
 
-/** Record a review: update the lock (or the German page's front matter) and nothing else. */
-export function recordReview(en: Record<string, string>, who: string, on: string, only?: string[], dir = 'content'): void {
-  const lock = readLock();
-  lock.reviewed_by = who; lock.reviewed_on = on;
-  for (const k of Object.keys(en)) if (!only || only.includes(k)) lock.hashes[k] = hash(en[k]);
-  writeLock(lock);
-  for (const [n, p] of Object.entries(readProse(dir))) {
-    if (only && !only.includes(`page:${n}`)) continue;
-    const file = `${dir}/de/${n}.md`;
-    const [fm, body] = split(readFileSync(file, 'utf8'));
-    writeFileSync(file, `---\n${stringify({ ...fm, en_hash: hash(p.en), reviewed_by: who, reviewed_on: on })}---\n${body}`);
+/**
+ * Record a review of the named items only (`key` or `page:<name>`): update their lock entry or the German page's
+ * front matter and nothing else. Naming nothing is an error, so unread German is never stamped in bulk.
+ */
+export function recordReview(en: Record<string, string>, who: string, on: string, items: string[], dir = 'content', lockPath = LOCK_PATH): void {
+  if (!who || !items.length) throw new Error('review: name the reviewer and at least one key or page:<name>');
+  const lock = readLock(lockPath);
+  const pages = readProse(dir);
+  for (const item of items) {
+    if (item.startsWith('page:')) {
+      const n = item.slice(5);
+      if (!pages[n]) throw new Error(`review: no English page ${dir}/en/${n}.md`);
+      const file = `${dir}/de/${n}.md`;
+      if (!existsSync(file)) throw new Error(`review: no German page ${file} to review`);
+      const [fm, body] = frontMatter(readFileSync(file, 'utf8'));
+      writeFileSync(file, `---\n${stringify({ ...fm, en_hash: enHash(pages[n].en), reviewed_by: who, reviewed_on: on })}---\n${body}`);
+    } else {
+      if (!(item in en)) throw new Error(`review: no English key ${item}`);
+      lock[item] = { en_hash: enHash(en[item]), reviewed_by: who, reviewed_on: on };
+    }
   }
+  writeFileSync(lockPath, stringify(lock));
 }

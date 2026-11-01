@@ -46,7 +46,14 @@
     184,
     65,
     69
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "01",
+    "ind": "FLC002"
+   }
   },
   "02.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Hamburg – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -91,7 +98,14 @@
     69,
     62,
     42
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "02",
+    "ind": "FLC002"
+   }
   },
   "03.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Niedersachsen – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -136,7 +150,14 @@
     261,
     267,
     164
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "03",
+    "ind": "FLC002"
+   }
   },
   "04.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Bremen – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -181,7 +202,14 @@
     20,
     73,
     18
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "04",
+    "ind": "FLC002"
+   }
   },
   "05.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Nordrhein-Westfalen – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -226,7 +254,14 @@
     570,
     707,
     485
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "05",
+    "ind": "FLC002"
+   }
   },
   "06.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Hessen – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -271,7 +306,14 @@
     455,
     343,
     130
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "06",
+    "ind": "FLC002"
+   }
   },
   "07.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Rheinland-Pfalz – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -316,7 +358,14 @@
     122,
     87,
     102
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "07",
+    "ind": "FLC002"
+   }
   },
   "08.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Baden-Württemberg – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -361,7 +410,14 @@
     489,
     603,
     657
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "08",
+    "ind": "FLC002"
+   }
   },
   "09.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Bayern – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -406,7 +462,14 @@
     656,
     677,
     545
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "09",
+    "ind": "FLC002"
+   }
   },
   "10.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Saarland – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -451,7 +514,14 @@
     18,
     12,
     14
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "10",
+    "ind": "FLC002"
+   }
   },
   "11.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Berlin – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -496,7 +566,14 @@
     408,
     245,
     168
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "11",
+    "ind": "FLC002"
+   }
   },
   "12.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Brandenburg – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -541,7 +618,14 @@
     77,
     42,
     39
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "12",
+    "ind": "FLC002"
+   }
   },
   "13.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Mecklenburg-Vorpommern – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -586,7 +670,14 @@
     23,
     19,
     35
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "13",
+    "ind": "FLC002"
+   }
   },
   "14.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Sachsen – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -631,7 +722,14 @@
     85,
     99,
     78
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "14",
+    "ind": "FLC002"
+   }
   },
   "15.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Sachsen-Anhalt – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -676,7 +774,14 @@
     26,
     33,
     75
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "15",
+    "ind": "FLC002"
+   }
   },
   "16.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
    "name": "Thüringen – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
@@ -721,7 +826,14 @@
     54,
     23,
     21
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-BV",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "16",
+    "ind": "FLC002"
+   }
   }
  }
 }

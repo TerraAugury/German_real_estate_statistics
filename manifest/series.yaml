@@ -1,10 +1,12 @@
 # One hand-written entry per series (spec sections 3-5). `provisional: true` = public-redisplay licence unconfirmed; excluded from the default build.
+# seasonal_adjustment: nsa | sa. resampling: mean for Economic indicators (rates, indices, levels), none for KPIs (native frequency).
+# short_window: starts after 2010; short_window_sentence: extra i18n key. scope: Note keys (note.scope.<key>).
 # Construction: Germany = sum of the 16 Länder (DBnomics has no total): own calculation. Native thousand m² -> million m².
 - key: construction-permits-office
   provider: DESTATIS
   dataset: 31111LJ001
   ids: ["{land}.BAUART1.BTK-GEB.GBD-NW-BV.FLC002"]
-  lands: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16"]
+  laender: &all_laender ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16"]
   publisher: &destatis_publisher "Statistisches Bundesamt (Destatis)"
   licence: &destatis_licence { name: "Datenlizenz Deutschland – Namensnennung – 2.0", url: "https://www.govdata.de/dl-de/by-2-0" }
   attribution: &destatis_attribution { en: "Source: Statistisches Bundesamt (Destatis), Datenlizenz Deutschland – Namensnennung – Version 2.0 (dl-de/by-2-0)", de: "Quelle: Statistisches Bundesamt (Destatis), Datenlizenz Deutschland – Namensnennung – Version 2.0 (dl-de/by-2-0)" }
@@ -14,12 +16,15 @@
   frequency: annual
   scale: 0.001
   expected_start: 2008
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
 
 - key: construction-permits-commercial
   provider: DESTATIS
   dataset: 31111LJ001
   ids: ["{land}.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002"]
-  lands: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16"]
+  laender: *all_laender
   publisher: *destatis_publisher
   licence: *destatis_licence
   attribution: *destatis_attribution
@@ -29,12 +34,15 @@
   frequency: annual
   scale: 0.001
   expected_start: 2015
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
 
 - key: construction-permits-warehouse
   provider: DESTATIS
   dataset: 31111LJ001
   ids: ["{land}.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002"]
-  lands: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16"]
+  laender: *all_laender
   publisher: *destatis_publisher
   licence: *destatis_licence
   attribution: *destatis_attribution
@@ -44,12 +52,15 @@
   frequency: annual
   scale: 0.001
   expected_start: 2015
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
 
 - key: construction-completions-office
   provider: DESTATIS
   dataset: 31121LJ001
   ids: ["{land}.BAUART1.BTK-GEB.GBD-NW-BV.FLC002"]
-  lands: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16"]
+  laender: *all_laender
   publisher: *destatis_publisher
   licence: *destatis_licence
   attribution: *destatis_attribution
@@ -59,12 +70,15 @@
   frequency: annual
   scale: 0.001
   expected_start: 2008
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
 
 - key: construction-completions-commercial
   provider: DESTATIS
   dataset: 31121LJ001
   ids: ["{land}.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002"]
-  lands: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16"]
+  laender: *all_laender
   publisher: *destatis_publisher
   licence: *destatis_licence
   attribution: *destatis_attribution
@@ -74,12 +88,15 @@
   frequency: annual
   scale: 0.001
   expected_start: 2015
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
 
 - key: construction-completions-warehouse
   provider: DESTATIS
   dataset: 31121LJ001
   ids: ["{land}.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002"]
-  lands: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16"]
+  laender: *all_laender
   publisher: *destatis_publisher
   licence: *destatis_licence
   attribution: *destatis_attribution
@@ -89,6 +106,9 @@
   frequency: annual
   scale: 0.001
   expected_start: 2015
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
 
 # Bundesbank BBDZ1/BBDR1 CRE series: all provisional (spec section 3).
 - key: price-index-de-total-a
@@ -104,6 +124,11 @@
   frequency: annual
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index]
 
 - key: price-index-de-total-q
   provider: BUBA
@@ -118,6 +143,11 @@
   frequency: quarterly
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index]
 
 - key: price-index-de-office-a
   provider: BUBA
@@ -132,6 +162,11 @@
   frequency: annual
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index]
 
 - key: price-index-de-office-q
   provider: BUBA
@@ -146,6 +181,11 @@
   frequency: quarterly
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index]
 
 - key: price-index-de-retail-a
   provider: BUBA
@@ -160,6 +200,11 @@
   frequency: annual
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index]
 
 - key: price-index-de-retail-q
   provider: BUBA
@@ -174,6 +219,11 @@
   frequency: quarterly
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index]
 
 - key: price-index-cities-total-a
   provider: BUBA
@@ -188,6 +238,11 @@
   frequency: annual
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index, city_class]
 
 - key: price-index-cities-total-q
   provider: BUBA
@@ -202,6 +257,11 @@
   frequency: quarterly
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index, city_class]
 
 - key: price-index-cities-office-a
   provider: BUBA
@@ -216,6 +276,11 @@
   frequency: annual
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index, city_class]
 
 - key: price-index-cities-office-q
   provider: BUBA
@@ -230,6 +295,11 @@
   frequency: quarterly
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index, city_class]
 
 - key: price-index-cities-retail-a
   provider: BUBA
@@ -244,6 +314,11 @@
   frequency: annual
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index, city_class]
 
 - key: price-index-cities-retail-q
   provider: BUBA
@@ -258,6 +333,11 @@
   frequency: quarterly
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index, city_class]
 
 - key: price-index-excl-total-a
   provider: BUBA
@@ -272,6 +352,11 @@
   frequency: annual
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index]
 
 - key: price-index-excl-total-q
   provider: BUBA
@@ -286,6 +371,11 @@
   frequency: quarterly
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index]
 
 - key: price-index-excl-office-a
   provider: BUBA
@@ -300,6 +390,11 @@
   frequency: annual
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index]
 
 - key: price-index-excl-office-q
   provider: BUBA
@@ -314,6 +409,11 @@
   frequency: quarterly
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index]
 
 - key: price-index-excl-retail-a
   provider: BUBA
@@ -328,6 +428,11 @@
   frequency: annual
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index]
 
 - key: price-index-excl-retail-q
   provider: BUBA
@@ -342,6 +447,11 @@
   frequency: quarterly
   change: pct
   expected_start: 2013
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: true
+  short_window_sentence: note.short_cycle
+  scope: [index]
 
 - key: rent-index-de-office-a
   provider: BUBA
@@ -356,6 +466,9 @@
   frequency: annual
   change: pct
   expected_start: 2004
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
 
 - key: rent-index-de-office-q
   provider: BUBA
@@ -370,6 +483,9 @@
   frequency: quarterly
   change: pct
   expected_start: 2010
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
 
 - key: rent-index-de-retail-a
   provider: BUBA
@@ -384,6 +500,9 @@
   frequency: annual
   change: pct
   expected_start: 2004
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
 
 - key: rent-index-de-retail-q
   provider: BUBA
@@ -398,6 +517,9 @@
   frequency: quarterly
   change: pct
   expected_start: 2010
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
 
 - key: rent-index-combined-127
   provider: BUBA
@@ -412,6 +534,10 @@
   frequency: annual
   change: pct
   expected_start: 1995
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
+  scope: [city_class, combined]
 
 - key: rent-index-combined-120
   provider: BUBA
@@ -426,6 +552,10 @@
   frequency: annual
   change: pct
   expected_start: 1995
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
+  scope: [city_class, combined]
 
 - key: rent-index-combined-7
   provider: BUBA
@@ -440,6 +570,10 @@
   frequency: annual
   change: pct
   expected_start: 1995
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
+  scope: [city_class, combined]
 
 - key: initial-yield-combined-127
   provider: BUBA
@@ -454,6 +588,10 @@
   frequency: annual
   change: diff
   expected_start: 1995
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
+  scope: [city_class, combined]
 
 - key: initial-yield-combined-120
   provider: BUBA
@@ -468,6 +606,10 @@
   frequency: annual
   change: diff
   expected_start: 1995
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
+  scope: [city_class, combined]
 
 - key: initial-yield-combined-7
   provider: BUBA
@@ -482,6 +624,10 @@
   frequency: annual
   change: diff
   expected_start: 1995
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
+  scope: [city_class, combined]
 
 - key: office-vacancy-127
   provider: BUBA
@@ -496,6 +642,10 @@
   frequency: annual
   change: diff
   expected_start: 1995
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
+  scope: [city_class]
 
 - key: office-vacancy-7
   provider: BUBA
@@ -510,6 +660,10 @@
   frequency: annual
   change: diff
   expected_start: 1995
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
+  scope: [city_class]
 
 - key: office-vacancy-120
   provider: BUBA
@@ -524,6 +678,10 @@
   frequency: annual
   change: diff
   expected_start: 1995
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
+  scope: [city_class]
 
 - key: transaction-volume-de
   provider: BUBA
@@ -538,6 +696,9 @@
   frequency: annual
   change: pct
   expected_start: 2007
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
 
 - key: transaction-volume-127
   provider: BUBA
@@ -552,6 +713,10 @@
   frequency: annual
   change: pct
   expected_start: 2007
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
+  scope: [city_class]
 
 - key: transaction-volume-7
   provider: BUBA
@@ -566,6 +731,10 @@
   frequency: annual
   change: pct
   expected_start: 2007
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
+  scope: [city_class]
 
 - key: construction-bbk-permits-office
   provider: BUBA
@@ -580,6 +749,9 @@
   frequency: annual
   change: pct
   expected_start: 1992
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
 
 - key: construction-bbk-permits-wholesale-warehouse
   provider: BUBA
@@ -594,6 +766,9 @@
   frequency: annual
   change: pct
   expected_start: 1992
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
 
 - key: construction-bbk-completions-office
   provider: BUBA
@@ -608,6 +783,9 @@
   frequency: annual
   change: pct
   expected_start: 1992
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
 
 - key: construction-bbk-completions-wholesale-warehouse
   provider: BUBA
@@ -622,6 +800,9 @@
   frequency: annual
   change: pct
   expected_start: 1992
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
 
 # Economic indicators (spec section 5). Resampled by the Link module; never charted alone yet.
 
@@ -638,6 +819,9 @@
   frequency: monthly
   change: diff
   expected_start: 1972
+  seasonal_adjustment: nsa
+  resampling: mean
+  short_window: false
 
 # Open: final ECB licence wording is spec ticket 14; the name below is a neutral placeholder.
 - key: euribor-3m
@@ -653,6 +837,9 @@
   frequency: monthly
   change: diff
   expected_start: 1994
+  seasonal_adjustment: nsa
+  resampling: mean
+  short_window: false
 
 - key: loan-rate-nfc
   provider: BUBA
@@ -667,6 +854,9 @@
   frequency: monthly
   change: diff
   expected_start: 2010
+  seasonal_adjustment: nsa
+  resampling: mean
+  short_window: false
 
 - key: cpi
   provider: DESTATIS
@@ -681,6 +871,9 @@
   frequency: monthly
   change: pct
   expected_start: 1991
+  seasonal_adjustment: nsa
+  resampling: mean
+  short_window: false
 
 - key: gdp-real
   provider: BUBA
@@ -695,6 +888,9 @@
   frequency: quarterly
   change: pct
   expected_start: 1970
+  seasonal_adjustment: nsa
+  resampling: mean
+  short_window: false
 
 - key: unemployment-rate
   provider: BUBA
@@ -709,6 +905,9 @@
   frequency: monthly
   change: diff
   expected_start: 1991
+  seasonal_adjustment: sa
+  resampling: mean
+  short_window: false
 
 - key: construction-price-office
   provider: DESTATIS
@@ -723,6 +922,9 @@
   frequency: quarterly
   change: pct
   expected_start: 1958
+  seasonal_adjustment: nsa
+  resampling: mean
+  short_window: false
 
 - key: construction-price-commercial
   provider: DESTATIS
@@ -737,6 +939,9 @@
   frequency: quarterly
   change: pct
   expected_start: 1958
+  seasonal_adjustment: nsa
+  resampling: mean
+  short_window: false
 
 - key: oecd-confidence-construction
   provider: OECD
@@ -751,6 +956,9 @@
   frequency: monthly
   change: diff
   expected_start: 1985
+  seasonal_adjustment: nsa
+  resampling: mean
+  short_window: false
 
 - key: oecd-confidence-retail
   provider: OECD
@@ -765,3 +973,6 @@
   frequency: monthly
   change: diff
   expected_start: 1985
+  seasonal_adjustment: nsa
+  resampling: mean
+  short_window: false

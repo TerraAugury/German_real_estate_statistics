@@ -13,8 +13,9 @@ describe('provisional gate', () => {
   });
   it('drops every Link that uses an excluded series', () => {
     const pairs = [{ kpi: 'a', indicator: 'c' }, { kpi: 'b', indicator: 'c' }, { kpi: 'a', indicator: 'b' }];
-    expect(publicLinks(pairs, [e('a', false), e('b', true), e('c', false)], false)).toEqual([pairs[0]]);
-    expect(publicLinks(pairs, [e('a', false), e('b', true), e('c', false)], true)).toEqual(pairs);
+    const es = [e('a', false), e('b', true), e('c', false)];
+    expect(publicLinks(pairs, gate(es, false))).toEqual([pairs[0]]);
+    expect(publicLinks(pairs, gate(es, true))).toEqual(pairs);
   });
   it('loadManifest honours INCLUDE_PROVISIONAL', () => {
     expect(loadManifest(false).some((m) => m.provisional)).toBe(false);
@@ -49,13 +50,22 @@ describe('manifest content (spec sections 3, 4, 5)', () => {
     expect(byKey('transaction-volume-7').expected_start).toBe(2007);
     expect(byKey('construction-bbk-completions-office').ids).toEqual(['A.B30.N.G650.R0220.A']);
     for (const t of ['office', 'commercial', 'warehouse'] as const) for (const w of ['permits', 'completions'])
-      expect(byKey(`construction-${w}-${t}`).lands).toHaveLength(16);
+      expect(byKey(`construction-${w}-${t}`).laender).toHaveLength(16);
     expect(byKey('construction-completions-warehouse').dataset).toBe('31121LJ001');
     expect(byKey('construction-permits-commercial').expected_start).toBe(2015);
   });
   it('default build keeps only ECB and Destatis series', () => {
     expect(new Set(loadManifest(false).map((m) => m.provider))).toEqual(new Set(['DESTATIS', 'ECB']));
   });
+});
+
+it('manifest carries the spec section 11 fields', () => {
+  expect(byKey('unemployment-rate').seasonal_adjustment).toBe('sa');
+  expect(byKey('cpi').resampling).toBe('mean');
+  expect(byKey('price-index-de-office-q')).toMatchObject({ short_window: true, short_window_sentence: 'note.short_cycle', scope: ['index'] });
+  expect(byKey('rent-index-combined-7').scope).toEqual(['city_class', 'combined']);
+  expect(byKey('construction-permits-commercial').short_window).toBe(true);
+  for (const m of all) expect(m.resampling, m.key).toBe(m.provider === 'BUBA' && m.dataset === 'BBDZ1' || m.dataset.endsWith('LJ001') ? 'none' : 'mean');
 });
 
 it('dbnomicsId collapses Länder', () => {

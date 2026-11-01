@@ -796,7 +796,16 @@
     2.4253913,
     2.5131429,
     2.6350455
-   ]
+   ],
+   "dimensions": {
+    "CURRENCY": "EUR",
+    "DATA_TYPE_FM": "HSTA",
+    "FREQ": "M",
+    "INSTRUMENT_FM": "MM",
+    "PROVIDER_FM": "RT",
+    "PROVIDER_FM_ID": "EURIBOR3MD_",
+    "REF_AREA": "U2"
+   }
   }
  }
 }

@@ -394,7 +394,19 @@
     3.29,
     3.27,
     3.11
-   ]
+   ],
+   "dimensions": {
+    "BBK_BS_COUNT_SEC": "2240",
+    "BBK_BS_MATURITY_ORIG": "D",
+    "BBK_IRM_AMOUNT_CAT": "1",
+    "BBK_IRM_BUS_COV": "N",
+    "BBK_IRM_DATA_TYPE": "R",
+    "BBK_IRM_ITEM": "A2A",
+    "BBK_IRM_REF_SEC": "B",
+    "BBK_STD_AREA": "DE",
+    "BBK_STD_CURRENCY": "EUR",
+    "BBK_STD_FREQ": "M"
+   }
   }
  }
 }
