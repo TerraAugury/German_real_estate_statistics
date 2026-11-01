@@ -14,12 +14,12 @@ function render(options: Plot.PlotOptions, label: string): string {
 
 const x = (p: string) => (p.includes('Q') ? +p.slice(0, 4) + (+p[6] - 1) / 4 : +p); // "2020-Q3" -> 2020.5
 
-/** Server-rendered SVG line chart of an annual or quarterly series, formatted with the page locale. */
-export function lineChart(s: Series, lang: Lang): string {
+/** Server-rendered SVG line chart of an annual or quarterly series, formatted with the page locale; compact charts pass a lower height. */
+export function lineChart(s: Series, lang: Lang, height = 320): string {
   if (s.freq === 'M') throw new Error(`${s.key}: lineChart plots annual or quarterly series, got monthly`);
   const points = s.obs.map((o) => ({ ...o, x: x(o.period) }));
   return render({
-    width: 720, height: 320, marginLeft: 50,
+    width: 720, height, marginLeft: 50,
     x: { tickFormat: (d: number) => (Number.isInteger(d) ? String(d) : ''), label: null },
     y: { grid: true, label: s.unit[lang], tickFormat: (d: number) => fmt(lang, d) },
     marks: [Plot.lineY(points, { x: 'x', y: 'value' }), Plot.dot(points, { x: 'x', y: 'value', title: (d) => `${period(lang, d.period)}: ${fmt(lang, d.value, { maximumFractionDigits: 2 })}` })],

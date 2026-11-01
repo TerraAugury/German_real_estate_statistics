@@ -2,7 +2,7 @@
 // Selector values are language-neutral English keys (spec section 8); labels come from i18n (`segment.*`, `geo.*`, `freq.*`).
 import { loadManifest, type ManifestEntry } from './manifest';
 import { t } from './i18n';
-import type { Lang, PageKey } from './routes';
+import { href, type Lang, type PageKey } from './routes';
 
 export type Segment = 'office' | 'retail' | 'logistics' | 'commercial-overall';
 export type Freq = 'annual' | 'quarterly';
@@ -73,3 +73,27 @@ export function liveViews(kpi: Kpi, live: ManifestEntry[] = loadManifest()): Vie
   const keys = new Set(live.map((m) => m.key));
   return kpi.views.map((vw) => ({ ...vw, series: vw.series.filter((s) => keys.has(s.key)) })).filter((vw) => vw.series.length);
 }
+
+/** Availability grid columns; Logistics has a column but no Segment page (spec section 8). */
+export const SEGMENTS: Segment[] = ['office', 'retail', 'logistics', 'commercial-overall'];
+export const SEGMENT_PAGES = SEGMENTS.filter((s) => s !== 'logistics') as Exclude<Segment, 'logistics'>[];
+/**
+ * One KPI x Segment cell: the Segment's first live view, a licence gap (empty kind 3), or no Open source with the
+ * i18n key of its reason (`na.<page>.<segment>`, spec section 9).
+ */
+export type Cell = { view: View } | { na: 'licence' } | { na: 'source'; reason: string };
+export function cell(kpi: Kpi, segment: Segment, live: ManifestEntry[] = loadManifest()): Cell {
+  if (!kpi.views.some((x) => x.segment === segment)) return { na: 'source', reason: `na.${kpi.page}.${segment}` };
+  const view = liveViews(kpi, live).find((x) => x.segment === segment);
+  return view ? { view } : { na: 'licence' };
+}
+/** The greyed placeholder text of a Not available cell. */
+export const naText = (c: Exclude<Cell, { view: View }>, lang: Lang) =>
+  c.na === 'licence' ? t(lang, 'kpi.not_available.licence') : t(lang, 'na.source', { reason: t(lang, c.reason) });
+/** The Home card view: commercial overall at Germany where the KPI has it, else its first live view. */
+export function headline(kpi: Kpi, live: ManifestEntry[] = loadManifest()): View | undefined {
+  const views = liveViews(kpi, live);
+  return views.find((x) => x.segment === 'commercial-overall' && x.geo === 'germany') ?? views[0];
+}
+/** KPI page URL naming one view, so a compact chart opens the same view in full. */
+export const viewHref = (kpi: Kpi, x: View, lang: Lang) => `${href(kpi.page, lang)}?${new URLSearchParams({ segment: x.segment, geo: x.geo, freq: x.freq })}`;

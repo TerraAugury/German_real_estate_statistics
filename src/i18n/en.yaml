@@ -2,7 +2,6 @@ site.title: German commercial real estate statistics
 nav.home: Home
 lang.switch: Deutsch
 home.purpose: Open statistics on German commercial real estate, with every chart naming its source and licence.
-home.card.link: "{kpi}: latest {value} ({period})"
 kpi.construction.title: Construction (permits, completions)
 source.line: "Source: {publisher}, DBnomics series {id} / Licence: {licence} / Data to {period}"
 source.own: own calculation
@@ -81,3 +80,27 @@ geo.de-st: Saxony-Anhalt
 geo.de-th: Thuringia
 note.partial_total: "Germany total is the sum of the Länder with data; no value for {laender} in {year}."
 kpi.noscript: "Switching Segment, geography or frequency needs JavaScript. Without it, this page shows its first view."
+na.source: "Not available: no Open source for {reason}"
+na.kpi-price-index.logistics: a logistics property price index
+na.kpi-rent-index.logistics: logistics rents
+na.kpi-initial-yield.office: "office yields on their own; the source reports office and retail combined (see Commercial overall)"
+na.kpi-initial-yield.retail: "retail yields on their own; the source reports office and retail combined (see Commercial overall)"
+na.kpi-initial-yield.logistics: logistics yields
+na.kpi-office-vacancy.retail: retail vacancy
+na.kpi-office-vacancy.logistics: logistics vacancy
+na.kpi-office-vacancy.commercial-overall: vacancy across all commercial property
+na.kpi-transaction-volume.office: "office transaction volumes; the source covers all commercial property"
+na.kpi-transaction-volume.retail: "retail transaction volumes; the source covers all commercial property"
+na.kpi-transaction-volume.logistics: "logistics transaction volumes; the source covers all commercial property"
+na.construction.retail: "retail buildings; Destatis has no separate building type for them"
+nav.segments: Segments
+nav.availability: Availability
+nav.breadcrumb: Breadcrumb
+home.card.latest: "Latest: {value} ({period})"
+home.segments: Browse by Segment
+segment.intro: "One national chart per KPI where a source has it; each chart opens the full KPI page."
+segment.availability: Which KPI and Segment combinations exist, and why the others do not
+availability.title: Availability
+availability.intro: "Every KPI for every Segment. A gap is stated with its reason; nothing is planned for later."
+availability.kpi: KPI
+availability.available: "Available ({geo})"

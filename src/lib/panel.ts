@@ -1,5 +1,6 @@
 import { fmt, period, t } from './i18n';
-import { levelChart, lagChart } from './chart';
+import { levelChart, lagChart, lineChart } from './chart';
+import { notes } from './notes';
 import { href, type Lang } from './routes';
 import type { Series } from './series';
 import { computeLink, type LinkResult } from '../link/link';
@@ -14,6 +15,10 @@ export function sourceLine(s: Series, lang: Lang, own = false): string {
     licence: `<a href="${href('sources', lang)}">${esc(s.licence.name)}</a>`, period: period(lang, s.lastPeriod),
   }) + (own || s.derived ? ` / ${t(lang, 'source.own')}` : '');
 }
+
+/** Compact chart for Home cards and Segment pages: chart, stale and fetch-failed Notes, source line (spec section 9). */
+export const compactChart = (s: Series, lang: Lang) => lineChart(s, lang, 200)
+  + notes(s, lang).map((n) => `<p class="note">${esc(n)}</p>`).join('') + `<figcaption>${sourceLine(s, lang)}</figcaption>`;
 
 /** Link panel HTML for one KPI x indicator pair. Pure given the result, so it tests without the Link module. */
 export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang, geography = t(lang, 'geo.germany')): string {
