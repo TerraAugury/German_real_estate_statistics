@@ -25,7 +25,10 @@ export const missingGerman = (pages: Record<string, Prose>) => Object.keys(pages
 export function assertReviewed(unreviewed: string[], production: boolean): void {
   if (production && unreviewed.length) throw new Error(`review: unreviewed German (${unreviewed.length}): ${unreviewed.join(', ')}`);
 }
-export const draft = (text: string, unreviewed: boolean) => (unreviewed ? `[DRAFT] ${text}` : text);
+export const DRAFT = '[DRAFT] ';
+export const draft = (text: string, unreviewed: boolean) => (unreviewed ? DRAFT + text : text);
+/** Preview builds (INCLUDE_PROVISIONAL=1) include provisional series and show unreviewed German as [DRAFT]; production is the default. */
+export const isPreview = () => process.env.INCLUDE_PROVISIONAL === '1';
 
 export const LOCK_PATH = 'src/i18n/de.reviewed.lock';
 export const readLock = (path = LOCK_PATH): Lock => (existsSync(path) ? parse(readFileSync(path, 'utf8')) ?? {} : {});
@@ -50,14 +53,22 @@ export const allUnreviewed = (en: Record<string, string>, pages = readProse()) =
   [...unreviewedKeys(en, readLock()), ...unreviewedProse(pages).map((n) => `page:${n}`)];
 
 /**
- * Record a review of the named items only (`key` or `page:<name>`): update their lock entry or the German page's
- * front matter and nothing else. Naming nothing is an error, so unread German is never stamped in bulk.
+ * Record a review of the named items only (`key`, `page:<name>`, or a typed prefix such as `manifest:cpi.*`): update
+ * their lock entry or the German page's front matter and nothing else. Naming nothing is an error, so German is
+ * never stamped without the reviewer saying which.
  */
 export function recordReview(en: Record<string, string>, who: string, on: string, items: string[], dir = 'content', lockPath = LOCK_PATH): void {
   if (!who || !items.length) throw new Error('review: name the reviewer and at least one key or page:<name>');
   const lock = readLock(lockPath);
   const pages = readProse(dir);
-  for (const item of items) {
+  const all = [...Object.keys(en), ...Object.keys(pages).map((n) => `page:${n}`)];
+  const expand = (i: string) => {
+    if (!i.endsWith('*')) return [i];
+    const hits = all.filter((k) => k.startsWith(i.slice(0, -1)));
+    if (!hits.length) throw new Error(`review: nothing matches ${i}`);
+    return hits;
+  };
+  for (const item of items.flatMap(expand)) {
     if (item.startsWith('page:')) {
       const n = item.slice(5);
       if (!pages[n]) throw new Error(`review: no English page ${dir}/en/${n}.md`);

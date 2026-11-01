@@ -13,7 +13,7 @@ note.stale: "Latest observation: {period}. The source has not published newer da
 note.fetch_failed: "Could not refresh from DBnomics on {date}; showing data retrieved on {snapshot}."
 note.revised: "The source revised earlier values; detected {date}. This chart shows the latest published version."
 note.short_window: "Short history ({start} to {end})."
-note.short_cycle: "this window contains essentially one interest-rate cycle, so the pattern may not hold in other periods."
+note.short_cycle: "This window contains essentially one interest-rate cycle, so the pattern may not hold in other periods."
 note.scope.index: "Index (2013 = 100): shows change over time, not a price level in euros."
 note.scope.city_class: "Aggregate for {class}, not an individual city."
 note.scope.combined: "Office and retail combined; no separate office or retail figure."

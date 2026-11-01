@@ -68,6 +68,12 @@ describe('recordReview', () => {
     expect(() => recordReview(en, 'Owner', 'd', ['page:terms'], dir, lock)).toThrow(/no German page/);
     expect(existsSync(join(dir, 'de/terms.md'))).toBe(false);
   });
+  it('a typed prefix stamps exactly the keys it names', () => {
+    const { dir, lock } = setup();
+    recordReview({ 'manifest:cpi.title': 'CPI', 'manifest:cpi.unit': 'index', 'manifest:gdp.title': 'GDP' }, 'Owner', 'd', ['manifest:cpi.*'], dir, lock);
+    expect(Object.keys(readLock(lock)).sort()).toEqual(['b', 'manifest:cpi.title', 'manifest:cpi.unit']);
+    expect(() => recordReview(en, 'Owner', 'd', ['zzz*'], dir, lock)).toThrow(/nothing matches/);
+  });
   it('rejects an unknown key', () => expect(() => recordReview(en, 'Owner', 'd', ['zzz'], setup().dir, setup().lock)).toThrow(/no English key/));
 });
 
@@ -89,12 +95,21 @@ describe('manifest checks', () => {
 });
 
 describe('DBnomics name change', () => {
-  const m: any = { key: 'k', provider: 'P', dataset: 'D', ids: ['X'], laender: [''], frequency: 'annual' };
+  const m: any = { key: 'k', dbnomics_provider: 'P', dataset: 'D', ids: ['X'], laender: [''], frequency: 'annual' };
   const doc = (name: string, at: string) => ({ series: { docs: [{ series_name: name, indexed_at: at, '@frequency': 'annual', period: ['2020'], value: [1] }] } });
   const old: Snapshot = { retrieved_at: 'x', fetch_failed: null, parts: { X: { name: 'Old', indexed_at: 'a', frequency: 'annual', period: ['2020'], value: [1] } } };
   it('warns, does not throw', async () => {
     const w: string[] = [];
     await refresh(m, old, { get: async () => doc('New', 'b'), now: new Date(), warn: (s) => w.push(s) });
     expect(w.join()).toMatch(/X: DBnomics name changed/);
+  });
+});
+
+describe('[DRAFT] placement', () => {
+  it('a drafted value inside another string moves the marker to the front', async () => {
+    const { t } = await import('../src/lib/i18n');
+    const out = t('en', 'link.title', { kpi: '[DRAFT] Büro', indicator: 'CPI' });
+    expect(out.startsWith('[DRAFT] ')).toBe(true);
+    expect(out.indexOf('[DRAFT]', 1)).toBe(-1);
   });
 });

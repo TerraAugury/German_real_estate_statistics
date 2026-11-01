@@ -1,17 +1,17 @@
 import { fmt, t } from './i18n';
 import { levelChart, lagChart } from './chart';
-import type { Lang } from './routes';
+import { href, type Lang } from './routes';
 import type { Series } from './series';
 import { computeLink, type LinkResult } from '../link/link';
 
 export const esc = (x: string) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const SMALL = 20; // annual Links with fewer lag-0 pairs get the Small sample Note (spec section 9)
 
-/** Source line for one series, same wording as KPI charts. */
+/** Source line for one series, same wording as KPI charts. The id links the series on DBnomics, the licence our Sources & licences page. */
 export function sourceLine(s: Series, lang: Lang, own = false): string {
   return t(lang, 'source.line', {
-    publisher: esc(s.publisher), id: `<a href="${s.dbnomicsUrl}">${esc(s.dbnomicsId)}</a>`,
-    licence: `<a href="${s.licence.url}">${esc(s.licence.name)}</a>`, period: s.lastPeriod,
+    publisher: esc(s.publisher), id: `<a href="${esc(s.dbnomicsUrl)}">${esc(s.dbnomicsId)}</a>`,
+    licence: `<a href="${href('sources', lang)}">${esc(s.licence.name)}</a>`, period: s.lastPeriod,
   }) + (own || s.derived ? ` / ${t(lang, 'source.own')}` : '');
 }
 

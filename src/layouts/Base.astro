@@ -18,10 +18,9 @@ const { lang, page, title } = Astro.props as { lang: Lang; page: PageKey; title:
     <nav>
       <a href={href('home', lang)}>{t(lang, 'nav.home')}</a>
       <a href={href('construction', lang)}>{t(lang, 'nav.construction')}</a>
-      <a href={href('sources', lang)}>{t(lang, 'nav.sources')}</a>
       <a class="sw" href={href(page, otherLang(lang))} hreflang={otherLang(lang)}>{t(lang, 'lang.switch')}</a>
     </nav>
     <main><slot /></main>
-    <footer>{t(lang, 'footer.text')}</footer>
+    <footer><span>{t(lang, 'footer.text')}</span><a href={href('sources', lang)}>{t(lang, 'nav.sources')}</a></footer>
   </body>
 </html>
