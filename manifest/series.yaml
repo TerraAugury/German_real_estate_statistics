@@ -709,7 +709,7 @@
   licence: *bbk_licence
   attribution: *bbk_attribution
   provisional: true
-  title: { en: "Transaction volume index, commercial overall, 127 towns", de: "Transaktionsvolumenindex, Gewerbe gesamt, 127 Städte" }
+  title: { en: "Transaction volume index, commercial overall, 127 administrative districts", de: "Transaktionsvolumenindex, Gewerbe gesamt, 127 Kreise" }
   unit: { en: "index", de: "Index" }
   frequency: annual
   change: pct

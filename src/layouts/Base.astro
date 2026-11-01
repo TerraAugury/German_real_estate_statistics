@@ -1,6 +1,7 @@
 ---
 import { t } from '../lib/i18n';
 import { href, otherLang, type Lang, type PageKey } from '../lib/routes';
+import { KPIS } from '../lib/kpis';
 const { lang, page, title } = Astro.props as { lang: Lang; page: PageKey; title: string };
 ---
 <!doctype html>
@@ -11,15 +12,19 @@ const { lang, page, title } = Astro.props as { lang: Lang; page: PageKey; title:
     <style>
       body { font: 16px/1.5 system-ui, sans-serif; max-width: 48rem; margin: 0 auto; padding: 0 1rem; color: #1a1a1a; }
       nav, footer { display: flex; gap: 1rem; padding: 1rem 0; } nav .sw { margin-left: auto; }
+      nav details > a { display: block; }
+      .selectors { display: flex; flex-wrap: wrap; gap: 1rem; }
       figure { margin: 1rem 0; } figcaption { font-size: .85rem; color: #444; } svg { max-width: 100%; height: auto; }
     </style>
   </head>
   <body>
     <nav>
       <a href={href('home', lang)}>{t(lang, 'nav.home')}</a>
-      <a href={href('construction', lang)}>{t(lang, 'nav.construction')}</a>
+      <details><summary>{t(lang, 'nav.kpis')}</summary>{KPIS.map((k) => <a href={href(k.page, lang)}>{t(lang, k.title)}</a>)}</details>
       <a class="sw" href={href(page, otherLang(lang))} hreflang={otherLang(lang)}>{t(lang, 'lang.switch')}</a>
     </nav>
+    <!-- The language switch keeps the selector parameters (segment, geo, freq) unchanged; KPI pages update it on change. -->
+    <script is:inline>document.querySelector('a.sw').search = location.search;</script>
     <main><slot /></main>
     <footer><span>{t(lang, 'footer.text')}</span><a href={href('sources', lang)}>{t(lang, 'nav.sources')}</a></footer>
   </body>

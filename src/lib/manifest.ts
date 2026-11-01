@@ -54,12 +54,12 @@ export function publicLinks<T extends { kpi: string; indicator: string }>(pairs:
   return pairs.filter((p) => keys.has(p.kpi) && keys.has(p.indicator));
 }
 
-/** DBnomics series id as shown on source lines; the 16 Länder collapse into one range. */
-export const dbnomicsId = (m: ManifestEntry) => `${m.dbnomics_provider}/${m.dataset}/`
-  + m.ids[0].replace('{land}', isDerived(m) ? `{${m.laender[0]}–${m.laender.at(-1)}}` : m.laender[0]);
+/** DBnomics series id as shown on source lines; the 16 Länder collapse into one range unless one Land is asked for. */
+export const dbnomicsId = (m: ManifestEntry, land?: string) => `${m.dbnomics_provider}/${m.dataset}/`
+  + m.ids[0].replace('{land}', land ?? (isDerived(m) ? `{${m.laender[0]}–${m.laender.at(-1)}}` : m.laender[0]));
 /** The series page on DBnomics; a sum of Länder has no single series, so it links the dataset. */
-export const dbnomicsUrl = (m: ManifestEntry) => `https://db.nomics.world/${m.dbnomics_provider}/${m.dataset}`
-  + (isDerived(m) ? '' : `/${m.ids[0].replace('{land}', m.laender[0])}`);
+export const dbnomicsUrl = (m: ManifestEntry, land?: string) => `https://db.nomics.world/${m.dbnomics_provider}/${m.dataset}`
+  + (isDerived(m) && !land ? '' : `/${m.ids[0].replace('{land}', land ?? m.laender[0])}`);
 
 /** Manifest build checks (spec sections 10, 11); any failure fails the build. */
 export function checkEntries(entries: ManifestEntry[], en: Record<string, string>): void {
