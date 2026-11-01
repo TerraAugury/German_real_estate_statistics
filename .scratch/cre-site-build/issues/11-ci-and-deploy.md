@@ -18,5 +18,5 @@ Spec: `.scratch/cre-site/spec.md`, Sections 7, 11 and 13.
 
 - One workflow, `.github/workflows/ci.yml`: job `preview` (pull requests; build uploaded as the `preview-site` artifact) and job `main` (push to `main`, daily cron, manual). A person's push always builds; cron and manual runs skip the build and deploy when no snapshot changed. Setup and the secrets table are in `README.md` under "Deploy".
 - Production deploy runs only when the repository variable `PRODUCTION_DEPLOY` is `true`. While it is off, the `main` job builds with `INCLUDE_PROVISIONAL=1`, because the production build fails on the unreviewed German (ticket 09).
-- The bot commits snapshots straight to `main`, so `main` gains commits that `work` lacks. `scripts/merge-work-to-main.sh` may then have to merge or resolve them.
+- Owner decision (2026-11-01): the bot commits snapshots to `work`, then runs `scripts/merge-work-to-main.sh` and pushes both branches, so `main` changes only through the script (AGENTS.md, Branches). Tests, build and deploy run on `main`. This amends spec section 11, which said "commit changed snapshots to `main`".
 - Not verified locally: a real Actions run, the bot push and the Cloudflare upload. actionlint was not installed; the workflow was checked with a strict YAML parse.

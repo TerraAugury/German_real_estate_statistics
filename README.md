@@ -3,7 +3,7 @@ Website embedding DBeconomics data relevant for German real estate
 
 ## Deploy
 
-`.github/workflows/ci.yml` runs daily, on manual trigger and on every push to `main`: fetch, commit changed snapshots to `main`, tests, build, deploy to Cloudflare Pages by direct upload. Cron and manual runs skip the build and deploy when no snapshot changed. Pull requests get a preview build with `INCLUDE_PROVISIONAL=1`, uploaded as the `preview-site` artifact.
+`.github/workflows/ci.yml` runs daily, on manual trigger and on every push to `main`: fetch, commit changed snapshots to `work` and merge them into `main` with `scripts/merge-work-to-main.sh`, then test, build and deploy `main` to Cloudflare Pages by direct upload. Cron and manual runs skip the build and deploy when no snapshot changed. Pull requests get a preview build with `INCLUDE_PROVISIONAL=1`, uploaded as the `preview-site` artifact.
 
 **Production deploy is off.** While it is off, the `main` job builds as a preview (`INCLUDE_PROVISIONAL=1`), because the production build fails on unreviewed German. It waits on launch gates 08, 14 and 15 (spec section 13). To switch it on once they resolve, set these in the GitHub repository settings (never commit them):
 

@@ -1,4 +1,4 @@
-# Spec section 11 job order: fetch and diff -> commit changed snapshots to main -> tests -> build -> deploy.
+# Spec section 11 job order: fetch and diff -> commit changed snapshots (to work, merged into main) -> tests -> build -> deploy.
 # Production deploy is off until launch gates 08, 14 and 15 resolve (spec section 13); see README "Deploy".
 name: ci
 
@@ -31,16 +31,18 @@ jobs:
   main:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    concurrency: main # one bot commit to main at a time
+    concurrency: main # one bot push at a time
     permissions:
       contents: write
     steps:
+      # Snapshots are committed to `work`; `main` changes only through scripts/merge-work-to-main.sh (AGENTS.md, Branches).
       - uses: actions/checkout@v4
+        with: { ref: work, fetch-depth: 0 }
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: npm }
       - run: npm ci
       - run: npx tsx scripts/fetch.ts
-      - name: Commit changed snapshots to main
+      - name: Commit changed snapshots to work, merge work into main
         id: diff
         run: |
           if [ -z "$(git status --porcelain data/snapshots)" ]; then echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
@@ -49,7 +51,10 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/snapshots
           git commit -m 'Update data snapshots'
-          git push origin HEAD:main
+          scripts/merge-work-to-main.sh 'Merge work into main: data snapshots'
+          git push origin work main
+      # Test, build and deploy what `main` holds.
+      - run: git switch -q main
       # A person's push always builds; cron and manual runs build only when a snapshot changed.
       - if: github.event_name == 'push' || steps.diff.outputs.changed == 'true'
         run: npm test
