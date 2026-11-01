@@ -2,15 +2,17 @@
 
 ### Issue tracker
 
-Issues and specs live as local markdown under `.scratch/<feature>/`. See `docs/agents/issue-tracker.md`.
+Tickets and specs are markdown under `.scratch/<feature>/`; read `docs/agents/issue-tracker.md` before creating, fetching or resolving one.
+
+A ticket ships in one commit with its code: that commit sets `**Status:** done` and ticks every criterion it meets.
 
 ### Triage labels
 
-Default five-role vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+Read `docs/agents/triage-labels.md` when setting a ticket's `Status:` to a triage role.
 
 ### Domain docs
 
-Single-context: one `GLOSSARY.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+Read `docs/agents/domain.md` before exploring the codebase: it covers `GLOSSARY.md` and ADRs.
 
 <!-- rtk-instructions v2 -->
 # Command output
@@ -24,4 +26,4 @@ output was clearly expected, contradicting its exit code, or garbled.
 <!-- /rtk-instructions -->
 ## Branches
 
-Work happens on `work`, which tracks `.scratch/`. `main` never contains `.scratch/`. After every commit on `work`, run `scripts/merge-work-to-main.sh` (optionally with a merge message) to merge it into `main` without `.scratch/`. Add new `.scratch/` files with `git add -f`. Never push unless asked.
+Work happens on `work`, which tracks `.scratch/`; `main` never contains `.scratch/`. After every commit on `work`, run `scripts/merge-work-to-main.sh` to merge it into `main`. Add new `.scratch/` files with `git add -f`. Push only when asked.
