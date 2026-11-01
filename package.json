@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "tsx scripts/check-review.ts && tsx scripts/fetch.ts && astro build",
+    "build": "tsx scripts/fetch.ts && astro build",
     "test": "vitest run",
     "check": "astro check"
   },

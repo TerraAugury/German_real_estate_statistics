@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { built, langs, slug, href, type Lang, type PageKey } from '../../lib/routes';
+import { built, langs, slug, href, type Lang, type BuiltPage } from '../../lib/routes';
 import { t, fmt } from '../../lib/i18n';
 import { loadSeries, annualPoints } from '../../lib/series';
 import { lineChart } from '../../lib/chart';
@@ -13,12 +13,13 @@ export function getStaticPaths() {
   return langs.flatMap((lang) => built.map((page) => ({ params: { lang, slug: slug(page, lang) || undefined }, props: { page } })));
 }
 const { lang } = Astro.params as { lang: Lang };
-const { page } = Astro.props as { page: PageKey };
+const { page } = Astro.props as { page: BuiltPage };
 const s = loadSeries('construction-permits-office');
 // Construction page Links; the provisional gate drops any whose series is excluded.
 const links = publicLinks([{ kpi: s.key, indicator: 'euribor-3m' }, { kpi: s.key, indicator: 'cpi' }]);
 const panels = page === 'construction' ? links.map((l) => linkPanel(s, loadSeries(l.indicator), lang)) : [];
-const titleKey = { home: 'site.title', construction: 'kpi.construction.title', sources: 'sources.title' }[page as string]!;
+const titles: Record<BuiltPage, string> = { home: 'site.title', construction: 'kpi.construction.title', sources: 'sources.title' };
+const titleKey = titles[page];
 const last = annualPoints(s).at(-1)!;
 const source = sourceLine(s, lang);
 ---

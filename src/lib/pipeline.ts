@@ -37,7 +37,7 @@ function firstDoc(res: any, id: string): any {
 }
 
 export const partIds = (m: ManifestEntry) => m.laender.map((land) => m.ids[0].replace('{land}', land));
-const url = (m: ManifestEntry, id: string, obs: boolean) => `${API}/${m.provider}/${m.dataset}/${id}${obs ? '?observations=1' : ''}`;
+const url = (m: ManifestEntry, id: string, obs: boolean) => `${API}/${m.dbnomics_provider}/${m.dataset}/${id}${obs ? '?observations=1' : ''}`;
 
 /** True if a value for a period before the latest one changed. */
 export function revised(old: Part, next: Part): boolean {

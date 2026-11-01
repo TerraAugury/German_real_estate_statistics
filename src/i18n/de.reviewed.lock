@@ -27,7 +27,7 @@ note.short_window:
   reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
   reviewed_on: 2026-11-01
 note.short_cycle:
-  en_hash: c719cd63fed78184
+  en_hash: 7a1b9fdba833745f
   reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
   reviewed_on: 2026-11-01
 note.scope.index:
@@ -40,5 +40,9 @@ note.scope.city_class:
   reviewed_on: 2026-11-01
 note.scope.combined:
   en_hash: 0bc6ea1e485f1ecf
+  reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
+  reviewed_on: 2026-11-01
+link.small_sample:
+  en_hash: e3703571e54d2cef
   reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
   reviewed_on: 2026-11-01

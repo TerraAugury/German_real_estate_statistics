@@ -25,7 +25,8 @@ export const routes = {
 export type PageKey = keyof typeof routes;
 
 /** Pages that exist so far; each later ticket adds its pages here. A page missing from `routes` fails the build. */
-export const built: PageKey[] = ['home', 'construction', 'sources'];
+export const built = ['home', 'construction', 'sources'] as const satisfies readonly PageKey[];
+export type BuiltPage = (typeof built)[number];
 
 export function slug(key: PageKey, lang: Lang): string {
   const s = routes[key]?.[lang];

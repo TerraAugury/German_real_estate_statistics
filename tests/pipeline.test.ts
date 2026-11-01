@@ -4,7 +4,7 @@ import { notes } from '../src/lib/notes';
 import type { ManifestEntry } from '../src/lib/manifest';
 import type { Series } from '../src/lib/series';
 
-const m = { key: 'k', provider: 'P', dataset: 'D', ids: ['{land}.X'], laender: ['01'], frequency: 'annual', expected_start: 2008 } as ManifestEntry;
+const m = { key: 'k', dbnomics_provider: 'P', dataset: 'D', ids: ['{land}.X'], laender: ['01'], frequency: 'annual', expected_start: 2008 } as ManifestEntry;
 const part = (indexed_at: string, value: number[], start = 2008): Part =>
   ({ name: 'n', indexed_at, frequency: 'annual', dimensions: { ind: 'FLC002' }, period: value.map((_, i) => String(start + i)), value });
 const snap = (p: Part, extra: Partial<Snapshot> = {}): Snapshot => ({ retrieved_at: '2026-01-01T00:00:00.000Z', fetch_failed: null, parts: { '01.X': p }, ...extra });

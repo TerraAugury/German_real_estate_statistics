@@ -29,8 +29,8 @@ describe('manifest content (spec sections 3, 4, 5)', () => {
     for (const m of all) { expect(m.attribution.en).toBeTruthy(); expect(m.attribution.de).toBeTruthy(); }
   });
   it('flags exactly Bundesbank and OECD series as provisional; ECB and Destatis are not', () => {
-    for (const m of all) expect(m.provisional, m.key).toBe(['BUBA', 'OECD'].includes(m.provider));
-    expect(all.filter((m) => m.provider === 'BUBA' && m.dataset !== 'BBDZ1').map((m) => m.dataset).sort()).toEqual(['BBDL1', 'BBIM1', 'BBNZ1', 'BBSIS']);
+    for (const m of all) expect(m.provisional, m.key).toBe(['BUBA', 'OECD'].includes(m.dbnomics_provider));
+    expect(all.filter((m) => m.dbnomics_provider === 'BUBA' && m.dataset !== 'BBDZ1').map((m) => m.dataset).sort()).toEqual(['BBDL1', 'BBIM1', 'BBNZ1', 'BBSIS']);
   });
   it('covers the economic indicators with spec ids and start years', () => {
     const want: [string, string, number][] = [
@@ -55,7 +55,7 @@ describe('manifest content (spec sections 3, 4, 5)', () => {
     expect(byKey('construction-permits-commercial').expected_start).toBe(2015);
   });
   it('default build keeps only ECB and Destatis series', () => {
-    expect(new Set(loadManifest(false).map((m) => m.provider))).toEqual(new Set(['DESTATIS', 'ECB']));
+    expect(new Set(loadManifest(false).map((m) => m.dbnomics_provider))).toEqual(new Set(['DESTATIS', 'ECB']));
   });
 });
 
@@ -65,7 +65,19 @@ it('manifest carries the spec section 11 fields', () => {
   expect(byKey('price-index-de-office-q')).toMatchObject({ short_window: true, short_window_sentence: 'note.short_cycle', scope: ['index'] });
   expect(byKey('rent-index-combined-7').scope).toEqual(['city_class', 'combined']);
   expect(byKey('construction-permits-commercial').short_window).toBe(true);
-  for (const m of all) expect(m.resampling, m.key).toBe(m.provider === 'BUBA' && m.dataset === 'BBDZ1' || m.dataset.endsWith('LJ001') ? 'none' : 'mean');
+  for (const m of all) expect(m.resampling, m.key).toBe(m.dbnomics_provider === 'BUBA' && m.dataset === 'BBDZ1' || m.dataset.endsWith('LJ001') ? 'none' : 'mean');
+});
+
+it('unreviewed German manifest text is marked [DRAFT]; English never is', () => {
+  const m = byKey('cpi');
+  expect(m.title.de.startsWith('[DRAFT] ')).toBe(true);
+  expect(m.title.en).not.toContain('[DRAFT]');
+});
+
+it('dbnomicsUrl links the series, or the dataset for a sum of Länder', async () => {
+  const { dbnomicsUrl } = await import('../src/lib/manifest');
+  expect(dbnomicsUrl(byKey('cpi'))).toBe('https://db.nomics.world/DESTATIS/61111BM001/DG.PREIS1');
+  expect(dbnomicsUrl(byKey('construction-permits-office'))).toBe('https://db.nomics.world/DESTATIS/31111LJ001');
 });
 
 it('dbnomicsId collapses Länder', () => {
