@@ -18,5 +18,4 @@ _site/
 Gemfile.lock
 
 .claude/worktrees/
-.scratch/
 .rtk/
