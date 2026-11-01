@@ -22,3 +22,6 @@ Truncated results state their recovery path in their own output. Re-run a
 command as `rtk proxy <cmd>` only when its result is unusable: empty when
 output was clearly expected, contradicting its exit code, or garbled.
 <!-- /rtk-instructions -->
+## Branches
+
+Work happens on `work`, which tracks `.scratch/`. `main` never contains `.scratch/`. After every commit on `work`, run `scripts/merge-work-to-main.sh` (optionally with a merge message) to merge it into `main` without `.scratch/`. Add new `.scratch/` files with `git add -f`. Never push unless asked.
