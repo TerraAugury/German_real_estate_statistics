@@ -4,7 +4,7 @@
 
 **Blocked by:** 01, 02
 
-**Status:** ready-for-agent
+**Status:** done
 
 Spec: `.scratch/cre-site/spec.md`, Sections 6 and 9.
 

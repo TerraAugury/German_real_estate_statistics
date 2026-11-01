@@ -4,7 +4,7 @@
 
 **Blocked by:** 01
 
-**Status:** ready-for-agent
+**Status:** done
 
 Spec: `.scratch/cre-site/spec.md`, Section 11 (cadence, failure, revisions, thresholds) and section 9 (Notes).
 
