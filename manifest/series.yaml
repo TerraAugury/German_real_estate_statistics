@@ -13,3 +13,29 @@
   frequency: annual
   scale: 0.001   # native thousand m² -> million m² (own calculation)
   expected_start: 2008
+
+# Economic indicators (spec section 5). Resampled by the Link module; never charted alone yet.
+- key: euribor-3m
+  provider: ECB
+  dataset: FM
+  ids: ["M.U2.EUR.RT.MM.EURIBOR3MD_.HSTA"]
+  publisher: European Central Bank
+  # Open: final ECB licence wording is spec ticket 14; the name below is a neutral placeholder.
+  licence: { name: "Source: ECB", url: "https://www.ecb.europa.eu/home/disclaimer/html/index.en.html" }
+  title: { en: "Euribor 3-month, monthly average", de: "Euribor 3 Monate, Monatsdurchschnitt" }
+  unit: { en: "% p.a.", de: "% p. a." }
+  frequency: monthly
+  change: diff
+  expected_start: 1994
+
+- key: cpi
+  provider: DESTATIS
+  dataset: 61111BM001
+  ids: ["DG.PREIS1"]
+  publisher: Statistisches Bundesamt (Destatis)
+  licence: { name: "Datenlizenz Deutschland – Namensnennung – 2.0", url: "https://www.govdata.de/dl-de/by-2-0" }
+  title: { en: "Consumer price index, Germany", de: "Verbraucherpreisindex, Deutschland" }
+  unit: { en: "index", de: "Index" }
+  frequency: monthly
+  change: pct
+  expected_start: 1991

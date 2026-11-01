@@ -12,3 +12,18 @@ note.prefix: Note
 note.stale: "Latest observation: {period}. The source has not published newer data within the expected interval, so this series may be out of date."
 note.fetch_failed: "Could not refresh from DBnomics on {date}; showing data retrieved on {snapshot}."
 note.revised: "The source revised earlier values; detected {date}. This chart shows the latest published version."
+link.title: "{kpi} and {indicator}"
+link.scope: "National indicator against {geography}"
+geo.germany: Germany
+link.sentence: "This shows how two series moved together over {period} (n = {n}). It does not show that one causes the other, and it is not a forecast."
+link.period: "{from} to {to}"
+link.headline: "Rank correlation (Spearman) of changes at lag 0: {rho} (n = {n})"
+link.not_shown: "Link not shown: too few observations (n = {n})"
+link.not_shown.constant: "Link not shown: one series did not change over the period (n = {n})"
+link.strongest: "Strongest of {n} lags tested; chosen after looking at the data, so likely overstated."
+link.strongest.mark: strongest
+link.small_sample: "Based on only {n} annual observations. With a sample this small the pattern may be coincidental."
+link.lag.label: "Lag in years (positive: indicator moved earlier, negative: later)"
+link.rho.label: Spearman rho
+link.overlay.label: "Levels of {title}"
+link.lags.label: "Lag profile of {kpi} and {indicator}"

@@ -26,6 +26,15 @@ export function makeGet(fetchFn: typeof fetch = fetch, sleep = (ms: number) => n
   };
 }
 
+/** The API answered but not as expected (or the frequency changed). Fails the build; never a reason to reuse the snapshot. */
+export class BadResponse extends Error {}
+
+function firstDoc(res: any, id: string): any {
+  const d = res?.series?.docs?.[0];
+  if (!d) throw new BadResponse(`${id}: response has no series doc`);
+  return d;
+}
+
 export const partIds = (m: ManifestEntry) => m.lands.map((land) => m.ids[0].replace('{land}', land));
 const url = (m: ManifestEntry, id: string, obs: boolean) => `${API}/${m.provider}/${m.dataset}/${id}${obs ? '?observations=1' : ''}`;
 
@@ -38,16 +47,19 @@ export function revised(old: Part, next: Part): boolean {
 
 /**
  * Refresh one series. indexed_at is checked first; observations are downloaded only for parts where it moved.
- * Returns the new snapshot, or null when nothing changed. Throws on any fetch error.
+ * Returns the new snapshot, or null when nothing changed. Throws on any fetch error, and BadResponse on a malformed response or changed frequency.
  */
 export async function refresh(m: ManifestEntry, old: Snapshot | undefined, { get, now }: Deps): Promise<Snapshot | null> {
   const parts: Record<string, Part> = {};
   let downloaded = false, wasRevised = false;
   for (const id of partIds(m)) {
     const prev = old?.parts[id];
-    const meta = (await get(url(m, id, false))).series.docs[0];
-    if (prev && prev.indexed_at === meta.indexed_at) { parts[id] = prev; continue; }
-    const doc = (await get(url(m, id, true))).series.docs[0];
+    const meta = firstDoc(await get(url(m, id, false)), id);
+    if (prev?.frequency && prev.indexed_at === meta.indexed_at) { parts[id] = prev; continue; }
+    const doc = firstDoc(await get(url(m, id, true)), id);
+    if (!Array.isArray(doc.period) || !Array.isArray(doc.value) || doc.period.length !== doc.value.length || !doc.period.length)
+      throw new BadResponse(`${id}: malformed period/value arrays`);
+    if (doc['@frequency'] !== m.frequency) throw new BadResponse(`${id}: frequency changed to ${doc['@frequency']}, manifest says ${m.frequency}`);
     parts[id] = { name: doc.series_name, indexed_at: doc.indexed_at, frequency: doc['@frequency'], period: doc.period, value: doc.value };
     downloaded = true;
     if (prev && revised(prev, parts[id])) wasRevised = true;
@@ -76,7 +88,8 @@ export function validateSnapshot(m: ManifestEntry, snap: Snapshot): void {
   if (errs.length) throw new Error(`manifest validation, ${m.key}: ${errs.join('; ')}`);
 }
 
-const thresholds = () => parse(readFileSync('manifest/stale.yaml', 'utf8')) as Record<string, number>;
+let cached: Record<string, number> | undefined;
+const thresholds = () => (cached ??= parse(readFileSync('manifest/stale.yaml', 'utf8')) as Record<string, number>);
 
 /** Stale when the last period ended more than the frequency's threshold ago. */
 export function isStale(lastPeriod: string, frequency: string, now: Date, days = thresholds()): boolean {

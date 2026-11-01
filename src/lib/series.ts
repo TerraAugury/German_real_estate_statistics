@@ -1,12 +1,17 @@
 import { readFileSync } from 'node:fs';
 import { loadManifest, type Localized } from './manifest';
 import { validateSnapshot, isStale } from './pipeline';
+import { noteTexts } from './notes';
+import { langs, type Lang } from './routes';
 
 export interface Series {
   key: string; title: Localized; unit: Localized;
   publisher: string; licence: { name: string; url: string }; dbnomicsId: string; dbnomicsUrl: string;
-  points: { year: number; value: number }[]; lastPeriod: string; derived: boolean; provisional: boolean;
+  obs: { period: string; value: number }[]; change: 'pct' | 'diff'; freq: 'M' | 'A';
+  lastPeriod: string; derived: boolean; provisional: boolean;
   stale: boolean; fetchFailed: string | null; retrievedAt: string; revisedAt: string | null;
+  /** Unprefixed Note texts per language (stale, fetch failed, revised); Link panels inherit them. */
+  notes: Record<Lang, string[]>;
 }
 
 /** Load a manifest series from its committed snapshot. Germany = sum of Länder (own calculation). */
@@ -18,16 +23,26 @@ export function loadSeries(key: string, now = new Date()): Series {
   catch { throw new Error(`${key}: no snapshot`); }
   validateSnapshot(m, snap);
   const parts = Object.values<any>(snap.parts);
-  const sums = new Map<number, number>();
+  const sums = new Map<string, number>();
   for (const p of parts) p.period.forEach((per: string, i: number) => {
-    if (p.value[i] != null && p.value[i] !== 'NA') sums.set(+per, (sums.get(+per) ?? 0) + p.value[i] * m.scale);
+    if (p.value[i] != null && p.value[i] !== 'NA') sums.set(per, (sums.get(per) ?? 0) + p.value[i] * m.scale);
   });
   // ponytail: no "Partial total" Note yet; a Land with missing years silently lowers the sum (later ticket)
-  const points = [...sums].sort((a, b) => a[0] - b[0]).map(([year, value]) => ({ year, value }));
-  return { key, title: m.title, unit: m.unit, publisher: m.publisher, licence: m.licence,
+  const obs = [...sums].sort((a, b) => (a[0] < b[0] ? -1 : 1)).map(([period, value]) => ({ period, value }));
+  const annual = m.frequency === 'annual';
+  const lastPeriod = obs.at(-1)!.period;
+  const stale = isStale(lastPeriod, m.frequency, now);
+  const s: Series = { key, title: m.title, unit: m.unit, publisher: m.publisher, licence: m.licence,
     dbnomicsId: m.lands.length > 1 ? `${m.provider}/${m.dataset}/{${m.lands[0]}–${m.lands.at(-1)}}.${m.ids[0].split('.').slice(1).join('.')}` : `${m.provider}/${m.dataset}/${m.ids[0]}`,
-    dbnomicsUrl: `https://db.nomics.world/${m.provider}/${m.dataset}`, points, lastPeriod: String(points.at(-1)!.year),
-    derived: m.lands.length > 1, provisional: m.provisional,
-    stale: isStale(String(points.at(-1)!.year), m.frequency, now), fetchFailed: snap.fetch_failed ?? null,
-    retrievedAt: snap.retrieved_at, revisedAt: snap.revised_at ?? null };
+    dbnomicsUrl: `https://db.nomics.world/${m.provider}/${m.dataset}`, obs, change: m.change, freq: annual ? 'A' : 'M',
+    lastPeriod, derived: m.lands.length > 1, provisional: m.provisional, stale, fetchFailed: snap.fetch_failed ?? null,
+    retrievedAt: snap.retrieved_at, revisedAt: snap.revised_at ?? null, notes: { en: [], de: [] } };
+  for (const l of langs) s.notes[l] = noteTexts(s, l, now);
+  return s;
+}
+
+/** Annual observations as year/value pairs. Explicit error for other frequencies, never a silent empty list. */
+export function annualPoints(s: Series): { year: number; value: number }[] {
+  if (s.freq !== 'A') throw new Error(`${s.key}: annualPoints needs an annual series, got ${s.freq}`);
+  return s.obs.map((o) => ({ year: +o.period, value: o.value }));
 }

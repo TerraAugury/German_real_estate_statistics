@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { makeGet, refresh, markFailed, validateSnapshot, isStale, revised, type Snapshot, type Part } from '../src/lib/pipeline';
+import { BadResponse, makeGet, refresh, markFailed, validateSnapshot, isStale, revised, type Snapshot, type Part } from '../src/lib/pipeline';
 import { notes } from '../src/lib/notes';
 import type { ManifestEntry } from '../src/lib/manifest';
 import type { Series } from '../src/lib/series';
@@ -38,6 +38,21 @@ describe('refresh', () => {
     expect(next.retrieved_at).toBe(old.retrieved_at);
   });
   it('revised() ignores the latest period', () => expect(revised(part('a', [1, 2]), part('b', [1, 3]))).toBe(false));
+});
+
+describe('malformed responses', () => {
+  const empty = vi.fn(async () => ({ series: { docs: [] } }));
+  it('empty docs fails loudly with BadResponse', async () => {
+    await expect(refresh(m, undefined, { get: empty, now })).rejects.toBeInstanceOf(BadResponse);
+  });
+  it('missing arrays fail loudly', async () => {
+    const get = vi.fn(async (u: string) => ({ series: { docs: [{ indexed_at: 'x', '@frequency': 'annual' }] } }));
+    await expect(refresh(m, undefined, { get, now })).rejects.toBeInstanceOf(BadResponse);
+  });
+  it('a changed frequency is rejected at fetch time', async () => {
+    const bad = { ...part('t2', [1, 2]), frequency: 'monthly' };
+    await expect(refresh(m, snap(part('t1', [1, 2])), { get: api(bad), now })).rejects.toThrow(/frequency changed/);
+  });
 });
 
 describe('failure', () => {

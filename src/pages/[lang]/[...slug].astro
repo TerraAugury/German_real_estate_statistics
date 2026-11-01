@@ -2,9 +2,10 @@
 import Base from '../../layouts/Base.astro';
 import { built, langs, slug, href, type Lang, type PageKey } from '../../lib/routes';
 import { t, fmt } from '../../lib/i18n';
-import { loadSeries } from '../../lib/series';
+import { loadSeries, annualPoints } from '../../lib/series';
 import { lineChart } from '../../lib/chart';
 import { notes } from '../../lib/notes';
+import { linkPanel, sourceLine } from '../../lib/panel';
 
 export function getStaticPaths() {
   return langs.flatMap((lang) => built.map((page) => ({ params: { lang, slug: slug(page, lang) || undefined }, props: { page } })));
@@ -12,12 +13,9 @@ export function getStaticPaths() {
 const { lang } = Astro.params as { lang: Lang };
 const { page } = Astro.props as { page: PageKey };
 const s = loadSeries('construction-permits-office');
-const last = s.points.at(-1)!;
-const esc = (x: string) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-const sourceLine = t(lang, 'source.line', {
-  publisher: esc(s.publisher), id: `<a href="${s.dbnomicsUrl}">${esc(s.dbnomicsId)}</a>`,
-  licence: `<a href="${s.licence.url}">${esc(s.licence.name)}</a>`, period: s.lastPeriod })
-  + (s.derived ? ` / ${t(lang, 'source.own')}` : '');
+const panels = page === 'construction' ? ['euribor-3m', 'cpi'].map((k) => linkPanel(s, loadSeries(k), lang)) : [];
+const last = annualPoints(s).at(-1)!;
+const source = sourceLine(s, lang);
 ---
 <Base lang={lang} page={page} title={page === 'home' ? t(lang, 'site.title') : t(lang, 'kpi.construction.title')}>
   {page === 'home' ? (
@@ -33,8 +31,9 @@ const sourceLine = t(lang, 'source.line', {
         <h2>{s.title[lang]}</h2>
         <Fragment set:html={lineChart(s, lang)} />
         {notes(s, lang).map((n) => <p class="note">{n}</p>)}
-        <figcaption set:html={sourceLine} />
+        <figcaption set:html={source} />
       </figure>
+      {panels.map((p) => <Fragment set:html={p} />)}
     </>
   )}
 </Base>
