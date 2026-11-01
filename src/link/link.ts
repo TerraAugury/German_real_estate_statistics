@@ -23,6 +23,8 @@ export type LinkResult =
       lags: Lag[];
       headline: Lag;
       strongest: Lag;
+      /** first and last period paired at lag 0 (indicator side shifted by 0) */
+      span: [string, string];
     };
 
 const DAY = 864e5;
@@ -128,7 +130,9 @@ export function computeLink(kpi: LinkSeries, indicator: LinkSeries): LinkResult 
   const strongest = passing.reduce((b, l) => (Math.abs(l.rho!) > Math.abs(b.rho!) ? l : b));
   const keys = [...new Set([...lk.keys(), ...li.keys()])].sort((a, b) => a - b);
   const overlay = keys.map((i) => ({ period: label(i, t), kpi: lk.get(i) ?? null, indicator: li.get(i) ?? null }));
-  const result: LinkResult = { shown: true, overlay, lags, headline, strongest };
+  const ts0 = [...ck.keys()].filter((i) => ci.has(i)).sort((a, b) => a - b);
+  const span: [string, string] = [label(ts0[0], t), label(ts0[ts0.length - 1], t)];
+  const result: LinkResult = { shown: true, overlay, lags, headline, strongest, span };
   assertLinkInvariants(result, t);
   return result;
 }

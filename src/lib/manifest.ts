@@ -5,13 +5,14 @@ export type Localized = { en: string; de: string };
 
 export interface ManifestEntry {
   key: string; provider: string; dataset: string;
-  ids: string[]; lands: string[]; scale: number;
+  ids: string[]; lands: string[]; scale: number; change: 'pct' | 'diff';
   publisher: string; licence: { name: string; url: string }; provisional: boolean;
   title: Localized; unit: Localized; frequency: string; expected_start: number;
 }
 
 export function loadManifest(): ManifestEntry[] {
   const entries = parse(readFileSync('manifest/series.yaml', 'utf8')) as ManifestEntry[];
+  for (const m of entries) { m.lands ??= ['']; m.scale ??= 1; m.provisional ??= false; m.change ??= 'pct'; }
   for (const m of entries) for (const l of ['en', 'de'] as const)
     if (!m.title?.[l] || !m.unit?.[l]) throw new Error(`manifest: ${m.key} needs en and de title and unit`);
   return entries;

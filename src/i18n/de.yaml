@@ -8,3 +8,22 @@ kpi.construction.title: Bautätigkeit (Genehmigungen, Fertigstellungen)
 source.line: "Quelle: {publisher}, DBnomics-Reihe {id} / Lizenz: {licence} / Daten bis {period}"
 source.own: eigene Berechnung
 footer.text: Betrieben von Terra Augury Ltd.
+note.prefix: Hinweis
+note.stale: "Letzte Beobachtung: {period}. Die Quelle hat innerhalb des erwarteten Zeitraums keine neueren Daten veröffentlicht; die Reihe ist möglicherweise nicht aktuell."
+note.fetch_failed: "Aktualisierung über DBnomics am {date} fehlgeschlagen; dargestellt sind die am {snapshot} abgerufenen Daten."
+note.revised: "Die Quelle hat frühere Werte revidiert (festgestellt am {date}). Dargestellt ist die zuletzt veröffentlichte Fassung."
+link.title: "{kpi} und {indicator}"
+link.scope: "Nationaler Indikator gegen {geography}"
+geo.germany: Deutschland
+link.sentence: "Dargestellt ist, wie sich zwei Reihen im Zeitraum {period} (n = {n}) gemeinsam entwickelt haben. Das belegt keine Ursache-Wirkungs-Beziehung und ist keine Prognose."
+link.period: "{from} bis {to}"
+link.headline: "Rangkorrelation (Spearman) der Veränderungen bei Zeitversatz 0: {rho} (n = {n})"
+link.not_shown: "Verknüpfung nicht angezeigt: zu wenige Beobachtungen (n = {n})"
+link.not_shown.constant: "Verknüpfung nicht angezeigt: eine Reihe hat sich im Zeitraum nicht verändert (n = {n})"
+link.strongest: "Stärkster von {n} getesteten Zeitversätzen; nach Ansicht der Daten ausgewählt, daher wahrscheinlich überschätzt."
+link.strongest.mark: stärkster
+link.small_sample: "Auf nur {n} Jahresbeobachtungen beruhend. Bei so kleiner Stichprobe kann das Muster zufällig sein."
+link.lag.label: "Zeitversatz in Jahren (positiv: Indikator lief voraus, negativ: lief nach)"
+link.rho.label: Spearman-Rho
+link.overlay.label: "Niveau: {title}"
+link.lags.label: "Zeitversatzprofil von {kpi} und {indicator}"
