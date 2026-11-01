@@ -1,6 +1,5 @@
 site.title: Statistiken zum deutschen Gewerbeimmobilienmarkt
 nav.home: Startseite
-nav.construction: Bautätigkeit
 lang.switch: English
 home.purpose: Offene Statistiken zum deutschen Gewerbeimmobilienmarkt; jede Grafik nennt Quelle und Lizenz.
 home.card.link: "{kpi}: zuletzt {value} ({period})"
@@ -40,3 +39,44 @@ sources.col.publisher: Herausgeber
 sources.col.id: DBnomics-Reihen-ID
 sources.col.licence: Lizenz
 sources.col.attribution: Quellenangabe
+nav.kpis: Kennzahlen
+kpi.price-index.title: Gewerbeimmobilien-Preisindex
+kpi.rent-index.title: Mietindex (Neuvermietung)
+kpi.initial-yield.title: Anfangsrendite
+kpi.office-vacancy.title: Büroleerstandsquote
+kpi.transaction-volume.title: Transaktionsvolumenindex
+kpi.not_available.licence: "Nicht verfügbar: Lizenz für die öffentliche Wiedergabe nicht bestätigt"
+select.segment: Segment
+select.geo: Gebiet
+select.freq: Häufigkeit
+select.city_classes: Städtegruppen
+select.laender: Länder
+segment.office: Büro
+segment.retail: Einzelhandel
+segment.logistics: Logistik
+segment.commercial-overall: Gewerbe gesamt
+freq.annual: Jährlich
+freq.quarterly: Vierteljährlich
+geo.supra-regional: Städte mit überregionaler Bedeutung
+geo.excl-supra-regional: Deutschland ohne Städte mit überregionaler Bedeutung
+geo.7-cities: 7 Großstädte (A-Städte)
+geo.120-towns: 120 Städte
+geo.127-towns: 127 Städte
+geo.127-districts: 127 Kreise
+geo.de-sh: Schleswig-Holstein
+geo.de-hh: Hamburg
+geo.de-ni: Niedersachsen
+geo.de-hb: Bremen
+geo.de-nw: Nordrhein-Westfalen
+geo.de-he: Hessen
+geo.de-rp: Rheinland-Pfalz
+geo.de-bw: Baden-Württemberg
+geo.de-by: Bayern
+geo.de-sl: Saarland
+geo.de-be: Berlin
+geo.de-bb: Brandenburg
+geo.de-mv: Mecklenburg-Vorpommern
+geo.de-sn: Sachsen
+geo.de-st: Sachsen-Anhalt
+geo.de-th: Thüringen
+note.partial_total: "Deutschland-Summe aus den Ländern mit Daten; für {laender} liegt für {year} kein Wert vor."

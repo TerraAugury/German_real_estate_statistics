@@ -1,4 +1,5 @@
 import { t } from './i18n';
+import { landName } from './kpis';
 import type { Lang } from './routes';
 import type { Series } from './series';
 
@@ -15,6 +16,22 @@ export function noteTexts(s: Omit<Series, 'notes'>, lang: Lang, now = new Date()
   return out;
 }
 
-/** Prefixed Notes for a series page. */
-export const notes = (s: Series, lang: Lang, now = new Date()): string[] =>
-  noteTexts(s, lang, now).map((n) => `${t(lang, 'note.prefix')}: ${n}`);
+const prefix = (lang: Lang, ns: string[]) => ns.map((n) => `${t(lang, 'note.prefix')}: ${n}`);
+
+/** Prefixed Notes for Home cards and Segment charts: stale, fetch failed, revised. */
+export const notes = (s: Series, lang: Lang, now = new Date()): string[] => prefix(lang, noteTexts(s, lang, now));
+
+/**
+ * Prefixed Notes for a KPI page chart, all of them in the fixed order: scope, short history, partial total, then `notes`.
+ * `geography` is the selector label; English lowercases its first letter mid-sentence, German nouns keep theirs.
+ */
+export function kpiNotes(s: Series, lang: Lang, geography: string, now = new Date()): string[] {
+  const cls = lang === 'en' ? geography.charAt(0).toLowerCase() + geography.slice(1) : geography;
+  const out = s.scope.map((k) => t(lang, `note.scope.${k}`, k === 'city_class' ? { class: cls } : {}));
+  if (s.shortWindow) {
+    const short = t(lang, 'note.short_window', { start: s.obs[0].period, end: s.lastPeriod });
+    out.push(typeof s.shortWindow === 'string' ? `${short} ${t(lang, s.shortWindow)}` : short);
+  }
+  for (const p of s.partial) out.push(t(lang, 'note.partial_total', { laender: p.laender.map((l) => landName(lang, l)).join(', '), year: p.period }));
+  return prefix(lang, [...out, ...noteTexts(s, lang, now)]);
+}

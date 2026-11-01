@@ -2,7 +2,7 @@ import * as Plot from '@observablehq/plot';
 import { JSDOM } from 'jsdom';
 import { fmt } from './i18n';
 import type { Lang } from './routes';
-import { annualPoints, type Series } from './series';
+import type { Series } from './series';
 
 /** Render a Plot to an SVG string with an accessible label (shared by all charts). */
 function render(options: Plot.PlotOptions, label: string): string {
@@ -12,18 +12,19 @@ function render(options: Plot.PlotOptions, label: string): string {
   return svg.outerHTML;
 }
 
-/** Server-rendered SVG line chart, formatted with the page locale. */
+const x = (p: string) => (p.includes('Q') ? +p.slice(0, 4) + (+p[6] - 1) / 4 : +p); // "2020-Q3" -> 2020.5
+
+/** Server-rendered SVG line chart of an annual or quarterly series, formatted with the page locale. */
 export function lineChart(s: Series, lang: Lang): string {
-  const points = annualPoints(s);
+  if (s.freq === 'M') throw new Error(`${s.key}: lineChart plots annual or quarterly series, got monthly`);
+  const points = s.obs.map((o) => ({ ...o, x: x(o.period) }));
   return render({
     width: 720, height: 320, marginLeft: 50,
-    x: { tickFormat: (d: number) => String(d), label: null },
+    x: { tickFormat: (d: number) => (Number.isInteger(d) ? String(d) : ''), label: null },
     y: { grid: true, label: s.unit[lang], tickFormat: (d: number) => fmt(lang, d) },
-    marks: [Plot.lineY(points, { x: 'year', y: 'value' }), Plot.dot(points, { x: 'year', y: 'value', title: (d) => `${d.year}: ${fmt(lang, d.value, { maximumFractionDigits: 2 })}` })],
+    marks: [Plot.lineY(points, { x: 'x', y: 'value' }), Plot.dot(points, { x: 'x', y: 'value', title: (d) => `${d.period}: ${fmt(lang, d.value, { maximumFractionDigits: 2 })}` })],
   }, s.title[lang]);
 }
-
-const x = (p: string) => (p.includes('Q') ? +p.slice(0, 4) + (+p[6] - 1) / 4 : +p); // "2020-Q3" -> 2020.5
 
 /** Levels of one series from a Link overlay; `unit` labels the y axis. */
 export function levelChart(pts: { period: string; value: number }[], unit: string, title: string, lang: Lang): string {

@@ -1,6 +1,5 @@
 site.title: German commercial real estate statistics
 nav.home: Home
-nav.construction: Construction
 lang.switch: Deutsch
 home.purpose: Open statistics on German commercial real estate, with every chart naming its source and licence.
 home.card.link: "{kpi}: latest {value} ({period})"
@@ -40,3 +39,44 @@ sources.col.publisher: Publisher
 sources.col.id: DBnomics series id
 sources.col.licence: Licence
 sources.col.attribution: Attribution
+nav.kpis: KPIs
+kpi.price-index.title: Commercial property price index
+kpi.rent-index.title: Rent index (new lettings)
+kpi.initial-yield.title: Initial yield
+kpi.office-vacancy.title: Office vacancy rate
+kpi.transaction-volume.title: Transaction volume index
+kpi.not_available.licence: "Not available: licence for public redisplay not confirmed"
+select.segment: Segment
+select.geo: Geography
+select.freq: Frequency
+select.city_classes: City classes
+select.laender: Länder
+segment.office: Office
+segment.retail: Retail
+segment.logistics: Logistics
+segment.commercial-overall: Commercial overall
+freq.annual: Annual
+freq.quarterly: Quarterly
+geo.supra-regional: Cities of supra-regional importance
+geo.excl-supra-regional: Germany excluding cities of supra-regional importance
+geo.7-cities: 7 major cities (A-Städte)
+geo.120-towns: 120 towns and cities
+geo.127-towns: 127 towns and cities
+geo.127-districts: 127 administrative districts
+geo.de-sh: Schleswig-Holstein
+geo.de-hh: Hamburg
+geo.de-ni: Lower Saxony
+geo.de-hb: Bremen
+geo.de-nw: North Rhine-Westphalia
+geo.de-he: Hesse
+geo.de-rp: Rhineland-Palatinate
+geo.de-bw: Baden-Württemberg
+geo.de-by: Bavaria
+geo.de-sl: Saarland
+geo.de-be: Berlin
+geo.de-bb: Brandenburg
+geo.de-mv: Mecklenburg-Western Pomerania
+geo.de-sn: Saxony
+geo.de-st: Saxony-Anhalt
+geo.de-th: Thuringia
+note.partial_total: "Germany total is the sum of the Länder with data; no value for {laender} in {year}."
