@@ -1,0 +1,503 @@
+{
+ "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "fetch_failed": null,
+ "revised_at": null,
+ "parts": {
+  "01.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Schleswig-Holstein – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    114,
+    125,
+    100,
+    87,
+    185,
+    135,
+    108,
+    106,
+    105,
+    45,
+    62
+   ]
+  },
+  "02.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Hamburg – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    18,
+    26,
+    57,
+    116,
+    53,
+    2,
+    25,
+    24,
+    44,
+    6,
+    6
+   ]
+  },
+  "03.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Niedersachsen – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    295,
+    301,
+    259,
+    286,
+    191,
+    250,
+    243,
+    265,
+    187,
+    128,
+    122
+   ]
+  },
+  "04.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Bremen – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    9,
+    31,
+    23,
+    1,
+    11,
+    5,
+    14,
+    6,
+    20,
+    75,
+    10
+   ]
+  },
+  "05.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Nordrhein-Westfalen – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    722,
+    665,
+    374,
+    384,
+    426,
+    298,
+    367,
+    286,
+    185,
+    277,
+    309
+   ]
+  },
+  "06.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Hessen – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    178,
+    482,
+    198,
+    192,
+    217,
+    197,
+    133,
+    110,
+    135,
+    71,
+    88
+   ]
+  },
+  "07.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Rheinland-Pfalz – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    126,
+    162,
+    111,
+    136,
+    134,
+    80,
+    119,
+    90,
+    68,
+    61,
+    152
+   ]
+  },
+  "08.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Baden-Württemberg – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    330,
+    303,
+    410,
+    344,
+    338,
+    296,
+    372,
+    306,
+    178,
+    171,
+    159
+   ]
+  },
+  "09.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Bayern – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    632,
+    713,
+    486,
+    578,
+    511,
+    426,
+    395,
+    369,
+    316,
+    263,
+    410
+   ]
+  },
+  "10.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Saarland – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    15,
+    26,
+    42,
+    61,
+    88,
+    36,
+    16,
+    43,
+    12,
+    3,
+    7
+   ]
+  },
+  "11.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Berlin – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    80,
+    278,
+    110,
+    142,
+    64,
+    27,
+    17,
+    41,
+    25,
+    35,
+    14
+   ]
+  },
+  "12.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Brandenburg – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    99,
+    40,
+    85,
+    74,
+    77,
+    63,
+    95,
+    63,
+    106,
+    46,
+    63
+   ]
+  },
+  "13.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Mecklenburg-Vorpommern – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    43,
+    32,
+    57,
+    61,
+    67,
+    39,
+    349,
+    80,
+    63,
+    26,
+    29
+   ]
+  },
+  "14.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Sachsen – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    129,
+    71,
+    114,
+    86,
+    126,
+    77,
+    84,
+    157,
+    82,
+    77,
+    122
+   ]
+  },
+  "15.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Sachsen-Anhalt – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    29,
+    92,
+    47,
+    58,
+    69,
+    58,
+    32,
+    58,
+    36,
+    41,
+    39
+   ]
+  },
+  "16.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
+   "name": "Thüringen – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
+   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "frequency": "annual",
+   "period": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    55,
+    91,
+    48,
+    78,
+    69,
+    43,
+    34,
+    38,
+    62,
+    23,
+    39
+   ]
+  }
+ }
+}

@@ -8,7 +8,7 @@ export const UA = 'german-cre-statistics (build; contact oelamine@terraaugury.co
 
 export interface Part { name: string; indexed_at: string; frequency: string; period: string[]; value: (number | string | null)[] }
 export interface Snapshot { retrieved_at: string; fetch_failed: string | null; revised_at?: string | null; parts: Record<string, Part> }
-export interface Deps { get: (url: string) => Promise<any>; now: Date }
+export interface Deps { get: (url: string) => Promise<any>; now: Date; warn?: (msg: string) => void }
 
 /** GET JSON with retry and exponential backoff. */
 export function makeGet(fetchFn: typeof fetch = fetch, sleep = (ms: number) => new Promise((r) => setTimeout(r, ms)), tries = 3) {
@@ -49,7 +49,7 @@ export function revised(old: Part, next: Part): boolean {
  * Refresh one series. indexed_at is checked first; observations are downloaded only for parts where it moved.
  * Returns the new snapshot, or null when nothing changed. Throws on any fetch error, and BadResponse on a malformed response or changed frequency.
  */
-export async function refresh(m: ManifestEntry, old: Snapshot | undefined, { get, now }: Deps): Promise<Snapshot | null> {
+export async function refresh(m: ManifestEntry, old: Snapshot | undefined, { get, now, warn = console.warn }: Deps): Promise<Snapshot | null> {
   const parts: Record<string, Part> = {};
   let downloaded = false, wasRevised = false;
   for (const id of partIds(m)) {
@@ -62,6 +62,7 @@ export async function refresh(m: ManifestEntry, old: Snapshot | undefined, { get
     if (doc['@frequency'] !== m.frequency) throw new BadResponse(`${id}: frequency changed to ${doc['@frequency']}, manifest says ${m.frequency}`);
     parts[id] = { name: doc.series_name, indexed_at: doc.indexed_at, frequency: doc['@frequency'], period: doc.period, value: doc.value };
     downloaded = true;
+    if (prev && prev.name !== doc.series_name) warn(`${id}: DBnomics name changed from "${prev.name}" to "${doc.series_name}"; re-check manifest titles`);
     if (prev && revised(prev, parts[id])) wasRevised = true;
   }
   if (!downloaded && old && !old.fetch_failed) return null;

@@ -1,0 +1,52 @@
+{
+ "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "fetch_failed": null,
+ "revised_at": null,
+ "parts": {
+  "A.B30.N.G800.R0800.A": {
+   "name": "Real Economic Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / Association of German Pfandbrief Banks (Verband deutscher Pfandbriefbanken) / commercial properties - transaction volume index: euro values / Germany total / unadjusted figures",
+   "indexed_at": "2026-06-06T01:53:40.451Z",
+   "frequency": "annual",
+   "period": [
+    "2007",
+    "2008",
+    "2009",
+    "2010",
+    "2011",
+    "2012",
+    "2013",
+    "2014",
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024"
+   ],
+   "value": [
+    231.5,
+    107.6,
+    74.8,
+    100,
+    130.3,
+    128.6,
+    136.4,
+    162.4,
+    196.7,
+    178.8,
+    203.2,
+    208.5,
+    251.5,
+    209.2,
+    230.5,
+    180.4,
+    107.8,
+    114.3
+   ]
+  }
+ }
+}

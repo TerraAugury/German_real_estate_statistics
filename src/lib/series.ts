@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { loadManifest, type Localized } from './manifest';
+import { loadManifest, dbnomicsId, type Localized } from './manifest';
 import { validateSnapshot, isStale } from './pipeline';
 import { noteTexts } from './notes';
 import { langs, type Lang } from './routes';
@@ -33,7 +33,7 @@ export function loadSeries(key: string, now = new Date()): Series {
   const lastPeriod = obs.at(-1)!.period;
   const stale = isStale(lastPeriod, m.frequency, now);
   const s: Series = { key, title: m.title, unit: m.unit, publisher: m.publisher, licence: m.licence,
-    dbnomicsId: m.lands.length > 1 ? `${m.provider}/${m.dataset}/{${m.lands[0]}–${m.lands.at(-1)}}.${m.ids[0].split('.').slice(1).join('.')}` : `${m.provider}/${m.dataset}/${m.ids[0]}`,
+    dbnomicsId: dbnomicsId(m),
     dbnomicsUrl: `https://db.nomics.world/${m.provider}/${m.dataset}`, obs, change: m.change, freq: annual ? 'A' : 'M',
     lastPeriod, derived: m.lands.length > 1, provisional: m.provisional, stale, fetchFailed: snap.fetch_failed ?? null,
     retrievedAt: snap.retrieved_at, revisedAt: snap.revised_at ?? null, notes: { en: [], de: [] } };
