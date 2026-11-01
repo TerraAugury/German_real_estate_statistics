@@ -18,6 +18,11 @@ describe('Link pairs per view (spec sections 5, 6)', () => {
       'construction-price-office', 'oecd-confidence-construction']);
     expect(ind('retail').slice(6)).toEqual(['construction-price-commercial', 'oecd-confidence-retail']);
   });
+  it('Construction: construction prices follow the KPI series’ building type, not the Segment', () => {
+    const prices = (seg: string) => viewLinks(view('construction', seg), preview)[6].indicator;
+    expect(prices('commercial-overall')).toBe('construction-price-office'); // its first series is office permits
+    expect(prices('logistics')).toBe('construction-price-commercial');
+  });
   it('the KPI side is the view’s first series, Land included', () => {
     expect(viewLinks(view('construction', 'office', 'de-by'), preview)[0]).toMatchObject({ kpi: 'construction-permits-office', land: '09' });
   });

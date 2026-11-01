@@ -22,7 +22,7 @@ Jede Verknüpfung hat drei Teile:
 4. Verbraucherpreisindex (Destatis), monatlich.
 5. Reales Bruttoinlandsprodukt (Deutsche Bundesbank), vierteljährlich.
 6. Registrierte Arbeitslosenquote (Deutsche Bundesbank), monatlich.
-7. Baupreisindex (Destatis), vierteljährlich: Bürogebäude für Büro-Ansichten, gewerbliche Betriebsgebäude für alle übrigen.
+7. Baupreisindex (Destatis), vierteljährlich: Bürogebäude für Büro-Ansichten und für die Bautätigkeit bei Bürogebäuden, gewerbliche Betriebsgebäude für alle übrigen.
 8. OECD-Geschäftsklima (OECD), monatlich: Einzelhandel für Einzelhandels-Ansichten, Bau für alle übrigen. Diese Reihen sind nicht saisonbereinigt und Prozentsalden, daher sind ihre Veränderungen Differenzen in Punkten.
 
 ## So lesen Sie diese Zahlen
@@ -31,4 +31,4 @@ Jede Verknüpfung hat drei Teile:
 - Deutschland-Summen der Bautätigkeit, Einheitenumrechnungen, Veränderungen gegenüber dem Vorjahr und Verknüpfungen sind eigene Berechnung und als solche gekennzeichnet.
 - Die Seite zeigt nur die zuletzt veröffentlichte Fassung jeder Reihe und führt keine Revisionshistorie.
 - Die Gewerbeimmobilienreihen der Deutschen Bundesbank beruhen auf Daten Dritter (bulwiengesa, vdp).
-- Herausgeber, Reihen-ID und Lizenz jeder Reihe stehen unter Quellen und Lizenzen.
+- Herausgeber, Reihen-ID und Lizenz jeder Reihe stehen unter [Quellen und Lizenzen](/de/quellen).

@@ -9,22 +9,26 @@ export const INDICATORS = ['bund-yield-10y', 'euribor-3m', 'loan-rate-nfc', 'cpi
   'construction-price', 'oecd-confidence'] as const;
 export type Indicator = (typeof INDICATORS)[number];
 
-/** Construction prices and OECD confidence have two series each; the view's Segment picks one. */
-const seriesOf = (name: Indicator, segment: Segment) =>
-  name === 'construction-price' ? (segment === 'office' ? 'construction-price-office' : 'construction-price-commercial')
+/**
+ * Construction prices and OECD confidence have two series each; the view's Segment picks one. A Construction KPI series
+ * picks construction prices by its own building type, since Commercial overall leads with office buildings.
+ */
+const seriesOf = (name: Indicator, segment: Segment, kpi: string) =>
+  name === 'construction-price'
+    ? ((kpi.startsWith('construction-') ? kpi.endsWith('-office') : segment === 'office') ? 'construction-price-office' : 'construction-price-commercial')
     : name === 'oecd-confidence' ? (segment === 'retail' ? 'oecd-confidence-retail' : 'oecd-confidence-construction')
       : name;
 
 /** One view's Link pairs: its first series against each indicator, minus pairs the provisional gate drops. */
 export function viewLinks(v: View, live: ManifestEntry[] = loadManifest()) {
   const { key, land } = v.series[0];
-  return publicLinks(INDICATORS.map((name) => ({ name, kpi: key, land, indicator: seriesOf(name, v.segment) })), live);
+  return publicLinks(INDICATORS.map((name) => ({ name, kpi: key, land, indicator: seriesOf(name, v.segment, key) })), live);
 }
 
 const results = new Map<string, LinkResult>();
 /** The Link of two series, computed once per build. */
 export function linkResult(kpi: Series, ind: Series): LinkResult {
-  const id = `${kpi.dbnomicsId}|${ind.dbnomicsId}`;
+  const id = `${kpi.key}@${kpi.dbnomicsId}|${ind.key}`; // dbnomicsId names the Land
   if (!results.has(id)) results.set(id, computeLink(kpi, ind));
   return results.get(id)!;
 }

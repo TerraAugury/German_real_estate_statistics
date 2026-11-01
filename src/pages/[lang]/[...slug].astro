@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { built, langs, slug, href, type Lang, type BuiltPage } from '../../lib/routes';
 import { t, fmt, period } from '../../lib/i18n';
-import { getSeries } from '../../lib/series';
+import { getSeries, type Series } from '../../lib/series';
 import { lineChart } from '../../lib/chart';
 import { kpiNotes } from '../../lib/notes';
 import { loadManifest } from '../../lib/manifest';
@@ -52,6 +52,9 @@ const segment = page.startsWith('segment-') ? (page.slice('segment-'.length) as 
 const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
   : t(lang, `${page === 'home' ? 'site' : page}.title`);
 // Home cards and Segment pages show the first series of a view as a compact chart.
+// Latest value with its unit; percentages through Intl (spec section 10: EN "3.2%", DE "3,2 %").
+const latest = (x: Series) => x.unit[lang] === '%' ? fmt(lang, x.obs.at(-1)!.value / 100, { style: 'percent', maximumFractionDigits: 2 })
+  : `${fmt(lang, x.obs.at(-1)!.value, { maximumFractionDigits: 2 })} ${x.unit[lang]}`;
 const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
 ---
 <Base lang={lang} page={page} title={title}>
@@ -69,7 +72,7 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
               <h2><a href={v ? viewHref(k, v, lang) : href(k.page, lang)}>{t(lang, k.title)}</a></h2>
               {x ? (
                 <figure>
-                  <p>{t(lang, 'home.card.latest', { value: fmt(lang, x.obs.at(-1)!.value, { maximumFractionDigits: 2 }), period: period(lang, x.lastPeriod) })}</p>
+                  <p>{t(lang, 'home.card.latest', { value: latest(x), period: period(lang, x.lastPeriod) })}</p>
                   <h3>{x.title[lang]}</h3>
                   <Fragment set:html={compactChart(x, lang)} />
                 </figure>
@@ -102,7 +105,7 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
     <>
       <h1>{title}</h1>
       <p>{t(lang, 'availability.intro')}</p>
-      <table>
+      <div class="scroll"><table>
         <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{SEGMENTS.map((g) => <th scope="col">{t(lang, `segment.${g}`)}</th>)}</tr></thead>
         <tbody>{KPIS.map((k) => (
           <tr><th scope="row"><a href={href(k.page, lang)}>{t(lang, k.title)}</a></th>{SEGMENTS.map((g) => {
@@ -114,13 +117,13 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
             return <td><a href={viewHref(k, c.view, lang)}>{t(lang, 'availability.available', { geo })}</a></td>;
           })}</tr>
         ))}</tbody>
-      </table>
+      </table></div>
     </>
   ) : page === 'links' ? (
     <>
       <h1>{title}</h1>
       <p>{t(lang, 'links.intro')}</p>
-      <table>
+      <div class="scroll"><table>
         <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{columns.map((n) => <th scope="col">{t(lang, `indicator.${n}`)}</th>)}</tr></thead>
         <tbody>{overview.map(({ k, v, cells }) => (
           <tr>
@@ -134,7 +137,7 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
             })}
           </tr>
         ))}</tbody>
-      </table>
+      </table></div>
     </>
   ) : page === 'methodology' ? (
     <>
