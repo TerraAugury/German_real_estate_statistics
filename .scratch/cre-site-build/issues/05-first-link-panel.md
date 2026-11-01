@@ -8,8 +8,8 @@
 
 Spec: `.scratch/cre-site/spec.md`, Sections 6 and 9.
 
-- [ ] Overlay of levels with both series named; lag bar chart with the strongest lag marked and the "strongest of N lags tested" note
-- [ ] Co-movement sentence (EN and DE, exact text) under the chart, with period and n filled in
-- [ ] Small sample Note shown for annual Links with n below 20 at lag 0
-- [ ] "Link not shown: too few observations (n = ...)" shown, never hidden, when the module says so
-- [ ] Panel inherits the Notes of both series, each prefixed with the series title
+- [x] Overlay of levels with both series named; lag bar chart with the strongest lag marked and the "strongest of N lags tested" note
+- [x] Co-movement sentence (EN and DE, exact text) under the chart, with period and n filled in
+- [x] Small sample Note shown for annual Links with n below 20 at lag 0
+- [x] "Link not shown: too few observations (n = ...)" shown, never hidden, when the module says so
+- [x] Panel inherits the Notes of both series, each prefixed with the series title

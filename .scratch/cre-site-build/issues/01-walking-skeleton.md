@@ -8,9 +8,9 @@
 
 Spec: `.scratch/cre-site/spec.md`, Sections 7, 8, 10 and 11.
 
-- [ ] Site builds as a static site with `/en/` and `/de/` page sets that match one-to-one; `/` redirects by browser language and stores nothing
-- [ ] Route table from the spec is the only source of slugs; a missing entry fails the build
-- [ ] EN and DE interface strings with identical key sets; build fails on a missing key, empty value or placeholder mismatch
-- [ ] Formatting goes through `Intl` with the page locale (DE `1.234,5`, EN `1,234.5`)
-- [ ] One series fetched from DBnomics into a committed snapshot and charted with the source line (publisher, series id, licence, data-to period; "own calculation" where derived)
-- [ ] No request to any third-party host; fonts and scripts self-hosted
+- [x] Site builds as a static site with `/en/` and `/de/` page sets that match one-to-one; `/` redirects by browser language and stores nothing
+- [x] Route table from the spec is the only source of slugs; a missing entry fails the build
+- [x] EN and DE interface strings with identical key sets; build fails on a missing key, empty value or placeholder mismatch
+- [x] Formatting goes through `Intl` with the page locale (DE `1.234,5`, EN `1,234.5`)
+- [x] One series fetched from DBnomics into a committed snapshot and charted with the source line (publisher, series id, licence, data-to period; "own calculation" where derived)
+- [x] No request to any third-party host; fonts and scripts self-hosted
