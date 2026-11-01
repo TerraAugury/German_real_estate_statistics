@@ -1,10 +1,10 @@
 // Fetch every manifest series from DBnomics into data/snapshots/. On fetch failure, reuse the last snapshot.
-import { parse } from 'yaml';
+import { loadManifest } from '../src/lib/manifest';
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 
 const API = 'https://api.db.nomics.world/v22/series';
 const UA = 'german-cre-statistics (build; contact oelamine@terraaugury.com)';
-const manifest = parse(readFileSync('manifest/series.yaml', 'utf8')) as any[];
+const manifest = loadManifest();
 mkdirSync('data/snapshots', { recursive: true });
 
 async function get(url: string) {

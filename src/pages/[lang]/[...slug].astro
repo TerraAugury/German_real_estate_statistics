@@ -1,18 +1,21 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { routes, langs, slug, href, type PageKey } from '../../lib/routes';
+import { built, langs, slug, href, type Lang, type PageKey } from '../../lib/routes';
 import { t, fmt } from '../../lib/i18n';
 import { loadSeries } from '../../lib/series';
 import { lineChart } from '../../lib/chart';
 
 export function getStaticPaths() {
-  return langs.flatMap((lang) => (Object.keys(routes) as PageKey[]).map((page) => ({ params: { lang, slug: slug(page, lang) || undefined }, props: { page } })));
+  return langs.flatMap((lang) => built.map((page) => ({ params: { lang, slug: slug(page, lang) || undefined }, props: { page } })));
 }
-const { lang } = Astro.params as { lang: 'en' | 'de' };
+const { lang } = Astro.params as { lang: Lang };
 const { page } = Astro.props as { page: PageKey };
 const s = loadSeries('construction-permits-office');
 const last = s.points.at(-1)!;
-const sourceLine = t(lang, 'source.line', { publisher: s.publisher, id: s.dbnomicsId, licence: s.licence.name, period: s.lastPeriod })
+const esc = (x: string) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+const sourceLine = t(lang, 'source.line', {
+  publisher: esc(s.publisher), id: `<a href="${s.dbnomicsUrl}">${esc(s.dbnomicsId)}</a>`,
+  licence: `<a href="${s.licence.url}">${esc(s.licence.name)}</a>`, period: s.lastPeriod })
   + (s.derived ? ` / ${t(lang, 'source.own')}` : '');
 ---
 <Base lang={lang} page={page} title={page === 'home' ? t(lang, 'site.title') : t(lang, 'kpi.construction.title')}>
@@ -20,7 +23,7 @@ const sourceLine = t(lang, 'source.line', { publisher: s.publisher, id: s.dbnomi
     <>
       <h1>{t(lang, 'site.title')}</h1>
       <p>{t(lang, 'home.purpose')}</p>
-      <p><a href={href('construction', lang)}>{t(lang, 'home.card.link', { kpi: s.title[lang], period: `${fmt(lang, last.value, { maximumFractionDigits: 2 })} (${last.year})` })}</a></p>
+      <p><a href={href('construction', lang)}>{t(lang, 'home.card.link', { kpi: s.title[lang], value: fmt(lang, last.value, { maximumFractionDigits: 2 }), period: String(last.year) })}</a></p>
     </>
   ) : (
     <>
@@ -28,7 +31,7 @@ const sourceLine = t(lang, 'source.line', { publisher: s.publisher, id: s.dbnomi
       <figure>
         <h2>{s.title[lang]}</h2>
         <Fragment set:html={lineChart(s, lang)} />
-        <figcaption>{sourceLine}</figcaption>
+        <figcaption set:html={sourceLine} />
       </figure>
     </>
   )}

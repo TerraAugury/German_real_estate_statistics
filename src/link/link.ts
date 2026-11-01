@@ -5,7 +5,7 @@ export const MIN = { Q: 40, A: 10 } as const;
 const MAX_LAG = { Q: 8, A: 3 } as const;
 const MIN_LAGS = 3; // lags (lag 0 included) that must pass for a Link to show
 
-export type Series = {
+export type LinkSeries = {
   /** D = event-dated (forward-filled to daily before averaging) */
   freq: 'D' | 'M' | 'Q' | 'A';
   /** pct = year-on-year percent (indices, money); diff = year-on-year points (rates, balances) */
@@ -16,7 +16,7 @@ export type Series = {
 type Target = 'Q' | 'A';
 export type Lag = { lag: number; n: number; rho: number | null };
 export type LinkResult =
-  | { shown: false; n0: number }
+  | { shown: false; n0: number; reason: 'too_few' | 'constant' }
   | {
       shown: true;
       overlay: { period: string; kpi: number | null; indicator: number | null }[];
@@ -40,7 +40,7 @@ const daysIn = (i: number, t: Target) =>
     : (Date.UTC(Math.floor(i / 4), (i % 4) * 3 + 3, 1) - Date.UTC(Math.floor(i / 4), (i % 4) * 3, 1)) / DAY;
 
 /** Period means at the target frequency; incomplete periods dropped, gaps stay gaps. */
-function levels(s: Series, t: Target): Map<number, number> {
+function levels(s: LinkSeries, t: Target): Map<number, number> {
   const pts = s.obs
     .filter((o): o is { period: string; value: number } => o.value !== null)
     .sort((a, b) => (a.period < b.period ? -1 : 1));
@@ -72,7 +72,7 @@ function levels(s: Series, t: Target): Map<number, number> {
   return out;
 }
 
-function changes(lv: Map<number, number>, t: Target, rule: Series['change']) {
+function changes(lv: Map<number, number>, t: Target, rule: LinkSeries['change']) {
   const step = t === 'A' ? 1 : 4;
   const out = new Map<number, number>();
   for (const [i, v] of lv) {
@@ -109,7 +109,7 @@ function spearman(x: number[], y: number[]): number | null {
 }
 
 /** Positive lag = the indicator moved earlier than the KPI. */
-export function computeLink(kpi: Series, indicator: Series): LinkResult {
+export function computeLink(kpi: LinkSeries, indicator: LinkSeries): LinkResult {
   const t: Target = kpi.freq === 'A' ? 'A' : 'Q';
   const [lk, li] = [levels(kpi, t), levels(indicator, t)];
   const [ck, ci] = [changes(lk, t, kpi.change), changes(li, t, indicator.change)];
@@ -121,15 +121,26 @@ export function computeLink(kpi: Series, indicator: Series): LinkResult {
   }
   const passing = lags.filter((l) => l.rho !== null);
   const headline = lags.find((l) => l.lag === 0)!;
-  if (headline.rho === null || passing.length < MIN_LAGS) return { shown: false, n0: headline.n };
-
-  // build invariants
-  for (const l of passing) {
-    if (Math.abs(l.rho!) > 1 + 1e-9) throw new Error(`|rho| > 1 at lag ${l.lag}`);
-    if (l.n < MIN[t]) throw new Error(`n below minimum at lag ${l.lag}`);
-  }
+  if (headline.n < MIN[t]) return { shown: false, n0: headline.n, reason: 'too_few' };
+  // enough pairs at lag 0 but one side never changes: no correlation to show
+  if (headline.rho === null) return { shown: false, n0: headline.n, reason: 'constant' };
+  if (passing.length < MIN_LAGS) return { shown: false, n0: headline.n, reason: 'too_few' };
   const strongest = passing.reduce((b, l) => (Math.abs(l.rho!) > Math.abs(b.rho!) ? l : b));
   const keys = [...new Set([...lk.keys(), ...li.keys()])].sort((a, b) => a - b);
   const overlay = keys.map((i) => ({ period: label(i, t), kpi: lk.get(i) ?? null, indicator: li.get(i) ?? null }));
-  return { shown: true, overlay, lags, headline, strongest };
+  const result: LinkResult = { shown: true, overlay, lags, headline, strongest };
+  assertLinkInvariants(result, t);
+  return result;
+}
+
+/** Build-time invariants (spec section 11); the build calls this on every result it keeps. */
+export function assertLinkInvariants(r: LinkResult, t: Target): void {
+  if (!r.shown) return;
+  const shown = r.lags.filter((l) => l.rho !== null);
+  if (r.headline.rho === null || r.headline.lag !== 0) throw new Error('Link shown without a passing lag 0');
+  if (shown.length < MIN_LAGS) throw new Error(`Link shown with ${shown.length} lags, need ${MIN_LAGS}`);
+  for (const l of shown) {
+    if (Math.abs(l.rho!) > 1 + 1e-9) throw new Error(`|rho| > 1 at lag ${l.lag}`);
+    if (l.n < MIN[t]) throw new Error(`n below minimum at lag ${l.lag}`);
+  }
 }
