@@ -52,7 +52,7 @@ jobs:
           git add data/snapshots
           git commit -m 'Update data snapshots'
           scripts/merge-work-to-main.sh 'Merge work into main: data snapshots'
-          git push origin work main
+          git push --atomic origin work main # both refs or neither, so work and main never diverge
       # Test, build and deploy what `main` holds.
       - run: git switch -q main
       # A person's push always builds; cron and manual runs build only when a snapshot changed.

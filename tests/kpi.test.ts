@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { sumLaender, type Series } from '../src/lib/series';
 import { kpiNotes } from '../src/lib/notes';
+import { period } from '../src/lib/i18n';
 import { KPIS, liveViews } from '../src/lib/kpis';
 import { pickView } from '../src/lib/select';
 import { loadAllManifest, loadManifest } from '../src/lib/manifest';
@@ -84,8 +85,8 @@ describe('KPI page Notes (spec section 9)', () => {
     expect(kpiNotes(s, 'en', 'Cities of supra-regional importance', at)).toEqual([
       'Note: Index (2013 = 100): shows change over time, not a price level in euros.',
       'Note: Aggregate for cities of supra-regional importance, not an individual city.',
-      'Note: Short history (2013-Q1 to 2026-Q1). This window contains essentially one interest-rate cycle, so the pattern may not hold in other periods.',
-      'Note: Latest observation: 2026-Q1. The source has not published newer data within the expected interval, so this series may be out of date.',
+      'Note: Short history (Q1 2013 to Q1 2026). This window contains essentially one interest-rate cycle, so the pattern may not hold in other periods.',
+      'Note: Latest observation: Q1 2026. The source has not published newer data within the expected interval, so this series may be out of date.',
     ]);
   });
   it('combined scope and short history without the cycle sentence, in German', () => {
@@ -93,7 +94,7 @@ describe('KPI page Notes (spec section 9)', () => {
     // Unreviewed German carries [DRAFT] (ticket 09), so match the text, not the whole line.
     expect(kpiNotes(s, 'de', '', at)).toEqual([
       expect.stringContaining('Büro und Einzelhandel zusammen; keine getrennten Werte.'),
-      expect.stringContaining('Kurze Zeitreihe (2013-Q1 bis 2026-Q1).'),
+      expect.stringContaining('Kurze Zeitreihe (Q1 2013 bis Q1 2026).'),
     ]);
   });
   it('Partial total names the missing Länder per year', () => {
@@ -106,4 +107,12 @@ it('Construction lists the Länder in Destatis order after Germany', () => {
   const geos = KPIS.find((k) => k.page === 'construction')!.views.filter((x) => x.segment === 'office').map((x) => x.geo);
   expect(geos.slice(0, 3)).toEqual(['germany', 'de-sh', 'de-hh']);
   expect(geos.at(-1)).toBe('de-th');
+});
+
+it('periods: "Q1 2026" in both languages, annual as the year, months through Intl (spec section 10)', () => {
+  expect(period('en', '2026-Q1')).toBe('Q1 2026');
+  expect(period('de', '2026-Q1')).toBe('Q1 2026');
+  expect(period('en', '2026')).toBe('2026');
+  expect(period('en', '2026-03')).toBe('March 2026');
+  expect(period('de', '2026-03')).toBe('März 2026');
 });

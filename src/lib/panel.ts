@@ -1,4 +1,4 @@
-import { fmt, t } from './i18n';
+import { fmt, period, t } from './i18n';
 import { levelChart, lagChart } from './chart';
 import { href, type Lang } from './routes';
 import type { Series } from './series';
@@ -11,7 +11,7 @@ const SMALL = 20; // annual Links with fewer lag-0 pairs get the Small sample No
 export function sourceLine(s: Series, lang: Lang, own = false): string {
   return t(lang, 'source.line', {
     publisher: esc(s.publisher), id: `<a href="${esc(s.dbnomicsUrl)}">${esc(s.dbnomicsId)}</a>`,
-    licence: `<a href="${href('sources', lang)}">${esc(s.licence.name)}</a>`, period: s.lastPeriod,
+    licence: `<a href="${href('sources', lang)}">${esc(s.licence.name)}</a>`, period: period(lang, s.lastPeriod),
   }) + (own || s.derived ? ` / ${t(lang, 'source.own')}` : '');
 }
 
@@ -33,7 +33,7 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
       + lagChart(r.lags, r.strongest.lag, { lag: t(lang, 'link.lag.label'), rho: t(lang, 'link.rho.label'), mark: t(lang, 'link.strongest.mark'), title: t(lang, 'link.lags.label', { kpi: kpi.title[lang], indicator: ind.title[lang] }) }, lang)
       + `<p>${t(lang, 'link.headline', { rho: fmt(lang, r.headline.rho!, { maximumFractionDigits: 2 }), n: String(r.headline.n) })}</p>`
       + `<p>${t(lang, 'link.strongest', { n: String(N) })}</p>`
-      + `<p>${t(lang, 'link.sentence', { period: t(lang, 'link.period', { from: r.span[0], to: r.span[1] }), n: String(r.headline.n) })}</p>`;
+      + `<p>${t(lang, 'link.sentence', { period: t(lang, 'link.period', { from: period(lang, r.span[0]), to: period(lang, r.span[1]) }), n: String(r.headline.n) })}</p>`;
   }
   const noteHtml = notes.map((n) => `<p class="note">${n}</p>`).join('');
   return `<figure class="link-panel">${head}${noteHtml}${body}<figcaption>${sourceLine(kpi, lang, true)}<br>${sourceLine(ind, lang, true)}</figcaption></figure>`;
