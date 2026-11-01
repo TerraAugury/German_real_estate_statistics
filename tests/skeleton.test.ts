@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validate } from '../src/lib/i18n';
-import { fmt } from '../src/lib/i18n';
+import { validate, fmt } from '../src/lib/i18n';
 import { slug, routes, langs } from '../src/lib/routes';
 
 describe('i18n validation', () => {
@@ -15,4 +14,8 @@ it('formats with page locale', () => {
 });
 it('route table has every language for every page', () => {
   for (const k of Object.keys(routes)) for (const l of langs) expect(() => slug(k as keyof typeof routes, l)).not.toThrow();
+});
+it('built pages are all in the route table', async () => {
+  const { built } = await import('../src/lib/routes');
+  for (const k of built) expect(routes).toHaveProperty(k);
 });
