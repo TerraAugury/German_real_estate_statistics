@@ -1,0 +1,15 @@
+# One hand-written entry per series. Walking skeleton: one derived series.
+- key: construction-permits-office
+  provider: DESTATIS
+  dataset: 31111LJ001
+  # Germany = sum of the 16 Länder (DBnomics has no total): own calculation
+  ids: ["{land}.BAUART1.BTK-GEB.GBD-NW-BV.FLC002"]
+  lands: ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16"]
+  publisher: Statistisches Bundesamt (Destatis)
+  licence: { name: "Datenlizenz Deutschland – Namensnennung – 2.0", url: "https://www.govdata.de/dl-de/by-2-0" }
+  provisional: false
+  title: { en: "Building permits: office and administrative buildings, Germany", de: "Baugenehmigungen: Büro- und Verwaltungsgebäude, Deutschland" }
+  unit: { en: "million m² floor space", de: "Mio. m² Nutzfläche" }
+  frequency: annual
+  scale: 0.001   # native thousand m² -> million m² (own calculation)
+  expected_start: 2008
