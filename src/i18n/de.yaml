@@ -27,3 +27,11 @@ link.lag.label: "Zeitversatz in Jahren (positiv: Indikator lief voraus, negativ:
 link.rho.label: Spearman-Rho
 link.overlay.label: "Niveau: {title}"
 link.lags.label: "Zeitversatzprofil von {kpi} und {indicator}"
+nav.sources: Quellen und Lizenzen
+sources.title: Quellen und Lizenzen
+sources.intro: "Eine Zeile je Reihe, die auf dieser Seite gezeigt wird. DBnomics bündelt die Reihen; die zugrunde liegenden Daten behalten die Lizenz des Herausgebers."
+sources.col.series: Reihe
+sources.col.publisher: Herausgeber
+sources.col.id: DBnomics-Reihen-ID
+sources.col.licence: Lizenz
+sources.col.attribution: Quellenangabe

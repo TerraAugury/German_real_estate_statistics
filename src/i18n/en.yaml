@@ -27,3 +27,11 @@ link.lag.label: "Lag in years (positive: indicator moved earlier, negative: late
 link.rho.label: Spearman rho
 link.overlay.label: "Levels of {title}"
 link.lags.label: "Lag profile of {kpi} and {indicator}"
+nav.sources: Sources and licences
+sources.title: Sources and licences
+sources.intro: "One row per series shown on this site. Series are aggregated by DBnomics; the underlying data keeps the publisher's licence."
+sources.col.series: Series
+sources.col.publisher: Publisher
+sources.col.id: DBnomics series id
+sources.col.licence: Licence
+sources.col.attribution: Attribution

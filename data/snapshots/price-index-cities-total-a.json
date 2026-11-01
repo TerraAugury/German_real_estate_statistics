@@ -1,0 +1,42 @@
+{
+ "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "fetch_failed": null,
+ "revised_at": null,
+ "parts": {
+  "A.B10.N.G010.P0110.A": {
+   "name": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / Commercial property price index / total / German cities of supra-regional importance / unadjusted figures",
+   "indexed_at": "2026-06-06T01:53:40.451Z",
+   "frequency": "annual",
+   "period": [
+    "2013",
+    "2014",
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "value": [
+    100,
+    105,
+    112.5,
+    123.9,
+    137.9,
+    149.2,
+    168.1,
+    181.2,
+    190.2,
+    184.2,
+    165.4,
+    164.1,
+    168.3
+   ]
+  }
+ }
+}
