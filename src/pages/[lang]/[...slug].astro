@@ -2,33 +2,45 @@
 import Base from '../../layouts/Base.astro';
 import { built, langs, slug, href, type Lang, type BuiltPage } from '../../lib/routes';
 import { t, fmt, period } from '../../lib/i18n';
-import { loadSeries, type Series } from '../../lib/series';
+import { getSeries } from '../../lib/series';
 import { lineChart } from '../../lib/chart';
 import { kpiNotes } from '../../lib/notes';
-import { loadManifest, publicLinks } from '../../lib/manifest';
+import { loadManifest } from '../../lib/manifest';
+import { INDICATORS, linkResult, viewLinks } from '../../lib/links';
+import { readProse, unreviewedProse, DRAFT } from '../../lib/review';
 import { sourcesTable } from '../../lib/sources';
 import { compactChart, linkPanel, sourceLine } from '../../lib/panel';
-import { KPIS, CITY_CLASSES, SEGMENTS, SEGMENT_PAGES, cell, headline, isLand, liveViews, naText, viewHref, type Segment } from '../../lib/kpis';
+import { KPIS, CITY_CLASSES, SEGMENTS, SEGMENT_PAGES, cell, headline, isLand, liveViews, naText, viewHref, type Segment, type View } from '../../lib/kpis';
 
 export function getStaticPaths() {
   return langs.flatMap((lang) => built.map((page) => ({ params: { lang, slug: slug(page, lang) || undefined }, props: { page } })));
 }
 const { lang } = Astro.params as { lang: Lang };
 const { page } = Astro.props as { page: BuiltPage };
-const s = loadSeries('construction-permits-office');
-// Construction page Links; the provisional gate drops any whose series is excluded.
-const links = publicLinks([{ kpi: s.key, indicator: 'euribor-3m' }, { kpi: s.key, indicator: 'cpi' }]);
-const panels = page === 'construction' ? links.map((l) => linkPanel(s, loadSeries(l.indicator), lang)) : [];
 
 // KPI page: every selector state rendered, the script shows the one the URL asks for (spec section 8).
 const kpi = KPIS.find((k) => k.page === page);
 const views = kpi ? liveViews(kpi) : [];
-const cache = new Map<string, Series>();
-const series = (key: string, land?: string) => {
-  const id = `${key}@${land ?? ''}`;
-  if (!cache.has(id)) cache.set(id, loadSeries(key, undefined, land));
-  return cache.get(id)!;
-};
+// Link panels: each pair rendered once, in indicator order (a view has one per indicator); a view lists its panel ids in data-links.
+type Pair = ReturnType<typeof viewLinks>[number];
+const panelId = (l: Pair) => `link-${l.kpi}-${l.land ?? 'de'}-${l.indicator}`;
+const panels = new Map<string, { order: number; html: string }>();
+const linkIds = (v: View) => viewLinks(v).map((l) => {
+  const id = panelId(l);
+  if (!panels.has(id)) panels.set(id, { order: INDICATORS.indexOf(l.name), html: linkPanel(getSeries(l.kpi, l.land), getSeries(l.indicator), lang, t(lang, `geo.${v.geo}`), id) });
+  return id;
+}).join(' ');
+const viewLinkIds = views.map(linkIds);
+// Links overview: each KPI at its headline view, one cell per indicator any row has a public pair for.
+const overview = page === 'links' ? KPIS.map((k) => {
+  const v = headline(k);
+  const pairs = v ? viewLinks(v) : [];
+  return { k, v, cells: new Map(pairs.map((l) => [l.name, { l, r: linkResult(getSeries(l.kpi, l.land), getSeries(l.indicator)) }])) };
+}) : [];
+const columns = INDICATORS.filter((n) => overview.some((row) => row.cells.has(n)));
+const prose = import.meta.glob<{ Content: any }>('../../../content/*/*.md', { eager: true });
+const Methodology = prose[`../../../content/${lang}/methodology.md`]?.Content;
+const methodologyDraft = lang === 'de' && unreviewedProse(readProse()).includes('methodology');
 const uniq = <T,>(xs: T[]) => [...new Set(xs)];
 const geos = uniq(views.map((v) => v.geo));
 const geoGroups = [
@@ -38,9 +50,9 @@ const geoGroups = [
 ].filter((g) => g.geos.length);
 const segment = page.startsWith('segment-') ? (page.slice('segment-'.length) as Segment) : null;
 const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
-  : t(lang, page === 'home' ? 'site.title' : page === 'availability' ? 'availability.title' : 'sources.title');
+  : t(lang, `${page === 'home' ? 'site' : page}.title`);
 // Home cards and Segment pages show the first series of a view as a compact chart.
-const compact = (v: { series: { key: string; land?: string }[] }) => series(v.series[0].key, v.series[0].land);
+const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
 ---
 <Base lang={lang} page={page} title={title}>
   {(kpi || segment) && <nav class="crumbs" aria-label={t(lang, 'nav.breadcrumb')}><a href={href('home', lang)}>{t(lang, 'nav.home')}</a> › {title}</nav>}
@@ -104,6 +116,32 @@ const compact = (v: { series: { key: string; land?: string }[] }) => series(v.se
         ))}</tbody>
       </table>
     </>
+  ) : page === 'links' ? (
+    <>
+      <h1>{title}</h1>
+      <p>{t(lang, 'links.intro')}</p>
+      <table>
+        <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{columns.map((n) => <th scope="col">{t(lang, `indicator.${n}`)}</th>)}</tr></thead>
+        <tbody>{overview.map(({ k, v, cells }) => (
+          <tr>
+            <th scope="row"><a href={href(k.page, lang)}>{t(lang, k.title)}</a>{v && <><br /><small>{compact(v).title[lang]}</small></>}</th>
+            {!v ? <td class="na" colspan={columns.length}>{t(lang, 'kpi.not_available.licence')}</td> : columns.map((n) => {
+              const c = cells.get(n);
+              if (!c) return <td />;
+              const text = c.r.shown ? t(lang, 'links.cell.shown', { rho: fmt(lang, c.r.headline.rho!, { maximumFractionDigits: 2 }), n: String(c.r.headline.n) })
+                : t(lang, 'links.cell.not_shown', { n: String(c.r.n0) });
+              return <td><a href={`${viewHref(k, v, lang)}#${panelId(c.l)}`}>{text}</a></td>;
+            })}
+          </tr>
+        ))}</tbody>
+      </table>
+    </>
+  ) : page === 'methodology' ? (
+    <>
+      <h1>{title}</h1>
+      {methodologyDraft && <p class="note">{DRAFT.trim()}</p>}
+      <Methodology />
+    </>
   ) : page === 'sources' ? (
     <>
       <h1>{title}</h1>
@@ -126,8 +164,8 @@ const compact = (v: { series: { key: string; land?: string }[] }) => series(v.se
             <label>{t(lang, 'select.freq')} <select name="freq">{uniq(views.map((v) => v.freq)).map((x) => <option value={x}>{t(lang, `freq.${x}`)}</option>)}</select></label>
           </form>
           {views.map((v, i) => (
-            <section class="view" data-segment={v.segment} data-geo={v.geo} data-freq={v.freq} hidden={i > 0}>
-              {v.series.map((r) => series(r.key, r.land)).map((x) => (
+            <section class="view" data-segment={v.segment} data-geo={v.geo} data-freq={v.freq} data-links={viewLinkIds[i]} hidden={i > 0}>
+              {v.series.map((r) => getSeries(r.key, r.land)).map((x) => (
                 <figure>
                   <h2>{x.title[lang]}</h2>
                   <Fragment set:html={lineChart(x, lang)} />
@@ -137,26 +175,37 @@ const compact = (v: { series: { key: string; land?: string }[] }) => series(v.se
               ))}
             </section>
           ))}
+          {panels.size > 0 && (
+            <>
+              <h2>{t(lang, 'links.heading')}</h2>
+              {[...panels].sort(([, a], [, b]) => a.order - b.order).map(([id, p]) =>
+                <div data-panel={id} hidden={!viewLinkIds[0].split(' ').includes(id)}><Fragment set:html={p.html} /></div>)}
+            </>
+          )}
           <script>
             import { pickView, type Want } from '../../lib/select';
             const form = document.querySelector<HTMLFormElement>('form.selectors')!;
             const views = [...document.querySelectorAll<HTMLElement>('section.view')].map((el) => ({ el, ...(el.dataset as Want) }));
+            const panels = [...document.querySelectorAll<HTMLElement>('[data-panel]')];
             const keys = ['segment', 'geo', 'freq'] as const;
-            // Show the closest view; the URL and the language switch then name exactly that view.
+            // Show the closest view and its Link panels; the URL and the language switch then name exactly that view.
             const show = (want: Partial<Want>, changed?: keyof Want) => {
               const v = pickView(views, want, changed);
               for (const x of views) x.el.hidden = x !== v;
+              const ids = v.el.dataset.links!.split(' ');
+              for (const p of panels) p.hidden = !ids.includes(p.dataset.panel!);
               for (const k of keys) (form.elements.namedItem(k) as HTMLSelectElement).value = v[k];
-              history.replaceState(null, '', '?' + new URLSearchParams({ segment: v.segment, geo: v.geo, freq: v.freq }));
+              history.replaceState(null, '', '?' + new URLSearchParams({ segment: v.segment, geo: v.geo, freq: v.freq }) + location.hash);
               document.querySelector<HTMLAnchorElement>('a.sw')!.search = location.search;
             };
             const q = new URLSearchParams(location.search);
             if (keys.some((k) => q.has(k))) show(Object.fromEntries(keys.flatMap((k) => (q.has(k) ? [[k, q.get(k)!]] : []))));
+            // A Links overview cell names a panel that was hidden at load, so the browser could not scroll to it.
+            if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
             form.addEventListener('change', (e) => show(Object.fromEntries(new FormData(form)) as Want, (e.target as HTMLSelectElement).name as keyof Want));
           </script>
         </>
       )}
-      {panels.map((p) => <Fragment set:html={p} />)}
     </>
   )}
 </Base>

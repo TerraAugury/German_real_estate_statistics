@@ -104,3 +104,19 @@ availability.title: Verfügbarkeit
 availability.intro: "Jede Kennzahl für jedes Segment. Eine Lücke wird mit ihrem Grund genannt; nichts ist für später vorgesehen."
 availability.kpi: Kennzahl
 availability.available: "Verfügbar ({geo})"
+nav.links: Verknüpfungen
+nav.methodology: Methodik
+methodology.title: Methodik
+links.title: Verknüpfungen
+links.intro: "Jede Kennzahl mit jedem Wirtschaftsindikator: die Rangkorrelation der Veränderungen bei Verschiebung 0 mit der Zahl der Paare, oder warum die Verknüpfung nicht angezeigt wird. Jede Kennzahl erscheint in ihrer Hauptansicht; jede Zelle öffnet die vollständige Verknüpfung auf der Kennzahlseite."
+links.heading: Verknüpfungen mit Wirtschaftsindikatoren
+links.cell.shown: "{rho} (n = {n})"
+links.cell.not_shown: "Nicht angezeigt (n = {n})"
+indicator.bund-yield-10y: Rendite zehnjähriger Bundesanleihen
+indicator.euribor-3m: Euribor 3 Monate
+indicator.loan-rate-nfc: Kreditzins, nichtfinanzielle Unternehmen
+indicator.cpi: Verbraucherpreisindex
+indicator.gdp-real: Reales BIP
+indicator.unemployment-rate: Arbeitslosenquote
+indicator.construction-price: Baupreisindex
+indicator.oecd-confidence: OECD-Geschäftsklima

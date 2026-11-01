@@ -67,6 +67,14 @@ export function loadSeries(key: string, now = new Date(), land?: string): Series
   return s;
 }
 
+const cache = new Map<string, Series>();
+/** `loadSeries` at build time, once per series and Land. */
+export function getSeries(key: string, land?: string): Series {
+  const id = `${key}@${land ?? ''}`;
+  if (!cache.has(id)) cache.set(id, loadSeries(key, undefined, land));
+  return cache.get(id)!;
+}
+
 /** Destatis titles end in ", Germany"; a Land series names the Land instead. */
 function landTitle(title: Localized, land: string): Localized {
   const out = { ...title };

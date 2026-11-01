@@ -21,6 +21,13 @@ const prefix = (lang: Lang, ns: string[]) => ns.map((n) => `${t(lang, 'note.pref
 /** Prefixed Notes for Home cards and Segment charts: stale and fetch failed only (spec section 9). */
 export const notes = (s: Series, lang: Lang): string[] => prefix(lang, noteTexts({ ...s, revisedAt: null }, lang));
 
+/** The Short history Note text, with the series' extra sentence if it has one; empty for a long series. */
+export function shortNote(s: Series, lang: Lang): string[] {
+  if (!s.shortWindow) return [];
+  const short = t(lang, 'note.short_window', { start: period(lang, s.obs[0].period), end: period(lang, s.lastPeriod) });
+  return [typeof s.shortWindow === 'string' ? `${short} ${t(lang, s.shortWindow)}` : short];
+}
+
 /**
  * Prefixed Notes for a KPI page chart, all of them in the fixed order: scope, short history, partial total, then `notes`.
  * `geography` is the selector label; English lowercases its first letter mid-sentence, German nouns keep theirs.
@@ -28,10 +35,7 @@ export const notes = (s: Series, lang: Lang): string[] => prefix(lang, noteTexts
 export function kpiNotes(s: Series, lang: Lang, geography: string, now = new Date()): string[] {
   const cls = lang === 'en' ? geography.charAt(0).toLowerCase() + geography.slice(1) : geography;
   const out = s.scope.map((k) => t(lang, `note.scope.${k}`, k === 'city_class' ? { class: cls } : {}));
-  if (s.shortWindow) {
-    const short = t(lang, 'note.short_window', { start: period(lang, s.obs[0].period), end: period(lang, s.lastPeriod) });
-    out.push(typeof s.shortWindow === 'string' ? `${short} ${t(lang, s.shortWindow)}` : short);
-  }
+  out.push(...shortNote(s, lang));
   for (const p of s.partial) out.push(t(lang, 'note.partial_total', { laender: p.laender.map((l) => landName(lang, l)).join(', '), year: p.period }));
   return prefix(lang, [...out, ...noteTexts(s, lang, now)]);
 }

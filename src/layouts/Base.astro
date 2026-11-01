@@ -24,7 +24,9 @@ const { lang, page, title } = Astro.props as { lang: Lang; page: PageKey; title:
       <a href={href('home', lang)}>{t(lang, 'nav.home')}</a>
       <details><summary>{t(lang, 'nav.segments')}</summary>{SEGMENT_PAGES.map((g) => <a href={href(`segment-${g}`, lang)}>{t(lang, `segment.${g}`)}</a>)}</details>
       <details><summary>{t(lang, 'nav.kpis')}</summary>{KPIS.map((k) => <a href={href(k.page, lang)}>{t(lang, k.title)}</a>)}</details>
+      <a href={href('links', lang)}>{t(lang, 'nav.links')}</a>
       <a href={href('availability', lang)}>{t(lang, 'nav.availability')}</a>
+      <a href={href('methodology', lang)}>{t(lang, 'nav.methodology')}</a>
       <a class="sw" href={href(page, otherLang(lang))} hreflang={otherLang(lang)}>{t(lang, 'lang.switch')}</a>
     </nav>
     <!-- The language switch keeps the selector parameters (segment, geo, freq) unchanged; KPI pages update it on change. -->

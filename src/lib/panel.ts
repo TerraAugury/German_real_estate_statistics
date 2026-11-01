@@ -1,9 +1,10 @@
 import { fmt, period, t } from './i18n';
 import { levelChart, lagChart, lineChart } from './chart';
-import { notes } from './notes';
+import { notes, shortNote } from './notes';
 import { href, type Lang } from './routes';
 import type { Series } from './series';
-import { computeLink, type LinkResult } from '../link/link';
+import type { LinkResult } from '../link/link';
+import { linkResult } from './links';
 
 export const esc = (x: string) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const SMALL = 20; // annual Links with fewer lag-0 pairs get the Small sample Note (spec section 9)
@@ -21,9 +22,10 @@ export const compactChart = (s: Series, lang: Lang) => lineChart(s, lang, 200)
   + notes(s, lang).map((n) => `<p class="note">${esc(n)}</p>`).join('') + `<figcaption>${sourceLine(s, lang)}</figcaption>`;
 
 /** Link panel HTML for one KPI x indicator pair. Pure given the result, so it tests without the Link module. */
-export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang, geography = t(lang, 'geo.germany')): string {
-  const note = (s: Series) => s.notes[lang].map((n) => `${t(lang, 'note.prefix')}: ${esc(s.title[lang])}: ${esc(n)}`);
-  const notes = [...note(kpi), ...note(ind)];
+export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang, geography = t(lang, 'geo.germany'), id?: string): string {
+  // The KPI's Short history Note carries the one-cycle caveat over to its Links (spec section 6).
+  const note = (s: Series, extra: string[] = []) => [...extra, ...s.notes[lang]].map((n) => `${t(lang, 'note.prefix')}: ${esc(s.title[lang])}: ${esc(n)}`);
+  const notes = [...note(kpi, shortNote(kpi, lang)), ...note(ind)];
   const head = `<h3>${t(lang, 'link.title', { kpi: esc(kpi.title[lang]), indicator: esc(ind.title[lang]) })}</h3>
 <p>${t(lang, 'link.scope', { geography: esc(geography) })}</p>`;
   let body: string;
@@ -41,11 +43,9 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
       + `<p>${t(lang, 'link.sentence', { period: t(lang, 'link.period', { from: period(lang, r.span[0]), to: period(lang, r.span[1]) }), n: String(r.headline.n) })}</p>`;
   }
   const noteHtml = notes.map((n) => `<p class="note">${n}</p>`).join('');
-  return `<figure class="link-panel">${head}${noteHtml}${body}<figcaption>${sourceLine(kpi, lang, true)}<br>${sourceLine(ind, lang, true)}</figcaption></figure>`;
+  return `<figure class="link-panel"${id ? ` id="${esc(id)}"` : ''}>${head}${noteHtml}${body}<figcaption>${sourceLine(kpi, lang, true)}<br>${sourceLine(ind, lang, true)}</figcaption></figure>`;
 }
 
-/** Compute and render. The KPI is annual, so the Link is annual (spec section 6). */
-export function linkPanel(kpi: Series, ind: Series, lang: Lang): string {
-  const r = computeLink({ freq: kpi.freq, change: kpi.change, obs: kpi.obs }, { freq: ind.freq, change: ind.change, obs: ind.obs });
-  return renderPanel(kpi, ind, r, lang);
-}
+/** Compute (once per build) and render; the Link takes the KPI's frequency (spec section 6). */
+export const linkPanel = (kpi: Series, ind: Series, lang: Lang, geography?: string, id?: string) =>
+  renderPanel(kpi, ind, linkResult(kpi, ind), lang, geography, id);

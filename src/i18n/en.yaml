@@ -104,3 +104,19 @@ availability.title: Availability
 availability.intro: "Every KPI for every Segment. A gap is stated with its reason; nothing is planned for later."
 availability.kpi: KPI
 availability.available: "Available ({geo})"
+nav.links: Links
+nav.methodology: Methodology
+methodology.title: Methodology
+links.title: Links
+links.intro: "Every KPI against every economic indicator: the rank correlation of changes at lag 0 with the number of pairs, or why the Link is not shown. Each KPI is shown at its headline view; each cell opens the full Link on the KPI page."
+links.heading: Links with economic indicators
+links.cell.shown: "{rho} (n = {n})"
+links.cell.not_shown: "Not shown (n = {n})"
+indicator.bund-yield-10y: 10-year Bund yield
+indicator.euribor-3m: Euribor 3 months
+indicator.loan-rate-nfc: Loan rate, non-financial corporations
+indicator.cpi: Consumer price index
+indicator.gdp-real: Real GDP
+indicator.unemployment-rate: Unemployment rate
+indicator.construction-price: Construction price index
+indicator.oecd-confidence: OECD business confidence
