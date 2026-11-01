@@ -18,8 +18,8 @@ export function noteTexts(s: Omit<Series, 'notes'>, lang: Lang, now = new Date()
 
 const prefix = (lang: Lang, ns: string[]) => ns.map((n) => `${t(lang, 'note.prefix')}: ${n}`);
 
-/** Prefixed Notes for Home cards and Segment charts: stale, fetch failed, revised. */
-export const notes = (s: Series, lang: Lang, now = new Date()): string[] => prefix(lang, noteTexts(s, lang, now));
+/** Prefixed Notes for Home cards and Segment charts: stale and fetch failed only (spec section 9). */
+export const notes = (s: Series, lang: Lang): string[] => prefix(lang, noteTexts({ ...s, revisedAt: null }, lang));
 
 /**
  * Prefixed Notes for a KPI page chart, all of them in the fixed order: scope, short history, partial total, then `notes`.

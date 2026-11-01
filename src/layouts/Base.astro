@@ -1,7 +1,7 @@
 ---
 import { t } from '../lib/i18n';
 import { href, otherLang, type Lang, type PageKey } from '../lib/routes';
-import { KPIS } from '../lib/kpis';
+import { KPIS, SEGMENT_PAGES } from '../lib/kpis';
 const { lang, page, title } = Astro.props as { lang: Lang; page: PageKey; title: string };
 ---
 <!doctype html>
@@ -14,18 +14,22 @@ const { lang, page, title } = Astro.props as { lang: Lang; page: PageKey; title:
       nav, footer { display: flex; gap: 1rem; padding: 1rem 0; } nav .sw { margin-left: auto; }
       nav details > a { display: block; }
       :global(.selectors) { display: flex; flex-wrap: wrap; gap: 1rem; } /* the form lives in the page, outside this layout's scope */
+      :global(.na) { color: #6b7280; background: #f3f4f6; padding: .25rem .5rem; } /* greyed Not available placeholders */
+      :global(table) { border-collapse: collapse; } :global(th), :global(td) { border: 1px solid #ddd; padding: .25rem .5rem; text-align: left; vertical-align: top; }
       figure { margin: 1rem 0; } figcaption { font-size: .85rem; color: #444; } svg { max-width: 100%; height: auto; }
     </style>
   </head>
   <body>
     <nav>
       <a href={href('home', lang)}>{t(lang, 'nav.home')}</a>
+      <details><summary>{t(lang, 'nav.segments')}</summary>{SEGMENT_PAGES.map((g) => <a href={href(`segment-${g}`, lang)}>{t(lang, `segment.${g}`)}</a>)}</details>
       <details><summary>{t(lang, 'nav.kpis')}</summary>{KPIS.map((k) => <a href={href(k.page, lang)}>{t(lang, k.title)}</a>)}</details>
+      <a href={href('availability', lang)}>{t(lang, 'nav.availability')}</a>
       <a class="sw" href={href(page, otherLang(lang))} hreflang={otherLang(lang)}>{t(lang, 'lang.switch')}</a>
     </nav>
     <!-- The language switch keeps the selector parameters (segment, geo, freq) unchanged; KPI pages update it on change. -->
     <script is:inline>document.querySelector('a.sw').search = location.search;</script>
     <main><slot /></main>
-    <footer><span>{t(lang, 'footer.text')}</span><a href={href('sources', lang)}>{t(lang, 'nav.sources')}</a></footer>
+    <footer><span>{t(lang, 'footer.text')}</span><a href={href('availability', lang)}>{t(lang, 'nav.availability')}</a><a href={href('sources', lang)}>{t(lang, 'nav.sources')}</a></footer>
   </body>
 </html>

@@ -2,7 +2,6 @@ site.title: Statistiken zum deutschen Gewerbeimmobilienmarkt
 nav.home: Startseite
 lang.switch: English
 home.purpose: Offene Statistiken zum deutschen Gewerbeimmobilienmarkt; jede Grafik nennt Quelle und Lizenz.
-home.card.link: "{kpi}: zuletzt {value} ({period})"
 kpi.construction.title: Bautätigkeit (Genehmigungen, Fertigstellungen)
 source.line: "Quelle: {publisher}, DBnomics-Reihe {id} / Lizenz: {licence} / Daten bis {period}"
 source.own: eigene Berechnung
@@ -81,3 +80,27 @@ geo.de-st: Sachsen-Anhalt
 geo.de-th: Thüringen
 note.partial_total: "Deutschland-Summe aus den Ländern mit Daten; für {laender} liegt für {year} kein Wert vor."
 kpi.noscript: "Zum Wechseln von Segment, Gebiet oder Häufigkeit wird JavaScript benötigt. Ohne JavaScript zeigt diese Seite die erste Ansicht."
+na.source: "Nicht verfügbar: keine offene Quelle für {reason}"
+na.kpi-price-index.logistics: einen Preisindex für Logistikimmobilien
+na.kpi-rent-index.logistics: Logistikmieten
+na.kpi-initial-yield.office: "Büro-Renditen allein; die Quelle weist Büro und Einzelhandel zusammen aus (siehe Gewerbe gesamt)"
+na.kpi-initial-yield.retail: "Einzelhandels-Renditen allein; die Quelle weist Büro und Einzelhandel zusammen aus (siehe Gewerbe gesamt)"
+na.kpi-initial-yield.logistics: Logistik-Renditen
+na.kpi-office-vacancy.retail: Leerstand im Einzelhandel
+na.kpi-office-vacancy.logistics: Leerstand bei Logistikimmobilien
+na.kpi-office-vacancy.commercial-overall: Leerstand über alle Gewerbeimmobilien
+na.kpi-transaction-volume.office: "Transaktionsvolumen bei Büros; die Quelle erfasst alle Gewerbeimmobilien zusammen"
+na.kpi-transaction-volume.retail: "Transaktionsvolumen im Einzelhandel; die Quelle erfasst alle Gewerbeimmobilien zusammen"
+na.kpi-transaction-volume.logistics: "Transaktionsvolumen bei Logistikimmobilien; die Quelle erfasst alle Gewerbeimmobilien zusammen"
+na.construction.retail: "Einzelhandelsgebäude; Destatis führt dafür keine eigene Gebäudeart"
+nav.segments: Segmente
+nav.availability: Verfügbarkeit
+nav.breadcrumb: Brotkrümelnavigation
+home.card.latest: "Zuletzt: {value} ({period})"
+home.segments: Nach Segment
+segment.intro: "Je Kennzahl eine Grafik für Deutschland, soweit eine Quelle sie liefert; jede Grafik öffnet die vollständige Kennzahlseite."
+segment.availability: Welche Kombinationen aus Kennzahl und Segment es gibt und warum die übrigen nicht verfügbar sind
+availability.title: Verfügbarkeit
+availability.intro: "Jede Kennzahl für jedes Segment. Eine Lücke wird mit ihrem Grund genannt; nichts ist für später vorgesehen."
+availability.kpi: Kennzahl
+availability.available: "Verfügbar ({geo})"

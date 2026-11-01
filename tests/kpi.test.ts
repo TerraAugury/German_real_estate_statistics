@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { sumLaender, type Series } from '../src/lib/series';
 import { kpiNotes } from '../src/lib/notes';
-import { period } from '../src/lib/i18n';
-import { KPIS, liveViews } from '../src/lib/kpis';
+import { period, t } from '../src/lib/i18n';
+import { KPIS, SEGMENTS, cell, headline, liveViews } from '../src/lib/kpis';
 import { pickView } from '../src/lib/select';
 import { loadAllManifest, loadManifest } from '../src/lib/manifest';
 
@@ -61,6 +61,33 @@ describe('KPI catalogue (spec section 4)', () => {
     expect(liveViews(kpi('kpi-price-index'), live)).toEqual([]);
     expect(liveViews(kpi('construction'), live).find((x) => x.segment === 'office' && x.geo === 'germany')!.series.map((s) => s.key))
       .toEqual(['construction-permits-office', 'construction-completions-office']);
+  });
+});
+
+describe('Availability grid (spec section 4)', () => {
+  const grid = (live: ReturnType<typeof loadManifest>) => KPIS.map((k) => SEGMENTS.map((seg) => {
+    const c = cell(k, seg, live);
+    return 'view' in c ? 'Y' : c.na === 'licence' ? 'L' : 'N';
+  }).join(' '));
+  it('preview build: the spec grid, columns office, retail, logistics, commercial overall', () =>
+    expect(grid(loadManifest(true))).toEqual(['Y Y N Y', 'Y Y N Y', 'N N N Y', 'Y N N N', 'N N N Y', 'Y N Y Y']));
+  it('default build: Bundesbank-only cells are licence gaps, Construction stays', () =>
+    expect(grid(loadManifest(false))).toEqual(['L L N L', 'L L N L', 'N N N L', 'L N N N', 'N N N L', 'Y N Y Y']));
+  it('every source gap has a reason in both languages', () => {
+    for (const k of KPIS) for (const seg of SEGMENTS) {
+      const c = cell(k, seg, loadManifest(true));
+      if ('reason' in c) for (const l of ['en', 'de'] as const) expect(t(l, c.reason)).toBeTruthy();
+    }
+  });
+  it('a cell shows the first view of its Segment, national where the KPI has it', () => {
+    const c = cell(kpi('kpi-price-index'), 'retail', loadManifest(true));
+    expect('view' in c && c.view.series.map((s) => s.key)).toEqual(['price-index-de-retail-a']);
+  });
+  it('Home headline: commercial overall at Germany where it exists, else the first view', () => {
+    const live = loadManifest(true);
+    expect(headline(kpi('kpi-price-index'), live)?.series[0].key).toBe('price-index-de-total-a');
+    expect(headline(kpi('kpi-office-vacancy'), live)?.series[0].key).toBe('office-vacancy-7');
+    expect(headline(kpi('kpi-price-index'), loadManifest(false))).toBeUndefined();
   });
 });
 

@@ -1,14 +1,14 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { built, langs, slug, href, type Lang, type BuiltPage } from '../../lib/routes';
-import { t, fmt } from '../../lib/i18n';
-import { loadSeries, annualPoints, type Series } from '../../lib/series';
+import { t, fmt, period } from '../../lib/i18n';
+import { loadSeries, type Series } from '../../lib/series';
 import { lineChart } from '../../lib/chart';
 import { kpiNotes } from '../../lib/notes';
 import { loadManifest, publicLinks } from '../../lib/manifest';
 import { sourcesTable } from '../../lib/sources';
-import { linkPanel, sourceLine } from '../../lib/panel';
-import { KPIS, CITY_CLASSES, isLand, liveViews } from '../../lib/kpis';
+import { compactChart, linkPanel, sourceLine } from '../../lib/panel';
+import { KPIS, CITY_CLASSES, SEGMENTS, SEGMENT_PAGES, cell, headline, isLand, liveViews, naText, viewHref, type Segment } from '../../lib/kpis';
 
 export function getStaticPaths() {
   return langs.flatMap((lang) => built.map((page) => ({ params: { lang, slug: slug(page, lang) || undefined }, props: { page } })));
@@ -19,7 +19,6 @@ const s = loadSeries('construction-permits-office');
 // Construction page Links; the provisional gate drops any whose series is excluded.
 const links = publicLinks([{ kpi: s.key, indicator: 'euribor-3m' }, { kpi: s.key, indicator: 'cpi' }]);
 const panels = page === 'construction' ? links.map((l) => linkPanel(s, loadSeries(l.indicator), lang)) : [];
-const last = annualPoints(s).at(-1)!;
 
 // KPI page: every selector state rendered, the script shows the one the URL asks for (spec section 8).
 const kpi = KPIS.find((k) => k.page === page);
@@ -37,14 +36,73 @@ const geoGroups = [
   { label: t(lang, 'select.city_classes'), geos: geos.filter((g) => CITY_CLASSES.includes(g)) },
   { label: t(lang, 'select.laender'), geos: geos.filter(isLand) },
 ].filter((g) => g.geos.length);
-const title = kpi ? t(lang, kpi.title) : t(lang, page === 'home' ? 'site.title' : 'sources.title');
+const segment = page.startsWith('segment-') ? (page.slice('segment-'.length) as Segment) : null;
+const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
+  : t(lang, page === 'home' ? 'site.title' : page === 'availability' ? 'availability.title' : 'sources.title');
+// Home cards and Segment pages show the first series of a view as a compact chart.
+const compact = (v: { series: { key: string; land?: string }[] }) => series(v.series[0].key, v.series[0].land);
 ---
 <Base lang={lang} page={page} title={title}>
+  {(kpi || segment) && <nav class="crumbs" aria-label={t(lang, 'nav.breadcrumb')}><a href={href('home', lang)}>{t(lang, 'nav.home')}</a> › {title}</nav>}
   {page === 'home' ? (
     <>
       <h1>{t(lang, 'site.title')}</h1>
       <p>{t(lang, 'home.purpose')}</p>
-      <p><a href={href('construction', lang)}>{t(lang, 'home.card.link', { kpi: s.title[lang], value: fmt(lang, last.value, { maximumFractionDigits: 2 }), period: String(last.year) })}</a></p>
+      <div class="cards">
+        {KPIS.map((k) => {
+          const v = headline(k);
+          const x = v && compact(v);
+          return (
+            <section class="card">
+              <h2><a href={v ? viewHref(k, v, lang) : href(k.page, lang)}>{t(lang, k.title)}</a></h2>
+              {x ? (
+                <figure>
+                  <p>{t(lang, 'home.card.latest', { value: fmt(lang, x.obs.at(-1)!.value, { maximumFractionDigits: 2 }), period: period(lang, x.lastPeriod) })}</p>
+                  <h3>{x.title[lang]}</h3>
+                  <Fragment set:html={compactChart(x, lang)} />
+                </figure>
+              ) : <p class="na">{t(lang, 'kpi.not_available.licence')}</p>}
+            </section>
+          );
+        })}
+      </div>
+      <h2>{t(lang, 'home.segments')}</h2>
+      <ul>{SEGMENT_PAGES.map((g) => <li><a href={href(`segment-${g}`, lang)}>{t(lang, `segment.${g}`)}</a></li>)}</ul>
+    </>
+  ) : segment ? (
+    <>
+      <h1>{title}</h1>
+      <p>{t(lang, 'segment.intro')}</p>
+      {KPIS.map((k) => {
+        const c = cell(k, segment);
+        if (!('view' in c)) return <section><h2>{t(lang, k.title)}</h2><p class="na">{naText(c, lang)}</p></section>;
+        const x = compact(c.view);
+        return (
+          <section>
+            <h2><a href={viewHref(k, c.view, lang)}>{t(lang, k.title)}</a></h2>
+            <figure><h3>{x.title[lang]}</h3><Fragment set:html={compactChart(x, lang)} /></figure>
+          </section>
+        );
+      })}
+      <p><a href={href('availability', lang)}>{t(lang, 'segment.availability')}</a></p>
+    </>
+  ) : page === 'availability' ? (
+    <>
+      <h1>{title}</h1>
+      <p>{t(lang, 'availability.intro')}</p>
+      <table>
+        <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{SEGMENTS.map((g) => <th scope="col">{t(lang, `segment.${g}`)}</th>)}</tr></thead>
+        <tbody>{KPIS.map((k) => (
+          <tr><th scope="row"><a href={href(k.page, lang)}>{t(lang, k.title)}</a></th>{SEGMENTS.map((g) => {
+            const c = cell(k, g);
+            if (!('view' in c)) return <td class="na">{naText(c, lang)}</td>;
+            // Geographies the cell covers, grouped as on the KPI page selector: Germany, City classes, Länder.
+            const geo = uniq(liveViews(k).filter((v) => v.segment === g)
+              .map((v) => (isLand(v.geo) ? 'select.laender' : CITY_CLASSES.includes(v.geo) ? 'select.city_classes' : 'geo.germany'))).map((x) => t(lang, x)).join(', ');
+            return <td><a href={viewHref(k, c.view, lang)}>{t(lang, 'availability.available', { geo })}</a></td>;
+          })}</tr>
+        ))}</tbody>
+      </table>
     </>
   ) : page === 'sources' ? (
     <>
