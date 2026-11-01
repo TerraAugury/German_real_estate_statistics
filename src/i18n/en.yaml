@@ -80,3 +80,4 @@ geo.de-sn: Saxony
 geo.de-st: Saxony-Anhalt
 geo.de-th: Thuringia
 note.partial_total: "Germany total is the sum of the Länder with data; no value for {laender} in {year}."
+kpi.noscript: "Switching Segment, geography or frequency needs JavaScript. Without it, this page shows its first view."

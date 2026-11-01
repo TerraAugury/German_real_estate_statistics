@@ -57,6 +57,8 @@ const title = kpi ? t(lang, kpi.title) : t(lang, page === 'home' ? 'site.title' 
       <h1>{title}</h1>
       {views.length === 0 ? <p class="na">{t(lang, 'kpi.not_available.licence')}</p> : (
         <>
+          {/* Without JavaScript the selectors cannot switch views: hide them and say so. */}
+          <noscript><style>.selectors { display: none; }</style><p class="note">{t(lang, 'kpi.noscript')}</p></noscript>
           <form class="selectors">
             <label>{t(lang, 'select.segment')} <select name="segment">{uniq(views.map((v) => v.segment)).map((x) => <option value={x}>{t(lang, `segment.${x}`)}</option>)}</select></label>
             <label>{t(lang, 'select.geo')} <select name="geo">{geoGroups.map((g) => {
