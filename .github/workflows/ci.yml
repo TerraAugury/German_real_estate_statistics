@@ -1,0 +1,67 @@
+# Spec section 11 job order: fetch and diff -> commit changed snapshots to main -> tests -> build -> deploy.
+# Production deploy is off until launch gates 08, 14 and 15 resolve (spec section 13); see README "Deploy".
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '17 5 * * *' # daily
+  workflow_dispatch:
+
+jobs:
+  # Preview build: committed snapshots, provisional series included, unreviewed German shown as [DRAFT].
+  preview:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm test
+      - run: npx astro build
+        env: { INCLUDE_PROVISIONAL: '1' }
+      - uses: actions/upload-artifact@v4
+        with: { name: preview-site, path: dist }
+
+  main:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    concurrency: main # one bot commit to main at a time
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npx tsx scripts/fetch.ts
+      - name: Commit changed snapshots to main
+        id: diff
+        run: |
+          if [ -z "$(git status --porcelain data/snapshots)" ]; then echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/snapshots
+          git commit -m 'Update data snapshots'
+          git push origin HEAD:main
+      # A person's push always builds; cron and manual runs build only when a snapshot changed.
+      - if: github.event_name == 'push' || steps.diff.outputs.changed == 'true'
+        run: npm test
+      # Production build only when it will be deployed: it fails on unreviewed German (spec section 10).
+      - if: github.event_name == 'push' || steps.diff.outputs.changed == 'true'
+        run: npx astro build
+        env:
+          INCLUDE_PROVISIONAL: ${{ vars.PRODUCTION_DEPLOY != 'true' && '1' || '' }}
+      - name: Deploy to Cloudflare Pages (production)
+        if: vars.PRODUCTION_DEPLOY == 'true' && (github.event_name == 'push' || steps.diff.outputs.changed == 'true')
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT }} --branch=main
