@@ -13,7 +13,7 @@ const { lang, page, title } = Astro.props as { lang: Lang; page: PageKey; title:
       body { font: 16px/1.5 system-ui, sans-serif; max-width: 48rem; margin: 0 auto; padding: 0 1rem; color: #1a1a1a; }
       nav, footer { display: flex; gap: 1rem; padding: 1rem 0; } nav .sw { margin-left: auto; }
       nav details > a { display: block; }
-      .selectors { display: flex; flex-wrap: wrap; gap: 1rem; }
+      :global(.selectors) { display: flex; flex-wrap: wrap; gap: 1rem; } /* the form lives in the page, outside this layout's scope */
       figure { margin: 1rem 0; } figcaption { font-size: .85rem; color: #444; } svg { max-width: 100%; height: auto; }
     </style>
   </head>

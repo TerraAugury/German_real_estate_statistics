@@ -80,3 +80,4 @@ geo.de-sn: Sachsen
 geo.de-st: Sachsen-Anhalt
 geo.de-th: Thüringen
 note.partial_total: "Deutschland-Summe aus den Ländern mit Daten; für {laender} liegt für {year} kein Wert vor."
+kpi.noscript: "Zum Wechseln von Segment, Gebiet oder Häufigkeit wird JavaScript benötigt. Ohne JavaScript zeigt diese Seite die erste Ansicht."
