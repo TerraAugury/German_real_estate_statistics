@@ -3,7 +3,7 @@
  "fetch_failed": null,
  "parts": {
   "01.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Schleswig-Holstein – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Schleswig-Holstein \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -44,10 +44,11 @@
     116,
     88,
     55
-   ]
+   ],
+   "frequency": "annual"
   },
   "02.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Hamburg – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Hamburg \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -88,10 +89,11 @@
     92,
     32,
     106
-   ]
+   ],
+   "frequency": "annual"
   },
   "03.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Niedersachsen – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Niedersachsen \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -132,10 +134,11 @@
     218,
     180,
     235
-   ]
+   ],
+   "frequency": "annual"
   },
   "04.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Bremen – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Bremen \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -176,10 +179,11 @@
     29,
     57,
     29
-   ]
+   ],
+   "frequency": "annual"
   },
   "05.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Nordrhein-Westfalen – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Nordrhein-Westfalen \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -220,10 +224,11 @@
     546,
     623,
     380
-   ]
+   ],
+   "frequency": "annual"
   },
   "06.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Hessen – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Hessen \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -264,10 +269,11 @@
     287,
     344,
     227
-   ]
+   ],
+   "frequency": "annual"
   },
   "07.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Rheinland-Pfalz – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Rheinland-Pfalz \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -308,10 +314,11 @@
     126,
     64,
     122
-   ]
+   ],
+   "frequency": "annual"
   },
   "08.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Baden-Württemberg – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Baden-W\u00fcrttemberg \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -352,10 +359,11 @@
     443,
     362,
     368
-   ]
+   ],
+   "frequency": "annual"
   },
   "09.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Bayern – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Bayern \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -396,10 +404,11 @@
     680,
     661,
     583
-   ]
+   ],
+   "frequency": "annual"
   },
   "10.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Saarland – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Saarland \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -440,10 +449,11 @@
     13,
     7,
     6
-   ]
+   ],
+   "frequency": "annual"
   },
   "11.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Berlin – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Berlin \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -484,10 +494,11 @@
     390,
     306,
     231
-   ]
+   ],
+   "frequency": "annual"
   },
   "12.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Brandenburg – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Brandenburg \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -528,10 +539,11 @@
     100,
     58,
     59
-   ]
+   ],
+   "frequency": "annual"
   },
   "13.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Mecklenburg-Vorpommern – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Mecklenburg-Vorpommern \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -572,10 +584,11 @@
     43,
     16,
     47
-   ]
+   ],
+   "frequency": "annual"
   },
   "14.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Sachsen – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Sachsen \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -616,10 +629,11 @@
     105,
     157,
     124
-   ]
+   ],
+   "frequency": "annual"
   },
   "15.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Sachsen-Anhalt – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Sachsen-Anhalt \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -660,10 +674,11 @@
     79,
     50,
     14
-   ]
+   ],
+   "frequency": "annual"
   },
   "16.BAUART1.BTK-GEB.GBD-NW-BV.FLC002": {
-   "name": "Thüringen – Building construction – Constr. of new buildings and work on exist. build. – Office and administrative buildings – Useful floor space",
+   "name": "Th\u00fcringen \u2013 Building construction \u2013 Constr. of new buildings and work on exist. build. \u2013 Office and administrative buildings \u2013 Useful floor space",
    "indexed_at": "2026-10-18T10:32:10.831Z",
    "period": [
     "2008",
@@ -704,7 +719,8 @@
     61,
     25,
     33
-   ]
+   ],
+   "frequency": "annual"
   }
  }
 }

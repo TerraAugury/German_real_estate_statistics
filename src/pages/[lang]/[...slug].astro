@@ -4,6 +4,7 @@ import { built, langs, slug, href, type Lang, type PageKey } from '../../lib/rou
 import { t, fmt } from '../../lib/i18n';
 import { loadSeries } from '../../lib/series';
 import { lineChart } from '../../lib/chart';
+import { notes } from '../../lib/notes';
 
 export function getStaticPaths() {
   return langs.flatMap((lang) => built.map((page) => ({ params: { lang, slug: slug(page, lang) || undefined }, props: { page } })));
@@ -31,6 +32,7 @@ const sourceLine = t(lang, 'source.line', {
       <figure>
         <h2>{s.title[lang]}</h2>
         <Fragment set:html={lineChart(s, lang)} />
+        {notes(s, lang).map((n) => <p class="note">{n}</p>)}
         <figcaption set:html={sourceLine} />
       </figure>
     </>

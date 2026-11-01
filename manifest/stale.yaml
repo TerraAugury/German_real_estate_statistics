@@ -1,0 +1,4 @@
+# Staleness thresholds in days: stale when the last period ended longer ago than this (spec section 11).
+monthly: 150
+quarterly: 240
+annual: 540
