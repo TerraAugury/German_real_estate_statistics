@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import { routes, langs, slug, href, type PageKey } from '../../lib/routes';
+import { t, fmt } from '../../lib/i18n';
+import { loadSeries } from '../../lib/series';
+import { lineChart } from '../../lib/chart';
+
+export function getStaticPaths() {
+  return langs.flatMap((lang) => (Object.keys(routes) as PageKey[]).map((page) => ({ params: { lang, slug: slug(page, lang) || undefined }, props: { page } })));
+}
+const { lang } = Astro.params as { lang: 'en' | 'de' };
+const { page } = Astro.props as { page: PageKey };
+const s = loadSeries('construction-permits-office');
+const last = s.points.at(-1)!;
+const sourceLine = t(lang, 'source.line', { publisher: s.publisher, id: s.dbnomicsId, licence: s.licence.name, period: s.lastPeriod })
+  + (s.derived ? ` / ${t(lang, 'source.own')}` : '');
+---
+<Base lang={lang} page={page} title={page === 'home' ? t(lang, 'site.title') : t(lang, 'kpi.construction.title')}>
+  {page === 'home' ? (
+    <>
+      <h1>{t(lang, 'site.title')}</h1>
+      <p>{t(lang, 'home.purpose')}</p>
+      <p><a href={href('construction', lang)}>{t(lang, 'home.card.link', { kpi: s.title[lang], period: `${fmt(lang, last.value, { maximumFractionDigits: 2 })} (${last.year})` })}</a></p>
+    </>
+  ) : (
+    <>
+      <h1>{t(lang, 'kpi.construction.title')}</h1>
+      <figure>
+        <h2>{s.title[lang]}</h2>
+        <Fragment set:html={lineChart(s, lang)} />
+        <figcaption>{sourceLine}</figcaption>
+      </figure>
+    </>
+  )}
+</Base>

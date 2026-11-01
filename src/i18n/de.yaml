@@ -1,0 +1,10 @@
+site.title: Statistiken zum deutschen Gewerbeimmobilienmarkt
+nav.home: Startseite
+nav.construction: Bautätigkeit
+lang.switch: English
+home.purpose: Offene Statistiken zum deutschen Gewerbeimmobilienmarkt; jede Grafik nennt Quelle und Lizenz.
+home.card.link: "{kpi}: zuletzt {period}"
+kpi.construction.title: Bautätigkeit (Genehmigungen, Fertigstellungen)
+source.line: "Quelle: {publisher}, DBnomics-Reihe {id} / Lizenz: {licence} / Daten bis {period}"
+source.own: eigene Berechnung
+footer.text: Betrieben von Terra Augury Ltd.

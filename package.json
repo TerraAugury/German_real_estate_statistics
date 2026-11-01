@@ -1,0 +1,25 @@
+{
+  "name": "german-cre-statistics",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "tsx scripts/fetch.ts && astro build",
+    "test": "vitest run",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@observablehq/plot": "^0.6.17",
+    "astro": "^7.4.1",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@types/jsdom": "^30.0.0",
+    "@types/node": "^26.6.6",
+    "jsdom": "^30.1.3",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
+  }
+}
