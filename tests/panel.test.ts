@@ -31,6 +31,11 @@ describe('Link panel', () => {
     expect(renderPanel(kpi, ind, shown(14), 'en')).toContain('Based on only 14 annual observations.');
     expect(renderPanel(kpi, ind, shown(20), 'en')).not.toContain('Based on only');
   });
+  it('Notes in the fixed order: the KPI’s short history, then small sample (spec section 9)', () => {
+    const h = renderPanel({ ...kpi, shortWindow: true }, ind, shown(14), 'en');
+    expect(h.indexOf('Short history')).toBeGreaterThan(-1);
+    expect(h.indexOf('Short history')).toBeLessThan(h.indexOf('Based on only'));
+  });
   it('not-shown state is visible, with n, in both languages, and no charts', () => {
     const r: LinkResult = { shown: false, n0: 7, reason: 'too_few' };
     expect(renderPanel(kpi, ind, r, 'en')).toContain('Link not shown: too few observations (n = 7)');

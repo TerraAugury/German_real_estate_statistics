@@ -22,7 +22,7 @@ Each Link has three parts:
 4. Consumer price index (Destatis), monthly.
 5. Real GDP (Deutsche Bundesbank), quarterly.
 6. Registered unemployment rate (Deutsche Bundesbank), monthly.
-7. Construction price index (Destatis), quarterly: office buildings for office views, industrial and commercial buildings for all others.
+7. Construction price index (Destatis), quarterly: office buildings for office views and for construction of office buildings, industrial and commercial buildings for all others.
 8. OECD business confidence (OECD), monthly: retail for retail views, construction for all others. These series are not seasonally adjusted and are percentage balances, so their changes are differences in points.
 
 ## How to read these figures
@@ -31,4 +31,4 @@ Each Link has three parts:
 - Germany construction totals, unit conversions, year-on-year changes and Links are our own calculation and are marked as such.
 - The site shows only the latest published version of each series and keeps no revision history.
 - The Deutsche Bundesbank commercial property series are compiled from third-party data (bulwiengesa, vdp).
-- Publisher, series id and licence for every series are listed under Sources and licences.
+- Publisher, series id and licence for every series are listed under [Sources and licences](/en/sources).

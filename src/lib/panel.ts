@@ -32,7 +32,8 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
   if (!r.shown) {
     body = `<p>${t(lang, r.reason === 'constant' ? 'link.not_shown.constant' : 'link.not_shown', { n: String(r.n0) })}</p>`;
   } else {
-    if (kpi.freq === 'A' && r.headline.n < SMALL) notes.unshift(`${t(lang, 'note.prefix')}: ${t(lang, 'link.small_sample', { n: String(r.headline.n) })}`);
+    // Fixed Note order (spec section 9): short history, then small sample, then stale and the rest.
+    if (kpi.freq === 'A' && r.headline.n < SMALL) notes.splice(shortNote(kpi, lang).length, 0, `${t(lang, 'note.prefix')}: ${t(lang, 'link.small_sample', { n: String(r.headline.n) })}`);
     const col = (k: 'kpi' | 'indicator', s: Series) =>
       `<h4>${esc(s.title[lang])}</h4>` + levelChart(r.overlay.flatMap((o) => (o[k] === null ? [] : [{ period: o.period, value: o[k]! }])), s.unit[lang], t(lang, 'link.overlay.label', { title: s.title[lang] }), lang);
     const N = r.lags.filter((l) => l.rho !== null).length;
