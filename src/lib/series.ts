@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { loadManifest, dbnomicsId, type Localized } from './manifest';
+import { loadManifest, dbnomicsId, isDerived, type Localized } from './manifest';
 import { validateSnapshot, isStale } from './pipeline';
 import { noteTexts } from './notes';
 import { langs, type Lang } from './routes';
@@ -35,7 +35,7 @@ export function loadSeries(key: string, now = new Date()): Series {
   const s: Series = { key, title: m.title, unit: m.unit, publisher: m.publisher, licence: m.licence,
     dbnomicsId: dbnomicsId(m),
     dbnomicsUrl: `https://db.nomics.world/${m.provider}/${m.dataset}`, obs, change: m.change, freq: annual ? 'A' : 'M',
-    lastPeriod, derived: m.lands.length > 1, provisional: m.provisional, stale, fetchFailed: snap.fetch_failed ?? null,
+    lastPeriod, derived: isDerived(m), provisional: m.provisional, stale, fetchFailed: snap.fetch_failed ?? null,
     retrievedAt: snap.retrieved_at, revisedAt: snap.revised_at ?? null, notes: { en: [], de: [] } };
   for (const l of langs) s.notes[l] = noteTexts(s, l, now);
   return s;

@@ -78,7 +78,15 @@
     9.967,
     9.653,
     8.906
-   ]
+   ],
+   "dimensions": {
+    "BBK_DOSC_GROUP": "B30",
+    "BBK_DOSC_NAME": "R0210",
+    "BBK_DOSC_SLIDE": "G650",
+    "BBK_DO_SUFFIX": "A",
+    "BBK_STD_ADJUSTMENT": "N",
+    "BBK_STD_FREQ": "A"
+   }
   }
  }
 }

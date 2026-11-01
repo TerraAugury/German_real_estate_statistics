@@ -46,7 +46,15 @@
     130.4,
     46.7,
     82.9
-   ]
+   ],
+   "dimensions": {
+    "BBK_DOSC_GROUP": "B30",
+    "BBK_DOSC_NAME": "R0820",
+    "BBK_DOSC_SLIDE": "G800",
+    "BBK_DO_SUFFIX": "A",
+    "BBK_STD_ADJUSTMENT": "N",
+    "BBK_STD_FREQ": "A"
+   }
   }
  }
 }

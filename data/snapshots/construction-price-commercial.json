@@ -560,7 +560,14 @@
     138.1,
     141.4,
     142.9
-   ]
+   ],
+   "dimensions": {
+    "BAUAR1": "BPNG2",
+    "BAUAR4": "BAULEISTBW",
+    "DINSG": "DG",
+    "STEMW1": "STEMW1",
+    "ind": "PRE002"
+   }
   }
  }
 }

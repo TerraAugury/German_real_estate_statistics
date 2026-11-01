@@ -840,7 +840,20 @@
     6.4,
     6.3,
     6.3
-   ]
+   ],
+   "dimensions": {
+    "BBK_DOLM_AGEGENDER": "A0000",
+    "BBK_DOLM_CONCEPT": "UBA000",
+    "BBK_DOLM_JURISDICTION": "A01",
+    "BBK_DOLM_NATIONALITY": "D00",
+    "BBK_DOLM_NAVIGATION": "UNE",
+    "BBK_DOLM_RANGE": "0",
+    "BBK_DO_BASIS": "R00",
+    "BBK_DO_SUFFIX": "A",
+    "BBK_STD_ADJUSTMENT": "Y",
+    "BBK_STD_AREA_WORLD": "DE",
+    "BBK_STD_FREQ": "M"
+   }
   }
  }
 }

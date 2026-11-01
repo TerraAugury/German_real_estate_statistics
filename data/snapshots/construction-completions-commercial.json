@@ -32,7 +32,14 @@
     63,
     65,
     66
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "01",
+    "ind": "FLC002"
+   }
   },
   "02.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Hamburg – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -63,7 +70,14 @@
     8,
     21,
     12
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "02",
+    "ind": "FLC002"
+   }
   },
   "03.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Niedersachsen – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -94,7 +108,14 @@
     151,
     172,
     111
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "03",
+    "ind": "FLC002"
+   }
   },
   "04.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Bremen – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -125,7 +146,14 @@
     11,
     9,
     4
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "04",
+    "ind": "FLC002"
+   }
   },
   "05.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Nordrhein-Westfalen – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -156,7 +184,14 @@
     316,
     174,
     220
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "05",
+    "ind": "FLC002"
+   }
   },
   "06.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Hessen – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -187,7 +222,14 @@
     152,
     106,
     81
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "06",
+    "ind": "FLC002"
+   }
   },
   "07.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Rheinland-Pfalz – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -218,7 +260,14 @@
     71,
     63,
     70
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "07",
+    "ind": "FLC002"
+   }
   },
   "08.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Baden-Württemberg – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -249,7 +298,14 @@
     209,
     242,
     210
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "08",
+    "ind": "FLC002"
+   }
   },
   "09.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Bayern – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -280,7 +336,14 @@
     372,
     259,
     280
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "09",
+    "ind": "FLC002"
+   }
   },
   "10.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Saarland – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -311,7 +374,14 @@
     25,
     7,
     9
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "10",
+    "ind": "FLC002"
+   }
   },
   "11.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Berlin – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -342,7 +412,14 @@
     34,
     43,
     44
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "11",
+    "ind": "FLC002"
+   }
   },
   "12.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Brandenburg – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -373,7 +450,14 @@
     50,
     61,
     24
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "12",
+    "ind": "FLC002"
+   }
   },
   "13.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Mecklenburg-Vorpommern – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -404,7 +488,14 @@
     47,
     327,
     46
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "13",
+    "ind": "FLC002"
+   }
   },
   "14.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Sachsen – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -435,7 +526,14 @@
     104,
     76,
     111
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "14",
+    "ind": "FLC002"
+   }
   },
   "15.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Sachsen-Anhalt – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -466,7 +564,14 @@
     38,
     21,
     36
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "15",
+    "ind": "FLC002"
+   }
   },
   "16.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002": {
    "name": "Thüringen – Building construction – Constr. of new buildings and work on exist. build. – Commercial buildings – Useful floor space",
@@ -497,7 +602,14 @@
     40,
     22,
     25
-   ]
+   ],
+   "dimensions": {
+    "BAUBR1": "BAUART1",
+    "BAUGB1": "GBD-NW-NLW-H",
+    "BAUTK1": "BTK-GEB",
+    "DLAND": "16",
+    "ind": "FLC002"
+   }
   }
  }
 }

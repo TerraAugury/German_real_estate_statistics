@@ -116,7 +116,15 @@
     169.7,
     170.7,
     171.5
-   ]
+   ],
+   "dimensions": {
+    "BBK_DOSC_GROUP": "B10",
+    "BBK_DOSC_NAME": "P0102",
+    "BBK_DOSC_SLIDE": "G000",
+    "BBK_DO_SUFFIX": "A",
+    "BBK_STD_ADJUSTMENT": "N",
+    "BBK_STD_FREQ": "Q"
+   }
   }
  }
 }

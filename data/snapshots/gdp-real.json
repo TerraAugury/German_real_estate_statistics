@@ -460,7 +460,15 @@
     104.94,
     106.04,
     105.15
-   ]
+   ],
+   "dimensions": {
+    "BBK_NAAC2011_CLASSIFICATION": "H",
+    "BBK_NAAC2011_SUFFIX": "L",
+    "BBK_NAAC2011_TITLE": "0000",
+    "BBK_STD_ADJUSTMENT": "N",
+    "BBK_STD_AREA": "DE",
+    "BBK_STD_FREQ": "Q"
+   }
   }
  }
 }

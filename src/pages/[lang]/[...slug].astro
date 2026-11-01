@@ -5,7 +5,7 @@ import { t, fmt } from '../../lib/i18n';
 import { loadSeries, annualPoints } from '../../lib/series';
 import { lineChart } from '../../lib/chart';
 import { notes } from '../../lib/notes';
-import { loadManifest } from '../../lib/manifest';
+import { loadManifest, publicLinks } from '../../lib/manifest';
 import { sourcesTable } from '../../lib/sources';
 import { linkPanel, sourceLine } from '../../lib/panel';
 
@@ -15,11 +15,14 @@ export function getStaticPaths() {
 const { lang } = Astro.params as { lang: Lang };
 const { page } = Astro.props as { page: PageKey };
 const s = loadSeries('construction-permits-office');
-const panels = page === 'construction' ? ['euribor-3m', 'cpi'].map((k) => linkPanel(s, loadSeries(k), lang)) : [];
+// Construction page Links; the provisional gate drops any whose series is excluded.
+const links = publicLinks([{ kpi: s.key, indicator: 'euribor-3m' }, { kpi: s.key, indicator: 'cpi' }]);
+const panels = page === 'construction' ? links.map((l) => linkPanel(s, loadSeries(l.indicator), lang)) : [];
+const titleKey = { home: 'site.title', construction: 'kpi.construction.title', sources: 'sources.title' }[page as string]!;
 const last = annualPoints(s).at(-1)!;
 const source = sourceLine(s, lang);
 ---
-<Base lang={lang} page={page} title={page === 'home' ? t(lang, 'site.title') : page === 'sources' ? t(lang, 'sources.title') : t(lang, 'kpi.construction.title')}>
+<Base lang={lang} page={page} title={t(lang, titleKey)}>
   {page === 'home' ? (
     <>
       <h1>{t(lang, 'site.title')}</h1>
@@ -28,13 +31,13 @@ const source = sourceLine(s, lang);
     </>
   ) : page === 'sources' ? (
     <>
-      <h1>{t(lang, 'sources.title')}</h1>
+      <h1>{t(lang, titleKey)}</h1>
       <p>{t(lang, 'sources.intro')}</p>
       <Fragment set:html={sourcesTable(loadManifest(), lang)} />
     </>
   ) : (
     <>
-      <h1>{t(lang, 'kpi.construction.title')}</h1>
+      <h1>{t(lang, titleKey)}</h1>
       <figure>
         <h2>{s.title[lang]}</h2>
         <Fragment set:html={lineChart(s, lang)} />

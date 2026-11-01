@@ -72,7 +72,15 @@
     4.2,
     4.5,
     4.8
-   ]
+   ],
+   "dimensions": {
+    "BBK_DOSC_GROUP": "B30",
+    "BBK_DOSC_NAME": "R1020",
+    "BBK_DOSC_SLIDE": "G850",
+    "BBK_DO_SUFFIX": "A",
+    "BBK_STD_ADJUSTMENT": "N",
+    "BBK_STD_FREQ": "A"
+   }
   }
  }
 }

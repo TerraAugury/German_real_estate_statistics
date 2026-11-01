@@ -1004,7 +1004,18 @@
     -25.5,
     -31.4,
     -31.4
-   ]
+   ],
+   "dimensions": {
+    "ACTIVITY": "G47",
+    "ADJUSTMENT": "Y",
+    "FREQ": "M",
+    "MEASURE": "BCICP",
+    "METHODOLOGY": "N",
+    "REF_AREA": "DEU",
+    "TIME_HORIZ": "_Z",
+    "TRANSFORMATION": "_Z",
+    "UNIT_MEASURE": "PB"
+   }
   }
  }
 }

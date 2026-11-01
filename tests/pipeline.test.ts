@@ -4,13 +4,13 @@ import { notes } from '../src/lib/notes';
 import type { ManifestEntry } from '../src/lib/manifest';
 import type { Series } from '../src/lib/series';
 
-const m = { key: 'k', provider: 'P', dataset: 'D', ids: ['{land}.X'], lands: ['01'], frequency: 'annual', expected_start: 2008 } as ManifestEntry;
+const m = { key: 'k', provider: 'P', dataset: 'D', ids: ['{land}.X'], laender: ['01'], frequency: 'annual', expected_start: 2008 } as ManifestEntry;
 const part = (indexed_at: string, value: number[], start = 2008): Part =>
-  ({ name: 'n', indexed_at, frequency: 'annual', period: value.map((_, i) => String(start + i)), value });
+  ({ name: 'n', indexed_at, frequency: 'annual', dimensions: { ind: 'FLC002' }, period: value.map((_, i) => String(start + i)), value });
 const snap = (p: Part, extra: Partial<Snapshot> = {}): Snapshot => ({ retrieved_at: '2026-01-01T00:00:00.000Z', fetch_failed: null, parts: { '01.X': p }, ...extra });
 const now = new Date('2026-11-01T12:00:00Z');
 // fake DBnomics: metadata call has no ?observations=1
-const api = (doc: Part) => vi.fn(async (u: string) => ({ series: { docs: [{ series_name: doc.name, indexed_at: doc.indexed_at, '@frequency': doc.frequency, period: doc.period, value: doc.value }] } }));
+const api = (doc: Part) => vi.fn(async (u: string) => ({ series: { docs: [{ series_name: doc.name, indexed_at: doc.indexed_at, '@frequency': doc.frequency, dimensions: doc.dimensions, period: doc.period, value: doc.value }] } }));
 
 describe('refresh', () => {
   it('skips the download when indexed_at is unchanged', async () => {
@@ -48,6 +48,17 @@ describe('malformed responses', () => {
   it('missing arrays fail loudly', async () => {
     const get = vi.fn(async (u: string) => ({ series: { docs: [{ indexed_at: 'x', '@frequency': 'annual' }] } }));
     await expect(refresh(m, undefined, { get, now })).rejects.toBeInstanceOf(BadResponse);
+  });
+  it('a changed unit (dimensions) is rejected at fetch time', async () => {
+    const bad = { ...part('t2', [1, 2]), dimensions: { ind: 'FLC003' } };
+    await expect(refresh(m, snap(part('t1', [1, 2])), { get: api(bad), now })).rejects.toThrow(/unit/);
+  });
+  it('records dimensions on an old snapshot that has none, without a download', async () => {
+    const { dimensions, ...legacy } = part('t1', [1, 2]);
+    const get = api(part('t1', [1, 2]));
+    const next = await refresh(m, snap(legacy as Part), { get, now });
+    expect(next!.parts['01.X'].dimensions).toEqual({ ind: 'FLC002' });
+    expect(get).toHaveBeenCalledTimes(1);
   });
   it('a changed frequency is rejected at fetch time', async () => {
     const bad = { ...part('t2', [1, 2]), frequency: 'monthly' };

@@ -6,7 +6,8 @@ import type { ManifestEntry } from './manifest';
 export const API = 'https://api.db.nomics.world/v22/series';
 export const UA = 'german-cre-statistics (build; contact oelamine@terraaugury.com)';
 
-export interface Part { name: string; indexed_at: string; frequency: string; period: string[]; value: (number | string | null)[] }
+/** `dimensions` holds DBnomics' dimension codes; DBnomics has no unit field, so the unit lives there (e.g. `ind: FLC002`). */
+export interface Part { name: string; indexed_at: string; frequency: string; dimensions?: Record<string, string>; period: string[]; value: (number | string | null)[] }
 export interface Snapshot { retrieved_at: string; fetch_failed: string | null; revised_at?: string | null; parts: Record<string, Part> }
 export interface Deps { get: (url: string) => Promise<any>; now: Date; warn?: (msg: string) => void }
 
@@ -26,7 +27,7 @@ export function makeGet(fetchFn: typeof fetch = fetch, sleep = (ms: number) => n
   };
 }
 
-/** The API answered but not as expected (or the frequency changed). Fails the build; never a reason to reuse the snapshot. */
+/** The API answered but not as expected (or the frequency or unit changed). Fails the build; never a reason to reuse the snapshot. */
 export class BadResponse extends Error {}
 
 function firstDoc(res: any, id: string): any {
@@ -35,7 +36,7 @@ function firstDoc(res: any, id: string): any {
   return d;
 }
 
-export const partIds = (m: ManifestEntry) => m.lands.map((land) => m.ids[0].replace('{land}', land));
+export const partIds = (m: ManifestEntry) => m.laender.map((land) => m.ids[0].replace('{land}', land));
 const url = (m: ManifestEntry, id: string, obs: boolean) => `${API}/${m.provider}/${m.dataset}/${id}${obs ? '?observations=1' : ''}`;
 
 /** True if a value for a period before the latest one changed. */
@@ -47,25 +48,33 @@ export function revised(old: Part, next: Part): boolean {
 
 /**
  * Refresh one series. indexed_at is checked first; observations are downloaded only for parts where it moved.
- * Returns the new snapshot, or null when nothing changed. Throws on any fetch error, and BadResponse on a malformed response or changed frequency.
+ * Returns the new snapshot, or null when nothing changed. Throws on any fetch error, and BadResponse on a malformed response or a changed frequency or unit.
  */
 export async function refresh(m: ManifestEntry, old: Snapshot | undefined, { get, now, warn = console.warn }: Deps): Promise<Snapshot | null> {
   const parts: Record<string, Part> = {};
-  let downloaded = false, wasRevised = false;
+  let downloaded = false, backfilled = false, wasRevised = false;
   for (const id of partIds(m)) {
     const prev = old?.parts[id];
     const meta = firstDoc(await get(url(m, id, false)), id);
-    if (prev?.frequency && prev.indexed_at === meta.indexed_at) { parts[id] = prev; continue; }
+    const dims: Record<string, string> = meta.dimensions ?? {};
+    if (prev?.dimensions && JSON.stringify(prev.dimensions) !== JSON.stringify(dims))
+      throw new BadResponse(`${id}: dimensions (unit) changed from ${JSON.stringify(prev.dimensions)} to ${JSON.stringify(dims)}`);
+    if (prev?.frequency && prev.indexed_at === meta.indexed_at) {
+      // Snapshots from before the unit check have no dimensions: record them now so the next change is caught.
+      if (!prev.dimensions) backfilled = true;
+      parts[id] = { ...prev, dimensions: dims };
+      continue;
+    }
     const doc = firstDoc(await get(url(m, id, true)), id);
     if (!Array.isArray(doc.period) || !Array.isArray(doc.value) || doc.period.length !== doc.value.length || !doc.period.length)
       throw new BadResponse(`${id}: malformed period/value arrays`);
     if (doc['@frequency'] !== m.frequency) throw new BadResponse(`${id}: frequency changed to ${doc['@frequency']}, manifest says ${m.frequency}`);
-    parts[id] = { name: doc.series_name, indexed_at: doc.indexed_at, frequency: doc['@frequency'], period: doc.period, value: doc.value };
+    parts[id] = { name: doc.series_name, indexed_at: doc.indexed_at, frequency: doc['@frequency'], dimensions: dims, period: doc.period, value: doc.value };
     downloaded = true;
     if (prev && prev.name !== doc.series_name) warn(`${id}: DBnomics name changed from "${prev.name}" to "${doc.series_name}"; re-check manifest titles`);
     if (prev && revised(prev, parts[id])) wasRevised = true;
   }
-  if (!downloaded && old && !old.fetch_failed) return null;
+  if (!downloaded && !backfilled && old && !old.fetch_failed) return null;
   const iso = now.toISOString();
   return { retrieved_at: downloaded || !old ? iso : old.retrieved_at, fetch_failed: null,
     revised_at: wasRevised ? iso : old?.revised_at ?? null, parts };
