@@ -10,9 +10,6 @@ on:
     - cron: '17 5 * * *' # daily
   workflow_dispatch:
 
-# One bot push at a time; pull requests do not queue behind main.
-concurrency: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.ref) || 'main' }}
-
 jobs:
   # Preview build: committed snapshots, provisional series included, unreviewed German shown as [DRAFT].
   preview:
@@ -33,71 +30,42 @@ jobs:
       - uses: actions/upload-artifact@v7
         with: { name: preview-site, path: dist }
 
-  # Jobs that run dependency code (npm ci, fetch, tests, build) get a read-only token with no credentials left in the
-  # checkout; only `commit`, which installs and runs nothing, can push.
-  fetch:
+  main:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    concurrency: main # one bot push at a time
     permissions:
-      contents: read
-    outputs:
-      changed: ${{ steps.diff.outputs.changed }}
+      contents: write
     steps:
+      # `work` is never pushed (AGENTS.md, Branches), so snapshots are committed straight to `main`;
+      # scripts/push-main.sh brings them into the local `work` and `main`. The tip of main, not the event's commit,
+      # so a run that waited in the concurrency queue still pushes a fast-forward.
       - uses: actions/checkout@v7
-        with: { ref: main, persist-credentials: false }
+        with: { ref: main }
       - uses: actions/setup-node@v7
         with: { node-version: 26, cache: npm }
       - run: npm ci
       - run: npx tsx scripts/fetch.ts
-      - id: diff
-        run: |
-          if [ -z "$(git status --porcelain data/snapshots)" ]; then echo "changed=false" >> "$GITHUB_OUTPUT"; else echo "changed=true" >> "$GITHUB_OUTPUT"; fi
-      - if: steps.diff.outputs.changed == 'true'
-        uses: actions/upload-artifact@v7
-        with: { name: snapshots, path: data/snapshots }
-
-  # `work` is never pushed (AGENTS.md, Branches), so snapshots are committed straight to `main`;
-  # scripts/push-main.sh brings them into the local `work` and `main`. The tip of main, not the event's commit,
-  # so a run that waited in the concurrency queue still pushes a fast-forward.
-  commit:
-    needs: fetch
-    if: needs.fetch.outputs.changed == 'true'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v7
-        with: { ref: main }
-      - uses: actions/download-artifact@v8
-        with: { name: snapshots, path: data/snapshots }
       - name: Commit changed snapshots to main
+        id: diff
         run: |
+          if [ -z "$(git status --porcelain data/snapshots)" ]; then echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/snapshots
           git commit -m 'Update data snapshots'
           git push origin main
-
-  # Test, build and deploy what `main` holds. A person's push always builds; cron and manual runs build only when a snapshot changed.
-  build:
-    needs: [fetch, commit]
-    if: ${{ !cancelled() && needs.fetch.result == 'success' && contains(fromJSON('["success","skipped"]'), needs.commit.result) && (github.event_name == 'push' || needs.fetch.outputs.changed == 'true') }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v7
-        with: { ref: main, persist-credentials: false }
-      - uses: actions/setup-node@v7
-        with: { node-version: 26, cache: npm }
-      - run: npm ci
-      - run: npm test
+      # Test, build and deploy what `main` holds. A person's push always builds; cron and manual runs build only when a snapshot changed.
+      - if: github.event_name == 'push' || steps.diff.outputs.changed == 'true'
+        run: npm test
       # Production build only when it will be deployed: it fails on unreviewed German (spec section 10).
-      - run: npx astro build
+      - if: github.event_name == 'push' || steps.diff.outputs.changed == 'true'
+        run: npx astro build
         env:
           INCLUDE_PROVISIONAL: ${{ vars.PRODUCTION_DEPLOY != 'true' && '1' || '' }}
       - name: Deploy to Cloudflare Pages (production)
-        if: vars.PRODUCTION_DEPLOY == 'true'
+        if: vars.PRODUCTION_DEPLOY == 'true' && (github.event_name == 'push' || steps.diff.outputs.changed == 'true')
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
