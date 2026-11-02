@@ -1,0 +1,61 @@
+// Page models (spec section 8): what the KPI pages, the Links overview and the Availability grid show, as data with no
+// language in it. The page file translates and renders; tests call these directly, without a build.
+import { INDICATORS, linkResult, viewLinks, type Indicator, type Pair } from './links';
+import { getSeries } from './series';
+import { GEO_GROUPS, KPIS, SEGMENTS, cell, geoGroup, headline, liveViews, type Cell, type Freq, type GeoGroup, type Kpi, type Segment, type View } from './kpis';
+import type { LinkResult } from '../link/link';
+
+const uniq = <T,>(xs: T[]) => [...new Set(xs)];
+
+export interface KpiPage {
+  /** Every live view in catalogue order; `links` are its panel ids. Only the first is live at load (ticket 12). */
+  views: { view: View; links: string[]; live: boolean }[];
+  /** Each Link pair once, in indicator order; `geo` is the geography of the first view showing it (its scope label). */
+  panels: { id: string; pair: Pair; geo: string; live: boolean }[];
+  /** Selector options in view order; geographies grouped, empty groups dropped. */
+  selectors: { segment: Segment[]; geo: { group: GeoGroup; geos: string[] }[]; freq: Freq[] };
+}
+
+export function kpiPage(kpi: Kpi): KpiPage {
+  const live = liveViews(kpi);
+  const panels = new Map<string, KpiPage['panels'][number]>();
+  const views = live.map((view, i) => {
+    const pairs = viewLinks(view);
+    for (const pair of pairs) if (!panels.has(pair.id)) panels.set(pair.id, { id: pair.id, pair, geo: view.geo, live: i === 0 });
+    return { view, links: pairs.map((p) => p.id), live: i === 0 };
+  });
+  const geos = uniq(live.map((v) => v.geo));
+  return {
+    views,
+    panels: [...panels.values()].sort((a, b) => INDICATORS.indexOf(a.pair.name) - INDICATORS.indexOf(b.pair.name)),
+    selectors: {
+      segment: uniq(live.map((v) => v.segment)),
+      geo: GEO_GROUPS.map((group) => ({ group, geos: geos.filter((g) => geoGroup(g) === group) })).filter((g) => g.geos.length),
+      freq: uniq(live.map((v) => v.freq)),
+    },
+  };
+}
+
+export interface LinksOverview {
+  /** Indicators that some row has a public pair for, in indicator order. */
+  columns: Indicator[];
+  /** Each KPI at its headline view (none = licence not confirmed), one cell per indicator it has a pair for. */
+  rows: { kpi: Kpi; view?: View; cells: Map<Indicator, { pair: Pair; result: LinkResult }> }[];
+}
+
+export function linksOverview(): LinksOverview {
+  const rows = KPIS.map((kpi) => {
+    const view = headline(kpi);
+    const pairs = view ? viewLinks(view) : [];
+    return { kpi, view, cells: new Map(pairs.map((pair) => [pair.name, { pair, result: linkResult(getSeries(pair.kpi, pair.land), getSeries(pair.indicator)) }])) };
+  });
+  return { columns: INDICATORS.filter((n) => rows.some((r) => r.cells.has(n))), rows };
+}
+
+/** Availability grid: one row per KPI, one cell per Segment with the geography groups its live views cover. */
+export const availability = () => KPIS.map((kpi) => ({
+  kpi,
+  cells: SEGMENTS.map((segment): { segment: Segment; cell: Cell; geos: GeoGroup[] } => ({
+    segment, cell: cell(kpi, segment), geos: uniq(liveViews(kpi).filter((v) => v.segment === segment).map((v) => geoGroup(v.geo))),
+  })),
+}));

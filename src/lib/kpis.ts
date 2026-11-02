@@ -21,6 +21,10 @@ export const landName = (lang: Lang, code: string) => t(lang, `geo.${landKey(cod
 export const isLand = (geo: string) => geo.startsWith('de-');
 /** City class geographies (labelled as classes, never as cities). */
 export const CITY_CLASSES = ['supra-regional', '7-cities', '120-towns', '127-towns', '127-districts'];
+/** How selectors and the Availability grid group geographies: Germany-wide (incl. "excluding supra-regional"), City classes, Länder. */
+export const GEO_GROUPS = ['germany', 'city_classes', 'laender'] as const;
+export type GeoGroup = (typeof GEO_GROUPS)[number];
+export const geoGroup = (geo: string): GeoGroup => (isLand(geo) ? 'laender' : CITY_CLASSES.includes(geo) ? 'city_classes' : 'germany');
 
 const v = (segment: Segment, geo: string, freq: Freq, ...keys: string[]): View => ({ segment, geo, freq, series: keys.map((key) => ({ key })) });
 const AQ = [['annual', 'a'], ['quarterly', 'q']] as const;
