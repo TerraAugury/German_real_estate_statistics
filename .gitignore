@@ -20,6 +20,7 @@ Gemfile.lock
 .claude/worktrees/
 .scratch/
 .rtk/
+.env
 
 node_modules
 dist
