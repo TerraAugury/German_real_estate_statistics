@@ -77,8 +77,9 @@ it('unreviewed German manifest text is marked [DRAFT]; English never is', () => 
 
 it('the committed manifest is loaded once while its files are unchanged; a passed lock gets its own copy', () => {
   expect(loadAllManifest()).toBe(loadAllManifest());
+  const before = structuredClone(loadAllManifest());
   expect(loadAllManifest({})).not.toBe(loadAllManifest());
-  expect(byKey('cpi').title.de).not.toBe(loadAllManifest({}).find((x) => x.key === 'cpi')!.title.de); // the passed lock never leaks into the shared copy
+  expect(loadAllManifest()).toEqual(before); // the passed lock never leaks into the shared copy
 });
 
 it('dbnomicsUrl links the series, or the dataset for a sum of Länder', async () => {

@@ -1,5 +1,5 @@
 import { parse } from 'yaml';
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { readFileSync, statSync } from 'node:fs';
 import { langs, type Lang } from './routes';
 import { loadStrings } from './i18n';
 import { LOCK_PATH, draft, isPreview, readLock, unreviewedKeys, type Lock } from './review';
@@ -50,7 +50,7 @@ let committed: { stamp: string; entries: ManifestEntry[] } | undefined;
  */
 export function loadAllManifest(lock?: Lock): ManifestEntry[] {
   if (lock) return build(lock);
-  const stamp = SOURCES.map((f) => (existsSync(f) ? statSync(f).mtimeMs : 0)).join();
+  const stamp = SOURCES.map((f) => statSync(f, { throwIfNoEntry: false })?.mtimeMs ?? 0).join();
   if (committed?.stamp !== stamp) committed = { stamp, entries: build(readLock()) };
   return committed.entries;
 }
