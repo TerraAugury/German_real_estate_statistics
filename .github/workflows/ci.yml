@@ -38,8 +38,10 @@ jobs:
       contents: write
     steps:
       # `work` is never pushed (AGENTS.md, Branches), so snapshots are committed straight to `main`;
-      # scripts/push-main.sh brings them into the local `work` and `main`.
+      # scripts/push-main.sh brings them into the local `work` and `main`. The tip of main, not the event's commit,
+      # so a run that waited in the concurrency queue still pushes a fast-forward.
       - uses: actions/checkout@v4
+        with: { ref: main }
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: npm }
       - run: npm ci
