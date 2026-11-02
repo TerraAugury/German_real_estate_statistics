@@ -43,12 +43,11 @@ A build-ready spec for adding Insights (see `GLOSSARY.md`) to the site: the fina
 - [Insight chart form](issues/03-chart-form.md): headline number and verdict tag, reading, a main chart of the headline measure with its average and in-line band, then small multiples of the levels with the gap shaded blue/red by sign (prototype variant C+D).
 - [Insight calculation rules](issues/02-calculation-rules.md): period means at the coarsest frequency; shown from 10 annual points, short-history Note under 20; rebased to 2015 = 100 (ECB asset purchases, reference point only); real = nominal / CPI (annual average for flows, December for stocks); verdict from mean and population SD, +/- half SD; one tested module `src/insight/insight.ts`.
 - [Final Insight catalogue](issues/04-final-catalogue.md): 10 Insights in order A, F, G, B, D, I, C, J, E, M (L, H, K out; M = office vacancy vs office employment, national); public today only C and J; "gap" renamed spread; titles, series and reading templates fixed.
+- [Insights page and site integration](issues/05-page-and-site-integration.md): page `insights`/`einblicke` after Links; 'Insights using this KPI' list on KPI pages; hand-written `manifest/insights.yaml` with build checks; Link-panel Notes; `insight.*` keys under the existing review lock; `npm run dev` sets `INCLUDE_PROVISIONAL=1`; Methodology 'Insights' section.
 
 ## Not yet specified
 
-- Whether Home features one Insight, and whether the Links overview gains an Insights column.
-- How an Insight behaves when its series are Stale, Revised or a fetch failed (likely the existing Notes, but the Insight-level wording isn't settled).
-- Methodology page section for Insights (calculation rules, the half-standard-deviation rule, 2015 base year, flow vs stock deflating).
+- Whether Home features one Insight, and whether the Links overview gains an Insights column (not in this spec).
 
 ## Out of scope
 
