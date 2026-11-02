@@ -4,51 +4,77 @@ import { fmt, period } from './i18n';
 import type { Lang } from './routes';
 import type { Series } from './series';
 
-/** Render a Plot to an SVG string with an accessible label (shared by all charts). */
-function render(options: Plot.PlotOptions, label: string): string {
-  const svg = Plot.plot({ document: new JSDOM('').window.document, ...options });
-  svg.setAttribute('role', 'img');
-  svg.setAttribute('aria-label', label);
-  return svg.outerHTML;
+// The palette of src/layouts/Base.astro (ticket 16); SVG is rendered at build time, so CSS variables would not reach Plot's own styles.
+const INK = '#17202a', DATA = '#1f4e79', MUTED = '#4a5562', STRONG = '#b26a00', BAR = '#7b8794';
+
+/**
+ * Render a Plot twice, wide (720) and narrow (320) with its own tick layout; CSS shows the one that fits its box, so
+ * axis text stays legible on a phone instead of shrinking with the SVG (ticket 16). Both carry the accessible label.
+ */
+function render(build: (narrow: boolean) => Plot.PlotOptions, label: string): string {
+  const document = new JSDOM('').window.document;
+  return [false, true].map((narrow) => {
+    const svg = Plot.plot({
+      document, width: narrow ? 320 : 720, marginLeft: narrow ? 36 : 50, ...build(narrow),
+      style: { fontFamily: "'IBM Plex Sans Condensed', 'IBM Plex Sans', sans-serif", fontSize: '13px', color: MUTED },
+    });
+    svg.classList.add(narrow ? 'narrow' : 'wide');
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', label);
+    return svg.outerHTML;
+  }).join('');
 }
 
 const x = (p: string) => (p.includes('Q') ? +p.slice(0, 4) + (+p[6] - 1) / 4 : +p); // "2020-Q3" -> 2020.5
+const years = (d: number) => (Number.isInteger(d) ? String(d) : '');
 
 /** Server-rendered SVG line chart of an annual or quarterly series, formatted with the page locale; compact charts pass a lower height. */
 export function lineChart(s: Series, lang: Lang, height = 320): string {
   if (s.freq === 'M') throw new Error(`${s.key}: lineChart plots annual or quarterly series, got monthly`);
   const points = s.obs.map((o) => ({ ...o, x: x(o.period) }));
-  return render({
-    width: 720, height, marginLeft: 50,
-    x: { tickFormat: (d: number) => (Number.isInteger(d) ? String(d) : ''), label: null },
-    y: { grid: true, label: s.unit[lang], tickFormat: (d: number) => fmt(lang, d) },
-    marks: [Plot.lineY(points, { x: 'x', y: 'value' }), Plot.dot(points, { x: 'x', y: 'value', title: (d) => `${period(lang, d.period)}: ${fmt(lang, d.value, { maximumFractionDigits: 2 })}` })],
-  }, s.title[lang]);
+  const last = points.slice(-1);
+  return render((narrow) => ({
+    height: narrow ? Math.round(height * 0.8) : height, marginRight: 52, marginTop: 28,
+    x: { tickFormat: years, label: null, ticks: narrow ? 4 : undefined },
+    y: { grid: true, label: s.unit[lang], labelArrow: 'none', tickFormat: (d: number) => fmt(lang, d) },
+    marks: [
+      Plot.lineY(points, { x: 'x', y: 'value', stroke: DATA, strokeWidth: 2.25 }),
+      // Invisible hover targets keep a tooltip on every point without drawing one.
+      Plot.dot(points, { x: 'x', y: 'value', r: 6, fill: 'transparent', title: (d) => `${period(lang, d.period)}: ${fmt(lang, d.value, { maximumFractionDigits: 2 })}` }),
+      Plot.dot(last, { x: 'x', y: 'value', r: 4, fill: DATA }),
+      Plot.text(last, { x: 'x', y: 'value', text: (d) => fmt(lang, d.value, { maximumFractionDigits: 2 }), dx: 8, textAnchor: 'start', fill: DATA, fontWeight: 600, fontSize: narrow ? 14 : 15 }),
+    ],
+  }), s.title[lang]);
 }
 
-/** Levels of one series from a Link overlay; `unit` labels the y axis. */
-export function levelChart(pts: { period: string; value: number }[], unit: string, title: string, lang: Lang): string {
+/** Levels of one series from a Link overlay; `unit` labels the y axis. The KPI is drawn in the data colour, the indicator muted. */
+export function levelChart(pts: { period: string; value: number }[], unit: string, title: string, lang: Lang, muted = false): string {
   const data = pts.map((p) => ({ x: x(p.period), value: p.value }));
-  return render({
-    width: 720, height: 200, marginLeft: 50,
-    x: { tickFormat: (d: number) => String(d), label: null },
-    y: { grid: true, label: unit, tickFormat: (d: number) => fmt(lang, d) },
-    marks: [Plot.lineY(data, { x: 'x', y: 'value' })],
-  }, title);
+  return render((narrow) => ({
+    height: 200, marginRight: 12, marginTop: 28,
+    x: { tickFormat: years, label: null, ticks: 4 },
+    y: { grid: true, label: unit, labelArrow: 'none', tickFormat: (d: number) => fmt(lang, d) },
+    marks: [Plot.lineY(data, { x: 'x', y: 'value', stroke: muted ? MUTED : DATA, strokeWidth: narrow ? 2 : 2.25 })],
+  }), title);
 }
 
-/** Lag profile bars; blank lags stay on the axis, the strongest bar is coloured and labelled. */
+const signed = (lag: number) => (lag > 0 ? `+${lag}` : String(lag));
+
+/** Lag profile bars; blank lags stay on the axis, the strongest bar is ochre and labelled. */
 export function lagChart(lags: { lag: number; rho: number | null }[], strongest: number, labels: { lag: string; rho: string; mark: string; title: string }, lang: Lang): string {
   const bars = lags.filter((l) => l.rho !== null);
   const top = bars.filter((l) => l.lag === strongest);
-  return render({
-    width: 720, height: 260, marginLeft: 50, marginBottom: 45,
-    x: { type: 'band', domain: lags.map((l) => l.lag), label: labels.lag },
-    y: { domain: [-1, 1], grid: true, label: labels.rho, tickFormat: (d: number) => fmt(lang, d) },
+  // The label grows away from the nearer edge, so an edge lag's label stays inside the plot.
+  const at = lags.findIndex((l) => l.lag === strongest) / Math.max(lags.length - 1, 1);
+  const anchor = at < 1 / 3 ? 'start' : at > 2 / 3 ? 'end' : 'middle';
+  return render((narrow) => ({
+    height: narrow ? 220 : 260, marginBottom: 45, marginTop: 28,
+    x: { type: 'band', domain: lags.map((l) => l.lag), label: labels.lag, labelArrow: 'none', labelAnchor: 'center', tickFormat: signed },
+    y: { domain: [-1, 1], grid: true, label: labels.rho, labelArrow: 'none', tickFormat: (d: number) => fmt(lang, d) },
     marks: [
-      Plot.barY(bars, { x: 'lag', y: 'rho', fill: (d) => (d.lag === strongest ? '#b3261e' : '#6b7280'), title: (d) => `${d.lag}: ${fmt(lang, d.rho, { maximumFractionDigits: 2 })}` }),
-      Plot.text(top, { x: 'lag', y: 'rho', text: () => labels.mark, dy: -8, fontWeight: 'bold' }),
-      Plot.ruleY([0]),
+      Plot.barY(bars, { x: 'lag', y: 'rho', fill: (d) => (d.lag === strongest ? STRONG : BAR), inset: narrow ? 3 : 8, title: (d) => `${signed(d.lag)}: ${fmt(lang, d.rho, { maximumFractionDigits: 2 })}` }),
+      Plot.text(top, { x: 'lag', y: 'rho', text: (d) => `${fmt(lang, d.rho, { maximumFractionDigits: 2 })} ${labels.mark}`, dy: (top[0]?.rho ?? 0) < 0 ? 14 : -10, textAnchor: anchor, dx: anchor === 'start' ? -6 : anchor === 'end' ? 6 : 0, fill: INK, fontWeight: 600 }),
+      Plot.ruleY([0], { stroke: MUTED }),
     ],
-  }, labels.title);
+  }), labels.title);
 }

@@ -91,9 +91,9 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
         <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{SEGMENTS.map((g) => <th scope="col">{t(lang, `segment.${g}`)}</th>)}</tr></thead>
         <tbody>{availability().map(({ kpi: k, cells }) => (
           <tr><th scope="row"><a href={href(k.page, lang)}>{t(lang, k.title)}</a></th>{cells.map(({ cell: c, geos }) => {
-            if (!('view' in c)) return <td class="na">{naText(c, lang)}</td>;
+            if (!('view' in c)) return <td class={c.na === 'licence' ? 'na licence' : 'na'}>{naText(c, lang)}</td>;
             const geo = geos.map((g) => t(lang, coverGroup[g])).join(', ');
-            return <td><a href={viewHref(k, c.view, lang)}>{t(lang, 'availability.available', { geo })}</a></td>;
+            return <td class="yes"><a href={viewHref(k, c.view, lang)}>{t(lang, 'availability.available', { geo })}</a></td>;
           })}</tr>
         ))}</tbody>
       </table></div>
@@ -107,7 +107,7 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
         <tbody>{overview!.rows.map(({ kpi: k, view: v, cells }) => (
           <tr>
             <th scope="row"><a href={href(k.page, lang)}>{t(lang, k.title)}</a>{v && <><br /><small>{compact(v).title[lang]}</small></>}</th>
-            {!v ? <td class="na" colspan={overview!.columns.length}>{t(lang, 'kpi.not_available.licence')}</td> : overview!.columns.map((n) => {
+            {!v ? <td class="na licence" colspan={overview!.columns.length}>{t(lang, 'kpi.not_available.licence')}</td> : overview!.columns.map((n) => {
               const c = cells.get(n);
               if (!c) return <td />;
               const r = c.result;
@@ -129,7 +129,7 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
     <>
       <h1>{title}</h1>
       <p>{t(lang, 'sources.intro')}</p>
-      <Fragment set:html={sourcesTable(loadManifest(), lang)} />
+      <div class="scroll"><Fragment set:html={sourcesTable(loadManifest(), lang)} /></div>
     </>
   ) : (
     <>

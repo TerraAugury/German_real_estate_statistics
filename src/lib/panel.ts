@@ -31,9 +31,9 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
     body = `<p>${t(lang, r.reason === 'constant' ? 'link.not_shown.constant' : 'link.not_shown', { n: String(r.n0) })}</p>`;
   } else {
     const col = (k: 'kpi' | 'indicator', s: Series) =>
-      `<h4>${esc(s.title[lang])}</h4>` + levelChart(r.overlay.flatMap((o) => (o[k] === null ? [] : [{ period: o.period, value: o[k]! }])), s.unit[lang], t(lang, 'link.overlay.label', { title: s.title[lang] }), lang);
+      `<div><h4>${esc(s.title[lang])}</h4>` + levelChart(r.overlay.flatMap((o) => (o[k] === null ? [] : [{ period: o.period, value: o[k]! }])), s.unit[lang], t(lang, 'link.overlay.label', { title: s.title[lang] }), lang, k === 'indicator') + '</div>';
     const N = r.lags.filter((l) => l.rho !== null).length;
-    body = col('kpi', kpi) + col('indicator', ind)
+    body = `<div class="pair">${col('kpi', kpi)}${col('indicator', ind)}</div>`
       + lagChart(r.lags, r.strongest.lag, { lag: t(lang, 'link.lag.label'), rho: t(lang, 'link.rho.label'), mark: t(lang, 'link.strongest.mark'), title: t(lang, 'link.lags.label', { kpi: kpi.title[lang], indicator: ind.title[lang] }) }, lang)
       + `<p>${t(lang, 'link.headline', { rho: fmt(lang, r.headline.rho!, { maximumFractionDigits: 2 }), n: String(r.headline.n) })}</p>`
       + `<p>${t(lang, 'link.strongest', { n: String(N) })}</p>`
