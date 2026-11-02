@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:30:49.881Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
   "M.I.ZAR.ZI.EUR.S1311.B.A604.R10XX.R.A.A._Z._Z.A": {
    "name": "Yields, derived from the term structure of interest rates, on listed Federal securities with annual coupon payments / residual maturity of 10.0 years / monthly data",
-   "indexed_at": "2026-07-04T01:54:22.554Z",
    "frequency": "monthly",
    "period": [
     "1972-09",
@@ -653,7 +652,11 @@
     "2026-03",
     "2026-04",
     "2026-05",
-    "2026-06"
+    "2026-06",
+    "2026-07",
+    "2026-08",
+    "2026-09",
+    "2026-10"
    ],
    "value": [
     7.92,
@@ -1301,24 +1304,25 @@
     3.06,
     3.15,
     3,
-    2.9
+    2.9,
+    3.18,
+    3.33,
+    3.6,
+    3.38
    ],
-   "dimensions": {
-    "BBK_SEIS_BEARER_REG": "I",
-    "BBK_SEIS_CERTIFICATE": "_Z",
-    "BBK_SEIS_COVERAGE": "_Z",
-    "BBK_SEIS_INTEREST_RATE": "A",
-    "BBK_SEIS_INTEREST_TYPE": "R",
-    "BBK_SEIS_ISSUER_CLASS": "S1311",
-    "BBK_SEIS_ITEM": "ZAR",
-    "BBK_SEIS_LISTED_SUB": "B",
-    "BBK_SEIS_MATURITY": "R10XX",
-    "BBK_SEIS_RATING": "A",
-    "BBK_SEIS_REDEMPTION": "A",
-    "BBK_SEIS_SECURITY_CLASS": "A604",
-    "BBK_SEIS_VALUATION": "ZI",
-    "BBK_STD_CURRENCY": "EUR",
-    "BBK_STD_FREQ": "M"
+   "meta": {
+    "source": "Deutsche Bundesbank",
+    "url": "https://api.statistiken.bundesbank.de/rest/data/BBSIS/M.I.ZAR.ZI.EUR.S1311.B.A604.R10XX.R.A.A._Z._Z.A?format=sdmx_json&lang=en",
+    "title": "Yields, derived from the term structure of interest rates, on listed Federal securities with annual coupon payments / residual maturity of 10.0 years / monthly data",
+    "unit": "",
+    "unit_mult": 0,
+    "decimals": 2,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-11-02T11:47:45.298Z",
+    "retrieved_at": "2026-11-02T23:30:49.881Z",
+    "sha256": "87afd558465a23a6b826f30b68a8fb6d9620eba2173a4add0de0bf5c86cca066"
    }
   }
  }

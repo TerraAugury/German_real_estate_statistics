@@ -32,6 +32,13 @@ describe('refresh with source bundesbank', () => {
     const next = (await refresh(m, first, { get: async () => r, now }))!;
     expect(next.revised_at).toBe(now.toISOString());
   });
+  it('unchanged values still rewrite a snapshot that has no source metadata yet (fetched through DBnomics)', async () => {
+    const first = (await refresh(m, undefined, { get: async () => fixture(), now }))!;
+    const { meta, ...legacy } = first.parts[id];
+    const next = await refresh(m, { ...first, parts: { [id]: { ...legacy, indexed_at: 'x' } } as any }, { get: async () => fixture(), now });
+    expect(next!.parts[id].meta).toBeTruthy();
+    expect(next!.revised_at).toBeNull();
+  });
   it('404 and 410 are Unavailable', async () => {
     for (const s of [404, 410]) await expect(refresh(m, undefined, { get: async () => { throw new HttpError(s, 'u'); }, now })).rejects.toBeInstanceOf(Unavailable);
   });

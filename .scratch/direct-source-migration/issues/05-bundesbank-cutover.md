@@ -4,11 +4,11 @@
 
 **Blocked by:** 02, 03, 04
 
-**Status:** ready-for-agent
+**Status:** done
 
 Spec: `.scratch/direct-source-migration/spec.md`, decisions 11, 12, story 1-2.
 
-- [ ] Datasets switched in order BBDZ1, BBSIS, BBIM1, BBNZ1, BBDL1, each after its comparison report is reviewed
-- [ ] Snapshots regenerated; build, tsc, vitest and astro check pass after each dataset
-- [ ] No DBnomics fallback remains for switched series
-- [ ] Provisional flags unchanged by this ticket (lifting them is out of scope)
+- [x] Datasets switched in order BBDZ1, BBSIS, BBIM1, BBNZ1, BBDL1, each after its comparison report is reviewed
+- [x] Snapshots regenerated; build, tsc, vitest and astro check pass after each dataset
+- [x] No DBnomics fallback remains for switched series
+- [x] Provisional flags unchanged by this ticket (lifting them is out of scope)

@@ -53,7 +53,7 @@ export function parseSdmx(res: any, m: ManifestEntry, url: string, retrievedAt: 
   };
 }
 
-/** Refresh one Bundesbank series. Returns null when the values are unchanged. Throws Unavailable on 404/410, BadResponse on a malformed response. */
+/** Refresh one Bundesbank series. Returns null when the values are unchanged and the snapshot already carries source metadata. Throws Unavailable on 404/410, BadResponse on a malformed response. */
 export async function refreshBundesbank(m: ManifestEntry, old: Snapshot | undefined, { get, now }: Deps): Promise<Snapshot | null> {
   const id = partIds(m)[0], url = bundesbankUrl(m), iso = now.toISOString();
   let res: any;
@@ -65,6 +65,6 @@ export async function refreshBundesbank(m: ManifestEntry, old: Snapshot | undefi
   const prev = old?.parts[id];
   if (prev?.meta && (prev.meta.unit !== next.meta!.unit || prev.meta.unit_mult !== next.meta!.unit_mult))
     throw new BadResponse(`${id}: unit changed from ${prev.meta.unit}/${prev.meta.unit_mult} to ${next.meta!.unit}/${next.meta!.unit_mult}`);
-  if (prev && !old!.fetch_failed && JSON.stringify([prev.period, prev.value]) === JSON.stringify([next.period, next.value])) return null;
+  if (prev?.meta && !old!.fetch_failed && JSON.stringify([prev.period, prev.value]) === JSON.stringify([next.period, next.value])) return null;
   return { retrieved_at: iso, fetch_failed: null, revised_at: prev && revised(prev, next) ? iso : old?.revised_at ?? null, parts: { [id]: next } };
 }

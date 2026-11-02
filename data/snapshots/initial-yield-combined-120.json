@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:31:20.238Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
   "A.B10.N.G300.P0810.A": {
    "name": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / bulwiengesa AG commercial property price index / net initial yields for office and retail core properties / 120 towns and cities - Bundesbank calculations / unadjusted figures",
-   "indexed_at": "2026-06-06T01:53:40.451Z",
    "frequency": "annual",
    "period": [
     "1995",
@@ -73,13 +72,19 @@
     5.7,
     5.8
    ],
-   "dimensions": {
-    "BBK_DOSC_GROUP": "B10",
-    "BBK_DOSC_NAME": "P0810",
-    "BBK_DOSC_SLIDE": "G300",
-    "BBK_DO_SUFFIX": "A",
-    "BBK_STD_ADJUSTMENT": "N",
-    "BBK_STD_FREQ": "A"
+   "meta": {
+    "source": "Deutsche Bundesbank",
+    "url": "https://api.statistiken.bundesbank.de/rest/data/BBDZ1/A.B10.N.G300.P0810.A?format=sdmx_json&lang=en",
+    "title": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / bulwiengesa AG commercial property price index / net initial yields for office and retail core properties / 120 towns and cities - Bundesbank calculations / unadjusted figures",
+    "unit": "Prozent",
+    "unit_mult": 0,
+    "decimals": 1,
+    "comment": "Bundesbank calculations based on price data provided by bulwiengesa AG.",
+    "general_comment": null,
+    "third_party": true,
+    "valid_from": "2026-09-04T08:22:42.522Z",
+    "retrieved_at": "2026-11-02T23:31:20.238Z",
+    "sha256": "266699b89ed14aaf439d3ff6ce575493566887010ae3d221e9e5ceb0b3f4d35e"
    }
   }
  }

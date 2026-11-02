@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:30:49.881Z",
  "fetch_failed": null,
- "revised_at": null,
+ "revised_at": "2026-11-02T23:30:49.881Z",
  "parts": {
   "A.B10.N.G250.P0610.A": {
    "name": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / bulwiengesa AG commercial property price index / rents for office and retail core properties / 120 towns and cities - Bundesbank calculations / unadjusted figures",
-   "indexed_at": "2026-06-06T01:53:40.451Z",
    "frequency": "annual",
    "period": [
     "1995",
@@ -42,12 +41,12 @@
    ],
    "value": [
     114.1,
-    108.5,
-    104.1,
-    100.8,
+    108.4,
+    104,
+    100.7,
     99.1,
     98.9,
-    99,
+    98.9,
     97.4,
     94.5,
     91.9,
@@ -55,31 +54,37 @@
     90.7,
     93.2,
     96.3,
-    98.6,
+    98.5,
     100,
     102.1,
-    104.1,
+    104,
     105.8,
     106.9,
     108.3,
     109,
     109.7,
-    110.1,
+    110,
     109.1,
     106.5,
     102.6,
     99.4,
     96,
     93.8,
-    92.8
+    93.1
    ],
-   "dimensions": {
-    "BBK_DOSC_GROUP": "B10",
-    "BBK_DOSC_NAME": "P0610",
-    "BBK_DOSC_SLIDE": "G250",
-    "BBK_DO_SUFFIX": "A",
-    "BBK_STD_ADJUSTMENT": "N",
-    "BBK_STD_FREQ": "A"
+   "meta": {
+    "source": "Deutsche Bundesbank",
+    "url": "https://api.statistiken.bundesbank.de/rest/data/BBDZ1/A.B10.N.G250.P0610.A?format=sdmx_json&lang=en",
+    "title": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / bulwiengesa AG commercial property price index / rents for office and retail core properties / 120 towns and cities - Bundesbank calculations / unadjusted figures",
+    "unit": "2010=100",
+    "unit_mult": 0,
+    "decimals": 1,
+    "comment": "Bundesbank calculations based on price data provided by bulwiengesa AG.",
+    "general_comment": null,
+    "third_party": true,
+    "valid_from": "2026-09-04T08:22:42.522Z",
+    "retrieved_at": "2026-11-02T23:30:49.881Z",
+    "sha256": "5a17d8562ea811a7c6c9f8f6738f9ad40999e7bca13d2cb40028af356e712587"
    }
   }
  }

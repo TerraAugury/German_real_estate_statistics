@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:31:20.238Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
   "A.B30.N.G850.R1020.A": {
    "name": "Real Economic Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / bulwiengesa AG commercial property price index / offices - vacancy rate / 120 towns and cities - Bundesbank calculations / unadjusted figures",
-   "indexed_at": "2026-06-06T01:53:40.451Z",
    "frequency": "annual",
    "period": [
     "1995",
@@ -73,13 +72,19 @@
     4.5,
     4.8
    ],
-   "dimensions": {
-    "BBK_DOSC_GROUP": "B30",
-    "BBK_DOSC_NAME": "R1020",
-    "BBK_DOSC_SLIDE": "G850",
-    "BBK_DO_SUFFIX": "A",
-    "BBK_STD_ADJUSTMENT": "N",
-    "BBK_STD_FREQ": "A"
+   "meta": {
+    "source": "Deutsche Bundesbank",
+    "url": "https://api.statistiken.bundesbank.de/rest/data/BBDZ1/A.B30.N.G850.R1020.A?format=sdmx_json&lang=en",
+    "title": "Real Economic Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / bulwiengesa AG commercial property price index / offices - vacancy rate / 120 towns and cities - Bundesbank calculations / unadjusted figures",
+    "unit": "Prozent",
+    "unit_mult": 0,
+    "decimals": 1,
+    "comment": "Bundesbank calculations based on price data provided by bulwiengesa AG.",
+    "general_comment": null,
+    "third_party": true,
+    "valid_from": "2026-09-04T08:22:42.527Z",
+    "retrieved_at": "2026-11-02T23:31:20.238Z",
+    "sha256": "d9e686abe6a73a3695c0454033dfeeee4b2c68d8e6453b24e3b87040efa80ef2"
    }
   }
  }

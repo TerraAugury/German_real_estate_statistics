@@ -106,7 +106,10 @@ it('Sources table has one row per live series with publisher, id, licence, attri
 });
 
 describe('source field', () => {
-  it('defaults to dbnomics', () => expect(all.every((m) => m.source === 'dbnomics')).toBe(true));
+  it('is dbnomics unless the entry names another source', () => {
+    expect(byKey('cpi').source).toBe('dbnomics');
+    expect(all.filter((m) => m.dbnomics_provider === 'BUBA').every((m) => m.source === 'bundesbank')).toBe(true);
+  });
   it('rejects an unknown source', () => {
     const bad = { ...byKey(all[0].key), source: 'ftp' } as unknown as ManifestEntry;
     expect(() => checkEntries([bad], { })).toThrow(/source must be one of/);

@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:30:49.881Z",
  "fetch_failed": null,
- "revised_at": null,
+ "revised_at": "2026-11-02T23:30:49.881Z",
  "parts": {
   "Q.B10.N.G000.P0104.A": {
    "name": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / Commercial property price index / retail / Germany / unadjusted figures",
-   "indexed_at": "2026-06-06T01:53:40.451Z",
    "frequency": "quarterly",
    "period": [
     "2013-Q1",
@@ -60,7 +59,8 @@
     "2025-Q2",
     "2025-Q3",
     "2025-Q4",
-    "2026-Q1"
+    "2026-Q1",
+    "2026-Q2"
    ],
    "value": [
     98.7,
@@ -114,16 +114,23 @@
     96.6,
     97,
     97.3,
-    97.8,
-    98.1
+    97.5,
+    97.4,
+    96.7
    ],
-   "dimensions": {
-    "BBK_DOSC_GROUP": "B10",
-    "BBK_DOSC_NAME": "P0104",
-    "BBK_DOSC_SLIDE": "G000",
-    "BBK_DO_SUFFIX": "A",
-    "BBK_STD_ADJUSTMENT": "N",
-    "BBK_STD_FREQ": "Q"
+   "meta": {
+    "source": "Deutsche Bundesbank",
+    "url": "https://api.statistiken.bundesbank.de/rest/data/BBDZ1/Q.B10.N.G000.P0104.A?format=sdmx_json&lang=en",
+    "title": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / Commercial property price index / retail / Germany / unadjusted figures",
+    "unit": "2013=100",
+    "unit_mult": 0,
+    "decimals": 1,
+    "comment": "vdpResearch GmbH and Bundesbank calculations.",
+    "general_comment": null,
+    "third_party": true,
+    "valid_from": "2026-09-04T08:22:42.528Z",
+    "retrieved_at": "2026-11-02T23:30:49.881Z",
+    "sha256": "0afe3016283fe581ee7530df974d169cabd38f0440de52227771f6f3aa4f33f2"
    }
   }
  }

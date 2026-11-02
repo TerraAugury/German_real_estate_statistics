@@ -1,4 +1,4 @@
-// Fetch every manifest series from DBnomics into data/snapshots/. On fetch failure, reuse the last snapshot.
+// Fetch every manifest series from its source into data/snapshots/. On fetch failure, reuse the last snapshot.
 import { loadAllManifest } from '../src/lib/manifest';
 import { Unavailable } from '../src/lib/bundesbank';
 import { makeGet, refresh, markFailed, BadResponse, type Snapshot } from '../src/lib/pipeline';

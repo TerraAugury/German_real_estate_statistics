@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:30:49.881Z",
  "fetch_failed": null,
- "revised_at": null,
+ "revised_at": "2026-11-02T23:30:49.881Z",
  "parts": {
   "A.B10.N.G250.P0620.A": {
    "name": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / bulwiengesa AG commercial property price index / rents for office and retail core properties / 7 major cities (A cities) - Bundesbank calculations / unadjusted figures",
-   "indexed_at": "2026-06-06T01:53:40.451Z",
    "frequency": "annual",
    "period": [
     "1995",
@@ -41,21 +40,21 @@
     "2025"
    ],
    "value": [
-    81.7,
-    75.2,
+    81.8,
+    75.4,
     74.2,
     77.4,
     81.1,
     87.3,
     94.7,
-    89.9,
+    90,
     84.3,
     82.5,
     85.3,
     91.2,
     95.2,
     99.5,
-    100.4,
+    100.5,
     100,
     104.5,
     109.6,
@@ -71,15 +70,21 @@
     129.7,
     128.1,
     129.8,
-    129.8
+    130.6
    ],
-   "dimensions": {
-    "BBK_DOSC_GROUP": "B10",
-    "BBK_DOSC_NAME": "P0620",
-    "BBK_DOSC_SLIDE": "G250",
-    "BBK_DO_SUFFIX": "A",
-    "BBK_STD_ADJUSTMENT": "N",
-    "BBK_STD_FREQ": "A"
+   "meta": {
+    "source": "Deutsche Bundesbank",
+    "url": "https://api.statistiken.bundesbank.de/rest/data/BBDZ1/A.B10.N.G250.P0620.A?format=sdmx_json&lang=en",
+    "title": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / bulwiengesa AG commercial property price index / rents for office and retail core properties / 7 major cities (A cities) - Bundesbank calculations / unadjusted figures",
+    "unit": "2010=100",
+    "unit_mult": 0,
+    "decimals": 1,
+    "comment": "Bundesbank calculations based on price data provided by bulwiengesa AG.",
+    "general_comment": null,
+    "third_party": true,
+    "valid_from": "2026-09-04T08:22:42.522Z",
+    "retrieved_at": "2026-11-02T23:30:49.881Z",
+    "sha256": "ce88e07eefc50e62dea2ca5021ebb8ca894eed2dea4296e7039fe1ff9f41742a"
    }
   }
  }
