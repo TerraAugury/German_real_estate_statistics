@@ -1,8 +1,8 @@
 import { parse } from 'yaml';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import { langs, type Lang } from './routes';
 import { loadStrings } from './i18n';
-import { draft, isPreview, readLock, unreviewedKeys } from './review';
+import { LOCK_PATH, draft, isPreview, readLock, unreviewedKeys, type Lock } from './review';
 
 export type Localized = { en: string; de: string };
 export const SCOPES = ['index', 'city_class', 'combined'] as const;
@@ -29,15 +29,30 @@ export const isDerived = (m: ManifestEntry) => m.laender.length > 1;
 export const manifestStrings = (entries: ManifestEntry[], lang: Lang): Record<string, string> =>
   Object.fromEntries(entries.flatMap((m) => TEXT_FIELDS.map((f) => [`manifest:${m.key}.${f}`, m[f][lang]])));
 
-/** Every hand-written entry, provisional ones included (fetching and previews need them all). Unreviewed German text carries [DRAFT]. */
-export function loadAllManifest(): ManifestEntry[] {
+function build(lock: Lock): ManifestEntry[] {
   const entries = parse(readFileSync('manifest/series.yaml', 'utf8')) as ManifestEntry[];
   for (const m of entries) { m.laender ??= ['']; m.scale ??= 1; m.provisional ??= false; m.change ??= 'pct'; m.scope ??= []; }
   checkEntries(entries, loadStrings('en'));
-  const unreviewed = new Set(unreviewedKeys(manifestStrings(entries, 'en'), readLock()));
+  const unreviewed = new Set(unreviewedKeys(manifestStrings(entries, 'en'), lock));
   for (const m of entries) for (const f of TEXT_FIELDS) // new objects: YAML anchors share them between entries
     m[f] = { ...m[f], de: draft(m[f].de, unreviewed.has(`manifest:${m.key}.${f}`)) };
   return entries;
+}
+
+// The files the committed manifest is built from; a change to any reloads it (so `astro dev` sees edits).
+const SOURCES = ['manifest/series.yaml', LOCK_PATH, 'src/i18n/en.yaml'];
+let committed: { stamp: string; entries: ManifestEntry[] } | undefined;
+
+/**
+ * Every hand-written entry, provisional ones included (fetching and previews need them all). Unreviewed German text
+ * carries [DRAFT], judged against `lock`; without one, the committed lock. The committed result is built once while its
+ * files are unchanged (a build asks for it hundreds of times) and shared, so callers must not change it.
+ */
+export function loadAllManifest(lock?: Lock): ManifestEntry[] {
+  if (lock) return build(lock);
+  const stamp = SOURCES.map((f) => (existsSync(f) ? statSync(f).mtimeMs : 0)).join();
+  if (committed?.stamp !== stamp) committed = { stamp, entries: build(readLock()) };
+  return committed.entries;
 }
 
 /** Everything under review: interface strings plus manifest text, English side. */

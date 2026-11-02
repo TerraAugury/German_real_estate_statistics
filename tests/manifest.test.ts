@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { loadAllManifest, loadManifest, gate, publicLinks, dbnomicsId, type ManifestEntry } from '../src/lib/manifest';
 
 const all = loadAllManifest();
@@ -68,14 +68,17 @@ it('manifest carries the spec section 11 fields', () => {
   for (const m of all) expect(m.resampling, m.key).toBe(m.dbnomics_provider === 'BUBA' && m.dataset === 'BBDZ1' || m.dataset.endsWith('LJ001') ? 'none' : 'mean');
 });
 
-it('unreviewed German manifest text is marked [DRAFT]; English never is', async () => {
+it('unreviewed German manifest text is marked [DRAFT]; English never is', () => {
   // An empty lock, so the test does not depend on what has been reviewed so far.
-  vi.resetModules();
-  vi.doMock('../src/lib/review', async (orig) => ({ ...(await orig<typeof import('../src/lib/review')>()), readLock: () => ({}) }));
-  const m = (await import('../src/lib/manifest')).loadAllManifest().find((x) => x.key === 'cpi')!;
-  vi.doUnmock('../src/lib/review');
+  const m = loadAllManifest({}).find((x) => x.key === 'cpi')!;
   expect(m.title.de.startsWith('[DRAFT] ')).toBe(true);
   expect(m.title.en).not.toContain('[DRAFT]');
+});
+
+it('the committed manifest is loaded once while its files are unchanged; a passed lock gets its own copy', () => {
+  expect(loadAllManifest()).toBe(loadAllManifest());
+  expect(loadAllManifest({})).not.toBe(loadAllManifest());
+  expect(byKey('cpi').title.de).not.toBe(loadAllManifest({}).find((x) => x.key === 'cpi')!.title.de); // the passed lock never leaks into the shared copy
 });
 
 it('dbnomicsUrl links the series, or the dataset for a sum of Länder', async () => {
