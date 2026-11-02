@@ -28,4 +28,4 @@ output was clearly expected, contradicting its exit code, or garbled.
 
 All development happens on `work` or on a branch cut from `work` (worktrees included). A finished worktree branch merges back into `work`. Every time `work` gains commits, by a direct commit or a merge, run `scripts/merge-work-to-main.sh`. It always merges `work`, not the current branch, so run it after the merge into `work`. `main` changes only through that script, and never contains `.scratch/`. Add new `.scratch/` files with `git add -f`.
 
-Never push `work`, or any branch cut from it: it stays local. `main` is the only branch pushed, and only when asked (`git push origin main`).
+Never push `work`, or any branch cut from it: it stays local. `main` is the only branch pushed, only when asked, and only with `scripts/push-main.sh`. CI commits data snapshots straight to `main` on GitHub; the script replays them onto `work` and merges them into the local `main` before it pushes.
