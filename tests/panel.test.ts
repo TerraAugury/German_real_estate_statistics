@@ -3,6 +3,8 @@ import { loadSeries } from '../src/lib/series';
 import { computeLink, type LinkResult } from '../src/link/link';
 import { annualPoints } from '../src/lib/series';
 import { renderPanel } from '../src/lib/panel';
+import { lineChart } from '../src/lib/chart';
+import { JSDOM } from 'jsdom';
 
 const kpi = loadSeries('construction-permits-office');
 const ind = loadSeries('euribor-3m');
@@ -12,6 +14,15 @@ const shown = (n0: number): LinkResult => ({
   overlay: [{ period: '2008', kpi: 1, indicator: 2 }, { period: '2009', kpi: 2, indicator: 1 }],
   lags: [lag(-1, 0.1), lag(0, 0.5), lag(1, -0.7), lag(2, null)],
   headline: { lag: 0, n: n0, rho: 0.5 }, strongest: lag(1, -0.7),
+});
+
+// Ticket 16: every chart is a wide and a narrow SVG with the same accessible label; CSS shows one.
+it('lineChart renders one wide and one narrow SVG with the same label', () => {
+  const doc = new JSDOM(lineChart(kpi, 'en')).window.document;
+  const [wide, narrow] = ['svg.wide', 'svg.narrow'].map((s) => doc.querySelectorAll(s));
+  expect([wide.length, narrow.length]).toEqual([1, 1]);
+  expect(wide[0].getAttribute('aria-label')).toBe(kpi.title.en);
+  expect(narrow[0].getAttribute('aria-label')).toBe(kpi.title.en);
 });
 
 describe('Link panel', () => {
