@@ -1,5 +1,5 @@
 # German_real_estate_statistics
-Website embedding DBeconomics data relevant for German real estate
+Website embedding DBnomics data relevant for German real estate
 
 ## Deploy
 
