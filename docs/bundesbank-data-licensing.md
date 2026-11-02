@@ -81,7 +81,38 @@ The Bundesbank's own calculations on third-party data may still fall outside the
 
 ## 7. What stays on DBnomics
 
-Destatis series (construction, CPI, construction price index), Euribor (ECB) and the two OECD series. They were not tested against their own APIs.
+Destatis series (construction, CPI, construction price index), Euribor (ECB) and the two OECD series. Euribor and the OECD series were not tested against their own APIs. The Destatis series are covered in section 7a.
+
+## 7a. Destatis series: direct fetch from GENESIS-Online
+
+Nine series come from DBnomics provider `DESTATIS`, all marked `provisional: false` with licence Datenlizenz Deutschland – Namensnennung – 2.0:
+
+| Series | DBnomics dataset | Notes |
+|---|---|---|
+| Building permits: office, commercial, warehouse | `31111LJ001` | 3 series, each summed from the 16 Länder, annual |
+| Building completions: office, commercial, warehouse | `31121LJ001` | 3 series, each summed from the 16 Länder, annual |
+| Consumer price index | `61111BM001` | monthly |
+| Construction price index: office, commercial | `61261BV001` | 2 series, quarterly |
+
+Findings (2026-11-02):
+
+- The official Destatis page ([GENESIS-Online API and web services](https://destatis.de/EN/Service/OpenData/api-webservice.html)) says GENESIS-Online is free to use without registration, under the licence above, and describes a RESTful/JSON interface. It states no rate limits.
+- Third-party client libraries (pystatis, restatis) say the web service needs a registered user, with a username and password or a token. The two statements conflict and the current policy is **unverified**.
+- The Swagger documentation at `https://genesis.destatis.de/genesisWS/swagger-ui/index.html` loads the spec `https://genesis.destatis.de/genesisWS/rest/2020/GOJsonApi.json` (OpenAPI 3.0.1, title "GENESIS-Online RESTful-JSON-API").
+- Endpoints are POST requests with form-encoded parameters, except `GET helloworld/whoami`, which answered 200 without a login. Data endpoints: `data/table`, `data/tablefile`, `data/timeseries`, `data/cube` and `data/result`. Matching `catalogue`, `metadata` and `find` endpoints exist.
+- Every endpoint except `whoami` takes `username` and `password` as headers. The spec marks neither as required and declares no security scheme.
+- `data/tablefile` takes `name`, `area` (default `free`), `startyear`, `endyear`, `contents`, `transpose` and `compress`. Responses are `application/octet-stream`, consistent with the flat-file CSV format named on the Destatis page.
+- The service host `www-genesis.destatis.de` redirects to `genesis.destatis.de`. The regional database has its own REST host, `www.regionalstatistik.de/genesisws/rest/2020/`, which answered but was not examined.
+- The Länder-level permits and completions tables may be in the regional database, not in GENESIS-Online, and the GENESIS table names probably differ from the DBnomics ids (for example `31111-LJ001`). Both are **unverified**.
+
+Decision recorded: the project owner will supply a Destatis username and password for testing. Credentials must never be committed. If a login is needed in production, store it as a CI secret and read it from the environment.
+
+Next steps for this part, none started:
+
+1. Use `catalogue` and `metadata` calls to map each DBnomics id to a GENESIS table and its dimensions.
+2. Fetch one table with `data/tablefile` and compare it with the committed snapshot, as was done for the Bundesbank series.
+3. Check which attributes in the response carry unit, source and the data-status flags, and what a discontinued table returns.
+4. Decide on the raw-copy format and the retry and error handling, which differ from the SDMX-JSON path.
 
 ## 8. Proposed plan (not started)
 
@@ -101,3 +132,4 @@ Defaults assumed, not yet confirmed: no DBnomics fallback for Bundesbank series,
 - Is automated access to the SDMX service allowed, and at what rate? Ask the Bundesbank.
 - Is showing the original title and unit enough to meet "metadata unaltered" while the site also uses its own wording and rounding?
 - Is the repository public, and does that make the snapshots a redistribution?
+- Does GENESIS-Online need a login for data calls, and are the Länder-level construction tables there or in the regional database?
