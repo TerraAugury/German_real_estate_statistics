@@ -50,3 +50,1087 @@ kpi.not_available.licence:
   en_hash: cf27aa873246ec4e
   reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
   reviewed_on: 2026-11-01
+site.title:
+  en_hash: 3f126fa2e9bff8da
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+nav.home:
+  en_hash: 3a78695388b38b5c
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+lang.switch:
+  en_hash: 801cfe0fa1182664
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+home.purpose:
+  en_hash: b6a88ff89413d76b
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+kpi.construction.title:
+  en_hash: 5d52e4d5249ba5a1
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+source.line:
+  en_hash: e4bc10f929ea7c20
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+source.own:
+  en_hash: 600f487bbc2fdb17
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+footer.text:
+  en_hash: c89e0721d5abe594
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+link.title:
+  en_hash: 23b8a6b2c62f4cd6
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+link.scope:
+  en_hash: 3e753a64e65027b9
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.germany:
+  en_hash: 80db4ccdca106d37
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+link.headline:
+  en_hash: 860c18981af70b95
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+link.not_shown:
+  en_hash: 60bcb0df6250e68b
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+link.not_shown.constant:
+  en_hash: 2d374bc74f8e15ab
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+link.strongest:
+  en_hash: 3204625f9dec5b3e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+link.strongest.mark:
+  en_hash: a0a416e1b1bb3484
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+link.lag.label:
+  en_hash: 0a192ea279bc7611
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+link.rho.label:
+  en_hash: f1447685fead243d
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+link.overlay.label:
+  en_hash: 8589ca5362a5f363
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+link.lags.label:
+  en_hash: f5e891ee49b7c018
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+nav.sources:
+  en_hash: 6adf604fbf18a253
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+sources.title:
+  en_hash: 6adf604fbf18a253
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+sources.intro:
+  en_hash: f9808446ef6d520b
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+sources.col.series:
+  en_hash: a8295e08ff7a961c
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+sources.col.publisher:
+  en_hash: 21378545892f1fe2
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+sources.col.id:
+  en_hash: 4b93bc072b34a330
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+sources.col.licence:
+  en_hash: f3ec8e880a46c8a6
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+sources.col.attribution:
+  en_hash: a902dcce08867bc4
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+nav.kpis:
+  en_hash: 5bfb14769ec0a645
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+kpi.price-index.title:
+  en_hash: 6e93b0e8393cf09e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+kpi.rent-index.title:
+  en_hash: b515b9a41d753783
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+kpi.initial-yield.title:
+  en_hash: 17d2d67956e48fba
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+kpi.office-vacancy.title:
+  en_hash: 1bc6d69f01aec2e4
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+kpi.transaction-volume.title:
+  en_hash: d759d888d1a64ce8
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+select.segment:
+  en_hash: 29ee089ccecadf9d
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+select.geo:
+  en_hash: f3c73803dfc63c7d
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+select.freq:
+  en_hash: 16b6668d9831a1b8
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+select.city_classes:
+  en_hash: 433d289880d9c7a5
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+select.laender:
+  en_hash: b655add844a16426
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+segment.office:
+  en_hash: 9e380d9991e6b742
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+segment.retail:
+  en_hash: cdb38c8dc89ad6b4
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+segment.logistics:
+  en_hash: ae6e98909c98e7c9
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+segment.commercial-overall:
+  en_hash: 1a6d3318df905383
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+freq.annual:
+  en_hash: 2c5e81714652558f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+freq.quarterly:
+  en_hash: d89999a0a8081139
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.supra-regional:
+  en_hash: 890b66b92865c68f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.excl-supra-regional:
+  en_hash: 7f7e747ed7e8cd3f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.7-cities:
+  en_hash: ebabf5e11149f2a4
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.120-towns:
+  en_hash: acbda8d329cafab6
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.127-towns:
+  en_hash: ea2bdb4b889cde90
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.127-districts:
+  en_hash: 37409cc7b90d31b2
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-sh:
+  en_hash: aab4990c00e69aa9
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-hh:
+  en_hash: 47afcff3dcb9e989
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-ni:
+  en_hash: e7c5f6d55432ad04
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-hb:
+  en_hash: 5d2f597198f41ba2
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-nw:
+  en_hash: 042d90ff3935f714
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-he:
+  en_hash: fdc5207079b9f863
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-rp:
+  en_hash: e58adf22915303b2
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-bw:
+  en_hash: 4081deb936e88df9
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-by:
+  en_hash: ee95a7c182cdcf57
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-sl:
+  en_hash: e43ba1e241ff79ac
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-be:
+  en_hash: dad114b6ed7342ba
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-bb:
+  en_hash: 656e5cea184d4f34
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-mv:
+  en_hash: ad2421ff8853b631
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-sn:
+  en_hash: 68271bc8ebb295aa
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-st:
+  en_hash: 4f09fcac3bb732b5
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+geo.de-th:
+  en_hash: 8fc372475de267e1
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+note.partial_total:
+  en_hash: a8a67044f41ddcf8
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+kpi.noscript:
+  en_hash: f27f72b5dec943b7
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+na.source:
+  en_hash: 8d2c5e6db6d0ab77
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+na.kpi-price-index.logistics:
+  en_hash: b1c528bdbbf9f2b4
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+na.kpi-rent-index.logistics:
+  en_hash: 2b88d0805b87a520
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+na.kpi-initial-yield.office:
+  en_hash: b86b60f23620bf24
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+na.kpi-initial-yield.retail:
+  en_hash: d1ab3eaca4b144e3
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+na.kpi-initial-yield.logistics:
+  en_hash: a6b855809a775791
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+na.kpi-office-vacancy.retail:
+  en_hash: 823b121a2ede4630
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+na.kpi-office-vacancy.logistics:
+  en_hash: 78ecfa5102875f63
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+na.kpi-office-vacancy.commercial-overall:
+  en_hash: 6eff78fe25013ba2
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+na.kpi-transaction-volume.office:
+  en_hash: e2787926ddca0045
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+na.kpi-transaction-volume.retail:
+  en_hash: 7005eba2323a3999
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+na.kpi-transaction-volume.logistics:
+  en_hash: c99bf0afbd41289a
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+na.construction.retail:
+  en_hash: d8b10b9e6b5136fb
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+nav.segments:
+  en_hash: 48c64fe09126a18f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+nav.availability:
+  en_hash: 12f67f8539c46701
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+nav.breadcrumb:
+  en_hash: 2bd873d6c734e63e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+home.card.latest:
+  en_hash: 75503139448d36c3
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+home.segments:
+  en_hash: a1f4586540a869aa
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+segment.intro:
+  en_hash: f8372ad6fca03eaf
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+segment.availability:
+  en_hash: 45f6264fed261635
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+availability.title:
+  en_hash: 12f67f8539c46701
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+availability.intro:
+  en_hash: e7da6e1a93b95e3f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+availability.kpi:
+  en_hash: f2536f5b3f1d03a1
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+availability.available:
+  en_hash: 927933e85e36481b
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+nav.links:
+  en_hash: 9024c197d84940e4
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+nav.methodology:
+  en_hash: f26d07e6b71e4259
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+methodology.title:
+  en_hash: f26d07e6b71e4259
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+links.title:
+  en_hash: 9024c197d84940e4
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+links.intro:
+  en_hash: 26e193805b665f09
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+links.heading:
+  en_hash: 48497180d9a00b3e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+links.cell.shown:
+  en_hash: 636abdb0e322fbd3
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+links.cell.not_shown:
+  en_hash: d69766b78464723d
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+indicator.bund-yield-10y:
+  en_hash: 54f974f46ad17923
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+indicator.euribor-3m:
+  en_hash: bea2a2a19ebc56af
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+indicator.loan-rate-nfc:
+  en_hash: 54bca07c40466ac3
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+indicator.cpi:
+  en_hash: f1d1d21f5a3e2898
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+indicator.gdp-real:
+  en_hash: 4cce92618a525157
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+indicator.unemployment-rate:
+  en_hash: d3078ee9a788ceda
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+indicator.construction-price:
+  en_hash: 39c6b4ae957c4df6
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+indicator.oecd-confidence:
+  en_hash: 5593f6209394cbab
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-permits-office.title:
+  en_hash: 8e4a2adeaa57c2aa
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-permits-office.unit:
+  en_hash: 536ec6351349d8e0
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-permits-office.attribution:
+  en_hash: 7f1ba88184b2589a
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-permits-commercial.title:
+  en_hash: 4654be94af46768c
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-permits-commercial.unit:
+  en_hash: 536ec6351349d8e0
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-permits-commercial.attribution:
+  en_hash: 7f1ba88184b2589a
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-permits-warehouse.title:
+  en_hash: a45407287695e95f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-permits-warehouse.unit:
+  en_hash: 536ec6351349d8e0
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-permits-warehouse.attribution:
+  en_hash: 7f1ba88184b2589a
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-completions-office.title:
+  en_hash: 2155c5580823aeec
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-completions-office.unit:
+  en_hash: 536ec6351349d8e0
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-completions-office.attribution:
+  en_hash: 7f1ba88184b2589a
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-completions-commercial.title:
+  en_hash: a5cecbd58ae61146
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-completions-commercial.unit:
+  en_hash: 536ec6351349d8e0
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-completions-commercial.attribution:
+  en_hash: 7f1ba88184b2589a
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-completions-warehouse.title:
+  en_hash: 4ece1981430ccedf
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-completions-warehouse.unit:
+  en_hash: 536ec6351349d8e0
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-completions-warehouse.attribution:
+  en_hash: 7f1ba88184b2589a
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-total-a.title:
+  en_hash: 6efeec079ef96b11
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-total-a.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-total-a.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-total-q.title:
+  en_hash: 6a9599fb9109f536
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-total-q.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-total-q.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-office-a.title:
+  en_hash: 0a9c19c3258205a9
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-office-a.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-office-a.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-office-q.title:
+  en_hash: 1a4056513ec90c40
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-office-q.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-office-q.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-retail-a.title:
+  en_hash: 8dbafb1e3cf7b0fe
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-retail-a.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-retail-a.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-retail-q.title:
+  en_hash: 32b8c9d880bfbe3b
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-retail-q.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-de-retail-q.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-total-a.title:
+  en_hash: 6ef75933402c056a
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-total-a.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-total-a.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-total-q.title:
+  en_hash: b4aa20ea193def1d
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-total-q.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-total-q.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-office-a.title:
+  en_hash: f2cc64d499269fad
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-office-a.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-office-a.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-office-q.title:
+  en_hash: 7c68d5c78ee9ec41
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-office-q.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-office-q.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-retail-a.title:
+  en_hash: 89f1e0f436867b29
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-retail-a.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-retail-a.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-retail-q.title:
+  en_hash: ee64ac32bbe169f3
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-retail-q.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-cities-retail-q.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-total-a.title:
+  en_hash: e5d39497f7d630c3
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-total-a.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-total-a.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-total-q.title:
+  en_hash: ed8b9a597157a2a0
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-total-q.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-total-q.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-office-a.title:
+  en_hash: 146f4a51e52f1d6c
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-office-a.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-office-a.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-office-q.title:
+  en_hash: 08a2c03a6cebcd03
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-office-q.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-office-q.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-retail-a.title:
+  en_hash: 5e20070e2d43f2f8
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-retail-a.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-retail-a.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-retail-q.title:
+  en_hash: 740e9f8075aba159
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-retail-q.unit:
+  en_hash: d432a60dcfd1330e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:price-index-excl-retail-q.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-de-office-a.title:
+  en_hash: 1a795f498f319caf
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-de-office-a.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-de-office-a.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-de-office-q.title:
+  en_hash: 0ec9c437207a08c4
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-de-office-q.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-de-office-q.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-de-retail-a.title:
+  en_hash: f7679eb76524dfd9
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-de-retail-a.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-de-retail-a.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-de-retail-q.title:
+  en_hash: 20506bbbb45df7ed
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-de-retail-q.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-de-retail-q.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-combined-127.title:
+  en_hash: 5ce916bede1b28cc
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-combined-127.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-combined-127.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-combined-120.title:
+  en_hash: 730167ceec18d482
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-combined-120.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-combined-120.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-combined-7.title:
+  en_hash: e52141dc16595b2e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-combined-7.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:rent-index-combined-7.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:initial-yield-combined-127.title:
+  en_hash: 646fd38261be4050
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:initial-yield-combined-127.unit:
+  en_hash: bbf3f11cb5b43e70
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:initial-yield-combined-127.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:initial-yield-combined-120.title:
+  en_hash: a74d0f22734a4a5c
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:initial-yield-combined-120.unit:
+  en_hash: bbf3f11cb5b43e70
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:initial-yield-combined-120.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:initial-yield-combined-7.title:
+  en_hash: 4336775377fd8169
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:initial-yield-combined-7.unit:
+  en_hash: bbf3f11cb5b43e70
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:initial-yield-combined-7.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:office-vacancy-127.title:
+  en_hash: 9991ffdf1977e2c9
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:office-vacancy-127.unit:
+  en_hash: bbf3f11cb5b43e70
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:office-vacancy-127.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:office-vacancy-7.title:
+  en_hash: 1f17729d1e82786a
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:office-vacancy-7.unit:
+  en_hash: bbf3f11cb5b43e70
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:office-vacancy-7.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:office-vacancy-120.title:
+  en_hash: 88a17500c10e7f2e
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:office-vacancy-120.unit:
+  en_hash: bbf3f11cb5b43e70
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:office-vacancy-120.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:transaction-volume-de.title:
+  en_hash: 3f5cdc82a4ed3253
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:transaction-volume-de.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:transaction-volume-de.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:transaction-volume-127.title:
+  en_hash: e9dc5706ebd28c90
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:transaction-volume-127.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:transaction-volume-127.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:transaction-volume-7.title:
+  en_hash: f134653fd1e51bad
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:transaction-volume-7.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:transaction-volume-7.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-bbk-permits-office.title:
+  en_hash: d6cf8d3f349ba48d
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-bbk-permits-office.unit:
+  en_hash: 536ec6351349d8e0
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-bbk-permits-office.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-bbk-permits-wholesale-warehouse.title:
+  en_hash: 035b826ba48c7c02
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-bbk-permits-wholesale-warehouse.unit:
+  en_hash: 536ec6351349d8e0
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-bbk-permits-wholesale-warehouse.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-bbk-completions-office.title:
+  en_hash: 71d60aa23087f08c
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-bbk-completions-office.unit:
+  en_hash: 536ec6351349d8e0
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-bbk-completions-office.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-bbk-completions-wholesale-warehouse.title:
+  en_hash: dd17f2aa98946cec
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-bbk-completions-wholesale-warehouse.unit:
+  en_hash: 536ec6351349d8e0
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-bbk-completions-wholesale-warehouse.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:bund-yield-10y.title:
+  en_hash: 54f974f46ad17923
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:bund-yield-10y.unit:
+  en_hash: e7f8da24a4237aad
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:bund-yield-10y.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:euribor-3m.title:
+  en_hash: 7ca679e9cb1cdfb4
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:euribor-3m.unit:
+  en_hash: e7f8da24a4237aad
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:euribor-3m.attribution:
+  en_hash: 6d2619ebcef70e01
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:loan-rate-nfc.title:
+  en_hash: fa6802b02ec11ddb
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:loan-rate-nfc.unit:
+  en_hash: e7f8da24a4237aad
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:loan-rate-nfc.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:cpi.title:
+  en_hash: af9442d33fc05e44
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:cpi.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:cpi.attribution:
+  en_hash: 7f1ba88184b2589a
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:gdp-real.title:
+  en_hash: 8f62e2c04266cef4
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:gdp-real.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:gdp-real.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:unemployment-rate.title:
+  en_hash: 278172a3d5bbe717
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:unemployment-rate.unit:
+  en_hash: bbf3f11cb5b43e70
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:unemployment-rate.attribution:
+  en_hash: 3f7252e067acb41f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-price-office.title:
+  en_hash: 0c26d68c036d4ed7
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-price-office.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-price-office.attribution:
+  en_hash: 7f1ba88184b2589a
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-price-commercial.title:
+  en_hash: 8282dea471401bc1
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-price-commercial.unit:
+  en_hash: 1bc04b5291c26a46
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:construction-price-commercial.attribution:
+  en_hash: 7f1ba88184b2589a
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:oecd-confidence-construction.title:
+  en_hash: 75d6e00f8fb5d75f
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:oecd-confidence-construction.unit:
+  en_hash: ba328cd957377c95
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:oecd-confidence-construction.attribution:
+  en_hash: 4f86095e64d32968
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:oecd-confidence-retail.title:
+  en_hash: 2b20b0814e457c32
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:oecd-confidence-retail.unit:
+  en_hash: ba328cd957377c95
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
+manifest:oecd-confidence-retail.attribution:
+  en_hash: 4f86095e64d32968
+  reviewed_by: Project owner
+  reviewed_on: 2026-11-02
