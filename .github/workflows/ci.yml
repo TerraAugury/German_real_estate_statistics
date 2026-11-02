@@ -26,6 +26,7 @@ jobs:
       - run: npx astro build
         env: { INCLUDE_PROVISIONAL: '1' }
       - run: npx vitest run tests/page-weight.test.ts
+        env: { PAGE_WEIGHT_STRICT: '1' }
       - uses: actions/upload-artifact@v4
         with: { name: preview-site, path: dist }
 
