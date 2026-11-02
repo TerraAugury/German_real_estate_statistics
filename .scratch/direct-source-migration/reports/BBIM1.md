@@ -1,0 +1,1 @@
+- loan-rate-nfc: 192 same; 4 new (2026-06..2026-09)

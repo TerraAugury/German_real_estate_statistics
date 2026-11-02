@@ -4,11 +4,11 @@
 
 **Blocked by:** 02
 
-**Status:** ready-for-agent
+**Status:** done
 
 Spec: `.scratch/direct-source-migration/spec.md`, decision 11, story 20.
 
-- [ ] Command takes a dataset or series key and prints new periods, changed values and missing periods; makes no change to snapshots
-- [ ] Runs for all 42 Bundesbank series; output explains or flags the GDP-wide difference (revision or rebase) in a short note in the report file
-- [ ] Report for each Bundesbank dataset saved under the feature folder
-- [ ] Test on fixtures: identical, revised, extended and missing-period cases
+- [x] Command takes a dataset or series key and prints new periods, changed values and missing periods; makes no change to snapshots
+- [x] Runs for all 42 Bundesbank series; output explains or flags the GDP-wide difference (revision or rebase) in a short note in the report file
+- [x] Report for each Bundesbank dataset saved under the feature folder
+- [x] Test on fixtures: identical, revised, extended and missing-period cases

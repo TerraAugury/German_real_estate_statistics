@@ -1,0 +1,1 @@
+- gdp-real: 0 same; 225 changed (1970-Q1: 36.7 -> 36.42, 1970-Q2: 39.73 -> 39.43, 1970-Q3: 41.57 -> 41.25, ...); 2 new (2026-Q2..2026-Q3)  [third party: Federal Statistical Office]

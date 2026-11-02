@@ -82,3 +82,21 @@ describe('third-party flag', () => {
     validateSnapshot({ ...m, provisional: true }, snap);
   });
 });
+
+describe('compareParts', () => {
+  it('reports same, changed, new and missing periods', async () => {
+    const { compareParts } = await import('../src/lib/compare');
+    const c = compareParts({ period: ['2020', '2021', '2022'], value: [1, '2', 'NA'] }, { period: ['2021', '2022', '2023'], value: [2, 5, 9] });
+    expect(c).toEqual({ same: 1, changed: [{ period: '2022', was: null, now: 5 }], added: ['2023'], missing: ['2020'] });
+  });
+});
+
+describe('general comment', () => {
+  it('flags a Source of the original data that is not the Bundesbank (GDP: Federal Statistical Office)', async () => {
+    const { originalDataSource, isThirdParty } = await import('../src/lib/bundesbank');
+    const note = '1 Source of the original data: Federal Statistical Office. - 2 Territorial definition: Germany as of 1991.';
+    expect(originalDataSource(note)).toBe('Federal Statistical Office');
+    expect(isThirdParty(originalDataSource(note))).toBe(true);
+    expect(originalDataSource('2 Methodology only.')).toBeNull();
+  });
+});

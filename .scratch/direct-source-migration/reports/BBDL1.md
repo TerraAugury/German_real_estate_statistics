@@ -1,0 +1,1 @@
+- unemployment-rate: 414 same; 1 changed (2024-12: 6.2 -> 6.1); 4 new (2026-07..2026-10)  [third party: Seasonal adjustment based on data provided by the Federal Employment Agency.]

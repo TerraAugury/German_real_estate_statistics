@@ -17,6 +17,9 @@ export function isThirdParty(comment: string | null, words = (own ??= new Set((p
   return (comment ?? '').split(/[^\p{L}\p{N}]+/u).filter(Boolean).some((w) => !words.has(w.toLowerCase()));
 }
 
+/** The "Source of the original data: X." part of a general comment; null when it has none. */
+export const originalDataSource = (note: string | null) => note?.match(/Source of the original data:\s*([^.]*)/i)?.[1] ?? null;
+
 /** The series left the Bundesbank service (404 no result, 410 no longer supported). Handled like any failed refresh: the old snapshot stays. */
 export class Unavailable extends Error {}
 
@@ -43,7 +46,8 @@ export function parseSdmx(res: any, m: ManifestEntry, url: string, retrievedAt: 
     meta: {
       source: 'Deutsche Bundesbank', url, title: attr.BBK_TITLE_ENG ?? '', unit: attr.BBK_UNIT ?? '',
       unit_mult: Number(attr.BBK_UNIT_MULT ?? 0), decimals: attr.BBK_DECIMALS == null ? null : Number(attr.BBK_DECIMALS),
-      comment: attr.BBK_COMM_SRC_ENG ?? null, third_party: isThirdParty(attr.BBK_COMM_SRC_ENG ?? null), valid_from: data.dataSets[0].validFrom ?? null, retrieved_at: retrievedAt,
+      comment: attr.BBK_COMM_SRC_ENG ?? null, general_comment: attr.BBK_COMM_GEN_ENG ?? null,
+      third_party: isThirdParty(attr.BBK_COMM_SRC_ENG ?? null) || isThirdParty(originalDataSource(attr.BBK_COMM_GEN_ENG ?? null)), valid_from: data.dataSets[0].validFrom ?? null, retrieved_at: retrievedAt,
       sha256: createHash('sha256').update(JSON.stringify(res)).digest('hex'),
     },
   };
