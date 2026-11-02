@@ -40,6 +40,7 @@ A build-ready spec for adding Insights (see `GLOSSARY.md`) to the site: the fina
 
 <!-- one line per resolved ticket: [title](issues/file.md): gist -->
 - [Office employment: is there an Open source?](issues/01-office-employment-open-source.md): yes, `DESTATIS/13311BJ002/DG.WZ08-K-N.ERW063` (persons employed in WZ K-N, annual 1991-2025, Germany; Länder in 13311LJ002; dl-de/by-2-0); no City class source, so Insight M stays in.
+- [Insight chart form](issues/03-chart-form.md): headline number and verdict tag, reading, a main chart of the headline measure with its average and in-line band, then small multiples of the levels with the gap shaded blue/red by sign (prototype variant C+D).
 
 ## Not yet specified
 

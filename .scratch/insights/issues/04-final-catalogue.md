@@ -12,3 +12,5 @@ For each candidate Insight A–M on the map, settle: in or out; the exact manife
 For Insight M, ticket 01 found office employment (Destatis 13311, WZ K-N) nationally and by Land, but not by City class. Decide whether M is national only, uses Länder, or sums Eurostat NUTS 3 data for the seven A-cities as an own calculation (which would mean narrowing the glossary's "no named-city series" line to Real estate KPIs). Treat Destatis's `0.0` for unpublished 2025 single sections as missing.
 
 Starting point: most candidates use Provisional Bundesbank series. C, J and K (Destatis version) and the indicator-only sides are public.
+
+Also: whether Insights comparing City classes show both 120 and 127 towns, which nearly overlap (ticket 03).
