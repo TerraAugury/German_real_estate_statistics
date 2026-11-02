@@ -3,7 +3,7 @@
 Label: wayfinder:grilling
 Type: grilling (HITL)
 Status: open
-Blocked by: 01, 02
+Blocked by:
 
 ## Question
 
@@ -14,3 +14,5 @@ For Insight M, ticket 01 found office employment (Destatis 13311, WZ K-N) nation
 Starting point: most candidates use Provisional Bundesbank series. C, J and K (Destatis version) and the indicator-only sides are public.
 
 Also: whether Insights comparing City classes show both 120 and 127 towns, which nearly overlap (ticket 03).
+
+From ticket 02: check whether the Bundesbank annual price index is an average or a year-end value, to pick the CPI mode for any price Insight; every Insight must reach 10 shared annual observations.
