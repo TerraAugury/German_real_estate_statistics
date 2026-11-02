@@ -21,6 +21,11 @@ A computed relationship between one real estate KPI and one economic indicator o
 _DE_: Verknüpfung (the relationship it describes is called "Gleichlauf")
 _Avoid_: Correlation (a link includes more than the coefficient), prediction, impact, driver, effect
 
+**Insight**:
+A curated chart that puts two or more series (Real estate KPIs, Economic indicators, or values computed from them such as a spread or an inflation-adjusted index) on one axis over a stated period, with a fixed one-line reading. Unlike a Link it carries no coefficient or lag. Its reading describes what the lines show, never a cause or forecast.
+_DE_: Einblick
+_Avoid_: Analysis (too broad), comparison, spread (one kind of Insight), chart (any chart)
+
 **Lag**:
 The shift, in whole periods, between an economic indicator and a real estate KPI when a link is computed. Positive lag means the indicator moved earlier than the KPI. It describes timing of co-movement, never lead time for prediction.
 _DE_: Verschiebung (in Perioden)
