@@ -17,14 +17,14 @@ A build-ready spec for adding Insights (see `GLOSSARY.md`) to the site: the fina
   - **Placement**: one Insights page in the main navigation, one anchor per Insight. Every KPI page an Insight uses links to it.
   - **Units**: one y-axis only, never two. Series with different units are each rebased to 100 in their first shared year.
   - **Reading**: a template filled at build time, reviewed once in EN and DE. It compares the latest value of the Insight's **headline measure** with its historical mean over the full shared period. The verdict is "in line" when the latest value is within half a standard deviation of the mean, otherwise "higher" or "lower". The mean and the period are stated in the sentence, e.g. "The latest spread over the Bund is 1.5 points, higher than the 1995–2025 average of 1.1 points."
-  - **Headline measure**: each Insight names one measure with no trend (a gap, ratio, difference or growth rate). It is never the level of a series that trends upward.
+  - **Headline measure**: each Insight names one measure with no trend (a spread, ratio, difference or growth rate). It is never the level of a series that trends upward.
   - Every Insight contains at least one Real estate KPI.
 - Candidate catalogue, agreed in principle (exact series, segments and City classes per Insight are decided in ticket 04):
   - A. Initial yield premium over the 10-year Bund, by City class
   - B. Real rents: rent index deflated by CPI
   - C. Construction pipeline: permits vs completions
   - D. Rents vs construction costs
-  - E. City class gap (vacancy or rent, 7 cities vs 127 towns)
+  - E. City class spread (vacancy or rent, 7 cities vs 127 towns)
   - F. Initial yield vs corporate loan rate (2010+)
   - G. Prices vs rents (2013+)
   - H. Office vacancy vs unemployment rate

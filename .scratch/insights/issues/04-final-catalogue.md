@@ -2,7 +2,7 @@
 
 Label: wayfinder:grilling
 Type: grilling (HITL)
-Status: open
+Status: resolved
 Blocked by:
 
 ## Question
