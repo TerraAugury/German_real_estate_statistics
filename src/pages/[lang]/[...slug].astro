@@ -166,37 +166,54 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
             })}</select></label>
             <label>{t(lang, 'select.freq')} <select name="freq">{uniq(views.map((v) => v.freq)).map((x) => <option value={x}>{t(lang, `freq.${x}`)}</option>)}</select></label>
           </form>
-          {views.map((v, i) => (
-            <section class="view" data-segment={v.segment} data-geo={v.geo} data-freq={v.freq} data-links={viewLinkIds[i]} hidden={i > 0}>
-              {v.series.map((r) => getSeries(r.key, r.land)).map((x) => (
-                <figure>
-                  <h2>{x.title[lang]}</h2>
-                  <Fragment set:html={lineChart(x, lang)} />
-                  {kpiNotes(x, lang, t(lang, `geo.${v.geo}`)).map((n) => <p class="note">{n}</p>)}
-                  <figcaption set:html={sourceLine(x, lang)} />
-                </figure>
-              ))}
-            </section>
-          ))}
+          {views.map((v, i) => {
+            const section = (
+              <section class="view" data-segment={v.segment} data-geo={v.geo} data-freq={v.freq} data-links={viewLinkIds[i]}>
+                {v.series.map((r) => getSeries(r.key, r.land)).map((x) => (
+                  <figure>
+                    <h2>{x.title[lang]}</h2>
+                    <Fragment set:html={lineChart(x, lang)} />
+                    {kpiNotes(x, lang, t(lang, `geo.${v.geo}`)).map((n) => <p class="note">{n}</p>)}
+                    <figcaption set:html={sourceLine(x, lang)} />
+                  </figure>
+                ))}
+              </section>
+            );
+            return i === 0 ? section : <template class="view">{section}</template>;
+          })}
           {panels.size > 0 && (
             <>
               <h2>{t(lang, 'links.heading')}</h2>
-              {[...panels].sort(([, a], [, b]) => a.order - b.order).map(([id, p]) =>
-                <div data-panel={id} hidden={!viewLinkIds[0].split(' ').includes(id)}><Fragment set:html={p.html} /></div>)}
+              {[...panels].sort(([, a], [, b]) => a.order - b.order).map(([id, p]) => {
+                const div = <div data-panel={id}><Fragment set:html={p.html} /></div>;
+                return viewLinkIds[0].split(' ').includes(id) ? div : <template class="panel">{div}</template>;
+              })}
             </>
           )}
           <script>
             import { pickView, type Want } from '../../lib/select';
             const form = document.querySelector<HTMLFormElement>('form.selectors')!;
-            const views = [...document.querySelectorAll<HTMLElement>('section.view')].map((el) => ({ el, ...(el.dataset as Want) }));
-            const panels = [...document.querySelectorAll<HTMLElement>('[data-panel]')];
+            // Page weight (ticket 12): only the first view and its panels are live at load; every other one waits in a
+            // <template> and its content moves into the page the first time it is shown.
+            const inner = (el: HTMLElement) => (el instanceof HTMLTemplateElement ? (el.content.firstElementChild as HTMLElement) : el);
+            const setShown = (x: { el: HTMLElement }, on: boolean) => {
+              if (x.el instanceof HTMLTemplateElement) {
+                if (!on) return;
+                const el = inner(x.el);
+                x.el.replaceWith(el);
+                x.el = el;
+              }
+              x.el.hidden = !on;
+            };
+            const views = [...document.querySelectorAll<HTMLElement>('section.view, template.view')].map((el) => ({ el, ...(inner(el).dataset as Want) }));
+            const panels = [...document.querySelectorAll<HTMLElement>('[data-panel], template.panel')].map((el) => ({ el, id: inner(el).dataset.panel! }));
             const keys = ['segment', 'geo', 'freq'] as const;
             // Show the closest view and its Link panels; the URL and the language switch then name exactly that view.
             const show = (want: Partial<Want>, changed?: keyof Want) => {
               const v = pickView(views, want, changed);
-              for (const x of views) x.el.hidden = x !== v;
+              for (const x of views) setShown(x, x === v);
               const ids = v.el.dataset.links!.split(' ');
-              for (const p of panels) p.hidden = !ids.includes(p.dataset.panel!);
+              for (const p of panels) setShown(p, ids.includes(p.id));
               for (const k of keys) (form.elements.namedItem(k) as HTMLSelectElement).value = v[k];
               history.replaceState(null, '', '?' + new URLSearchParams({ segment: v.segment, geo: v.geo, freq: v.freq }) + location.hash);
               document.querySelector<HTMLAnchorElement>('a.sw')!.search = location.search;
