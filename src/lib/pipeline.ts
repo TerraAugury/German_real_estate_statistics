@@ -2,6 +2,7 @@
 import { parse } from 'yaml';
 import { readFileSync } from 'node:fs';
 import type { ManifestEntry } from './manifest';
+import { refreshBundesbank } from './bundesbank';
 
 export const API = 'https://api.db.nomics.world/v22/series';
 export const UA = 'german-cre-statistics (build; contact oelamine@terraaugury.com)';
@@ -11,6 +12,9 @@ export { BadResponse } from './snapshot';
 import { BadResponse, type Part, type Snapshot } from './snapshot';
 export interface Deps { get: (url: string) => Promise<any>; now: Date; warn?: (msg: string) => void }
 
+/** Non-2xx answer; the message is the status code and URL. */
+export class HttpError extends Error { constructor(public status: number, url = '') { super(`${status} ${url}`.trim()); } }
+
 /** GET JSON with retry and exponential backoff. */
 export function makeGet(fetchFn: typeof fetch = fetch, sleep = (ms: number) => new Promise((r) => setTimeout(r, ms)), tries = 3) {
   return async (url: string) => {
@@ -18,9 +22,9 @@ export function makeGet(fetchFn: typeof fetch = fetch, sleep = (ms: number) => n
       try {
         const r = await fetchFn(url, { headers: { 'User-Agent': UA } });
         if (r.ok) return (await r.json()) as any;
-        throw new Error(String(r.status));
+        throw new HttpError(r.status, url);
       } catch (e) {
-        if (i >= tries - 1) throw e;
+        if (i >= tries - 1 || (e instanceof HttpError && (e.status === 404 || e.status === 410))) throw e; // a missing resource will not come back in a second
         await sleep(1000 * 2 ** i);
       }
     }
@@ -80,6 +84,7 @@ export async function refreshDbnomics(m: ManifestEntry, old: Snapshot | undefine
 /** Refresh one series from the source its manifest entry names. */
 export async function refresh(m: ManifestEntry, old: Snapshot | undefined, deps: Deps): Promise<Snapshot | null> {
   if (m.source === 'dbnomics') return refreshDbnomics(m, old, deps);
+  if (m.source === 'bundesbank') return refreshBundesbank(m, old, deps);
   throw new BadResponse(`${m.key}: no fetcher for source ${m.source}`);
 }
 

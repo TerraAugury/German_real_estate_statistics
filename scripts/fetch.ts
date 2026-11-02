@@ -1,5 +1,6 @@
 // Fetch every manifest series from DBnomics into data/snapshots/. On fetch failure, reuse the last snapshot.
 import { loadAllManifest } from '../src/lib/manifest';
+import { Unavailable } from '../src/lib/bundesbank';
 import { makeGet, refresh, markFailed, BadResponse, type Snapshot } from '../src/lib/pipeline';
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 
@@ -15,6 +16,6 @@ for (const m of loadAllManifest()) { // sequential: one series at a time
   } catch (e) {
     if (e instanceof BadResponse) throw e; // malformed response is a bug, not an outage
     writeFileSync(file, JSON.stringify(markFailed(m.key, old, deps.now, e), null, 1));
-    console.warn('fetch failed, reusing snapshot', m.key, String(e));
+    console.warn(e instanceof Unavailable ? 'series unavailable at source, reusing snapshot' : 'fetch failed, reusing snapshot', m.key, String(e));
   }
 }
