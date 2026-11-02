@@ -2,11 +2,10 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { parse } from 'yaml';
-import type { ManifestEntry } from './manifest';
+import { BBK_API, type ManifestEntry } from './manifest';
 import { BadResponse, type Part, type Snapshot } from './snapshot';
 import { partIds, revised, type Deps } from './pipeline';
 
-export const BBK_API = 'https://api.statistiken.bundesbank.de/rest/data';
 const FREQ: Record<string, string> = { A: 'annual', Q: 'quarterly', M: 'monthly' };
 
 export const bundesbankUrl = (m: ManifestEntry) => `${BBK_API}/${m.dataset}/${m.ids[0]}?format=sdmx_json&lang=en`;

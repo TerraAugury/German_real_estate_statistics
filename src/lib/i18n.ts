@@ -35,7 +35,7 @@ export function t(lang: Lang, key: string, vars: Record<string, string> = {}): s
   return draft(out, nested || (lang === 'de' && unreviewed.has(key)));
 }
 
-const locale = { en: 'en-GB', de: 'de-DE' } as const;
+export const locale = { en: 'en-GB', de: 'de-DE' } as const;
 // Page-locale number formatting: EN "1,234.5", DE "1.234,5".
 export const fmt = (lang: Lang, n: number, o: Intl.NumberFormatOptions = {}) => new Intl.NumberFormat(locale[lang], o).format(n);
 /** A period as shown (spec section 10): "2026-Q1" -> "Q1 2026" in both languages, "2026" as is, months through Intl. */

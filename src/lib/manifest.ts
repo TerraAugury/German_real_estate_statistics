@@ -72,11 +72,15 @@ export function publicLinks<T extends { kpi: string; indicator: string }>(pairs:
   return pairs.filter((p) => keys.has(p.kpi) && keys.has(p.indicator));
 }
 
-/** DBnomics series id as shown on source lines; the 16 Länder collapse into one range unless one Land is asked for. */
-export const dbnomicsId = (m: ManifestEntry, land?: string) => `${m.dbnomics_provider}/${m.dataset}/`
+export const BBK_API = 'https://api.statistiken.bundesbank.de/rest/data';
+/** Name of the web service a direct source is fetched from, as shown on source lines. */
+export const SERVICE: Partial<Record<ManifestEntry['source'], string>> = { bundesbank: 'SDMX Web Service', destatis: 'GENESIS-Online' };
+
+/** Series id as shown on source lines: the Bundesbank's own id, or the DBnomics path. The 16 Länder collapse into one range unless one Land is asked for. */
+export const seriesId = (m: ManifestEntry, land?: string) => m.source === 'bundesbank' ? `${m.dataset}.${m.ids[0]}` : `${m.dbnomics_provider}/${m.dataset}/`
   + m.ids[0].replace('{land}', land ?? (isDerived(m) ? `{${m.laender[0]}–${m.laender.at(-1)}}` : m.laender[0]));
-/** The series page on DBnomics; a sum of Länder has no single series, so it links the dataset. */
-export const dbnomicsUrl = (m: ManifestEntry, land?: string) => `https://db.nomics.world/${m.dbnomics_provider}/${m.dataset}`
+/** Where the series can be checked: the Bundesbank data URL, or its page on DBnomics (a sum of Länder has no single series, so it links the dataset). */
+export const seriesUrl = (m: ManifestEntry, land?: string) => m.source === 'bundesbank' ? `${BBK_API}/${m.dataset}/${m.ids[0]}?lang=en` : `https://db.nomics.world/${m.dbnomics_provider}/${m.dataset}`
   + (isDerived(m) && !land ? '' : `/${m.ids[0].replace('{land}', land ?? m.laender[0])}`);
 
 /** Manifest build checks (spec sections 10, 11); any failure fails the build. */

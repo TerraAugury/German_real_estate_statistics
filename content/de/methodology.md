@@ -9,7 +9,7 @@ Eine Verknüpfung setzt eine Immobilienkennzahl und einen Wirtschaftsindikator f
 
 Jede Verknüpfung hat drei Teile:
 
-- **Verlauf der Niveaus.** Beide Reihen wie veröffentlicht, je eine Grafik, über dieselben Perioden.
+- **Verlauf der Niveaus.** Beide Reihen, je eine Grafik, über dieselben Perioden. Indikatoren werden wie unter Frequenz beschrieben auf die Frequenz der Kennzahl gemittelt; die Überlagerung zeigt daher eine eigene Berechnung, nicht die veröffentlichten Werte.
 - **Rangkorrelation der Veränderungen.** Spearmans Rangkorrelation, mit Bindungen, der Veränderungen beider Reihen: prozentuale Veränderung gegenüber dem Vorjahr bei Indizes und Geldbeträgen, Differenz in Punkten gegenüber dem Vorjahr bei Zinssätzen und Salden. Sie wird immer mit der Zahl der Beobachtungspaare (n) und dem Zeitraum angegeben. P-Werte oder Signifikanzsterne werden nicht gezeigt.
 - **Verschiebungsprofil.** Dieselbe Korrelation, mit dem Indikator um ganze Perioden verschoben: −8 bis +8 Quartale bei Quartalskennzahlen, −3 bis +3 Jahre bei Jahreskennzahlen. Eine positive Verschiebung bedeutet, dass der Indikator vorauslief. Der Hauptwert ist die Verschiebung 0. Die stärkste Verschiebung ist markiert; sie wurde nach Ansicht der Daten gewählt und ist daher vermutlich überzeichnet. Die Seite stellt eine Verschiebung nie als Vorlaufzeit dar.
 
@@ -32,7 +32,8 @@ Jede Verknüpfung hat drei Teile:
 
 ## So lesen Sie diese Zahlen
 
-- Die Daten kommen über DBnomics, das amtliche Quellen bündelt. Die Herausgeber sind für diese Seite nicht verantwortlich.
+- Jede Reihe wird entweder direkt beim Herausgeber oder über DBnomics abgerufen, das amtliche Quellen bündelt; die Quellenzeile nennt den Weg. Die Herausgeber sind für diese Seite nicht verantwortlich.
+- Bei direkt abgerufenen Reihen nennt die Quellenzeile das Abrufdatum sowie den Originaltitel und die Originaleinheit des Herausgebers. Unsere eigenen Titel, Zahlenformate und Rundungen stammen nicht vom Herausgeber.
 - Deutschland-Summen der Bautätigkeit, Einheitenumrechnungen, Veränderungen gegenüber dem Vorjahr und Verknüpfungen sind eigene Berechnung und als solche gekennzeichnet.
 - Die Seite zeigt nur die zuletzt veröffentlichte Fassung jeder Reihe und führt keine Revisionshistorie.
 - Die Gewerbeimmobilienreihen der Deutschen Bundesbank beruhen auf Daten Dritter (bulwiengesa, vdp).

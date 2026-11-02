@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { checkEntries, loadAllManifest, loadManifest, gate, publicLinks, dbnomicsId, type ManifestEntry } from '../src/lib/manifest';
+import { checkEntries, loadAllManifest, loadManifest, gate, publicLinks, seriesId, type ManifestEntry } from '../src/lib/manifest';
 
 const all = loadAllManifest();
 const byKey = (k: string) => all.find((m) => m.key === k)!;
@@ -82,15 +82,15 @@ it('the committed manifest is loaded once while its files are unchanged; a passe
   expect(loadAllManifest()).toEqual(before); // the passed lock never leaks into the shared copy
 });
 
-it('dbnomicsUrl links the series, or the dataset for a sum of Länder', async () => {
-  const { dbnomicsUrl } = await import('../src/lib/manifest');
-  expect(dbnomicsUrl(byKey('cpi'))).toBe('https://db.nomics.world/DESTATIS/61111BM001/DG.PREIS1');
-  expect(dbnomicsUrl(byKey('construction-permits-office'))).toBe('https://db.nomics.world/DESTATIS/31111LJ001');
+it('seriesUrl links the series, or the dataset for a sum of Länder', async () => {
+  const { seriesUrl } = await import('../src/lib/manifest');
+  expect(seriesUrl(byKey('cpi'))).toBe('https://db.nomics.world/DESTATIS/61111BM001/DG.PREIS1');
+  expect(seriesUrl(byKey('construction-permits-office'))).toBe('https://db.nomics.world/DESTATIS/31111LJ001');
 });
 
-it('dbnomicsId collapses Länder', () => {
-  expect(dbnomicsId(byKey('construction-permits-office'))).toBe('DESTATIS/31111LJ001/{01–16}.BAUART1.BTK-GEB.GBD-NW-BV.FLC002');
-  expect(dbnomicsId(byKey('cpi'))).toBe('DESTATIS/61111BM001/DG.PREIS1');
+it('seriesId collapses Länder', () => {
+  expect(seriesId(byKey('construction-permits-office'))).toBe('DESTATIS/31111LJ001/{01–16}.BAUART1.BTK-GEB.GBD-NW-BV.FLC002');
+  expect(seriesId(byKey('cpi'))).toBe('DESTATIS/61111BM001/DG.PREIS1');
 });
 
 it('Sources table has one row per live series with publisher, id, licence, attribution in both languages', async () => {
