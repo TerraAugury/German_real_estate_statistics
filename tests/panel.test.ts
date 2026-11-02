@@ -43,10 +43,10 @@ describe('Link panel', () => {
     expect(renderPanel(kpi, ind, r, 'en')).not.toContain('<svg');
   });
   it('inherits series Notes prefixed with the series title', () => {
-    // no hand-injected notes: a 2020 'now' makes the committed snapshot stale, and loadSeries fills notes itself
+    // no hand-injected flags: a 2035 'now' makes the committed snapshot stale when loadSeries reads it
     const stale = loadSeries('construction-permits-office', new Date('2035-01-01'));
-    expect(stale.notes.en[0]).toMatch(/^Latest observation: /);
-    expect(renderPanel(stale, ind, shown(14), 'en')).toContain(`Note: ${kpi.title.en}: ${stale.notes.en[0]}`);
+    expect(stale.stale).toBe(true);
+    expect(renderPanel(stale, ind, shown(14), 'en')).toContain(`Note: ${kpi.title.en}: Latest observation: `);
     expect(renderPanel(kpi, ind, shown(14), 'en')).not.toContain('Latest observation');
   });
   it('real data: office permits vs Euribor and CPI give a shown Link', () => {

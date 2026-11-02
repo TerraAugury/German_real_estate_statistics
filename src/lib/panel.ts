@@ -1,13 +1,13 @@
 import { fmt, period, t } from './i18n';
 import { levelChart, lagChart, lineChart } from './chart';
-import { notes, shortNote } from './notes';
+import { notesFor } from './notes';
 import { href, type Lang } from './routes';
 import type { Series } from './series';
 import type { LinkResult } from '../link/link';
 import { linkResult } from './links';
 
 export const esc = (x: string) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-const SMALL = 20; // annual Links with fewer lag-0 pairs get the Small sample Note (spec section 9)
+const noteHtml = (ns: string[]) => ns.map((n) => `<p class="note">${esc(n)}</p>`).join('');
 
 /** Source line for one series, same wording as KPI charts. The id links the series on DBnomics, the licence our Sources & licences page. */
 export function sourceLine(s: Series, lang: Lang, own = false): string {
@@ -19,21 +19,17 @@ export function sourceLine(s: Series, lang: Lang, own = false): string {
 
 /** Compact chart for Home cards and Segment pages: chart, stale and fetch-failed Notes, source line (spec section 9). */
 export const compactChart = (s: Series, lang: Lang) => lineChart(s, lang, 200)
-  + notes(s, lang).map((n) => `<p class="note">${esc(n)}</p>`).join('') + `<figcaption>${sourceLine(s, lang)}</figcaption>`;
+  + noteHtml(notesFor(s, lang, { on: 'compact' })) + `<figcaption>${sourceLine(s, lang)}</figcaption>`;
 
 /** Link panel HTML for one KPI x indicator pair. Pure given the result, so it tests without the Link module. */
 export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang, geography = t(lang, 'geo.germany'), id?: string): string {
-  // The KPI's Short history Note carries the one-cycle caveat over to its Links (spec section 6).
-  const note = (s: Series, extra: string[] = []) => [...extra, ...s.notes[lang]].map((n) => `${t(lang, 'note.prefix')}: ${esc(s.title[lang])}: ${esc(n)}`);
-  const notes = [...note(kpi, shortNote(kpi, lang)), ...note(ind)];
+  const notes = notesFor(kpi, lang, { on: 'link', indicator: ind, pairs: r.shown ? r.headline.n : undefined });
   const head = `<h3>${t(lang, 'link.title', { kpi: esc(kpi.title[lang]), indicator: esc(ind.title[lang]) })}</h3>
 <p>${t(lang, 'link.scope', { geography: esc(geography) })}</p>`;
   let body: string;
   if (!r.shown) {
     body = `<p>${t(lang, r.reason === 'constant' ? 'link.not_shown.constant' : 'link.not_shown', { n: String(r.n0) })}</p>`;
   } else {
-    // Fixed Note order (spec section 9): short history, then small sample, then stale and the rest.
-    if (kpi.freq === 'A' && r.headline.n < SMALL) notes.splice(shortNote(kpi, lang).length, 0, `${t(lang, 'note.prefix')}: ${t(lang, 'link.small_sample', { n: String(r.headline.n) })}`);
     const col = (k: 'kpi' | 'indicator', s: Series) =>
       `<h4>${esc(s.title[lang])}</h4>` + levelChart(r.overlay.flatMap((o) => (o[k] === null ? [] : [{ period: o.period, value: o[k]! }])), s.unit[lang], t(lang, 'link.overlay.label', { title: s.title[lang] }), lang);
     const N = r.lags.filter((l) => l.rho !== null).length;
@@ -43,8 +39,7 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
       + `<p>${t(lang, 'link.strongest', { n: String(N) })}</p>`
       + `<p>${t(lang, 'link.sentence', { period: t(lang, 'link.period', { from: period(lang, r.span[0]), to: period(lang, r.span[1]) }), n: String(r.headline.n) })}</p>`;
   }
-  const noteHtml = notes.map((n) => `<p class="note">${n}</p>`).join('');
-  return `<figure class="link-panel"${id ? ` id="${esc(id)}"` : ''}>${head}${noteHtml}${body}<figcaption>${sourceLine(kpi, lang, true)}<br>${sourceLine(ind, lang, true)}</figcaption></figure>`;
+  return `<figure class="link-panel"${id ? ` id="${esc(id)}"` : ''}>${head}${noteHtml(notes)}${body}<figcaption>${sourceLine(kpi, lang, true)}<br>${sourceLine(ind, lang, true)}</figcaption></figure>`;
 }
 
 /** Compute (once per build) and render; the Link takes the KPI's frequency (spec section 6). */
