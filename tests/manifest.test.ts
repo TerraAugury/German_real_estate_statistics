@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { loadAllManifest, loadManifest, gate, publicLinks, dbnomicsId, type ManifestEntry } from '../src/lib/manifest';
+import { checkEntries, loadAllManifest, loadManifest, gate, publicLinks, dbnomicsId, type ManifestEntry } from '../src/lib/manifest';
 
 const all = loadAllManifest();
 const byKey = (k: string) => all.find((m) => m.key === k)!;
@@ -103,4 +103,12 @@ it('Sources table has one row per live series with publisher, id, licence, attri
     expect(html).toContain('DESTATIS/31111LJ001/{01–16}');
     expect(html).not.toContain('BBDZ1');
   }
+});
+
+describe('source field', () => {
+  it('defaults to dbnomics', () => expect(all.every((m) => m.source === 'dbnomics')).toBe(true));
+  it('rejects an unknown source', () => {
+    const bad = { ...byKey(all[0].key), source: 'ftp' } as unknown as ManifestEntry;
+    expect(() => checkEntries([bad], { })).toThrow(/source must be one of/);
+  });
 });

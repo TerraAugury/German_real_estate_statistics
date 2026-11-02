@@ -6,9 +6,9 @@ import type { ManifestEntry } from './manifest';
 export const API = 'https://api.db.nomics.world/v22/series';
 export const UA = 'german-cre-statistics (build; contact oelamine@terraaugury.com)';
 
-/** `dimensions` holds DBnomics' dimension codes; DBnomics has no unit field, so the unit lives there (e.g. `ind: FLC002`). */
-export interface Part { name: string; indexed_at: string; frequency: string; dimensions?: Record<string, string>; period: string[]; value: (number | string | null)[] }
-export interface Snapshot { retrieved_at: string; fetch_failed: string | null; revised_at?: string | null; parts: Record<string, Part> }
+export type { Part, Snapshot, SourceMeta } from './snapshot';
+export { BadResponse } from './snapshot';
+import { BadResponse, type Part, type Snapshot } from './snapshot';
 export interface Deps { get: (url: string) => Promise<any>; now: Date; warn?: (msg: string) => void }
 
 /** GET JSON with retry and exponential backoff. */
@@ -26,9 +26,6 @@ export function makeGet(fetchFn: typeof fetch = fetch, sleep = (ms: number) => n
     }
   };
 }
-
-/** The API answered but not as expected (or the frequency or unit changed). Fails the build; never a reason to reuse the snapshot. */
-export class BadResponse extends Error {}
 
 function firstDoc(res: any, id: string): any {
   const d = res?.series?.docs?.[0];
@@ -50,7 +47,7 @@ export function revised(old: Part, next: Part): boolean {
  * Refresh one series. indexed_at is checked first; observations are downloaded only for parts where it moved.
  * Returns the new snapshot, or null when nothing changed. Throws on any fetch error, and BadResponse on a malformed response or a changed frequency or unit.
  */
-export async function refresh(m: ManifestEntry, old: Snapshot | undefined, { get, now, warn = console.warn }: Deps): Promise<Snapshot | null> {
+export async function refreshDbnomics(m: ManifestEntry, old: Snapshot | undefined, { get, now, warn = console.warn }: Deps): Promise<Snapshot | null> {
   const parts: Record<string, Part> = {};
   let downloaded = false, backfilled = false, wasRevised = false;
   for (const id of partIds(m)) {
@@ -78,6 +75,12 @@ export async function refresh(m: ManifestEntry, old: Snapshot | undefined, { get
   const iso = now.toISOString();
   return { retrieved_at: downloaded || !old ? iso : old.retrieved_at, fetch_failed: null,
     revised_at: wasRevised ? iso : old?.revised_at ?? null, parts };
+}
+
+/** Refresh one series from the source its manifest entry names. */
+export async function refresh(m: ManifestEntry, old: Snapshot | undefined, deps: Deps): Promise<Snapshot | null> {
+  if (m.source === 'dbnomics') return refreshDbnomics(m, old, deps);
+  throw new BadResponse(`${m.key}: no fetcher for source ${m.source}`);
 }
 
 /** Last snapshot with fetch_failed recorded. A series without a snapshot fails the build. */

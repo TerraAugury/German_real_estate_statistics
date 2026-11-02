@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { BadResponse, makeGet, refresh, markFailed, validateSnapshot, isStale, revised, type Snapshot, type Part } from '../src/lib/pipeline';
 import type { ManifestEntry } from '../src/lib/manifest';
 
-const m = { key: 'k', dbnomics_provider: 'P', dataset: 'D', ids: ['{land}.X'], laender: ['01'], frequency: 'annual', expected_start: 2008 } as ManifestEntry;
+const m = { key: 'k', source: 'dbnomics', dbnomics_provider: 'P', dataset: 'D', ids: ['{land}.X'], laender: ['01'], frequency: 'annual', expected_start: 2008 } as ManifestEntry;
 const part = (indexed_at: string, value: number[], start = 2008): Part =>
   ({ name: 'n', indexed_at, frequency: 'annual', dimensions: { ind: 'FLC002' }, period: value.map((_, i) => String(start + i)), value });
 const snap = (p: Part, extra: Partial<Snapshot> = {}): Snapshot => ({ retrieved_at: '2026-01-01T00:00:00.000Z', fetch_failed: null, parts: { '01.X': p }, ...extra });
@@ -36,6 +36,18 @@ describe('refresh', () => {
     expect(next.retrieved_at).toBe(old.retrieved_at);
   });
   it('revised() ignores the latest period', () => expect(revised(part('a', [1, 2]), part('b', [1, 3]))).toBe(false));
+});
+
+describe('source dispatch', () => {
+  it('a source without a fetcher fails loudly instead of falling back to DBnomics', async () => {
+    const get = vi.fn();
+    await expect(refresh({ ...m, source: 'destatis' }, undefined, { get, now })).rejects.toBeInstanceOf(BadResponse);
+    expect(get).not.toHaveBeenCalled();
+  });
+  it('parts without meta or indexed_at (older or direct snapshots) still validate', () => {
+    const { indexed_at, ...p } = part('x', [1]);
+    validateSnapshot(m, snap(p as Part));
+  });
 });
 
 describe('malformed responses', () => {

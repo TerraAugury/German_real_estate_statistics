@@ -4,12 +4,12 @@
 
 **Blocked by:** none
 
-**Status:** ready-for-agent
+**Status:** done
 
 Spec: `.scratch/direct-source-migration/spec.md`, decisions 1, 4, 10.
 
-- [ ] Manifest entries accept `source` (bundesbank | destatis | dbnomics, default dbnomics); manifest test rejects unknown values
-- [ ] Snapshot parts gain optional fields: source name, source URL, original title, unit, unit multiplier, decimals, original-source comment, validFrom, retrieved-at, response hash
-- [ ] Existing committed snapshots still load and validate unchanged
-- [ ] The refresh step dispatches on `source`; only the dbnomics path exists yet, others fail clearly
-- [ ] Tests through the refresh seam with injected `get`
+- [x] Manifest entries accept `source` (bundesbank | destatis | dbnomics, default dbnomics); manifest test rejects unknown values
+- [x] Snapshot parts gain optional fields: source name, source URL, original title, unit, unit multiplier, decimals, original-source comment, validFrom, retrieved-at, response hash
+- [x] Existing committed snapshots still load and validate unchanged
+- [x] The refresh step dispatches on `source`; only the dbnomics path exists yet, others fail clearly
+- [x] Tests through the refresh seam with injected `get`

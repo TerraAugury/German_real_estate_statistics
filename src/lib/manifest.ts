@@ -8,12 +8,15 @@ export type Localized = { en: string; de: string };
 export const SCOPES = ['index', 'city_class', 'combined'] as const;
 export const ADJUSTMENTS = ['nsa', 'sa'] as const;
 export const RESAMPLING = ['mean', 'none'] as const;
+export const SOURCE_KINDS = ['dbnomics', 'bundesbank', 'destatis'] as const;
 /** Manifest fields with German text; each goes through the review workflow like an interface string. */
 const TEXT_FIELDS = ['title', 'unit', 'attribution'] as const;
 
 export interface ManifestEntry {
   /** DBnomics provider code (BUBA, DESTATIS, ...), not the site operator (GLOSSARY: Provider). */
   key: string; dbnomics_provider: string; dataset: string;
+  /** Which fetcher serves the series; dbnomics unless the entry says otherwise. Bundesbank: dataset is the dataflow, ids[0] the series key. */
+  source: (typeof SOURCE_KINDS)[number];
   /** Series id; `{land}` is replaced by each code in `laender` (Destatis Land series summed to Germany). */
   ids: string[]; laender: string[]; scale: number; change: 'pct' | 'diff';
   publisher: string; attribution: Localized; licence: { name: string; url: string }; provisional: boolean;
@@ -31,7 +34,7 @@ export const manifestStrings = (entries: ManifestEntry[], lang: Lang): Record<st
 
 function build(lock: Lock): ManifestEntry[] {
   const entries = parse(readFileSync('manifest/series.yaml', 'utf8')) as ManifestEntry[];
-  for (const m of entries) { m.laender ??= ['']; m.scale ??= 1; m.provisional ??= false; m.change ??= 'pct'; m.scope ??= []; }
+  for (const m of entries) { m.source ??= 'dbnomics'; m.laender ??= ['']; m.scale ??= 1; m.provisional ??= false; m.change ??= 'pct'; m.scope ??= []; }
   checkEntries(entries, loadStrings('en'));
   const unreviewed = new Set(unreviewedKeys(manifestStrings(entries, 'en'), lock));
   for (const m of entries) for (const f of TEXT_FIELDS) // new objects: YAML anchors share them between entries
@@ -84,6 +87,7 @@ export function checkEntries(entries: ManifestEntry[], en: Record<string, string
     if (seen.has(m.key)) errs.push(`duplicate key ${m.key}`);
     seen.add(m.key);
     for (const l of langs) if (TEXT_FIELDS.some((f) => !m[f]?.[l])) errs.push(`${m.key} needs en and de title, unit and attribution`);
+    if (!SOURCE_KINDS.includes(m.source)) errs.push(`${m.key}: source must be one of ${SOURCE_KINDS}`);
     if (!ADJUSTMENTS.includes(m.seasonal_adjustment)) errs.push(`${m.key}: seasonal_adjustment must be one of ${ADJUSTMENTS}`);
     if (!RESAMPLING.includes(m.resampling)) errs.push(`${m.key}: resampling must be one of ${RESAMPLING}`);
     if (m.short_window !== m.expected_start > 2010) errs.push(`${m.key}: short_window must be ${m.expected_start > 2010} (starts ${m.expected_start})`);
