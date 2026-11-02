@@ -1,3 +1,8 @@
+---
+en_hash: 80a59c4347365222
+reviewed_by: Project owner
+reviewed_on: 2026-11-02
+---
 ## Verknüpfungen
 
 Eine Verknüpfung setzt eine Immobilienkennzahl und einen Wirtschaftsindikator für einen angegebenen Zeitraum in Beziehung. Sie zeigt Gleichlauf: wie sich zwei Reihen gemeinsam entwickelt haben. Das belegt keine Ursache-Wirkungs-Beziehung und ist keine Prognose.
