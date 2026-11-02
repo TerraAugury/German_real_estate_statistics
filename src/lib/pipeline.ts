@@ -3,6 +3,7 @@ import { parse } from 'yaml';
 import { readFileSync } from 'node:fs';
 import type { ManifestEntry } from './manifest';
 import { refreshBundesbank } from './bundesbank';
+import { refreshDestatis } from './destatis';
 
 export const API = 'https://api.db.nomics.world/v22/series';
 export const UA = 'german-cre-statistics (build; contact oelamine@terraaugury.com)';
@@ -10,26 +11,37 @@ export const UA = 'german-cre-statistics (build; contact oelamine@terraaugury.co
 export type { Part, Snapshot, SourceMeta } from './snapshot';
 export { BadResponse } from './snapshot';
 import { BadResponse, type Part, type Snapshot } from './snapshot';
-export interface Deps { get: (url: string) => Promise<any>; now: Date; warn?: (msg: string) => void }
+export type Post = (url: string, form: Record<string, string>, headers: Record<string, string>) => Promise<any>;
+/** `post` and `env` are needed only by sources that log in (Destatis); `env` defaults to the process environment. */
+export interface Deps { get: (url: string) => Promise<any>; post?: Post; env?: Record<string, string | undefined>; now: Date; warn?: (msg: string) => void }
 
 /** Non-2xx answer; the message is the status code and URL. */
 export class HttpError extends Error { constructor(public status: number, url = '') { super(`${status} ${url}`.trim()); } }
 
-/** GET JSON with retry and exponential backoff. */
-export function makeGet(fetchFn: typeof fetch = fetch, sleep = (ms: number) => new Promise((r) => setTimeout(r, ms)), tries = 3) {
-  return async (url: string) => {
-    for (let i = 0; ; i++) {
-      try {
-        const r = await fetchFn(url, { headers: { 'User-Agent': UA } });
-        if (r.ok) return (await r.json()) as any;
-        throw new HttpError(r.status, url);
-      } catch (e) {
-        if (i >= tries - 1 || (e instanceof HttpError && (e.status === 404 || e.status === 410))) throw e; // a missing resource will not come back in a second
-        await sleep(1000 * 2 ** i);
-      }
+const NO_RETRY = new Set([401, 403, 404, 410]); // a second try will not change the answer
+
+/** Fetch JSON with retry and exponential backoff. */
+async function fetchJson(fetchFn: typeof fetch, sleep: (ms: number) => Promise<unknown>, tries: number, url: string, init: RequestInit) {
+  for (let i = 0; ; i++) {
+    try {
+      const r = await fetchFn(url, init);
+      if (r.ok) return (await r.json()) as any;
+      throw new HttpError(r.status, url);
+    } catch (e) {
+      if (i >= tries - 1 || (e instanceof HttpError && NO_RETRY.has(e.status))) throw e;
+      await sleep(1000 * 2 ** i);
     }
-  };
+  }
 }
+const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/** GET JSON with retry and exponential backoff. */
+export const makeGet = (fetchFn: typeof fetch = fetch, sleep = wait, tries = 3) => (url: string) =>
+  fetchJson(fetchFn, sleep, tries, url, { headers: { 'User-Agent': UA } });
+
+/** POST a form and read JSON, with the same retry. `headers` carries the credentials. */
+export const makePost = (fetchFn: typeof fetch = fetch, sleep = wait, tries = 3): Post => (url, form, headers) =>
+  fetchJson(fetchFn, sleep, tries, url, { method: 'POST', body: new URLSearchParams(form), headers: { 'User-Agent': UA, ...headers } });
 
 function firstDoc(res: any, id: string): any {
   const d = res?.series?.docs?.[0];
@@ -85,6 +97,7 @@ export async function refreshDbnomics(m: ManifestEntry, old: Snapshot | undefine
 export async function refresh(m: ManifestEntry, old: Snapshot | undefined, deps: Deps): Promise<Snapshot | null> {
   if (m.source === 'dbnomics') return refreshDbnomics(m, old, deps);
   if (m.source === 'bundesbank') return refreshBundesbank(m, old, deps);
+  if (m.source === 'destatis') return refreshDestatis(m, old, deps);
   throw new BadResponse(`${m.key}: no fetcher for source ${m.source}`);
 }
 

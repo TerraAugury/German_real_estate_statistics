@@ -3,6 +3,9 @@
 /** The API answered but not as expected (or the frequency or unit changed). Fails the build; never a reason to reuse the snapshot. */
 export class BadResponse extends Error {}
 
+/** The series left its source (Bundesbank 404/410, GENESIS status 104). Handled like any failed refresh: the old snapshot stays. */
+export class Unavailable extends Error {}
+
 /** Where a part came from and what the source called it. Absent on parts fetched through DBnomics before direct sources. */
 export interface SourceMeta {
   /** Who served the data, e.g. "Deutsche Bundesbank". */

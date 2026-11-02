@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { refresh, HttpError, makeGet, type Snapshot } from '../src/lib/pipeline';
 import { BadResponse } from '../src/lib/snapshot';
-import { Unavailable } from '../src/lib/bundesbank';
+import { Unavailable } from '../src/lib/snapshot';
 import type { ManifestEntry } from '../src/lib/manifest';
 
 const fixture = () => JSON.parse(readFileSync('tests/fixtures/bbk-sdmx-q.json', 'utf8'));

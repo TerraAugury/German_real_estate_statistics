@@ -41,7 +41,7 @@ describe('refresh', () => {
 describe('source dispatch', () => {
   it('a source without a fetcher fails loudly instead of falling back to DBnomics', async () => {
     const get = vi.fn();
-    await expect(refresh({ ...m, source: 'destatis' }, undefined, { get, now })).rejects.toBeInstanceOf(BadResponse);
+    await expect(refresh({ ...m, source: 'ftp' as any }, undefined, { get, now })).rejects.toBeInstanceOf(BadResponse);
     expect(get).not.toHaveBeenCalled();
   });
   it('parts without meta or indexed_at (older or direct snapshots) still validate', () => {

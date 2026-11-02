@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { parse } from 'yaml';
 import { BBK_API, type ManifestEntry } from './manifest';
-import { BadResponse, type Part, type Snapshot } from './snapshot';
+import { BadResponse, Unavailable, type Part, type Snapshot } from './snapshot';
 import { partIds, revised, type Deps } from './pipeline';
 
 const FREQ: Record<string, string> = { A: 'annual', Q: 'quarterly', M: 'monthly' };
@@ -18,9 +18,6 @@ export function isThirdParty(comment: string | null, words = (own ??= new Set((p
 
 /** The "Source of the original data: X." part of a general comment; null when it has none. */
 export const originalDataSource = (note: string | null) => note?.match(/Source of the original data:\s*([^.]*)/i)?.[1] ?? null;
-
-/** The series left the Bundesbank service (404 no result, 410 no longer supported). Handled like any failed refresh: the old snapshot stays. */
-export class Unavailable extends Error {}
 
 /** Parse one SDMX-JSON response into a Part. Throws BadResponse when it is not shaped as expected. */
 export function parseSdmx(res: any, m: ManifestEntry, url: string, retrievedAt: string): Part {
