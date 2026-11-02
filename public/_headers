@@ -1,0 +1,8 @@
+# Cloudflare Pages response headers. Inline scripts and styles are allowed ('unsafe-inline'): the pages carry three
+# inline scripts and Plot writes <style>/style="" into its SVG. Everything else is limited to this origin.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
