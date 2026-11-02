@@ -63,3 +63,22 @@ describe('refresh with source bundesbank', () => {
     await expect(refresh(m, first, { get: async () => r, now })).rejects.toThrow(/unit changed/);
   });
 });
+
+describe('third-party flag', () => {
+  it('flags every original source the Bundesbank names besides itself', async () => {
+    const { isThirdParty } = await import('../src/lib/bundesbank');
+    for (const c of ['vdpResearch GmbH and Bundesbank calculations.', 'vdpResearch GmbH.', 'Bundesbank calculations based on price data provided by bulwiengesa AG.',
+      'Bundesbank calculations based on data provided by the Federal Statistical Office.', 'Seasonal adjustment based on data provided by the Federal Employment Agency.']) expect(isThirdParty(c)).toBe(true);
+    for (const c of [null, '', 'Bundesbank calculations.', 'Deutsche Bundesbank and ECB']) expect(isThirdParty(c)).toBe(false);
+  });
+  it('is recorded on the snapshot', async () => {
+    const snap = (await refresh(m, undefined, { get: async () => fixture(), now }))!;
+    expect(snap.parts[id].meta!.third_party).toBe(true);
+  });
+  it('validation refuses a flagged series that is not provisional', async () => {
+    const { validateSnapshot } = await import('../src/lib/pipeline');
+    const snap = (await refresh(m, undefined, { get: async () => fixture(), now }))!;
+    expect(() => validateSnapshot({ ...m, provisional: false }, snap)).toThrow(/third-party/);
+    validateSnapshot({ ...m, provisional: true }, snap);
+  });
+});

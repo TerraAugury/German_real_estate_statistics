@@ -12,6 +12,8 @@ export interface SourceMeta {
   title: string; unit: string; unit_mult: number; decimals: number | null;
   /** Original source named in the metadata (e.g. "vdpResearch GmbH and Bundesbank calculations."); null if none. */
   comment: string | null;
+  /** True when `comment` names anyone besides the Bundesbank or ESCB: licence review needed before public use. */
+  third_party: boolean;
   valid_from: string | null;
   retrieved_at: string;
   /** SHA-256 of the response body as received. */

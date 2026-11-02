@@ -1,5 +1,7 @@
 // Bundesbank SDMX-JSON fetcher. Dataset = dataflow, ids[0] = series key. Keeps the original metadata with the data.
 import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { parse } from 'yaml';
 import type { ManifestEntry } from './manifest';
 import { BadResponse, type Part, type Snapshot } from './snapshot';
 import { partIds, revised, type Deps } from './pipeline';
@@ -8,6 +10,12 @@ export const BBK_API = 'https://api.statistiken.bundesbank.de/rest/data';
 const FREQ: Record<string, string> = { A: 'annual', Q: 'quarterly', M: 'monthly' };
 
 export const bundesbankUrl = (m: ManifestEntry) => `${BBK_API}/${m.dataset}/${m.ids[0]}?format=sdmx_json&lang=en`;
+
+let own: Set<string> | undefined;
+/** True when a Bundesbank source comment names anyone else; null or empty means the Bundesbank's own series. */
+export function isThirdParty(comment: string | null, words = (own ??= new Set((parse(readFileSync('manifest/original-sources.yaml', 'utf8')) as { own: string[] }).own.map((w) => w.toLowerCase())))): boolean {
+  return (comment ?? '').split(/[^\p{L}\p{N}]+/u).filter(Boolean).some((w) => !words.has(w.toLowerCase()));
+}
 
 /** The series left the Bundesbank service (404 no result, 410 no longer supported). Handled like any failed refresh: the old snapshot stays. */
 export class Unavailable extends Error {}
@@ -35,7 +43,7 @@ export function parseSdmx(res: any, m: ManifestEntry, url: string, retrievedAt: 
     meta: {
       source: 'Deutsche Bundesbank', url, title: attr.BBK_TITLE_ENG ?? '', unit: attr.BBK_UNIT ?? '',
       unit_mult: Number(attr.BBK_UNIT_MULT ?? 0), decimals: attr.BBK_DECIMALS == null ? null : Number(attr.BBK_DECIMALS),
-      comment: attr.BBK_COMM_SRC_ENG ?? null, valid_from: data.dataSets[0].validFrom ?? null, retrieved_at: retrievedAt,
+      comment: attr.BBK_COMM_SRC_ENG ?? null, third_party: isThirdParty(attr.BBK_COMM_SRC_ENG ?? null), valid_from: data.dataSets[0].validFrom ?? null, retrieved_at: retrievedAt,
       sha256: createHash('sha256').update(JSON.stringify(res)).digest('hex'),
     },
   };

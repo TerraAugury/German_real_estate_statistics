@@ -56,6 +56,11 @@ A series whose licence for public redisplay is not yet confirmed. It is kept out
 _DE_: Vorläufig
 _Avoid_: Draft, unverified, beta
 
+**Original source**:
+The third party a series' metadata names as the maker of the data (for example vdpResearch, bulwiengesa, the Federal Employment Agency), when the Provider serving it is a different body. A series with an Original source other than the Bundesbank or ESCB stays Provisional until its permission is confirmed.
+_DE_: Ursprungsquelle
+_Avoid_: Publisher (the publisher is the body that serves the series)
+
 **Stale**:
 A series whose latest observation is older than the expected interval for its frequency. The site still shows it, with a note.
 _DE_: Nicht aktuell
