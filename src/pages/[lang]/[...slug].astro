@@ -6,11 +6,11 @@ import { getSeries, type Series } from '../../lib/series';
 import { lineChart } from '../../lib/chart';
 import { kpiNotes } from '../../lib/notes';
 import { loadManifest } from '../../lib/manifest';
-import { INDICATORS, linkResult, viewLinks } from '../../lib/links';
 import { readProse, unreviewedProse, DRAFT } from '../../lib/review';
 import { sourcesTable } from '../../lib/sources';
 import { compactChart, linkPanel, sourceLine } from '../../lib/panel';
-import { KPIS, CITY_CLASSES, SEGMENTS, SEGMENT_PAGES, cell, headline, isLand, liveViews, naText, viewHref, type Segment, type View } from '../../lib/kpis';
+import { KPIS, SEGMENTS, SEGMENT_PAGES, cell, headline, naText, viewHref, type GeoGroup, type Segment, type View } from '../../lib/kpis';
+import { availability, kpiPage, linksOverview } from '../../lib/pages';
 
 export function getStaticPaths() {
   return langs.flatMap((lang) => built.map((page) => ({ params: { lang, slug: slug(page, lang) || undefined }, props: { page } })));
@@ -20,34 +20,16 @@ const { page } = Astro.props as { page: BuiltPage };
 
 // KPI page: every selector state rendered, the script shows the one the URL asks for (spec section 8).
 const kpi = KPIS.find((k) => k.page === page);
-const views = kpi ? liveViews(kpi) : [];
-// Link panels: each pair rendered once, in indicator order (a view has one per indicator); a view lists its panel ids in data-links.
-type Pair = ReturnType<typeof viewLinks>[number];
-const panelId = (l: Pair) => `link-${l.kpi}-${l.land ?? 'de'}-${l.indicator}`;
-const panels = new Map<string, { order: number; html: string }>();
-const linkIds = (v: View) => viewLinks(v).map((l) => {
-  const id = panelId(l);
-  if (!panels.has(id)) panels.set(id, { order: INDICATORS.indexOf(l.name), html: linkPanel(getSeries(l.kpi, l.land), getSeries(l.indicator), lang, t(lang, `geo.${v.geo}`), id) });
-  return id;
-}).join(' ');
-const viewLinkIds = views.map(linkIds);
-// Links overview: each KPI at its headline view, one cell per indicator any row has a public pair for.
-const overview = page === 'links' ? KPIS.map((k) => {
-  const v = headline(k);
-  const pairs = v ? viewLinks(v) : [];
-  return { k, v, cells: new Map(pairs.map((l) => [l.name, { l, r: linkResult(getSeries(l.kpi, l.land), getSeries(l.indicator)) }])) };
-}) : [];
-const columns = INDICATORS.filter((n) => overview.some((row) => row.cells.has(n)));
+const model = kpi ? kpiPage(kpi) : undefined;
+const views = model?.views ?? [];
+const panels = (model?.panels ?? []).map((p) => ({ ...p, html: linkPanel(getSeries(p.pair.kpi, p.pair.land), getSeries(p.pair.indicator), lang, t(lang, `geo.${p.geo}`), p.id) }));
+const overview = page === 'links' ? linksOverview() : undefined;
 const prose = import.meta.glob<{ Content: any }>('../../../content/*/*.md', { eager: true });
 const Methodology = prose[`../../../content/${lang}/methodology.md`]?.Content;
 const methodologyDraft = lang === 'de' && unreviewedProse(readProse()).includes('methodology');
-const uniq = <T,>(xs: T[]) => [...new Set(xs)];
-const geos = uniq(views.map((v) => v.geo));
-const geoGroups = [
-  { label: null, geos: geos.filter((g) => !CITY_CLASSES.includes(g) && !isLand(g)) },
-  { label: t(lang, 'select.city_classes'), geos: geos.filter((g) => CITY_CLASSES.includes(g)) },
-  { label: t(lang, 'select.laender'), geos: geos.filter(isLand) },
-].filter((g) => g.geos.length);
+// Germany-wide geographies have no optgroup on the selector; the Availability grid names them "Germany".
+const selectorGroup: Record<GeoGroup, string | null> = { germany: null, city_classes: 'select.city_classes', laender: 'select.laender' };
+const coverGroup: Record<GeoGroup, string> = { germany: 'geo.germany', city_classes: 'select.city_classes', laender: 'select.laender' };
 const segment = page.startsWith('segment-') ? (page.slice('segment-'.length) as Segment) : null;
 const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
   : t(lang, `${page === 'home' ? 'site' : page}.title`);
@@ -107,13 +89,10 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
       <p>{t(lang, 'availability.intro')}</p>
       <div class="scroll"><table>
         <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{SEGMENTS.map((g) => <th scope="col">{t(lang, `segment.${g}`)}</th>)}</tr></thead>
-        <tbody>{KPIS.map((k) => (
-          <tr><th scope="row"><a href={href(k.page, lang)}>{t(lang, k.title)}</a></th>{SEGMENTS.map((g) => {
-            const c = cell(k, g);
+        <tbody>{availability().map(({ kpi: k, cells }) => (
+          <tr><th scope="row"><a href={href(k.page, lang)}>{t(lang, k.title)}</a></th>{cells.map(({ cell: c, geos }) => {
             if (!('view' in c)) return <td class="na">{naText(c, lang)}</td>;
-            // Geographies the cell covers, grouped as on the KPI page selector: Germany, City classes, Länder.
-            const geo = uniq(liveViews(k).filter((v) => v.segment === g)
-              .map((v) => (isLand(v.geo) ? 'select.laender' : CITY_CLASSES.includes(v.geo) ? 'select.city_classes' : 'geo.germany'))).map((x) => t(lang, x)).join(', ');
+            const geo = geos.map((g) => t(lang, coverGroup[g])).join(', ');
             return <td><a href={viewHref(k, c.view, lang)}>{t(lang, 'availability.available', { geo })}</a></td>;
           })}</tr>
         ))}</tbody>
@@ -124,16 +103,17 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
       <h1>{title}</h1>
       <p>{t(lang, 'links.intro')}</p>
       <div class="scroll"><table>
-        <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{columns.map((n) => <th scope="col">{t(lang, `indicator.${n}`)}</th>)}</tr></thead>
-        <tbody>{overview.map(({ k, v, cells }) => (
+        <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{overview!.columns.map((n) => <th scope="col">{t(lang, `indicator.${n}`)}</th>)}</tr></thead>
+        <tbody>{overview!.rows.map(({ kpi: k, view: v, cells }) => (
           <tr>
             <th scope="row"><a href={href(k.page, lang)}>{t(lang, k.title)}</a>{v && <><br /><small>{compact(v).title[lang]}</small></>}</th>
-            {!v ? <td class="na" colspan={columns.length}>{t(lang, 'kpi.not_available.licence')}</td> : columns.map((n) => {
+            {!v ? <td class="na" colspan={overview!.columns.length}>{t(lang, 'kpi.not_available.licence')}</td> : overview!.columns.map((n) => {
               const c = cells.get(n);
               if (!c) return <td />;
-              const text = c.r.shown ? t(lang, 'links.cell.shown', { rho: fmt(lang, c.r.headline.rho!, { maximumFractionDigits: 2 }), n: String(c.r.headline.n) })
-                : t(lang, 'links.cell.not_shown', { n: String(c.r.n0) });
-              return <td><a href={`${viewHref(k, v, lang)}#${panelId(c.l)}`}>{text}</a></td>;
+              const r = c.result;
+              const text = r.shown ? t(lang, 'links.cell.shown', { rho: fmt(lang, r.headline.rho!, { maximumFractionDigits: 2 }), n: String(r.headline.n) })
+                : t(lang, 'links.cell.not_shown', { n: String(r.n0) });
+              return <td><a href={`${viewHref(k, v, lang)}#${c.pair.id}`}>{text}</a></td>;
             })}
           </tr>
         ))}</tbody>
@@ -159,16 +139,17 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
           {/* Without JavaScript the selectors cannot switch views: hide them and say so. */}
           <noscript><style>.selectors { display: none; }</style><p class="note">{t(lang, 'kpi.noscript')}</p></noscript>
           <form class="selectors">
-            <label>{t(lang, 'select.segment')} <select name="segment">{uniq(views.map((v) => v.segment)).map((x) => <option value={x}>{t(lang, `segment.${x}`)}</option>)}</select></label>
-            <label>{t(lang, 'select.geo')} <select name="geo">{geoGroups.map((g) => {
+            <label>{t(lang, 'select.segment')} <select name="segment">{model!.selectors.segment.map((x) => <option value={x}>{t(lang, `segment.${x}`)}</option>)}</select></label>
+            <label>{t(lang, 'select.geo')} <select name="geo">{model!.selectors.geo.map((g) => {
               const opts = g.geos.map((x) => <option value={x}>{t(lang, `geo.${x}`)}</option>);
-              return g.label ? <optgroup label={g.label}>{opts}</optgroup> : opts;
+              const label = selectorGroup[g.group];
+              return label ? <optgroup label={t(lang, label)}>{opts}</optgroup> : opts;
             })}</select></label>
-            <label>{t(lang, 'select.freq')} <select name="freq">{uniq(views.map((v) => v.freq)).map((x) => <option value={x}>{t(lang, `freq.${x}`)}</option>)}</select></label>
+            <label>{t(lang, 'select.freq')} <select name="freq">{model!.selectors.freq.map((x) => <option value={x}>{t(lang, `freq.${x}`)}</option>)}</select></label>
           </form>
-          {views.map((v, i) => {
+          {views.map(({ view: v, links, live }) => {
             const section = (
-              <section class="view" data-segment={v.segment} data-geo={v.geo} data-freq={v.freq} data-links={viewLinkIds[i]}>
+              <section class="view" data-segment={v.segment} data-geo={v.geo} data-freq={v.freq} data-links={links.join(' ')}>
                 {v.series.map((r) => getSeries(r.key, r.land)).map((x) => (
                   <figure>
                     <h2>{x.title[lang]}</h2>
@@ -179,14 +160,14 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
                 ))}
               </section>
             );
-            return i === 0 ? section : <template class="view">{section}</template>;
+            return live ? section : <template class="view">{section}</template>;
           })}
-          {panels.size > 0 && (
+          {panels.length > 0 && (
             <>
               <h2>{t(lang, 'links.heading')}</h2>
-              {[...panels].sort(([, a], [, b]) => a.order - b.order).map(([id, p]) => {
-                const div = <div data-panel={id}><Fragment set:html={p.html} /></div>;
-                return viewLinkIds[0].split(' ').includes(id) ? div : <template class="panel">{div}</template>;
+              {panels.map((p) => {
+                const div = <div data-panel={p.id}><Fragment set:html={p.html} /></div>;
+                return p.live ? div : <template class="panel">{div}</template>;
               })}
             </>
           )}

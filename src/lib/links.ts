@@ -19,11 +19,18 @@ const seriesOf = (name: Indicator, segment: Segment, kpi: string) =>
     : name === 'oecd-confidence' ? (segment === 'retail' ? 'oecd-confidence-retail' : 'oecd-confidence-construction')
       : name;
 
-/** One view's Link pairs: its first series against each indicator, minus pairs the provisional gate drops. */
+/**
+ * One view's Link pairs: its first series against each indicator, minus pairs the provisional gate drops. `id` is the
+ * panel's HTML id, which KPI pages and the Links overview anchors share.
+ */
 export function viewLinks(v: View, live: ManifestEntry[] = loadManifest()) {
   const { key, land } = v.series[0];
-  return publicLinks(INDICATORS.map((name) => ({ name, kpi: key, land, indicator: seriesOf(name, v.segment, key) })), live);
+  return publicLinks(INDICATORS.map((name) => {
+    const indicator = seriesOf(name, v.segment, key);
+    return { name, kpi: key, land, indicator, id: `link-${key}-${land ?? 'de'}-${indicator}` };
+  }), live);
 }
+export type Pair = ReturnType<typeof viewLinks>[number];
 
 const results = new Map<string, LinkResult>();
 /** The Link of two series, computed once per build. */
