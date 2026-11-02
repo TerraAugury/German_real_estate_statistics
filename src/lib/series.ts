@@ -1,9 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { loadManifest, dbnomicsId, dbnomicsUrl, isDerived, type Localized, type ManifestEntry } from './manifest';
 import { validateSnapshot, isStale } from './pipeline';
-import { noteTexts } from './notes';
 import { landName } from './kpis';
-import { langs, type Lang } from './routes';
+import { langs } from './routes';
 
 /** Years in which some Länder had no value, so the Germany sum covers only the others. */
 export type PartialTotal = { period: string; laender: string[] }[];
@@ -16,8 +15,6 @@ export interface Series {
   stale: boolean; fetchFailed: string | null; retrievedAt: string; revisedAt: string | null;
   /** KPI-page Note inputs: manifest scope keys, short-history sentence key (true = no extra sentence), Partial total years. */
   scope: ManifestEntry['scope']; shortWindow: string | boolean; partial: PartialTotal;
-  /** Unprefixed Note texts per language (stale, fetch failed, revised); Link panels inherit them. */
-  notes: Record<Lang, string[]>;
 }
 
 const FREQ = { annual: 'A', quarterly: 'Q', monthly: 'M' } as const;
@@ -61,9 +58,8 @@ export function loadSeries(key: string, now = new Date(), land?: string): Series
     lastPeriod, derived: (isDerived(m) && !land) || m.scale !== 1, provisional: m.provisional,
     stale: isStale(lastPeriod, m.frequency, now), fetchFailed: snap.fetch_failed ?? null,
     retrievedAt: snap.retrieved_at, revisedAt: snap.revised_at ?? null,
-    scope: m.scope, shortWindow: m.short_window && (m.short_window_sentence ?? true), partial, notes: { en: [], de: [] } };
+    scope: m.scope, shortWindow: m.short_window && (m.short_window_sentence ?? true), partial };
   if (!s.freq) throw new Error(`${key}: unknown frequency ${m.frequency}`);
-  for (const l of langs) s.notes[l] = noteTexts(s, l, now);
   return s;
 }
 

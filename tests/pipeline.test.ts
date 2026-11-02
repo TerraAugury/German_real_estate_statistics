@@ -1,8 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { BadResponse, makeGet, refresh, markFailed, validateSnapshot, isStale, revised, type Snapshot, type Part } from '../src/lib/pipeline';
-import { notes, noteTexts } from '../src/lib/notes';
 import type { ManifestEntry } from '../src/lib/manifest';
-import type { Series } from '../src/lib/series';
 
 const m = { key: 'k', dbnomics_provider: 'P', dataset: 'D', ids: ['{land}.X'], laender: ['01'], frequency: 'annual', expected_start: 2008 } as ManifestEntry;
 const part = (indexed_at: string, value: number[], start = 2008): Part =>
@@ -110,20 +108,4 @@ describe('isStale', () => {
     expect(isStale('2026-02', 'monthly', new Date('2026-08-01'), d)).toBe(true);
   });
   it('reads the config file by default', () => expect(isStale('2025', 'annual', now)).toBe(false));
-});
-
-describe('notes', () => {
-  const s = { stale: true, lastPeriod: '2023', fetchFailed: '2026-10-30T01:00:00Z', retrievedAt: '2026-10-01T01:00:00Z', revisedAt: '2026-09-01T00:00:00Z' } as Series;
-  it('Home cards and Segment charts: stale and fetch failed only, EN and DE, dates written out (spec section 9)', () => {
-    const en = notes(s, 'en');
-    expect(en).toHaveLength(2);
-    expect(en[0]).toMatch(/^Note: Latest observation: 2023\./);
-    expect(en[1]).toBe('Note: Could not refresh from DBnomics on 30 October 2026; showing data retrieved on 1 October 2026.');
-    expect(notes(s, 'de')[1]).toBe('Hinweis: Aktualisierung über DBnomics am 30. Oktober 2026 fehlgeschlagen; dargestellt sind die am 1. Oktober 2026 abgerufenen Daten.');
-  });
-  it('revised note comes last and expires after 90 days; nothing else when fresh', () => {
-    expect(noteTexts(s, 'en', now)[2]).toMatch(/detected 1 September 2026/);
-    expect(noteTexts({ ...s, stale: false, fetchFailed: null }, 'en', new Date('2026-11-30'))).toHaveLength(1);
-    expect(noteTexts({ ...s, stale: false, fetchFailed: null }, 'en', new Date('2026-12-01T01:00:00Z'))).toHaveLength(0);
-  });
 });

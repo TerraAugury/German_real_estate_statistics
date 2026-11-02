@@ -1,3 +1,4 @@
+// Notes (spec section 9): every chart gets its Notes here, so the fixed order lives in one place.
 import { period, t } from './i18n';
 import { landName } from './kpis';
 import type { Lang } from './routes';
@@ -5,37 +6,57 @@ import type { Series } from './series';
 
 const locale = { en: 'en-GB', de: 'de-DE' } as const;
 const day = (lang: Lang, iso: string) => new Intl.DateTimeFormat(locale[lang], { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(iso));
-export const REVISED_DAYS = 90;
+const REVISED_DAYS = 90;
+const SMALL = 20; // annual Links with fewer lag-0 pairs get the Small sample Note
 
-/** Note texts in the fixed order: stale, fetch failed, revised. No prefix. */
-export function noteTexts(s: Omit<Series, 'notes'>, lang: Lang, now = new Date()): string[] {
+/**
+ * Where the Notes appear:
+ * - `kpi`: a KPI page chart. `geography` is the selector label; English lowercases its first letter mid-sentence.
+ * - `compact`: a Home card or Segment chart.
+ * - `link`: a Link panel for this KPI series against `indicator`. `pairs` is the lag-0 n when the Link is shown.
+ */
+export type NoteContext =
+  | { on: 'kpi'; geography: string }
+  | { on: 'compact' }
+  | { on: 'link'; indicator: Series; pairs?: number };
+
+/** Stale, fetch failed, then revised (within REVISED_DAYS). */
+function freshness(s: Series, lang: Lang, now: Date, revised = true): string[] {
   const out: string[] = [];
   if (s.stale) out.push(t(lang, 'note.stale', { period: period(lang, s.lastPeriod) }));
   if (s.fetchFailed) out.push(t(lang, 'note.fetch_failed', { date: day(lang, s.fetchFailed), snapshot: day(lang, s.retrievedAt) }));
-  if (s.revisedAt && (now.getTime() - Date.parse(s.revisedAt)) / 864e5 <= REVISED_DAYS) out.push(t(lang, 'note.revised', { date: day(lang, s.revisedAt) }));
+  if (revised && s.revisedAt && (now.getTime() - Date.parse(s.revisedAt)) / 864e5 <= REVISED_DAYS) out.push(t(lang, 'note.revised', { date: day(lang, s.revisedAt) }));
   return out;
 }
 
-const prefix = (lang: Lang, ns: string[]) => ns.map((n) => `${t(lang, 'note.prefix')}: ${n}`);
-
-/** Prefixed Notes for Home cards and Segment charts: stale and fetch failed only (spec section 9). */
-export const notes = (s: Series, lang: Lang): string[] => prefix(lang, noteTexts({ ...s, revisedAt: null }, lang));
-
-/** The Short history Note text, with the series' extra sentence if it has one; empty for a long series. */
-export function shortNote(s: Series, lang: Lang): string[] {
+/** Short history, with the series' extra sentence if it has one. */
+function short(s: Series, lang: Lang): string[] {
   if (!s.shortWindow) return [];
-  const short = t(lang, 'note.short_window', { start: period(lang, s.obs[0].period), end: period(lang, s.lastPeriod) });
-  return [typeof s.shortWindow === 'string' ? `${short} ${t(lang, s.shortWindow)}` : short];
+  const text = t(lang, 'note.short_window', { start: period(lang, s.obs[0].period), end: period(lang, s.lastPeriod) });
+  return [typeof s.shortWindow === 'string' ? `${text} ${t(lang, s.shortWindow)}` : text];
 }
 
 /**
- * Prefixed Notes for a KPI page chart, all of them in the fixed order: scope, short history, partial total, then `notes`.
- * `geography` is the selector label; English lowercases its first letter mid-sentence, German nouns keep theirs.
+ * A chart's Notes, prefixed, in the fixed order for its context:
+ * - KPI chart: scope, short history, partial total, stale, fetch failed, revised.
+ * - Compact chart: stale, fetch failed.
+ * - Link panel: the KPI's short history (it carries the one-cycle caveat over), small sample, the KPI's stale, fetch
+ *   failed and revised, then the indicator's; each series Note names its series.
+ * Plain text: callers escape it for HTML.
  */
-export function kpiNotes(s: Series, lang: Lang, geography: string, now = new Date()): string[] {
-  const cls = lang === 'en' ? geography.charAt(0).toLowerCase() + geography.slice(1) : geography;
-  const out = s.scope.map((k) => t(lang, `note.scope.${k}`, k === 'city_class' ? { class: cls } : {}));
-  out.push(...shortNote(s, lang));
-  for (const p of s.partial) out.push(t(lang, 'note.partial_total', { laender: p.laender.map((l) => landName(lang, l)).join(', '), year: p.period }));
-  return prefix(lang, [...out, ...noteTexts(s, lang, now)]);
+export function notesFor(s: Series, lang: Lang, ctx: NoteContext, now = new Date()): string[] {
+  const note = (n: string) => `${t(lang, 'note.prefix')}: ${n}`;
+  if (ctx.on === 'compact') return freshness(s, lang, now, false).map(note);
+  if (ctx.on === 'kpi') {
+    const cls = lang === 'en' ? ctx.geography.charAt(0).toLowerCase() + ctx.geography.slice(1) : ctx.geography;
+    return [
+      ...s.scope.map((k) => t(lang, `note.scope.${k}`, k === 'city_class' ? { class: cls } : {})),
+      ...short(s, lang),
+      ...s.partial.map((p) => t(lang, 'note.partial_total', { laender: p.laender.map((l) => landName(lang, l)).join(', '), year: p.period })),
+      ...freshness(s, lang, now),
+    ].map(note);
+  }
+  const of = (x: Series, ns: string[]) => ns.map((n) => note(`${x.title[lang]}: ${n}`));
+  const small = s.freq === 'A' && ctx.pairs !== undefined && ctx.pairs < SMALL ? [note(t(lang, 'link.small_sample', { n: String(ctx.pairs) }))] : [];
+  return [...of(s, short(s, lang)), ...small, ...of(s, freshness(s, lang, now)), ...of(ctx.indicator, freshness(ctx.indicator, lang, now))];
 }

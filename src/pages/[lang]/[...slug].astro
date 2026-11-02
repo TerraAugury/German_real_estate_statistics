@@ -4,7 +4,7 @@ import { built, langs, slug, href, type Lang, type BuiltPage } from '../../lib/r
 import { t, fmt, period } from '../../lib/i18n';
 import { getSeries, type Series } from '../../lib/series';
 import { lineChart } from '../../lib/chart';
-import { kpiNotes } from '../../lib/notes';
+import { notesFor } from '../../lib/notes';
 import { loadManifest } from '../../lib/manifest';
 import { readProse, unreviewedProse, DRAFT } from '../../lib/review';
 import { sourcesTable } from '../../lib/sources';
@@ -154,7 +154,7 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
                   <figure>
                     <h2>{x.title[lang]}</h2>
                     <Fragment set:html={lineChart(x, lang)} />
-                    {kpiNotes(x, lang, t(lang, `geo.${v.geo}`)).map((n) => <p class="note">{n}</p>)}
+                    {notesFor(x, lang, { on: 'kpi', geography: t(lang, `geo.${v.geo}`) }).map((n) => <p class="note">{n}</p>)}
                     <figcaption set:html={sourceLine(x, lang)} />
                   </figure>
                 ))}

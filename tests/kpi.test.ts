@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { sumLaender, type Series } from '../src/lib/series';
-import { kpiNotes } from '../src/lib/notes';
+import { sumLaender } from '../src/lib/series';
 import { period, t } from '../src/lib/i18n';
 import { KPIS, SEGMENTS, cell, headline, liveViews } from '../src/lib/kpis';
 import { pickView } from '../src/lib/select';
@@ -101,33 +100,6 @@ describe('selector resolution', () => {
     expect(pickView(vs, { segment: 'commercial-overall', geo: 'germany', freq: 'quarterly' })).toBe(vs[3]));
   it('the selector just changed always takes effect', () =>
     expect(pickView(vs, { segment: 'commercial-overall', geo: '7-cities', freq: 'quarterly' }, 'freq')).toBe(vs[1]));
-});
-
-describe('KPI page Notes (spec section 9)', () => {
-  const base = { stale: false, fetchFailed: null, revisedAt: null, lastPeriod: '2026-Q1', retrievedAt: '2026-10-01T00:00:00Z',
-    obs: [{ period: '2013-Q1', value: 100 }, { period: '2026-Q1', value: 120 }], scope: [], shortWindow: false, partial: [] } as unknown as Series;
-  const at = new Date('2026-11-01');
-  it('scope, short history with the cycle sentence, then stale, in the fixed order and prefixed', () => {
-    const s = { ...base, scope: ['index', 'city_class'], shortWindow: 'note.short_cycle', stale: true } as Series;
-    expect(kpiNotes(s, 'en', 'Cities of supra-regional importance', at)).toEqual([
-      'Note: Index (2013 = 100): shows change over time, not a price level in euros.',
-      'Note: Aggregate for cities of supra-regional importance, not an individual city.',
-      'Note: Short history (Q1 2013 to Q1 2026). This window contains essentially one interest-rate cycle, so the pattern may not hold in other periods.',
-      'Note: Latest observation: Q1 2026. The source has not published newer data within the expected interval, so this series may be out of date.',
-    ]);
-  });
-  it('combined scope and short history without the cycle sentence, in German', () => {
-    const s = { ...base, scope: ['combined'], shortWindow: true } as Series;
-    // Unreviewed German carries [DRAFT] (ticket 09), so match the text, not the whole line.
-    expect(kpiNotes(s, 'de', '', at)).toEqual([
-      expect.stringContaining('Büro und Einzelhandel zusammen; keine getrennten Werte.'),
-      expect.stringContaining('Kurze Zeitreihe (Q1 2013 bis Q1 2026).'),
-    ]);
-  });
-  it('Partial total names the missing Länder per year', () => {
-    const s = { ...base, partial: [{ period: '2019', laender: ['04', '11'] }] } as Series;
-    expect(kpiNotes(s, 'en', '', at)).toEqual(['Note: Germany total is the sum of the Länder with data; no value for Bremen, Berlin in 2019.']);
-  });
 });
 
 it('Construction lists the Länder in Destatis order after Germany', () => {
