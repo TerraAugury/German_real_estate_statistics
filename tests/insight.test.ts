@@ -63,3 +63,35 @@ describe('Insight module: the verdict', () => {
     expect(spread(zeros(12))).toMatchObject({ sd: 0, verdict: 'in_line' });
   });
 });
+
+describe('Insight module: lines behind the headline, rebased', () => {
+  const ramp = (from: number, n: number, start = 10) => annual(from, Array.from({ length: n }, (_, i) => start + i));
+  it('both series are rebased to 2015 = 100 over the headline period', () => {
+    const r = computeInsight(ramp(2005, 20, 20), ramp(2005, 20, 100), { growth: false, base: 2015 });
+    if (!r.shown) throw new Error('not shown');
+    expect(r.lines.base).toBe('2015');
+    expect(r.lines.kpi.find((p) => p.period === '2015')!.value).toBe(100);
+    expect(r.lines.reference.find((p) => p.period === '2015')!.value).toBe(100);
+    expect(r.lines.kpi.map((p) => p.period)).toEqual(r.points.map((p) => p.period));
+    expect(r.lines.kpi.at(-1)!.value).toBeCloseTo((39 / 30) * 100, 9); // 2024: 39 against 30 in 2015
+  });
+  it('without a 2015 value in the shared period both fall back to the first shared year', () => {
+    const r = computeInsight(ramp(2016, 12, 40), ramp(2016, 12, 50), { growth: false, base: 2015 });
+    if (!r.shown) throw new Error('not shown');
+    expect(r.lines.base).toBe('2016');
+    expect(r.lines.kpi[0]).toEqual({ period: '2016', value: 100 });
+    expect(r.lines.reference[0]).toEqual({ period: '2016', value: 100 });
+  });
+  it('with no base the lines are the levels as they are', () => {
+    const r = computeInsight(ramp(2000, 12, 3), ramp(2000, 12, 1), { growth: false });
+    if (!r.shown) throw new Error('not shown');
+    expect(r.lines.base).toBeUndefined();
+    expect(r.lines.kpi.slice(0, 2)).toEqual([{ period: '2000', value: 3 }, { period: '2001', value: 4 }]);
+  });
+  it('a growth headline starts a year after its levels; the lines follow the headline period', () => {
+    const r = computeInsight(ramp(2000, 12, 10), ramp(2000, 12, 100), { growth: true, base: 2005 });
+    if (!r.shown) throw new Error('not shown');
+    expect(r.lines.kpi[0].period).toBe('2001');
+    expect(r.lines.base).toBe('2005');
+  });
+});

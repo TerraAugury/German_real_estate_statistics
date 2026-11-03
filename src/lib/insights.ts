@@ -29,5 +29,5 @@ export interface InsightModel { entry: InsightEntry; series: Series[]; result: I
 export const insightsPage = (): InsightModel[] => visibleInsights(loadInsights()).map((entry) => {
   const series = entry.series.map((s) => getSeries(s.key));
   const [kpi, reference] = (['kpi', 'reference'] as const).map((role) => series[entry.series.findIndex((s) => s.role === role)]);
-  return { entry, series, result: computeInsight(kpi, reference, { growth: entry.growth }) };
+  return { entry, series, result: computeInsight(kpi, reference, { growth: entry.growth, base: entry.base }) };
 });

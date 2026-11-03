@@ -74,6 +74,8 @@ export interface InsightEntry {
   headline: (typeof HEADLINES)[number];
   /** Compare year-on-year percent changes instead of levels. */
   growth: boolean;
+  /** Rebase the lines behind the headline to this year = 100 (index and differently-united series). */
+  base?: number;
   /** Reading template: `insight.template.<template>` in the interface strings. */
   template: string;
   /** The first KPI series against the first reference series is the headline; the order is the order shown. */
@@ -110,6 +112,7 @@ export function checkInsights(entries: InsightEntry[], known: { series: Set<stri
     seen.add(e.key);
     for (const l of langs) if (INSIGHT_TEXT.some((f) => !e[f]?.[l])) errs.push(`${e.key} needs en and de title and measure`);
     if (!HEADLINES.includes(e.headline)) errs.push(`${e.key}: headline must be one of ${HEADLINES}`);
+    if (e.base !== undefined && !Number.isInteger(e.base)) errs.push(`${e.key}: base must be a year`);
     if (!(`insight.template.${e.template}` in en)) errs.push(`${e.key}: no i18n key insight.template.${e.template}`);
     for (const s of e.series) {
       if (!ROLES.includes(s.role)) errs.push(`${e.key}: role must be one of ${ROLES}`);

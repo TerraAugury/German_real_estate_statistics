@@ -1,6 +1,7 @@
 # Insights (insights spec section 7): one entry per curated chart, in page order. An Insight's Provisional status is
 # never declared here: it follows from its series (an Insight with any Provisional series is hidden in production).
-# `headline` names how the two series are compared; `growth` compares their year-on-year percent changes.
+# `headline` names how the two series are compared; `growth` compares their year-on-year percent changes; `base` rebases
+# the lines behind the headline to that year = 100.
 # The first `kpi` series against the first `reference` series is the headline.
 
 - key: j
@@ -8,6 +9,7 @@
   measure: { en: "spread of construction price growth over CPI inflation", de: "Abstand des Baupreisanstiegs zur Inflationsrate" }
   headline: spread
   growth: true
+  base: 2015
   template: spread
   series:
     - { key: construction-price-office, role: kpi }

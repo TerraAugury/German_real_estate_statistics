@@ -1,5 +1,5 @@
 import { day, fmt, period, t } from './i18n';
-import { insightChart, levelChart, lagChart, lineChart } from './chart';
+import { insightChart, multiplesChart, sharedDomain, levelChart, lagChart, lineChart } from './chart';
 import { notesFor } from './notes';
 import { href, type Lang } from './routes';
 import type { Series } from './series';
@@ -61,8 +61,13 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
   });
   const notes = notesFor(series[0], lang, { on: 'insight', rest: series.slice(1), short: r.short ? { from: r.from, to: r.to, n: r.n } : undefined }, now);
   const chart = insightChart(r, { unit: t(lang, 'insight.unit.points'), average: t(lang, 'insight.average', { value: one(r.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
+  const [kpi, reference] = [series[e.series.findIndex((x) => x.role === 'kpi')], series[e.series.findIndex((x) => x.role === 'reference')]];
+  const unit = r.lines.base ? t(lang, 'insight.axis.rebased', { year: r.lines.base }) : kpi.unit[lang];
+  const multiples = `<div class="multiples"><h3>${t(lang, 'insight.multiples.title', { kpi: esc(kpi.title[lang]), reference: esc(reference.title[lang]) })}</h3>`
+    + multiplesChart(r.lines, { unit, title: t(lang, 'insight.multiples.label', { kpi: kpi.title[lang], reference: reference.title[lang] }) }, sharedDomain([r.lines]), lang)
+    + `<p class="note">${t(lang, 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(reference.title[lang]) })}</p></div>`;
   return `<section class="insight" id="${esc(e.key)}">${head}`
     + `<p class="headline"><span class="num">${one(r.latest.value)}</span> <span class="unit">${t(lang, 'insight.unit.points')}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span></p>`
     + `<p>${reading}</p>`
-    + `<figure>${chart}${noteHtml(notes)}<figcaption>${series.map((x) => sourceLine(x, lang, true)).join('<br>')}<br><a href="${href('methodology', lang)}#insights">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
+    + `<figure>${chart}${multiples}${noteHtml(notes)}<figcaption>${series.map((x) => sourceLine(x, lang, true)).join('<br>')}<br><a href="${href('methodology', lang)}#insights">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
 }

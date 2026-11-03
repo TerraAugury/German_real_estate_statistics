@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { checkInsights, loadAllManifest, loadManifest, type InsightEntry } from '../src/lib/manifest';
 import { loadStrings } from '../src/lib/i18n';
+import { multiplesChart, sharedDomain } from '../src/lib/chart';
 import { insightsPage, loadInsights, visibleInsights } from '../src/lib/insights';
 import { renderInsight } from '../src/lib/panel';
 import { getSeries } from '../src/lib/series';
@@ -23,8 +24,27 @@ describe('Insight declaration checks', () => {
     ['duplicate key', [entry(), entry()], 'duplicate key x'],
     ['missing German title', [entry({ title: { en: 'Title', de: '' } })], 'needs en and de title'],
     ['unknown headline kind', [entry({ headline: 'median' as 'spread' })], 'headline must be one of'],
+    ['base that is not a year', [entry({ base: 'x' as unknown as number })], 'base must be a year'],
     ['unknown template', [entry({ template: 'nope' })], 'no i18n key insight.template.nope'],
   ])('fails the build on: %s', (_, entries, message) => expect(() => checkInsights(entries, known, en)).toThrow(message));
+});
+
+describe('Shared y-domain', () => {
+  const l = (kpi: number[], reference: number[]) => ({ kpi: kpi.map((value) => ({ period: '2000', value })), reference: reference.map((value) => ({ period: '2000', value })) });
+  it('spans every line of every small chart', () => {
+    expect(sharedDomain([l([2, 5], [3, 4]), l([1, 2], [8, 9])])).toEqual([1, 9]);
+  });
+});
+
+describe('Shading of the gap', () => {
+  // Which colour sits where is checked by eye in the browser: Plot's "positive" side is the reference above the KPI.
+  it('the lines crossing gives both shades, a gap in one direction only the other', () => {
+    const pts = (...v: number[]) => v.map((value, i) => ({ period: String(2000 + i), value }));
+    const chart = (kpi: number[], reference: number[]) => multiplesChart({ kpi: pts(...kpi), reference: pts(...reference) }, { unit: 'u', title: 't' }, [0, 10], 'en');
+    const cross = chart([1, 5, 1], [3, 3, 3]);
+    expect(cross).toContain('#4e79a7');
+    expect(cross).toContain('#c0392b');
+  });
 });
 
 describe('Provisional gate', () => {
@@ -61,7 +81,8 @@ describe('Insight J on real data', () => {
 describe('Insight rendering', () => {
   const j = entry({ key: 'j', title: { en: 'Construction costs vs inflation', de: 'Baupreise und Inflation' }, measure: { en: 'spread of construction price growth over CPI inflation', de: 'Abstand des Baupreisanstiegs zur Inflationsrate' } });
   const series = [getSeries('construction-price-office'), getSeries('cpi')];
-  const shown: InsightResult = { shown: true, points: [{ period: '2020', value: 1 }, { period: '2021', value: 1.5 }, { period: '2022', value: 2.46 }], from: '2020', to: '2022', n: 3, short: false, mean: 1.65, sd: 0.5, latest: { period: '2022', value: 2.46 }, verdict: 'higher' };
+  const shown: InsightResult = { shown: true, points: [{ period: '2020', value: 1 }, { period: '2021', value: 1.5 }, { period: '2022', value: 2.46 }], from: '2020', to: '2022', n: 3, short: false, mean: 1.65, sd: 0.5, latest: { period: '2022', value: 2.46 }, verdict: 'higher',
+    lines: { base: '2015', kpi: [{ period: '2020', value: 100 }, { period: '2021', value: 110 }, { period: '2022', value: 125 }], reference: [{ period: '2020', value: 100 }, { period: '2021', value: 104 }, { period: '2022', value: 108 }] } };
   it('EN: headline, verdict tag and the exact reading sentence, one decimal', () => {
     const h = renderInsight(j, shown, series, 'en');
     expect(h).toContain('id="j"');
@@ -88,6 +109,13 @@ describe('Insight rendering', () => {
     for (const x of series) expect(h).toContain(x.seriesId);
     expect(h.match(/own calculation/g)).toHaveLength(2);
     expect(h).toContain('<a href="/en/methodology#insights">How this is calculated</a>');
+  });
+  it('small multiples: the two rebased lines in their own chart, the base on the axis, the shading explained in text', () => {
+    const h = renderInsight(j, shown, series, 'en');
+    expect(h.match(/<svg/g)).toHaveLength(4); // main chart and one small chart, each wide and narrow
+    expect(h).toContain('index, 2015 = 100');
+    expect(h).toContain(`Blue line: ${series[0].title.en}. Ochre line: ${series[1].title.en}. The shading is blue where the blue line is above the ochre line and red where it is below.`);
+    expect(renderInsight(j, shown, series, 'de')).toContain('Index, 2015 = 100');
   });
   it('Notes come first: a short history is named, then the series\' own Notes', () => {
     const h = renderInsight(j, { ...shown, short: true }, [{ ...series[0], stale: true }, series[1]], 'en');

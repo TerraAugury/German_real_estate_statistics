@@ -143,3 +143,7 @@ insight.unit.points: percentage points
 insight.not_shown: "Insight not shown: too few observations (n = {n}); at least {min} are needed."
 insight.short_history: "Short history ({n} years, {from} to {to}): the average rests on little data."
 insight.method: How this is calculated
+insight.axis.rebased: "index, {year} = 100"
+insight.multiples.title: "{kpi} against {reference}"
+insight.multiples.label: "{kpi} and {reference}, rebased"
+insight.multiples.legend: "Blue line: {kpi}. Ochre line: {reference}. The shading is blue where the blue line is above the ochre line and red where it is below."

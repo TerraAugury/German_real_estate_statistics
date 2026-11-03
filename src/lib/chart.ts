@@ -58,7 +58,7 @@ export function levelChart(pts: { period: string; value: number }[], unit: strin
   }), title);
 }
 
-const GRID = '#e3e7eb';
+const GRID = '#e3e7eb', ABOVE = '#4e79a7', BELOW = '#c0392b';
 
 /** Headline measure over time: latest point labelled, dashed average line, grey band of average plus or minus half a standard deviation. */
 export function insightChart(r: { points: { period: string; value: number }[]; from: string; to: string; mean: number; sd: number }, labels: { unit: string; average: string; title: string }, lang: Lang): string {
@@ -77,6 +77,29 @@ export function insightChart(r: { points: { period: string; value: number }[]; f
       Plot.dot(data, { x: 'x', y: 'value', r: 6, fill: 'transparent', title: (d) => `${d.x}: ${fmt(lang, d.value, { maximumFractionDigits: 2 })}` }),
       Plot.dot(last, { x: 'x', y: 'value', r: 4, fill: DATA }),
       Plot.text(last, { x: 'x', y: 'value', text: (d) => fmt(lang, d.value, { minimumFractionDigits: 1, maximumFractionDigits: 1 }), dx: 8, textAnchor: 'start', fill: DATA, fontWeight: 600, fontSize: narrow ? 14 : 15 }),
+    ],
+  }), labels.title);
+}
+
+type Lines = { kpi: { value: number }[]; reference: { value: number }[] };
+/** One y-domain for every small chart of an Insight, so their gaps compare by eye. */
+export function sharedDomain(ls: Lines[]): [number, number] {
+  const v = ls.flatMap((l) => [...l.kpi, ...l.reference].map((p) => p.value));
+  return [Math.min(...v), Math.max(...v)];
+}
+
+/** The KPI line (blue) against the reference line (ochre), the gap shaded blue where the KPI is above and red where below. */
+export function multiplesChart(l: { kpi: { period: string; value: number }[]; reference: { period: string; value: number }[] }, labels: { unit: string; title: string }, domain: [number, number], lang: Lang): string {
+  const rows = l.kpi.map((p, i) => ({ x: +p.period, kpi: p.value, reference: l.reference[i].value }));
+  return render((narrow) => ({
+    height: narrow ? 200 : 220, marginRight: 52, marginTop: 28,
+    x: { tickFormat: years, label: null, ticks: narrow ? 4 : undefined },
+    y: { grid: true, label: labels.unit, labelArrow: 'none', domain, tickFormat: (d: number) => fmt(lang, d) },
+    marks: [
+      Plot.differenceY(rows, { x: 'x', y1: 'kpi', y2: 'reference', positiveFill: BELOW, negativeFill: ABOVE, fillOpacity: 0.3, strokeWidth: 0 }),
+      Plot.lineY(rows, { x: 'x', y: 'reference', stroke: STRONG, strokeWidth: 2 }),
+      Plot.lineY(rows, { x: 'x', y: 'kpi', stroke: DATA, strokeWidth: 2.25 }),
+      Plot.dot(rows, { x: 'x', y: 'kpi', r: 6, fill: 'transparent', title: (d) => `${d.x}: ${fmt(lang, d.kpi, { maximumFractionDigits: 1 })} / ${fmt(lang, d.reference, { maximumFractionDigits: 1 })}` }),
     ],
   }), labels.title);
 }
