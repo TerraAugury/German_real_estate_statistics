@@ -8,7 +8,7 @@ Decisions (owner, 2026-11-03):
 - The tone comes from the **Verdict** (latest value against the shared-period average) mapped through a per-Insight direction that is declared by hand. It never comes from the sign of the number: a falling vacancy (negative change) is better, and a spread of -0.3 is "higher than" an average of -2.0.
 - "In line" is always neutral. G and C are deliberately left grey (owner, 2026-11-03): their direction depends on whose side you take, so the site makes no better/worse claim for them. A neutral Insight has a declared direction of "none"; its verdict tag stays uncoloured.
 - The colour shows wherever the verdict tag shows (Insights index, each Insight section, the Home lead), so one Insight never looks different in two places.
-- Colour is never the only signal: the tag keeps its verdict text and gains a word ("better" / "worse").
+- Colour is never the only signal: the tag keeps its verdict text and gains a word ("better" / "worse"). Superseded by ticket 04.
 
 Direction per Insight (the value is better when the latest value is on this side of its average). I and J were assigned by the author where the owner left it open; the owner may flip them in review.
 
@@ -25,3 +25,5 @@ Direction per Insight (the value is better when the latest value is on this side
 | J | lower | costs of building and refurbishing rise faster than inflation: worse for new capex (most contestable) |
 
 Constraints: no new third-party host; page weight unchanged; copy follows GLOSSARY.md; every new string gets German and a human review before production (the review gate).
+
+Change of 2026-11-03 (ticket 04): the coloured better/worse pill is replaced by a light tint of the whole plate (index tile, Insight section, Home lead): light green for better, light magenta for worse; in line and no-better-side Insights stay plain; the verdict pill stays. The words "better" and "worse" remain only as visually hidden text.

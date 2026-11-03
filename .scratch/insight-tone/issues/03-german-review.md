@@ -1,8 +1,8 @@
 # 03: German review of the new strings
 
-**What to build:** Every German string added by tickets 01 and 02 is checked by a named human against its English source, and the review lock records it, so the production build's review gate passes.
+**What to build:** Every German string added by tickets 01, 02 and 04 is checked by a named human against its English source, and the review lock records it, so the production build's review gate passes.
 
-**Blocked by:** 01, 02
+**Blocked by:** 01, 02, 04
 
 **Status:** ready-for-human
 
@@ -13,7 +13,7 @@
 
 ## Comments
 
-Written by the implementing agent after tickets 01 and 02. The four interface strings below are new in this effort; their German is a draft and shows `[DRAFT]` in preview builds. The criteria stay open: a named human has to review them and run the review script; an agent cannot.
+Written by the implementing agent after tickets 01 and 02 (ticket 04 changes the legend and Methodology wording, so refresh this list before reviewing). The four interface strings below are new in this effort; their German is a draft and shows `[DRAFT]` in preview builds. The criteria stay open: a named human has to review them and run the review script; an agent cannot.
 
 | Key | English | German draft |
 |---|---|---|
