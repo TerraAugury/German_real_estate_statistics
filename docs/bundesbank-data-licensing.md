@@ -159,9 +159,9 @@ Read from the `BBK_COMM_SRC_ENG` attribute of the Bundesbank SDMX-JSON response 
 
 ### Gaps remaining (checked 2026-11-03)
 
-- **Rule 1, terms statement.** The source line gives publisher, service, series id and "New data last retrieved {date}", but no page text says "original statistics and metadata used unmodified" or names the ESCB terms (nothing in `src/i18n`). The licence label still reads "public reuse not confirmed" by design until ticket licence-checks/01 clears a series.
-- **Rule 1, snapshots.** `data/snapshots/*.json` carry source, url and retrieval time in `meta`, but no attribution or terms field. Whether committing them to a public repository is redistribution is undecided (question above).
-- **Rule 2, rounding.** Displayed numbers are rounded by `Intl`. The original title and unit are now shown beside the site's wording; whether that satisfies "metadata unaltered" is undecided (question above).
+Closed since by escb-compliance 02: the terms (name and address) are recorded in each Bundesbank snapshot's source metadata and stated in Series details, "used unmodified" for original series and "derived from Deutsche Bundesbank data" for derived ones. The licence label still reads "public reuse not confirmed" until ticket licence-checks/01 clears a series.
+
+- **Rule 2, rounding.** Closed by escb-compliance 01: original Bundesbank values show at their published decimals. What remains is the open question above, whether showing the original title and unit beside the site's own wording meets "metadata unaltered".
 - **Rule 5, audit trail.** Fetches still log to the console only. The snapshot keeps the source URL and retrieval time, so only a separate run log is missing.
 - **Exports.** The site has no CSV, JSON or other download, so the export-attribution rules and tests do not apply yet. Any future export must carry the required block.
 - **Not Bundesbank.** `euribor-3m`, `oecd-confidence-construction` and `oecd-confidence-retail` are still on DBnomics without source metadata.
