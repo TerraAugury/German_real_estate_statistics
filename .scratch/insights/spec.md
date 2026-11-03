@@ -121,9 +121,15 @@ New hand-written `manifest/insights.yaml`, separate from `series.yaml`. Entry: `
 
 ## 10. Open questions
 
-- **Small multiples for ratio and growth Insights** (B, C, G, J, M): T03 only proposed, and did not settle, that part 4 shows the two rebased lines with the same shading. Default for the build: do that.
-- **Narrow (320 px) layout** was not checked in the prototype; only the 720 px layout was.
+Resolved by the build (`.scratch/insights-build/`):
+
+- **Small multiples for ratio and growth Insights**: built as the default says, the two rebased lines with the same shading; Insights that compare levels in one unit (A, F, E) show the levels.
+- **Narrow (320 px) layout**: checked on the built Insights page in English and German, all ten sections, no horizontal scroll. The only overflow was a long Destatis series id in the source line; fixed for every source.
+- **M's end year**: Destatis publishes 2025 for sections K-N, so M runs 1996 to 2025.
+- **Home**: no Home card and no Links-overview column; out of scope.
+- **KPI check for J**: J (construction prices vs CPI) has no series in `KPIS`; the build check accepts the construction price series as the Construction KPI's.
+
+Still open:
+
 - **Launch gates**: Insights using Provisional series appear only once the Bundesbank redisplay permission (cre-site tickets 08, 14) is confirmed.
-- **German wording**: the DE titles, templates and Methodology text are drafts until Reviewed by a named human.
-- **M's end year** depends on whether Destatis publishes 2025 for sections K-N.
-- **Home**: whether to feature one Insight, and a Links-overview Insights column, are not in this spec.
+- **German wording**: the DE titles, measures, templates and Methodology text are drafts until Reviewed by a named human (build ticket 12).
