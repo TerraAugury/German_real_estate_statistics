@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { PALETTE, SCHEMES, DIVERGING, rootCss } from '../src/lib/palette';
+import { PALETTE, SCHEMES, rootCss } from '../src/lib/palette';
 import { lineChart, lagChart, multiplesChart } from '../src/lib/chart';
 import { loadSeries } from '../src/lib/series';
 
@@ -59,8 +59,5 @@ describe('palette', () => {
     expect(out).toContain('var(--data)');
     expect(out).toContain('var(--strong)');
     expect(out.match(/#[0-9a-fA-F]{3,8}\b|rgba?\(/g) ?? []).toEqual([]);
-  });
-  it('the diverging scale runs blue, neutral, ochre', () => {
-    expect(DIVERGING).toEqual({ neg: PALETTE.data, mid: PALETTE.plate, pos: PALETTE.strong });
   });
 });

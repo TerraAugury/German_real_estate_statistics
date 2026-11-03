@@ -71,10 +71,13 @@ export const availability = () => KPIS.map((kpi) => ({
   })),
 }));
 
+/** A view's first series: the one its compact chart, Home row and Link pairs are about. */
+export const firstSeries = (v: View) => getSeries(v.series[0].key, v.series[0].land);
+
 export interface HomeRow {
   kpi: Kpi;
-  /** The KPI's headline view and its first series, with the latest value and the points of its sparkline; all absent when no series is public (licence not confirmed). */
-  view?: View; series?: Series; latest?: Latest; spark?: number[];
+  /** The KPI's headline view and its first series, with the latest value; all absent when no series is public (licence not confirmed). */
+  view?: View; series?: Series; latest?: Latest;
 }
 
 /** Home's KPI index: one row per KPI at its headline view. */
@@ -82,7 +85,7 @@ export function homeIndex(live = loadManifest()): HomeRow[] {
   return KPIS.map((kpi): HomeRow => {
     const view = headline(kpi, live);
     if (!view) return { kpi };
-    const series = getSeries(view.series[0].key, view.series[0].land);
-    return { kpi, view, series, latest: latestOf(series), spark: series.obs.map((o) => o.value) };
+    const series = firstSeries(view);
+    return { kpi, view, series, latest: latestOf(series) };
   });
 }

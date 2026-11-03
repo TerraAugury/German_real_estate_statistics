@@ -8,8 +8,8 @@ import type { Points } from '../insight/insight';
 
 // Colours are the page's custom properties (src/lib/palette.ts), so one build serves both colour schemes. Plot passes them
 // through as presentation attributes and browsers resolve them there.
-const v = (name: keyof typeof PALETTE) => `var(--${name})`;
-const INK = v('ink'), DATA = v('data'), MUTED = v('muted'), STRONG = v('strong'), BAR = v('field'), GRID = v('hair'), ABOVE = v('above'), BELOW = v('below');
+const cssVar = (name: keyof typeof PALETTE) => `var(--${name})`;
+const INK = cssVar('ink'), DATA = cssVar('data'), MUTED = cssVar('muted'), STRONG = cssVar('strong'), BAR = cssVar('field'), GRID = cssVar('hair'), ABOVE = cssVar('above'), BELOW = cssVar('below');
 
 /**
  * Render a Plot twice, wide (720) and narrow (320) with its own tick layout; CSS shows the one that fits its box, so
