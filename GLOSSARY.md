@@ -57,9 +57,9 @@ _DE_: Vorläufig
 _Avoid_: Draft, unverified, beta
 
 **Original source**:
-The third party a series' metadata names as the maker of the data (for example vdpResearch, bulwiengesa, the Federal Employment Agency), when the Provider serving it is a different body. A series with an Original source other than the Bundesbank or ESCB stays Provisional until its permission is confirmed.
+The third party a series' metadata names as the maker of the data (for example vdpResearch, bulwiengesa, the Federal Employment Agency), when the publisher serving it is a different body. A series with an Original source other than the Bundesbank or ESCB stays Provisional until its permission is confirmed.
 _DE_: Ursprungsquelle
-_Avoid_: Publisher (the publisher is the body that serves the series)
+_Avoid_: Provider (that is the operator of the site), Publisher (the body that serves the series, not the maker of the data)
 
 **Stale**:
 A series whose latest observation is older than the expected interval for its frequency. The site still shows it, with a note.

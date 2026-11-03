@@ -3,17 +3,21 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { parse } from 'yaml';
 import { BBK_API, type ManifestEntry } from './manifest';
-import { BadResponse, Unavailable, type Part, type Snapshot } from './snapshot';
+import { BadResponse, Unavailable, checkUnit, sameData, type Part, type Snapshot } from './snapshot';
 import { HttpError, partIds, revised, type Deps } from './pipeline';
 
 const FREQ: Record<string, string> = { A: 'annual', Q: 'quarterly', M: 'monthly' };
 
 export const bundesbankUrl = (m: ManifestEntry) => `${BBK_API}/${m.dataset}/${m.ids[0]}?format=sdmx_json&lang=en`;
 
-let own: Set<string> | undefined;
+interface OwnNames { names: string[]; filler: string[] }
+let own: OwnNames | undefined;
+const ownNames = () => (own ??= parse(readFileSync('manifest/original-sources.yaml', 'utf8')) as OwnNames);
+
 /** True when a Bundesbank source comment names anyone else; null or empty means the Bundesbank's own series. */
-export function isThirdParty(comment: string | null, words = (own ??= new Set((parse(readFileSync('manifest/original-sources.yaml', 'utf8')) as { own: string[] }).own.map((w) => w.toLowerCase())))): boolean {
-  return (comment ?? '').split(/[^\p{L}\p{N}]+/u).filter(Boolean).some((w) => !words.has(w.toLowerCase()));
+export function isThirdParty(comment: string | null, { names, filler } = ownNames()): boolean {
+  const left = names.reduce((t, n) => t.replace(new RegExp(`\\b${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi'), ' '), comment ?? '');
+  return left.split(/[^\p{L}\p{N}]+/u).filter((w) => w && !filler.includes(w.toLowerCase())).length > 0;
 }
 
 /** The "Source of the original data: X." part of a general comment; null when it has none. */
@@ -59,8 +63,7 @@ export async function refreshBundesbank(m: ManifestEntry, old: Snapshot | undefi
   }
   const next = parseSdmx(res, m, url, iso);
   const prev = old?.parts[id];
-  if (prev?.meta && (prev.meta.unit !== next.meta!.unit || prev.meta.unit_mult !== next.meta!.unit_mult))
-    throw new BadResponse(`${id}: unit changed from ${prev.meta.unit}/${prev.meta.unit_mult} to ${next.meta!.unit}/${next.meta!.unit_mult}`);
-  if (prev?.meta && !old!.fetch_failed && JSON.stringify([prev.period, prev.value]) === JSON.stringify([next.period, next.value])) return null;
+  checkUnit(id, prev, next);
+  if (prev?.meta && !old!.fetch_failed && sameData(prev, next)) return null;
   return { retrieved_at: iso, fetch_failed: null, revised_at: prev && revised(prev, next) ? iso : old?.revised_at ?? null, parts: { [id]: next } };
 }

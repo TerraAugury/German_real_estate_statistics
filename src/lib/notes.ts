@@ -18,11 +18,12 @@ export type NoteContext =
   | { on: 'compact' }
   | { on: 'link'; indicator: Series; pairs?: number };
 
-/** Stale, fetch failed, then revised (within REVISED_DAYS). */
+/** Stale, unavailable or fetch failed, then revised (within REVISED_DAYS). */
 function freshness(s: Series, lang: Lang, now: Date, revised = true): string[] {
   const out: string[] = [];
   if (s.stale) out.push(t(lang, 'note.stale', { period: period(lang, s.lastPeriod), source: s.publisher }));
-  if (s.fetchFailed) out.push(t(lang, 'note.fetch_failed', { source: s.fetchedFrom, date: day(lang, s.fetchFailed), snapshot: day(lang, s.retrievedAt) }));
+  if (s.unavailable) out.push(t(lang, 'note.unavailable', { source: s.publisher, date: day(lang, s.unavailable), snapshot: day(lang, s.retrievedAt) }));
+  else if (s.fetchFailed) out.push(t(lang, 'note.fetch_failed', { source: s.fetchedFrom, date: day(lang, s.fetchFailed), snapshot: day(lang, s.retrievedAt) }));
   if (revised && s.revisedAt && (now.getTime() - Date.parse(s.revisedAt)) / 864e5 <= REVISED_DAYS) out.push(t(lang, 'note.revised', { source: s.publisher, date: day(lang, s.revisedAt) }));
   return out;
 }

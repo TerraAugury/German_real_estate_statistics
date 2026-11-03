@@ -77,6 +77,12 @@ describe('malformed responses', () => {
 });
 
 describe('failure', () => {
+  it('a series withdrawn at the source is recorded as unavailable; any other failure clears that', async () => {
+    const { Unavailable } = await import('../src/lib/snapshot');
+    const gone = markFailed('k', snap(part('t1', [1])), now, new Unavailable('404'));
+    expect(gone.unavailable).toBe(now.toISOString());
+    expect(markFailed('k', gone, now, new Error('boom')).unavailable).toBeNull();
+  });
   it('reuses the snapshot and records the date', () => {
     const s = markFailed('k', snap(part('t1', [1])), now, 'boom');
     expect(s.fetch_failed).toBe(now.toISOString());

@@ -12,6 +12,7 @@ footer.text: Betrieben von Terra Augury Ltd.
 note.prefix: Hinweis
 note.stale: "Letzte Beobachtung: {period}. {source} hat innerhalb des erwarteten Zeitraums keine neueren Daten veröffentlicht; die Reihe ist möglicherweise nicht aktuell."
 note.fetch_failed: "Aktualisierung ({source}) am {date} fehlgeschlagen; dargestellt sind die am {snapshot} abgerufenen Daten."
+note.unavailable: "{source} stellt diese Reihe nicht mehr bereit (am {date} nicht gefunden); dargestellt sind die am {snapshot} abgerufenen Daten."
 note.revised: "{source} hat frühere Werte revidiert (festgestellt am {date}). Dargestellt ist die zuletzt veröffentlichte Fassung."
 note.short_window: "Kurze Zeitreihe ({start} bis {end})."
 note.short_cycle: "Der Zeitraum umfasst im Wesentlichen einen Zinszyklus; das Muster muss in anderen Zeiträumen nicht gelten."

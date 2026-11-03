@@ -2,7 +2,7 @@
 import { parse } from 'yaml';
 import { readFileSync } from 'node:fs';
 import type { ManifestEntry } from './manifest';
-import { refreshBundesbank } from './bundesbank';
+import { originalDataSource, refreshBundesbank } from './bundesbank';
 import { refreshDestatis } from './destatis';
 
 export const API = 'https://api.db.nomics.world/v22/series';
@@ -10,7 +10,7 @@ export const UA = 'german-cre-statistics (build; contact oelamine@terraaugury.co
 
 export type { Part, Snapshot, SourceMeta } from './snapshot';
 export { BadResponse } from './snapshot';
-import { BadResponse, type Part, type Snapshot } from './snapshot';
+import { BadResponse, Unavailable, type Part, type Snapshot } from './snapshot';
 export type Post = (url: string, form: Record<string, string>, headers: Record<string, string>) => Promise<any>;
 /** `post` and `env` are needed only by sources that log in (Destatis); `env` defaults to the process environment. */
 export interface Deps { get: (url: string) => Promise<any>; post?: Post; env?: Record<string, string | undefined>; now: Date; warn?: (msg: string) => void }
@@ -104,7 +104,8 @@ export async function refresh(m: ManifestEntry, old: Snapshot | undefined, deps:
 /** Last snapshot with fetch_failed recorded. A series without a snapshot fails the build. */
 export function markFailed(key: string, old: Snapshot | undefined, now: Date, err: unknown): Snapshot {
   if (!old) throw new Error(`${key}: fetch failed and no snapshot: ${err}`);
-  return { ...old, fetch_failed: now.toISOString() };
+  const iso = now.toISOString();
+  return { ...old, fetch_failed: iso, unavailable: err instanceof Unavailable ? iso : null };
 }
 
 /** Manifest validation: every id present, frequency and start date as in the manifest. */
@@ -114,7 +115,7 @@ export function validateSnapshot(m: ManifestEntry, snap: Snapshot): void {
     const p = snap.parts[id];
     if (!p) { errs.push(`id missing: ${id}`); continue; }
     if (p.frequency !== m.frequency) errs.push(`${id}: frequency ${p.frequency}, manifest says ${m.frequency}`);
-    if (p.meta?.third_party && !m.provisional) errs.push(`${id}: original source "${p.meta.comment}" is third-party data; set provisional: true until its licence is confirmed`);
+    if (p.meta?.third_party && !m.provisional) errs.push(`${id}: original source "${p.meta.comment ?? originalDataSource(p.meta.general_comment)}" is third-party data; set provisional: true until its licence is confirmed`);
     if (+p.period[0].slice(0, 4) !== m.expected_start) errs.push(`${id}: starts ${p.period[0]}, manifest says ${m.expected_start}`);
   }
   if (errs.length) throw new Error(`manifest validation, ${m.key}: ${errs.join('; ')}`);

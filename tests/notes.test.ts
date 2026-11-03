@@ -27,6 +27,13 @@ describe('Home cards and Segment charts', () => {
   });
 });
 
+describe('unavailable at the source', () => {
+  it('replaces the failed-refresh Note and names the publisher', () => {
+    const s = { ...base, fetchFailed: '2026-10-30T01:00:00Z', unavailable: '2026-10-30T01:00:00Z' } as Series;
+    expect(notesFor(s, 'en', { on: 'compact' }, at)).toEqual(['Note: Deutsche Bundesbank no longer provides this series (not found on 30 October 2026); showing data retrieved on 1 October 2026.']);
+  });
+});
+
 describe('fetched through DBnomics', () => {
   it('the failed-refresh Note names DBnomics, the stale Note the publisher', () => {
     const s = { ...base, publisher: 'Statistisches Bundesamt (Destatis)', fetchedFrom: 'DBnomics', stale: true, fetchFailed: '2026-10-30T01:00:00Z' } as Series;

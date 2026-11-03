@@ -3,7 +3,7 @@
 
 import { createHash } from 'node:crypto';
 import type { ManifestEntry } from './manifest';
-import { BadResponse, Unavailable, type Part, type Snapshot } from './snapshot';
+import { BadResponse, Unavailable, checkUnit, sameData, type Part, type Snapshot } from './snapshot';
 import { partIds, revised, type Deps } from './pipeline';
 
 export const GENESIS = 'https://genesis.destatis.de/genesisWS/rest/2020';
@@ -74,17 +74,19 @@ export function extractSeries(cube: Cube, id: string, frequency: string): { peri
 /** Raised before any request when the login is not configured. Not a BadResponse: the old snapshot stays and a Note says so. */
 export class MissingCredentials extends Error {}
 
+interface Creds { user: string; password: string }
 type Body = { Status?: { Code?: number; Content?: string }; Object?: Record<string, any> };
 
 /** "14.09.2026 18:22:09h" (Berlin time as GENESIS prints it) -> "2026-09-14T18:22:09". */
 const isoLocal = (s: string | undefined) => { const m = s?.match(/^(\d\d)\.(\d\d)\.(\d{4}) (\d\d:\d\d:\d\d)/); return m ? `${m[3]}-${m[2]}-${m[1]}T${m[4]}` : null; };
 
 /** One request to GENESIS; the body's own status decides: 0 ok, 104 no such object, anything else an error. */
-async function call(deps: Deps, user: string, password: string, path: string, form: Record<string, string>): Promise<Body['Object']> {
-  const body: Body = await deps.post!(`${GENESIS}/${path}`, form, { username: user, password });
+async function call(deps: Deps, { user, password }: Creds, path: string, form: Record<string, string>): Promise<Body['Object']> {
+  const url = `${GENESIS}/${path}`;
+  const body: Body = await deps.post!(url, form, { username: user, password });
   const code = body?.Status?.Code;
-  if (code === 104) throw new Unavailable(`${path} ${form.name}: ${body.Status!.Content}`);
-  if (code !== 0 || !body.Object) throw new Error(`${path} ${form.name}: GENESIS status ${code} ${body?.Status?.Content ?? ''}`.trim());
+  if (code === 104) throw new Unavailable(`${url} ${form.name}: ${body.Status!.Content}`);
+  if (code !== 0 || !body.Object) throw new Error(`${url} ${form.name}: GENESIS status ${code} ${body?.Status?.Content ?? ''}`.trim());
   return body.Object;
 }
 
@@ -99,13 +101,13 @@ const infos: Cached<{ title: string; updated: string | null }> = new WeakMap();
 const cubes: Cached<{ cube: Cube; sha256: string }> = new WeakMap();
 
 /** The cube's title and last-update time: one small call that tells whether the data download can be skipped. */
-const fetchInfo = (deps: Deps, name: string, user: string, password: string) => once(infos, deps, name, async () => {
-  const meta = await call(deps, user, password, 'metadata/cube', { name });
+const fetchInfo = (deps: Deps, name: string, creds: Creds) => once(infos, deps, name, async () => {
+  const meta = await call(deps, creds, 'metadata/cube', { name });
   return { title: String(meta!.Content ?? ''), updated: isoLocal(meta!.Updated) };
 });
 
-const fetchData = (deps: Deps, name: string, user: string, password: string) => once(cubes, deps, name, async () => {
-  const data = await call(deps, user, password, 'data/cube', { name, area: 'all', values: 'true', metadata: 'false', additionals: 'false', format: 'csv' });
+const fetchData = (deps: Deps, name: string, creds: Creds) => once(cubes, deps, name, async () => {
+  const data = await call(deps, creds, 'data/cube', { name, area: 'all', values: 'true', metadata: 'false', additionals: 'false', format: 'csv' });
   const content = String(data!.Content);
   const cube = parseCube(content, (l) => { throw new BadResponse(`${name}: malformed cube line: ${l.slice(0, 80)}`); });
   return { cube, sha256: createHash('sha256').update(content.replace(/^\*.*\n/, '')).digest('hex') }; // the first line names the user who exported
@@ -118,11 +120,12 @@ const fetchData = (deps: Deps, name: string, user: string, password: string) => 
 export async function refreshDestatis(m: ManifestEntry, old: Snapshot | undefined, deps: Deps): Promise<Snapshot | null> {
   const env = deps.env ?? process.env, user = env.DESTATIS_USER, password = env.DESTATIS_PASSWORD;
   if (!user || !password) throw new MissingCredentials(`${m.key}: DESTATIS_USER and DESTATIS_PASSWORD are not set`);
+  const creds = { user, password };
   if (!deps.post) throw new Error('no post function for a source that needs a login');
-  const { title, updated } = await fetchInfo(deps, m.dataset, user, password);
+  const { title, updated } = await fetchInfo(deps, m.dataset, creds);
   // Same update time as the snapshot already holds: nothing to download.
   if (updated && old && !old.fetch_failed && partIds(m).every((id) => old.parts[id]?.meta?.valid_from === updated)) return null;
-  const { cube, sha256 } = await fetchData(deps, m.dataset, user, password);
+  const { cube, sha256 } = await fetchData(deps, m.dataset, creds);
   const url = `${GENESIS}/data/cube?name=${m.dataset}`, iso = deps.now.toISOString();
   const parts: Record<string, Part> = {};
   let changed = !old || !!old.fetch_failed, wasRevised = false;
@@ -131,11 +134,11 @@ export async function refreshDestatis(m: ManifestEntry, old: Snapshot | undefine
     try { s = extractSeries(cube, id, m.frequency); } catch (e) { throw new BadResponse(`${id}: ${(e as Error).message}`); }
     if (!s.period.length) throw new BadResponse(`${id}: no observations in cube ${m.dataset}`);
     const prev = old?.parts[id];
-    if (prev?.meta && prev.meta.unit !== s.unit) throw new BadResponse(`${id}: unit changed from ${prev.meta.unit} to ${s.unit}`);
     parts[id] = { name: title, frequency: m.frequency, period: s.period, value: s.value,
       meta: { source: 'Statistisches Bundesamt (Destatis)', url, title, unit: s.unit, unit_mult: 0, decimals: null, comment: null, general_comment: null,
         third_party: false, valid_from: updated, retrieved_at: iso, sha256 } };
-    if (!prev?.meta || JSON.stringify([prev.period, prev.value]) !== JSON.stringify([s.period, s.value])) changed = true;
+    checkUnit(id, prev, parts[id]);
+    if (!prev?.meta || !sameData(prev, parts[id])) changed = true;
     if (prev && revised(prev, parts[id])) wasRevised = true;
   }
   if (!changed) return null;

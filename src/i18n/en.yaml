@@ -12,6 +12,7 @@ footer.text: Operated by Terra Augury Ltd.
 note.prefix: Note
 note.stale: "Latest observation: {period}. {source} has not published newer data within the expected interval, so this series may be out of date."
 note.fetch_failed: "Could not refresh from {source} on {date}; showing data retrieved on {snapshot}."
+note.unavailable: "{source} no longer provides this series (not found on {date}); showing data retrieved on {snapshot}."
 note.revised: "{source} revised earlier values; detected {date}. This chart shows the latest published version."
 note.short_window: "Short history ({start} to {end})."
 note.short_cycle: "This window contains essentially one interest-rate cycle, so the pattern may not hold in other periods."

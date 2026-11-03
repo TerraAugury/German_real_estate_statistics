@@ -1,3 +1,4 @@
-# Words that may appear in a Bundesbank "original source" comment without it counting as third-party data.
-# A comment with any other word (vdpResearch, bulwiengesa, Federal Employment Agency, ...) flags the series for licence review.
-own: [Deutsche, Bundesbank, ESCB, ECB, Eurosystem, European, Central, Bank, own, calculations, calculation, and]
+# A Bundesbank "original source" comment is the Bundesbank's own when, after removing these names and the filler words, nothing is left.
+# Anything else (vdpResearch, bulwiengesa, Federal Employment Agency, "Central Bank of X", ...) flags the series for licence review.
+names: [Deutsche Bundesbank, Bundesbank, European Central Bank, ESCB, ECB, Eurosystem]
+filler: [calculations, calculation, own, and]
