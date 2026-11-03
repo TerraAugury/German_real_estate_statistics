@@ -103,6 +103,7 @@ na.construction.retail: "Einzelhandelsgebäude; Destatis führt dafür keine eig
 nav.segments: Segmente
 nav.availability: Verfügbarkeit
 nav.breadcrumb: Brotkrümelnavigation
+home.spark.label: "Verlauf von {title}"
 latest.change.pct: "{change} gegenüber {period}"
 latest.change.diff: "{change} Punkte gegenüber {period}"
 latest.unchanged: "Keine Änderung gegenüber {period}"
