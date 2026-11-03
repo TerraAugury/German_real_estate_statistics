@@ -84,13 +84,15 @@ it('the committed manifest is loaded once while its files are unchanged; a passe
 
 it('seriesUrl links the series, or the dataset for a sum of Länder', async () => {
   const { seriesUrl } = await import('../src/lib/manifest');
-  expect(seriesUrl(byKey('cpi'))).toBe('https://db.nomics.world/DESTATIS/61111BM001/DG.PREIS1');
-  expect(seriesUrl(byKey('construction-permits-office'))).toBe('https://db.nomics.world/DESTATIS/31111LJ001');
+  expect(seriesUrl(byKey('cpi'))).toBe('https://genesis.destatis.de/datenbank/online/statistic/61111');
+  expect(seriesUrl(byKey('euribor-3m'))).toBe('https://db.nomics.world/ECB/FM/M.U2.EUR.RT.MM.EURIBOR3MD_.HSTA');
+  expect(seriesUrl(byKey('price-index-de-total-q'))).toBe('https://api.statistiken.bundesbank.de/rest/data/BBDZ1/Q.B10.N.G000.P0100.A?lang=en');
 });
 
 it('seriesId collapses Länder', () => {
-  expect(seriesId(byKey('construction-permits-office'))).toBe('DESTATIS/31111LJ001/{01–16}.BAUART1.BTK-GEB.GBD-NW-BV.FLC002');
-  expect(seriesId(byKey('cpi'))).toBe('DESTATIS/61111BM001/DG.PREIS1');
+  expect(seriesId(byKey('construction-permits-office'))).toBe('31111LJ001/{01–16}.BAUART1.BTK-GEB.GBD-NW-BV.FLC002');
+  expect(seriesId(byKey('cpi'))).toBe('61111BM001/DG.PREIS1');
+  expect(seriesId(byKey('euribor-3m'))).toMatch(/^ECB\/FM\//);
 });
 
 it('Sources table has one row per live series with publisher, id, licence, attribution in both languages', async () => {
@@ -100,18 +102,30 @@ it('Sources table has one row per live series with publisher, id, licence, attri
     const html = sourcesTable(live, lang);
     expect(html.match(/<tr>/g)).toHaveLength(live.length + 1); // + header
     expect(html).toContain(live[0].attribution[lang].replace(/&/g, '&amp;'));
-    expect(html).toContain('DESTATIS/31111LJ001/{01–16}');
+    expect(html).toContain('31111LJ001/{01–16}');
     expect(html).not.toContain('BBDZ1');
   }
 });
 
 describe('source field', () => {
   it('is dbnomics unless the entry names another source', () => {
-    expect(byKey('cpi').source).toBe('dbnomics');
+    expect(byKey('euribor-3m').source).toBe('dbnomics');
     expect(all.filter((m) => m.dbnomics_provider === 'BUBA').every((m) => m.source === 'bundesbank')).toBe(true);
+    expect(all.filter((m) => m.dbnomics_provider === 'DESTATIS').every((m) => m.source === 'destatis')).toBe(true);
+    expect(all.filter((m) => m.source === 'dbnomics').map((m) => m.key).sort()).toEqual(['euribor-3m', 'oecd-confidence-construction', 'oecd-confidence-retail']);
   });
   it('rejects an unknown source', () => {
     const bad = { ...byKey(all[0].key), source: 'ftp' } as unknown as ManifestEntry;
     expect(() => checkEntries([bad], { })).toThrow(/source must be one of/);
+  });
+});
+
+describe('Destatis login', () => {
+  it('is a CI secret on the fetch step only and .env is git-ignored', async () => {
+    const { readFileSync } = await import('node:fs');
+    const ci = readFileSync('.github/workflows/ci.yml', 'utf8');
+    expect(ci.match(/secrets\.DESTATIS_/g)).toHaveLength(2);
+    expect(ci.split('preview:')[1].split('main:')[0]).not.toMatch(/DESTATIS/);
+    expect(readFileSync('.gitignore', 'utf8').split('\n')).toContain('.env');
   });
 });

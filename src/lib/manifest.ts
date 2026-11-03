@@ -77,10 +77,10 @@ export const BBK_API = 'https://api.statistiken.bundesbank.de/rest/data';
 export const SERVICE: Partial<Record<ManifestEntry['source'], string>> = { bundesbank: 'SDMX Web Service', destatis: 'GENESIS-Online' };
 
 /** Series id as shown on source lines: the Bundesbank's own id, or the DBnomics path. The 16 Länder collapse into one range unless one Land is asked for. */
-export const seriesId = (m: ManifestEntry, land?: string) => m.source === 'bundesbank' ? `${m.dataset}.${m.ids[0]}` : `${m.dbnomics_provider}/${m.dataset}/`
+export const seriesId = (m: ManifestEntry, land?: string) => m.source === 'bundesbank' ? `${m.dataset}.${m.ids[0]}` : `${m.source === 'dbnomics' ? m.dbnomics_provider + '/' : ''}${m.dataset}/`
   + m.ids[0].replace('{land}', land ?? (isDerived(m) ? `{${m.laender[0]}–${m.laender.at(-1)}}` : m.laender[0]));
-/** Where the series can be checked: the Bundesbank data URL, or its page on DBnomics (a sum of Länder has no single series, so it links the dataset). */
-export const seriesUrl = (m: ManifestEntry, land?: string) => m.source === 'bundesbank' ? `${BBK_API}/${m.dataset}/${m.ids[0]}?lang=en` : `https://db.nomics.world/${m.dbnomics_provider}/${m.dataset}`
+/** Where the series can be checked: the Bundesbank data URL, the GENESIS-Online page of the statistic (cubes have no page of their own), or its page on DBnomics (a sum of Länder has no single series, so it links the dataset). */
+export const seriesUrl = (m: ManifestEntry, land?: string) => m.source === 'destatis' ? `https://genesis.destatis.de/datenbank/online/statistic/${m.dataset.slice(0, 5)}` : m.source === 'bundesbank' ? `${BBK_API}/${m.dataset}/${m.ids[0]}?lang=en` : `https://db.nomics.world/${m.dbnomics_provider}/${m.dataset}`
   + (isDerived(m) && !land ? '' : `/${m.ids[0].replace('{land}', land ?? m.laender[0])}`);
 
 /** Manifest build checks (spec sections 10, 11); any failure fails the build. */

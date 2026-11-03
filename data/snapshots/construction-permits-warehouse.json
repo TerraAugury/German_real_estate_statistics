@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:58:50.458Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
   "01.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Schleswig-Holstein – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -33,17 +32,23 @@
     145,
     219
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "01",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "02.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Hamburg – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -71,17 +76,23 @@
     25,
     10
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "02",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "03.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Niedersachsen – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -109,17 +120,23 @@
     914,
     690
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "03",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "04.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Bremen – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -147,17 +164,23 @@
     89,
     78
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "04",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "05.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Nordrhein-Westfalen – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -185,17 +208,23 @@
     2027,
     1700
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "05",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "06.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Hessen – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -223,17 +252,23 @@
     630,
     524
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "06",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "07.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Rheinland-Pfalz – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -261,17 +296,23 @@
     392,
     459
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "07",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "08.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Baden-Württemberg – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -299,17 +340,23 @@
     1051,
     830
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "08",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "09.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Bayern – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -337,17 +384,23 @@
     1387,
     1502
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "09",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "10.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Saarland – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -375,17 +428,23 @@
     42,
     39
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "10",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "11.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Berlin – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -413,17 +472,23 @@
     93,
     102
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "11",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "12.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Brandenburg – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -451,17 +516,23 @@
     470,
     334
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "12",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "13.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Mecklenburg-Vorpommern – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -489,17 +560,23 @@
     54,
     60
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "13",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "14.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Sachsen – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -527,17 +604,23 @@
     289,
     195
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "14",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "15.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Sachsen-Anhalt – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -565,17 +648,23 @@
     190,
     426
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "15",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   },
   "16.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002": {
-   "name": "Thüringen – Building construction – Constr. of new buildings and work on exist. build. – Warehouse buildings – Useful floor space",
-   "indexed_at": "2026-10-18T10:32:10.831Z",
+   "name": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
    "frequency": "annual",
    "period": [
     "2015",
@@ -603,12 +692,19 @@
     287,
     108
    ],
-   "dimensions": {
-    "BAUBR1": "BAUART1",
-    "BAUGB1": "GBD-NW-NLW-WL",
-    "BAUTK1": "BTK-GEB",
-    "DLAND": "16",
-    "ind": "FLC002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=31111LJ001",
+    "title": "Statistik der Baugenehmigungen, Rauminhalt, Wohnräume, Veranschlagte Kosten des Bauwerks, Wohnungen, Wohnfläche der sonstigen Wohneinheiten, Wohnfläche der Wohnungen, Sonstige Wohneinheiten, Nutzfläche, Gebäude, Gebäude/Baumaßnahmen, Baumaßnahmen, Bundesländer, Baubereiche, Bautätigkeiten, Gebäudeart, Jahr",
+    "unit": "1000 qm",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-09-14T18:22:09",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "53298eba61b11d002bd1c2a3f1d0d5846b907fa83835386ac2b169178f979599"
    }
   }
  }

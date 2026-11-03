@@ -5,6 +5,7 @@
 # Construction: Germany = sum of the 16 Länder (DBnomics has no total): own calculation. Native thousand m² -> million m².
 - key: construction-permits-office
   dbnomics_provider: DESTATIS
+  source: destatis
   dataset: 31111LJ001
   ids: ["{land}.BAUART1.BTK-GEB.GBD-NW-BV.FLC002"]
   laender: &all_laender ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16"]
@@ -23,6 +24,7 @@
 
 - key: construction-permits-commercial
   dbnomics_provider: DESTATIS
+  source: destatis
   dataset: 31111LJ001
   ids: ["{land}.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002"]
   laender: *all_laender
@@ -41,6 +43,7 @@
 
 - key: construction-permits-warehouse
   dbnomics_provider: DESTATIS
+  source: destatis
   dataset: 31111LJ001
   ids: ["{land}.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002"]
   laender: *all_laender
@@ -59,6 +62,7 @@
 
 - key: construction-completions-office
   dbnomics_provider: DESTATIS
+  source: destatis
   dataset: 31121LJ001
   ids: ["{land}.BAUART1.BTK-GEB.GBD-NW-BV.FLC002"]
   laender: *all_laender
@@ -77,6 +81,7 @@
 
 - key: construction-completions-commercial
   dbnomics_provider: DESTATIS
+  source: destatis
   dataset: 31121LJ001
   ids: ["{land}.BAUART1.BTK-GEB.GBD-NW-NLW-H.FLC002"]
   laender: *all_laender
@@ -95,6 +100,7 @@
 
 - key: construction-completions-warehouse
   dbnomics_provider: DESTATIS
+  source: destatis
   dataset: 31121LJ001
   ids: ["{land}.BAUART1.BTK-GEB.GBD-NW-NLW-WL.FLC002"]
   laender: *all_laender
@@ -901,6 +907,7 @@
 
 - key: cpi
   dbnomics_provider: DESTATIS
+  source: destatis
   dataset: 61111BM001
   ids: ["DG.PREIS1"]
   publisher: *destatis_publisher
@@ -954,6 +961,7 @@
 
 - key: construction-price-office
   dbnomics_provider: DESTATIS
+  source: destatis
   dataset: 61261BV001
   ids: ["DG.BAULEISTBW.BPNG1.STEMW1.PRE002"]
   publisher: *destatis_publisher
@@ -971,6 +979,7 @@
 
 - key: construction-price-commercial
   dbnomics_provider: DESTATIS
+  source: destatis
   dataset: 61261BV001
   ids: ["DG.BAULEISTBW.BPNG2.STEMW1.PRE002"]
   publisher: *destatis_publisher
