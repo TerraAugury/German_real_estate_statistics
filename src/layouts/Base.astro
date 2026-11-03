@@ -119,6 +119,7 @@ const inKpis = KPIS.some((k) => k.page === page);
       section.tone-better, section.tone-worse { padding: 1.25rem 1.5rem; border-radius: 6px; }
       section.tone-better > h2:first-child, section.tone-worse > h2:first-child { margin-top: 0; }
       @media (max-width: 560px) { section.tone-better, section.tone-worse { padding: 1rem; } }
+      p.back { font-size: 14px; margin: 0 0 .5rem; }
       .link-panel > p { font-size: 15px; max-width: 46em; }
       .link-panel > svg { margin-top: 1.25rem; }
 
@@ -169,8 +170,9 @@ const inKpis = KPIS.some((k) => k.page === page);
       table.matrix tbody th small { font-weight: 400; color: var(--muted); }
       @media (max-width: 560px) { table.matrix tbody th { min-width: 6.5rem; max-width: 7.5rem; font-size: 14px; } }
       .legend { display: flex; align-items: center; gap: .5rem; margin: 1rem 0 .25rem; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
-      .legend .ramp { flex: 0 1 16rem; height: .75rem; border: 1px solid var(--rule); border-radius: 2px;
+      .legend .ramp { flex: 0 1 22rem; height: .75rem; border: 1px solid var(--rule); border-radius: 2px;
         background: linear-gradient(90deg, color-mix(in srgb, var(--heat-neg) var(--heat-max), var(--plate)), var(--plate), color-mix(in srgb, var(--heat-pos) var(--heat-max), var(--plate))); }
+      .scale { display: flex; justify-content: space-between; gap: .25rem 1rem; flex-wrap: wrap; max-width: 22rem; margin: 0 0 .75rem; font-size: 13px; color: var(--muted); }
       td:empty { background: none; border-color: transparent; } /* Links overview: no such pair */
       p.na { padding: .5rem .75rem; border-radius: 4px; }
 

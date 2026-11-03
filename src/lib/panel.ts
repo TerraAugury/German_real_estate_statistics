@@ -71,7 +71,8 @@ export const compactChart = (s: Series, lang: Lang) => latestBlock(s, lang) + li
 /** Link panel HTML for one KPI x indicator pair. Pure given the result, so it tests without the Link module. */
 export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang, geography = t(lang, 'geo.germany'), id?: string): string {
   const notes = notesFor(kpi, lang, { on: 'link', indicator: ind, pairs: r.shown ? r.headline.n : undefined });
-  const head = `<h3>${t(lang, 'link.title', { kpi: esc(kpi.title[lang]), indicator: esc(ind.title[lang]) })}</h3>
+  const head = `<p class="back"><a href="${href('links', lang)}">← ${t(lang, 'link.back')}</a></p>
+<h3>${t(lang, 'link.title', { kpi: esc(kpi.title[lang]), indicator: esc(ind.title[lang]) })}</h3>
 <p>${t(lang, 'link.scope', { geography: esc(geography) })}</p>`;
   let body: string;
   if (!r.shown) {
@@ -155,7 +156,7 @@ export function renderHero(e: InsightEntry, r: InsightResult, series: Series[], 
 
 /** One Insight section: headline number with verdict tag, the reading, the chart (spec insights section 5). Pure given the result. */
 export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[], lang: Lang, now = new Date()): string {
-  const head = `<h2>${esc(e.title[lang])}</h2>`;
+  const head = `<p class="back"><a href="${href('insights', lang)}#index">← ${t(lang, 'insight.back')}</a></p><h2>${esc(e.title[lang])}</h2>`;
   if (!r.shown) return `<section class="insight" id="${esc(e.key)}">${head}<p class="na">${t(lang, 'insight.not_shown', { n: String(r.n), min: String(MIN_OBS) })}</p></section>`;
   const { headlineHtml, reading, chart, legend, notes, reference, plate } = insightLead(e, r, series, lang, now);
   const kpis = series.filter((_, i) => e.series[i].role === 'kpi');
