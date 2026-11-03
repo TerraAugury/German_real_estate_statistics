@@ -1077,7 +1077,7 @@
   ids: ["DEU.M.BCICP.PB.F.Y._Z._Z.N"]
   publisher: &oecd_publisher "OECD"
   licence: &oecd_licence { name: "OECD terms and conditions", url: "https://www.oecd.org/en/about/terms-conditions.html" }
-  attribution: &oecd_attribution { en: "Source: OECD", de: "Quelle: OECD" }
+  attribution: &oecd_attribution { en: "Source: OECD, Business tendency surveys (DSD_STES@DF_BTS)", de: "Quelle: OECD, Konjunkturumfragen (DSD_STES@DF_BTS)" }
   provisional: false
   cleared: *permission
   title: { en: "OECD business confidence, construction (not seasonally adjusted)", de: "OECD-Geschäftsklima, Bau (nicht saisonbereinigt)" }
