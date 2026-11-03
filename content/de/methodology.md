@@ -50,13 +50,13 @@ Welche Richtung als besser gilt, je Einblick:
 |---|---|---|
 | Renditeabstand der Anfangsrendite zur 10-jährigen Bundesanleihe, nach Städtegruppe | höher | mehr Einnahmen je Preiseinheit, als eine Bundesanleihe zahlt |
 | Renditeabstand der Anfangsrendite zum Unternehmenskreditzins | höher | mehr Einnahmen je Preiseinheit, als der Unternehmenskreditzins kostet |
-| Büropreise und Büromieten | keines von beiden | ein Käufer zahlt bei hohem Wert mehr je Mieteinheit, ein Eigentümer hält mehr Wert: es kommt auf den Standpunkt an |
+| Büropreise und Büromieten | keines von beiden | die Zahl ist ein indexiertes Verhältnis von Preis zu Miete (2015 = 100): ein Käufer zahlt bei hohem Wert mehr je Mieteinheit, ein Eigentümer hält mehr Wert, es kommt also auf den Standpunkt an |
 | Reale Büromieten | höher | Mieten wachsen schneller als die Preise insgesamt |
 | Büromieten und Baupreise | höher | Mieten wachsen schneller als die Baukosten |
 | Büromieten und Wirtschaftsleistung | höher | Mieten wachsen schneller als die Wirtschaft. Redaktionelles Urteil. |
 | Büro-Fertigstellungen und Baugenehmigungen zwei Jahre zuvor | keines von beiden | weniger Fertigstellungen je Genehmigung bedeuten weniger neues Angebot für Eigentümer, aber weniger Projekte für Entwickler: es kommt auf den Standpunkt an |
 | Baupreise und Inflation | niedriger | Bau- und Sanierungskosten, die schneller steigen als die Preise insgesamt, verteuern neue Investitionen. Redaktionelles Urteil. |
-| Büroleerstand: A-Städte und 127 Städte | niedriger | ein positiver Abstand heißt, der Leerstand ist in den 7 Großstädten höher als in den 127 Städten |
+| Büroleerstand: A-Städte und 127 Städte | niedriger | ein positiver Abstand heißt, die 7 Großstädte stehen leerer da als die 127 Städte, das ist schlechter; ein negativer Abstand ist besser |
 | Büroleerstand und Bürobeschäftigung | niedriger | ein Anstieg des Leerstands ist schlechter und ein Rückgang besser, also ist eine negative Veränderung besser |
 
 Die Zahlen der Einblicke, darunter Abstände, Verhältnisse, Durchschnitte und umbasierte Reihen, sind eigene Berechnung und in den Quellenzeilen als solche gekennzeichnet.

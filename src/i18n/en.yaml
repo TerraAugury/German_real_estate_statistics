@@ -139,7 +139,7 @@ insights.title: Insights
 insights.intro: "Each Insight puts several series on one axis over a stated period, with a fixed one-line reading. It describes what the lines show; it does not show a cause and is not a forecast."
 insights.jump: Insights on this page
 insights.tone.more: How better and worse are judged
-insights.tone.legend: "“Better” and “worse” show how the latest value reads for an investor in office property. Where a tag carries neither, the value is in line with the average or neither side is better. Colour is never the only signal."
+insights.tone.legend: "“Better” and “worse” show how the latest value reads for an investor in office property. Where a tag carries neither, the value is in line with the average or neither side is better. Colour is never the only cue."
 insights.empty: "No Insights are published yet; the licences for their data are being confirmed."
 insight.template.spread: "The latest {measure} is {latest} points, {verdict} the {from}-{to} average of {mean} points."
 insight.verdict.higher: higher than

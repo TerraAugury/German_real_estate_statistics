@@ -14,6 +14,14 @@ const contrast = (a: string, b: string) => {
   return (hi + 0.05) / (lo + 0.05);
 };
 
+const hue = (hex: string) => {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  const d = Math.max(r, g, b) - Math.min(r, g, b);
+  const h = d === 0 ? 0 : Math.max(r, g, b) === r ? ((g - b) / d) % 6 : Math.max(r, g, b) === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return (h * 60 + 360) % 360;
+};
+const hueGap = (a: string, b: string) => { const d = Math.abs(hue(a) - hue(b)); return Math.min(d, 360 - d); };
+
 describe('palette', () => {
   it('Base.astro and chart.ts hold no colour literal of their own', () => {
     for (const f of ['src/layouts/Base.astro', 'src/lib/chart.ts']) {
@@ -48,9 +56,9 @@ describe('palette', () => {
     });
     it('the better and worse colours are readable as text on the page and the plate, and differ from every other hue', () => {
       for (const bg of [c.page, c.plate]) for (const fg of [c.better, c.worse]) expect(contrast(fg, bg), `${scheme} ${fg} on ${bg}`).toBeGreaterThanOrEqual(4.5);
-      const others = [c.above, c.below, c.data, c.strong, c['heat-neg'], c['heat-pos']];
-      for (const fg of [c.better, c.worse]) expect(others).not.toContain(fg);
-      expect(c.better).not.toBe(c.worse);
+      // At least 25 degrees of hue from the above/below of the small charts and the two heat hues, and from each other.
+      for (const fg of [c.better, c.worse]) for (const other of [c.above, c.below, c['heat-neg'], c['heat-pos']]) expect(hueGap(fg, other), `${scheme} ${fg} vs ${other}`).toBeGreaterThanOrEqual(25);
+      expect(hueGap(c.better, c.worse)).toBeGreaterThanOrEqual(25);
     });
     it('graphics (lines, bars, borders of controls) are at least 3:1 on the plate', () => {
       for (const g of [c.data, c.strong, c.field, c.above, c.below]) expect(contrast(g, c.plate), `${scheme} ${g}`).toBeGreaterThanOrEqual(3);

@@ -88,5 +88,6 @@ describe('Insight tone on the tag', () => {
   });
   it('the Insights page legend explains the tone and the office-investor view', () => {
     expect(loadStrings('en')['insights.tone.legend']).toMatch(/investor in office property/);
+    expect(loadStrings('de')['insights.tone.legend']).toMatch(/Anleger in Büroimmobilien/);
   });
 });

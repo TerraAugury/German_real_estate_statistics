@@ -45,13 +45,13 @@ Which direction counts as better, per Insight:
 |---|---|---|
 | Initial yield spread over the 10-year Bund, by City class | higher | more income per unit of price than a government bond pays |
 | Initial yield spread over the corporate loan rate | higher | more income per unit of price than the corporate loan rate costs |
-| Office prices vs rents | neither | a buyer pays more per unit of rent when it is high, an owner holds more value: it depends on whose side you take |
+| Office prices vs rents | neither | the number is an indexed price-to-rent multiple (2015 = 100): a buyer pays more per unit of rent when it is high, an owner holds more value, so it depends on whose side you take |
 | Real office rents | higher | rents growing faster than prices generally |
 | Office rents vs construction costs | higher | rents growing faster than the cost of building |
 | Office rents vs GDP | higher | rents growing faster than the economy. Editorial judgement. |
 | Office completions vs permits two years earlier | neither | fewer completions per permit mean less new supply for owners but fewer projects for developers: it depends on whose side you take |
 | Construction costs vs inflation | lower | building and refurbishing costs rising faster than prices generally raise the cost of new capital spending. Editorial judgement. |
-| Office vacancy: 7 major cities vs 127 towns | lower | a positive spread means vacancy is higher in the 7 major cities than in the 127 towns |
+| Office vacancy: 7 major cities vs 127 towns | lower | a positive spread means the 7 major cities are emptier than the 127 towns, which is worse; a negative spread is better |
 | Office vacancy and office employment | lower | a rise in vacancy is worse and a fall is better, so a negative change is better |
 
 Insight figures, including spreads, ratios, averages and rebased series, are our own calculation and are marked as such in the source lines.
