@@ -6,6 +6,8 @@ const LIGHT = {
   /** Ochre for text: `strong` is 4.2:1 on the plate, this is 5.4:1. Lines and bars keep `strong`. */
   'strong-text': '#9a5b00',
   above: '#4e79a7', below: '#c0392b',
+  /** Insight tone (src/insight/insight.ts): a verdict that is better or worse for an office investor. Neither is the hue of the small charts' above and below, and a word always goes with the colour. */
+  better: '#1c6b4a', worse: '#9a2c5c',
   /** Availability: an available cell and its border; a Not available cell's hatch. */
   yes: '#e3ecf5', 'yes-rule': '#b9cde1', na: '#e9ecef',
   /** The two hues of a heat shade (src/lib/heat.ts): negative blue, positive ochre. */
@@ -19,6 +21,7 @@ const DARK = {
   data: '#7db4e8', strong: '#d99a3d', field: '#8996a3',
   'strong-text': '#e3ae5c',
   above: '#6a9fd0', below: '#e0705f',
+  better: '#5bc093', worse: '#e88ab4',
   yes: '#1c3045', 'yes-rule': '#30506f', na: '#202a33',
   // Darker hues than the lines: a heat shade mixes them into the plate, and light ink must stay 4.5:1 on the result.
   'heat-neg': '#3d7ab5', 'heat-pos': '#b8741a',

@@ -129,6 +129,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
       {insights.length === 0 ? <p>{t(lang, 'insights.empty')}</p> : (
         <>
           <p>{t(lang, 'insights.intro')}</p>
+          <p class="note">{t(lang, 'insights.tone.legend')}</p>
           <nav class="jump" aria-label={t(lang, 'insights.jump')}>
             <h2>{t(lang, 'insights.jump')}</h2>
             <Fragment set:html={renderInsightIndex(insights, lang)} />

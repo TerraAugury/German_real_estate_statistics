@@ -33,6 +33,11 @@ _Avoid_: Headline (also the name of a KPI's lead view in code), result
 **Verdict**:
 The tag on an Insight's headline measure: "higher than", "lower than" or "in line with" the average of the whole shared period, judged against half a standard deviation. It says where the latest value sits against the past, never a cause or forecast.
 
+**Tone**:
+Whether an Insight's verdict reads better, worse or neutral for an investor in office property. It follows the verdict (where the latest value sits against the average) through a direction declared per Insight, never the sign of the number: a falling vacancy is better although it is negative. An Insight whose direction depends on whose side you take has no better side and stays neutral, as does a verdict "in line". An editorial reading from a stated perspective, never a cause or forecast.
+_DE_: Einordnung (draft, not yet Reviewed)
+_Avoid_: Sentiment, rating, score, signal
+
 **Lead Insight**:
 The one Insight that Home opens with: the yield spread when it is public and shown, otherwise the first Insight that is shown. Home shows no lead when no Insight is shown.
 _Avoid_: Featured insight, hero (the hero is how Home draws it)

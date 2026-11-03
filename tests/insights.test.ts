@@ -12,7 +12,7 @@ import type { InsightResult } from '../src/insight/insight';
 afterEach(() => { delete process.env.INCLUDE_PROVISIONAL; });
 
 const entry = (over: Partial<InsightEntry> = {}): InsightEntry => ({
-  key: 'x', title: { en: 'Title', de: 'Titel' }, measure: { en: 'spread', de: 'Abstand' }, headline: 'spread', growth: false, template: 'spread',
+  key: 'x', title: { en: 'Title', de: 'Titel' }, measure: { en: 'spread', de: 'Abstand' }, headline: 'spread', growth: false, better: 'higher', template: 'spread',
   series: [{ key: 'kpi-a', role: 'kpi' }, { key: 'ref-b', role: 'reference' }], ...over,
 });
 const known = { series: new Set(['kpi-a', 'ref-b']), kpis: new Set(['kpi-a']) };
@@ -20,6 +20,7 @@ const en = loadStrings('en');
 
 describe('Insight declaration checks', () => {
   it('a sound entry passes', () => expect(() => checkInsights([entry()], known, en)).not.toThrow());
+  it.each(['higher', 'lower', 'none'] as const)('accepts the better direction %s', (better) => expect(() => checkInsights([entry({ better })], known, en)).not.toThrow());
   it.each<[string, InsightEntry[], string]>([
     ['unknown series', [entry({ series: [{ key: 'kpi-a', role: 'kpi' }, { key: 'nope', role: 'reference' }] })], 'unknown series nope'],
     ['no Real estate KPI series', [entry({ series: [{ key: 'ref-b', role: 'kpi' }, { key: 'ref-b', role: 'reference' }] })], 'needs a Real estate KPI'],
@@ -29,6 +30,8 @@ describe('Insight declaration checks', () => {
     ['base that is not a year', [entry({ base: 'x' as unknown as number })], 'base must be a year'],
     ['shift with no label', [entry({ shift: 7 })], 'no i18n key insight.shift.7'],
     ['deflate that is neither flow nor stock', [entry({ deflate: 'yearly' as 'flow' })], 'deflate must be one of'],
+    ['missing better direction', [entry({ better: undefined })], 'better must be one of'],
+    ['unknown better direction', [entry({ better: 'up' as 'higher' })], 'better must be one of'],
     ['unknown template', [entry({ template: 'nope' })], 'no i18n key insight.template.nope'],
   ])('fails the build on: %s', (_, entries, message) => expect(() => checkInsights(entries, known, en)).toThrow(message));
 });

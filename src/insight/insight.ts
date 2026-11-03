@@ -8,6 +8,8 @@ export const SHORT_OBS = 20;
 
 export type Headline = 'spread' | 'ratio' | 'growth' | 'change';
 export type Verdict = 'higher' | 'lower' | 'in_line';
+export type Better = 'higher' | 'lower' | 'none';
+export type Tone = 'better' | 'worse' | 'neutral';
 export type InsightSeries = Pick<LinkSeries, 'freq' | 'obs'>;
 export type Points = { period: string; value: number }[];
 export type InsightResult =
@@ -24,6 +26,12 @@ export function verdict(latest: number, mean: number, sd: number): Verdict {
   const d = latest - mean;
   return Math.abs(d) <= sd / 2 ? 'in_line' : d > 0 ? 'higher' : 'lower';
 }
+
+/**
+ * The verdict read through the direction an Insight declares as better for an office investor. In line, and an Insight with no
+ * better side, are neutral. The sign of the number never decides: only where the latest value sits against the average.
+ */
+export const tone = (v: Verdict, better: Better): Tone => (v === 'in_line' || better === 'none' ? 'neutral' : v === better ? 'better' : 'worse');
 
 /**
  * Both series over `years`, each divided by its value in the base year and scaled to 100. The base year is `base` when

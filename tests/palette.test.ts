@@ -46,6 +46,12 @@ describe('palette', () => {
         for (const fg of [c.ink, c.muted, c.data, c['strong-text']]) expect(contrast(fg, bg), `${scheme} ${fg} on ${bg}`).toBeGreaterThanOrEqual(4.5);
       }
     });
+    it('the better and worse colours are readable as text on the page and the plate, and differ from every other hue', () => {
+      for (const bg of [c.page, c.plate]) for (const fg of [c.better, c.worse]) expect(contrast(fg, bg), `${scheme} ${fg} on ${bg}`).toBeGreaterThanOrEqual(4.5);
+      const others = [c.above, c.below, c.data, c.strong, c['heat-neg'], c['heat-pos']];
+      for (const fg of [c.better, c.worse]) expect(others).not.toContain(fg);
+      expect(c.better).not.toBe(c.worse);
+    });
     it('graphics (lines, bars, borders of controls) are at least 3:1 on the plate', () => {
       for (const g of [c.data, c.strong, c.field, c.above, c.below]) expect(contrast(g, c.plate), `${scheme} ${g}`).toBeGreaterThanOrEqual(3);
     });
