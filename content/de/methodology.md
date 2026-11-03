@@ -1,7 +1,7 @@
 ---
-en_hash: 80a59c4347365222
-reviewed_by: Project owner
-reviewed_on: 2026-11-02
+en_hash: de3756647c04de52
+reviewed_by: terra augury
+reviewed_on: 2026-11-03
 ---
 ## Verknüpfungen
 

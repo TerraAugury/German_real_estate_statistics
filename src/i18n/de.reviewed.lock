@@ -3,17 +3,17 @@ note.prefix:
   reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
   reviewed_on: 2026-11-01
 note.stale:
-  en_hash: 29a57654def6b5b4
-  reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
-  reviewed_on: 2026-11-01
+  en_hash: 31cc95781011c685
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 note.fetch_failed:
-  en_hash: 94cf3aecad921e6d
-  reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
-  reviewed_on: 2026-11-01
+  en_hash: 1bc804b507db7f2c
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 note.revised:
-  en_hash: e3f0a04f0ff6f1a0
-  reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
-  reviewed_on: 2026-11-01
+  en_hash: 8b5a1500e9e8da01
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 link.sentence:
   en_hash: 198119bb762aa3c9
   reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
@@ -131,9 +131,9 @@ sources.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 sources.intro:
-  en_hash: f9808446ef6d520b
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 563a7397dc4c439a
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 sources.col.series:
   en_hash: a8295e08ff7a961c
   reviewed_by: Project owner
@@ -143,9 +143,9 @@ sources.col.publisher:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 sources.col.id:
-  en_hash: 4b93bc072b34a330
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 02b71f7bb1068155
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 sources.col.licence:
   en_hash: f3ec8e880a46c8a6
   reviewed_by: Project owner
@@ -551,9 +551,9 @@ manifest:price-index-de-total-a.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-de-total-a.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-de-total-q.title:
   en_hash: 6a9599fb9109f536
   reviewed_by: Project owner
@@ -563,9 +563,9 @@ manifest:price-index-de-total-q.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-de-total-q.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-de-office-a.title:
   en_hash: 0a9c19c3258205a9
   reviewed_by: Project owner
@@ -575,9 +575,9 @@ manifest:price-index-de-office-a.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-de-office-a.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-de-office-q.title:
   en_hash: 1a4056513ec90c40
   reviewed_by: Project owner
@@ -587,9 +587,9 @@ manifest:price-index-de-office-q.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-de-office-q.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-de-retail-a.title:
   en_hash: 8dbafb1e3cf7b0fe
   reviewed_by: Project owner
@@ -599,9 +599,9 @@ manifest:price-index-de-retail-a.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-de-retail-a.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-de-retail-q.title:
   en_hash: 32b8c9d880bfbe3b
   reviewed_by: Project owner
@@ -611,9 +611,9 @@ manifest:price-index-de-retail-q.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-de-retail-q.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-cities-total-a.title:
   en_hash: 6ef75933402c056a
   reviewed_by: Project owner
@@ -623,9 +623,9 @@ manifest:price-index-cities-total-a.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-cities-total-a.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-cities-total-q.title:
   en_hash: b4aa20ea193def1d
   reviewed_by: Project owner
@@ -635,9 +635,9 @@ manifest:price-index-cities-total-q.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-cities-total-q.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-cities-office-a.title:
   en_hash: f2cc64d499269fad
   reviewed_by: Project owner
@@ -647,9 +647,9 @@ manifest:price-index-cities-office-a.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-cities-office-a.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-cities-office-q.title:
   en_hash: 7c68d5c78ee9ec41
   reviewed_by: Project owner
@@ -659,9 +659,9 @@ manifest:price-index-cities-office-q.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-cities-office-q.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-cities-retail-a.title:
   en_hash: 89f1e0f436867b29
   reviewed_by: Project owner
@@ -671,9 +671,9 @@ manifest:price-index-cities-retail-a.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-cities-retail-a.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-cities-retail-q.title:
   en_hash: ee64ac32bbe169f3
   reviewed_by: Project owner
@@ -683,9 +683,9 @@ manifest:price-index-cities-retail-q.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-cities-retail-q.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-excl-total-a.title:
   en_hash: e5d39497f7d630c3
   reviewed_by: Project owner
@@ -695,9 +695,9 @@ manifest:price-index-excl-total-a.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-excl-total-a.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-excl-total-q.title:
   en_hash: ed8b9a597157a2a0
   reviewed_by: Project owner
@@ -707,9 +707,9 @@ manifest:price-index-excl-total-q.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-excl-total-q.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-excl-office-a.title:
   en_hash: 146f4a51e52f1d6c
   reviewed_by: Project owner
@@ -719,9 +719,9 @@ manifest:price-index-excl-office-a.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-excl-office-a.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-excl-office-q.title:
   en_hash: 08a2c03a6cebcd03
   reviewed_by: Project owner
@@ -731,9 +731,9 @@ manifest:price-index-excl-office-q.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-excl-office-q.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-excl-retail-a.title:
   en_hash: 5e20070e2d43f2f8
   reviewed_by: Project owner
@@ -743,9 +743,9 @@ manifest:price-index-excl-retail-a.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-excl-retail-a.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:price-index-excl-retail-q.title:
   en_hash: 740e9f8075aba159
   reviewed_by: Project owner
@@ -755,9 +755,9 @@ manifest:price-index-excl-retail-q.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:price-index-excl-retail-q.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:rent-index-de-office-a.title:
   en_hash: 1a795f498f319caf
   reviewed_by: Project owner
@@ -767,9 +767,9 @@ manifest:rent-index-de-office-a.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-de-office-a.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:rent-index-de-office-q.title:
   en_hash: 0ec9c437207a08c4
   reviewed_by: Project owner
@@ -779,9 +779,9 @@ manifest:rent-index-de-office-q.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-de-office-q.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:rent-index-de-retail-a.title:
   en_hash: f7679eb76524dfd9
   reviewed_by: Project owner
@@ -791,9 +791,9 @@ manifest:rent-index-de-retail-a.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-de-retail-a.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:rent-index-de-retail-q.title:
   en_hash: 20506bbbb45df7ed
   reviewed_by: Project owner
@@ -803,9 +803,9 @@ manifest:rent-index-de-retail-q.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-de-retail-q.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:rent-index-combined-127.title:
   en_hash: 5ce916bede1b28cc
   reviewed_by: Project owner
@@ -815,9 +815,9 @@ manifest:rent-index-combined-127.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-combined-127.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 1e7036f92b8645a9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:rent-index-combined-120.title:
   en_hash: 730167ceec18d482
   reviewed_by: Project owner
@@ -827,9 +827,9 @@ manifest:rent-index-combined-120.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-combined-120.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 1e7036f92b8645a9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:rent-index-combined-7.title:
   en_hash: e52141dc16595b2e
   reviewed_by: Project owner
@@ -839,9 +839,9 @@ manifest:rent-index-combined-7.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-combined-7.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 1e7036f92b8645a9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:initial-yield-combined-127.title:
   en_hash: 646fd38261be4050
   reviewed_by: Project owner
@@ -851,9 +851,9 @@ manifest:initial-yield-combined-127.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:initial-yield-combined-127.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 1e7036f92b8645a9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:initial-yield-combined-120.title:
   en_hash: a74d0f22734a4a5c
   reviewed_by: Project owner
@@ -863,9 +863,9 @@ manifest:initial-yield-combined-120.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:initial-yield-combined-120.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 1e7036f92b8645a9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:initial-yield-combined-7.title:
   en_hash: 4336775377fd8169
   reviewed_by: Project owner
@@ -875,9 +875,9 @@ manifest:initial-yield-combined-7.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:initial-yield-combined-7.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 1e7036f92b8645a9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:office-vacancy-127.title:
   en_hash: 9991ffdf1977e2c9
   reviewed_by: Project owner
@@ -887,9 +887,9 @@ manifest:office-vacancy-127.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:office-vacancy-127.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 1e7036f92b8645a9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:office-vacancy-7.title:
   en_hash: 1f17729d1e82786a
   reviewed_by: Project owner
@@ -899,9 +899,9 @@ manifest:office-vacancy-7.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:office-vacancy-7.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 1e7036f92b8645a9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:office-vacancy-120.title:
   en_hash: 88a17500c10e7f2e
   reviewed_by: Project owner
@@ -911,9 +911,9 @@ manifest:office-vacancy-120.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:office-vacancy-120.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 1e7036f92b8645a9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:transaction-volume-de.title:
   en_hash: 3f5cdc82a4ed3253
   reviewed_by: Project owner
@@ -923,9 +923,9 @@ manifest:transaction-volume-de.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:transaction-volume-de.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:transaction-volume-127.title:
   en_hash: e9dc5706ebd28c90
   reviewed_by: Project owner
@@ -935,9 +935,9 @@ manifest:transaction-volume-127.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:transaction-volume-127.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:transaction-volume-7.title:
   en_hash: f134653fd1e51bad
   reviewed_by: Project owner
@@ -947,9 +947,9 @@ manifest:transaction-volume-7.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:transaction-volume-7.attribution:
-  en_hash: 3f7252e067acb41f
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: aa065f54af1e34b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
 manifest:construction-bbk-permits-office.title:
   en_hash: d6cf8d3f349ba48d
   reviewed_by: Project owner
@@ -1118,3 +1118,335 @@ manifest:oecd-confidence-retail.attribution:
   en_hash: 4f86095e64d32968
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
+nav.menu:
+  en_hash: 99af6606ff9d6cd5
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+nav.logistics:
+  en_hash: 9680b40d0bb9721f
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+source.cite:
+  en_hash: b530bc4a2cbd5697
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+source.cite.credit:
+  en_hash: 8e20d8811d5941f4
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+source.details:
+  en_hash: 09d2ea5a523b22ac
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+source.detail.dbnomics:
+  en_hash: b614179e030d55d9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+source.detail.direct:
+  en_hash: b5f687168b7c1cfe
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+source.chip.provisional:
+  en_hash: 9b46c2e6d68c16f5
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+source.original:
+  en_hash: e6f975e5af60f8de
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+source.original.unit:
+  en_hash: 0ae9b39b2c191133
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+source.original.source:
+  en_hash: 5e24d019421b9e58
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+source.terms.original:
+  en_hash: 2d959bdeed029046
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+source.terms.derived:
+  en_hash: 8102173f879d82dc
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+note.unavailable:
+  en_hash: 1250e55d332fc686
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+link.overlay.chart:
+  en_hash: 8909f7ed7e344c34
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+link.overlay.legend:
+  en_hash: c8c0c1c997a51687
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+home.hero.more:
+  en_hash: be1549d02cf9e5a3
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+home.spark.label:
+  en_hash: 1e6b4b9b683f1ca6
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+latest.change.pct:
+  en_hash: 114750676f9496b9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+latest.change.diff:
+  en_hash: b7cea87f0f095997
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+latest.unchanged:
+  en_hash: 50d21524d51fe8b2
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+links.cell.n:
+  en_hash: 41acf9a79340a8d6
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+links.legend:
+  en_hash: 371a13edff90ddd8
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+nav.insights:
+  en_hash: 2a932f90172e99ea
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insights.title:
+  en_hash: 2a932f90172e99ea
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insights.intro:
+  en_hash: f2e33f7221c3cdc5
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insights.jump:
+  en_hash: 9dec562d3beb885e
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insights.tone.more:
+  en_hash: f90d08a9b178dfbd
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insights.tone.legend:
+  en_hash: f10c868a9a67f2ca
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insights.empty:
+  en_hash: 40cdc44501b96eb0
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.template.spread:
+  en_hash: 67da08a188279d39
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.verdict.higher:
+  en_hash: 3b3679efc5b9c838
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.verdict.lower:
+  en_hash: e97a9370b24d26e6
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.verdict.in_line:
+  en_hash: 8ae54a38605d5429
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.tag.higher:
+  en_hash: b5b500584ea0caa6
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.tag.lower:
+  en_hash: d40092d106d30aae
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.tag.in_line:
+  en_hash: 9d9d074b1fd4945b
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.tone.better:
+  en_hash: d7d5dcc369426e2e
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.tone.worse:
+  en_hash: e760bdbe0be65db9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.average:
+  en_hash: b0b2248bc9e5f488
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.chart.label:
+  en_hash: 4497fb18a7b2c316
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.unit.spread:
+  en_hash: e300964443317948
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.not_shown:
+  en_hash: 6e09206c30eca747
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.short_history:
+  en_hash: 8e284334cc58c924
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.method:
+  en_hash: 3cc38432b1cca7a4
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.axis.rebased:
+  en_hash: 08eba6b60961d5b1
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.multiples.title:
+  en_hash: 0a5f87074c592a02
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.multiples.label:
+  en_hash: 5c2c0640bff13c62
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.multiples.legend:
+  en_hash: 45c4651479e2eba2
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.template.completions-permits:
+  en_hash: 7f63cb2454d32d62
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.unit.ratio:
+  en_hash: 2bf61a3bc850596a
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.shift.2:
+  en_hash: 185762927a536ee3
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.shifted:
+  en_hash: 9d0bd68ca85bd31f
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+kpi.insights.heading:
+  en_hash: c5140bc04d7b56c7
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.template.price-rent:
+  en_hash: f1504b894f1e78b2
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.template.real-rents:
+  en_hash: 8e3f757982dcbdba
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.unit.growth:
+  en_hash: fd86717aca41c558
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.template.office-employment:
+  en_hash: e2fecc3a09b5abc4
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.unit.change:
+  en_hash: e300964443317948
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.context.legend:
+  en_hash: 55fcca102bb96b30
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+manifest:office-employment.title:
+  en_hash: ca2632ef7e6a7be0
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+manifest:office-employment.unit:
+  en_hash: 307bdfc873b838ca
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+manifest:office-employment.attribution:
+  en_hash: 7f1ba88184b2589a
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:a.title:
+  en_hash: 6ba47890118bec6a
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:a.measure:
+  en_hash: c951d2989a95fdd7
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:f.title:
+  en_hash: 97c3221bce8b2c79
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:f.measure:
+  en_hash: 3ac5c90827a37f55
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:g.title:
+  en_hash: 51c6d783279e4f26
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:g.measure:
+  en_hash: 445303c287fec4b8
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:b.title:
+  en_hash: 254a9c16ca1c5776
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:b.measure:
+  en_hash: dc4fa6297b613d86
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:d.title:
+  en_hash: 0abaec11f94c14f2
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:d.measure:
+  en_hash: 05422e88bd6f4fd8
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:i.title:
+  en_hash: a65d5b3b9d6d940d
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:i.measure:
+  en_hash: 296ca22a47bb78ab
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:c.title:
+  en_hash: 19997e53d9fd54a5
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:c.measure:
+  en_hash: 19728adcde84bfb9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:j.title:
+  en_hash: 15ea5ec78739d0f7
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:j.measure:
+  en_hash: b6e927a78e4348b9
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:e.title:
+  en_hash: e5729e61fedeb2f5
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:e.measure:
+  en_hash: 0a9b80756ebba7ba
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:m.title:
+  en_hash: d5c854e8855bcdf0
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight:m.measure:
+  en_hash: 6c17c72aa89b9324
+  reviewed_by: terra augury
+  reviewed_on: 2026-11-03
