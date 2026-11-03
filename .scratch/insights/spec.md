@@ -126,7 +126,7 @@ Resolved by the build (`.scratch/insights-build/`):
 - **Small multiples for ratio and growth Insights**: built as the default says, the two rebased lines with the same shading; Insights that compare levels in one unit (A, F, E) show the levels.
 - **Narrow (320 px) layout**: checked on the built Insights page in English and German, all ten sections, no horizontal scroll. The only overflow was a long Destatis series id in the source line; fixed for every source.
 - **M's end year**: Destatis publishes 2025 for sections K-N, so M runs 1996 to 2025.
-- **Home**: no Home card and no Links-overview column; out of scope.
+- **Home**: no Home card and no Links-overview column; out of scope. Reopened 2026-11-03 (design-refinement ticket 06): Home now opens with one Insight, the yield spread (a) when it is public and shown, else the first shown Insight. There is still no Links-overview column and no Home card per Insight.
 - **KPI check for J**: J (construction prices vs CPI) has no series in `KPIS`; the build check accepts the construction price series as the Construction KPI's.
 
 Still open:

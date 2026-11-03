@@ -91,10 +91,10 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
 export const linkPanel = (kpi: Series, ind: Series, lang: Lang, geography?: string, id?: string) =>
   renderPanel(kpi, ind, linkResult(kpi, ind), lang, geography, id);
 
-/** One Insight section: headline number with verdict tag, the reading, the chart (spec insights section 5). Pure given the result. */
-export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[], lang: Lang, now = new Date()): string {
-  const head = `<h2>${esc(e.title[lang])}</h2>`;
-  if (!r.shown) return `<section class="insight" id="${esc(e.key)}">${head}<p class="na">${t(lang, 'insight.not_shown', { n: String(r.n), min: String(MIN_OBS) })}</p></section>`;
+type Shown = Extract<InsightResult, { shown: true }>;
+
+/** What leads an Insight, shared by its section and the Home hero: headline number with verdict tag, the reading, the chart, its Notes. */
+function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, now: Date) {
   const digits = e.headline === 'ratio' ? 2 : 1; // ratios two decimals, everything else one
   const one = (n: number) => fmt(lang, n, { minimumFractionDigits: digits, maximumFractionDigits: digits });
   const unitKey = `insight.unit.${e.headline}`;
@@ -104,6 +104,26 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
   const notes = notesFor(series[0], lang, { on: 'insight', rest: series.slice(1), short: r.short ? { from: r.from, to: r.to, n: r.n } : undefined }, now);
   const chart = insightChart(r, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(r.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
   const reference = series[e.series.findIndex((x) => x.role === 'reference')];
+  return {
+    reading, notes, chart, reference,
+    headline: `<p class="headline"><span class="num">${one(r.latest.value)}</span> <span class="unit">${t(lang, unitKey)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span></p>`,
+    legend: r.context ? `<p class="note">${t(lang, 'insight.context.legend', { measure: esc(e.measure[lang]), title: esc(reference.title[lang]) })}</p>` : '',
+  };
+}
+
+/** The Home hero: the lead Insight's headline, reading, chart and citation, with a link to the full Insight. Empty when it is not shown. */
+export function renderHero(e: InsightEntry, r: InsightResult, series: Series[], lang: Lang, now = new Date()): string {
+  if (!r.shown) return '';
+  const { headline, reading, chart, legend, notes } = insightLead(e, r, series, lang, now);
+  return `<section class="hero"><h2>${esc(e.title[lang])}</h2>${headline}<p>${reading}</p>`
+    + `<figure>${chart}${legend}${noteHtml(notes)}<figcaption>${sourceBlock(series, lang, true)}<br><a href="${href('insights', lang)}#${esc(e.key)}">${t(lang, 'home.hero.more')}</a></figcaption></figure></section>`;
+}
+
+/** One Insight section: headline number with verdict tag, the reading, the chart (spec insights section 5). Pure given the result. */
+export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[], lang: Lang, now = new Date()): string {
+  const head = `<h2>${esc(e.title[lang])}</h2>`;
+  if (!r.shown) return `<section class="insight" id="${esc(e.key)}">${head}<p class="na">${t(lang, 'insight.not_shown', { n: String(r.n), min: String(MIN_OBS) })}</p></section>`;
+  const { headline, reading, chart, legend, notes, reference } = insightLead(e, r, series, lang, now);
   const kpis = series.filter((_, i) => e.series[i].role === 'kpi');
   const refTitle = e.shift ? t(lang, 'insight.shifted', { title: reference.title[lang], shift: t(lang, `insight.shift.${e.shift}`) }) : reference.title[lang];
   // The headline's lines are the first KPI series'; every other KPI series gets its own small chart over the same years.
@@ -117,7 +137,7 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
       + `<p class="note">${t(lang, 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p></div>`;
   }).join('');
   return `<section class="insight" id="${esc(e.key)}">${head}`
-    + `<p class="headline"><span class="num">${one(r.latest.value)}</span> <span class="unit">${t(lang, unitKey)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span></p>`
+    + headline
     + `<p>${reading}</p>`
-    + `<figure>${chart}${r.context ? `<p class="note">${t(lang, 'insight.context.legend', { measure: esc(e.measure[lang]), title: esc(reference.title[lang]) })}</p>` : ''}${multiples}${noteHtml(notes)}<figcaption>${sourceBlock(series, lang, true)}<br><a href="${href('methodology', lang)}#${slug('insights', lang)}">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
+    + `<figure>${chart}${legend}${multiples}${noteHtml(notes)}<figcaption>${sourceBlock(series, lang, true)}<br><a href="${href('methodology', lang)}#${slug('insights', lang)}">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
 }
