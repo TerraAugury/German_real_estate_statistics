@@ -4,12 +4,14 @@ lang.switch: Deutsch
 home.purpose: Open statistics on German commercial real estate, with every chart naming its source and licence.
 kpi.construction.title: Construction (permits, completions)
 source.line: "Source: {publisher}, DBnomics series {id} / Licence: {licence} / Data to {period}"
+source.line.direct: "Source: {publisher}, {service}, series {id} / Licence: {licence} / Data to {period} / Retrieved {retrieved}"
+source.original: "Original series as published: {title}; unit: {unit}"
 source.own: own calculation
 footer.text: Operated by Terra Augury Ltd.
 note.prefix: Note
-note.stale: "Latest observation: {period}. The source has not published newer data within the expected interval, so this series may be out of date."
-note.fetch_failed: "Could not refresh from DBnomics on {date}; showing data retrieved on {snapshot}."
-note.revised: "The source revised earlier values; detected {date}. This chart shows the latest published version."
+note.stale: "Latest observation: {period}. {source} has not published newer data within the expected interval, so this series may be out of date."
+note.fetch_failed: "Could not refresh from {source} on {date}; showing data retrieved on {snapshot}."
+note.revised: "{source} revised earlier values; detected {date}. This chart shows the latest published version."
 note.short_window: "Short history ({start} to {end})."
 note.short_cycle: "This window contains essentially one interest-rate cycle, so the pattern may not hold in other periods."
 note.scope.index: "Index (2013 = 100): shows change over time, not a price level in euros."
@@ -32,10 +34,10 @@ link.overlay.label: "Levels of {title}"
 link.lags.label: "Lag profile of {kpi} and {indicator}"
 nav.sources: Sources and licences
 sources.title: Sources and licences
-sources.intro: "One row per series shown on this site. Series are aggregated by DBnomics; the underlying data keeps the publisher's licence."
+sources.intro: "One row per series shown on this site. Series are fetched directly from the publisher or through DBnomics, which aggregates them; the data keeps the publisher's licence."
 sources.col.series: Series
 sources.col.publisher: Publisher
-sources.col.id: DBnomics series id
+sources.col.id: Series id
 sources.col.licence: Licence
 sources.col.attribution: Attribution
 nav.kpis: KPIs

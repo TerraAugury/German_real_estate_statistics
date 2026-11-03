@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:30:49.881Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
   "A.B10.N.G020.P0122.A": {
    "name": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / Commercial property price index / office / Germany excluding cities of supra-regional importance / unadjusted figures",
-   "indexed_at": "2026-06-06T01:53:40.451Z",
    "frequency": "annual",
    "period": [
     "2013",
@@ -35,15 +34,21 @@
     217.9,
     203.3,
     197.2,
-    202.4
+    202.2
    ],
-   "dimensions": {
-    "BBK_DOSC_GROUP": "B10",
-    "BBK_DOSC_NAME": "P0122",
-    "BBK_DOSC_SLIDE": "G020",
-    "BBK_DO_SUFFIX": "A",
-    "BBK_STD_ADJUSTMENT": "N",
-    "BBK_STD_FREQ": "A"
+   "meta": {
+    "source": "Deutsche Bundesbank",
+    "url": "https://api.statistiken.bundesbank.de/rest/data/BBDZ1/A.B10.N.G020.P0122.A?format=sdmx_json&lang=en",
+    "title": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / Commercial property price index / office / Germany excluding cities of supra-regional importance / unadjusted figures",
+    "unit": "2013=100",
+    "unit_mult": 0,
+    "decimals": 1,
+    "comment": "vdpResearch GmbH and Bundesbank calculations.",
+    "general_comment": null,
+    "third_party": true,
+    "valid_from": "2026-09-04T08:22:42.521Z",
+    "retrieved_at": "2026-11-02T23:30:49.881Z",
+    "sha256": "63ee0205f7fdbfa9560f0965d8035e1ae7ccfafb65192fc519dffa621145112d"
    }
   }
  }

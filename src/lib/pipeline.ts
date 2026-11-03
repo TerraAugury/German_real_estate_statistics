@@ -2,33 +2,46 @@
 import { parse } from 'yaml';
 import { readFileSync } from 'node:fs';
 import type { ManifestEntry } from './manifest';
+import { refreshBundesbank } from './bundesbank';
+import { refreshDestatis } from './destatis';
 
 export const API = 'https://api.db.nomics.world/v22/series';
 export const UA = 'german-cre-statistics (build; contact oelamine@terraaugury.com)';
 
-/** `dimensions` holds DBnomics' dimension codes; DBnomics has no unit field, so the unit lives there (e.g. `ind: FLC002`). */
-export interface Part { name: string; indexed_at: string; frequency: string; dimensions?: Record<string, string>; period: string[]; value: (number | string | null)[] }
-export interface Snapshot { retrieved_at: string; fetch_failed: string | null; revised_at?: string | null; parts: Record<string, Part> }
-export interface Deps { get: (url: string) => Promise<any>; now: Date; warn?: (msg: string) => void }
+export type { Part, Snapshot, SourceMeta } from './snapshot';
+export { BadResponse } from './snapshot';
+import { BadResponse, type Part, type Snapshot } from './snapshot';
+export type Post = (url: string, form: Record<string, string>, headers: Record<string, string>) => Promise<any>;
+/** `post` and `env` are needed only by sources that log in (Destatis); `env` defaults to the process environment. */
+export interface Deps { get: (url: string) => Promise<any>; post?: Post; env?: Record<string, string | undefined>; now: Date; warn?: (msg: string) => void }
+
+/** Non-2xx answer; the message is the status code and URL. */
+export class HttpError extends Error { constructor(public status: number, url = '') { super(`${status} ${url}`.trim()); } }
+
+const NO_RETRY = new Set([401, 403, 404, 410]); // a second try will not change the answer
+
+/** Fetch JSON with retry and exponential backoff. */
+async function fetchJson(fetchFn: typeof fetch, sleep: (ms: number) => Promise<unknown>, tries: number, url: string, init: RequestInit) {
+  for (let i = 0; ; i++) {
+    try {
+      const r = await fetchFn(url, init);
+      if (r.ok) return (await r.json()) as any;
+      throw new HttpError(r.status, url);
+    } catch (e) {
+      if (i >= tries - 1 || (e instanceof HttpError && NO_RETRY.has(e.status))) throw e;
+      await sleep(1000 * 2 ** i);
+    }
+  }
+}
+const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 /** GET JSON with retry and exponential backoff. */
-export function makeGet(fetchFn: typeof fetch = fetch, sleep = (ms: number) => new Promise((r) => setTimeout(r, ms)), tries = 3) {
-  return async (url: string) => {
-    for (let i = 0; ; i++) {
-      try {
-        const r = await fetchFn(url, { headers: { 'User-Agent': UA } });
-        if (r.ok) return (await r.json()) as any;
-        throw new Error(String(r.status));
-      } catch (e) {
-        if (i >= tries - 1) throw e;
-        await sleep(1000 * 2 ** i);
-      }
-    }
-  };
-}
+export const makeGet = (fetchFn: typeof fetch = fetch, sleep = wait, tries = 3) => (url: string) =>
+  fetchJson(fetchFn, sleep, tries, url, { headers: { 'User-Agent': UA } });
 
-/** The API answered but not as expected (or the frequency or unit changed). Fails the build; never a reason to reuse the snapshot. */
-export class BadResponse extends Error {}
+/** POST a form and read JSON, with the same retry. `headers` carries the credentials. */
+export const makePost = (fetchFn: typeof fetch = fetch, sleep = wait, tries = 3): Post => (url, form, headers) =>
+  fetchJson(fetchFn, sleep, tries, url, { method: 'POST', body: new URLSearchParams(form), headers: { 'User-Agent': UA, ...headers } });
 
 function firstDoc(res: any, id: string): any {
   const d = res?.series?.docs?.[0];
@@ -50,7 +63,7 @@ export function revised(old: Part, next: Part): boolean {
  * Refresh one series. indexed_at is checked first; observations are downloaded only for parts where it moved.
  * Returns the new snapshot, or null when nothing changed. Throws on any fetch error, and BadResponse on a malformed response or a changed frequency or unit.
  */
-export async function refresh(m: ManifestEntry, old: Snapshot | undefined, { get, now, warn = console.warn }: Deps): Promise<Snapshot | null> {
+export async function refreshDbnomics(m: ManifestEntry, old: Snapshot | undefined, { get, now, warn = console.warn }: Deps): Promise<Snapshot | null> {
   const parts: Record<string, Part> = {};
   let downloaded = false, backfilled = false, wasRevised = false;
   for (const id of partIds(m)) {
@@ -80,6 +93,14 @@ export async function refresh(m: ManifestEntry, old: Snapshot | undefined, { get
     revised_at: wasRevised ? iso : old?.revised_at ?? null, parts };
 }
 
+/** Refresh one series from the source its manifest entry names. */
+export async function refresh(m: ManifestEntry, old: Snapshot | undefined, deps: Deps): Promise<Snapshot | null> {
+  if (m.source === 'dbnomics') return refreshDbnomics(m, old, deps);
+  if (m.source === 'bundesbank') return refreshBundesbank(m, old, deps);
+  if (m.source === 'destatis') return refreshDestatis(m, old, deps);
+  throw new BadResponse(`${m.key}: no fetcher for source ${m.source}`);
+}
+
 /** Last snapshot with fetch_failed recorded. A series without a snapshot fails the build. */
 export function markFailed(key: string, old: Snapshot | undefined, now: Date, err: unknown): Snapshot {
   if (!old) throw new Error(`${key}: fetch failed and no snapshot: ${err}`);
@@ -93,6 +114,7 @@ export function validateSnapshot(m: ManifestEntry, snap: Snapshot): void {
     const p = snap.parts[id];
     if (!p) { errs.push(`id missing: ${id}`); continue; }
     if (p.frequency !== m.frequency) errs.push(`${id}: frequency ${p.frequency}, manifest says ${m.frequency}`);
+    if (p.meta?.third_party && !m.provisional) errs.push(`${id}: original source "${p.meta.comment}" is third-party data; set provisional: true until its licence is confirmed`);
     if (+p.period[0].slice(0, 4) !== m.expected_start) errs.push(`${id}: starts ${p.period[0]}, manifest says ${m.expected_start}`);
   }
   if (errs.length) throw new Error(`manifest validation, ${m.key}: ${errs.join('; ')}`);

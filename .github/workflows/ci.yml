@@ -46,6 +46,9 @@ jobs:
         with: { node-version: 26, cache: npm }
       - run: npm ci
       - run: npx tsx scripts/fetch.ts
+        env: # the Destatis login is for this step only; preview builds and tests never see it
+          DESTATIS_USER: ${{ secrets.DESTATIS_USER }}
+          DESTATIS_PASSWORD: ${{ secrets.DESTATIS_PASSWORD }}
       - name: Commit changed snapshots to main
         id: diff
         run: |

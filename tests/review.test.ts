@@ -78,7 +78,7 @@ describe('recordReview', () => {
 });
 
 describe('manifest checks', () => {
-  const e: any = { key: 'k', title: { en: 'a', de: 'b' }, unit: { en: 'u', de: 'v' }, attribution: { en: 's', de: 'q' },
+  const e: any = { key: 'k', source: 'dbnomics', title: { en: 'a', de: 'b' }, unit: { en: 'u', de: 'v' }, attribution: { en: 's', de: 'q' },
     seasonal_adjustment: 'nsa', resampling: 'none', expected_start: 2013, short_window: true, short_window_sentence: 'x', scope: ['index'] };
   const i18n = { x: 'X' };
   it('passes', () => checkEntries([e], i18n));
@@ -95,7 +95,7 @@ describe('manifest checks', () => {
 });
 
 describe('DBnomics name change', () => {
-  const m: any = { key: 'k', dbnomics_provider: 'P', dataset: 'D', ids: ['X'], laender: [''], frequency: 'annual' };
+  const m: any = { key: 'k', source: 'dbnomics', dbnomics_provider: 'P', dataset: 'D', ids: ['X'], laender: [''], frequency: 'annual' };
   const doc = (name: string, at: string) => ({ series: { docs: [{ series_name: name, indexed_at: at, '@frequency': 'annual', period: ['2020'], value: [1] }] } });
   const old: Snapshot = { retrieved_at: 'x', fetch_failed: null, parts: { X: { name: 'Old', indexed_at: 'a', frequency: 'annual', period: ['2020'], value: [1] } } };
   it('warns, does not throw', async () => {

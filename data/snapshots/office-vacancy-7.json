@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:30:49.881Z",
  "fetch_failed": null,
- "revised_at": null,
+ "revised_at": "2026-11-02T23:30:49.881Z",
  "parts": {
   "A.B30.N.G850.R1010.A": {
    "name": "Real Economic Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / bulwiengesa AG commercial property price index / offices - vacancy rate / 7 major cities (A cities) - Bundesbank calculations / unadjusted figures",
-   "indexed_at": "2026-06-06T01:53:40.451Z",
    "frequency": "annual",
    "period": [
     "1995",
@@ -41,7 +40,7 @@
     "2025"
    ],
    "value": [
-    5.6,
+    5.5,
     6.1,
     6.2,
     5.6,
@@ -50,8 +49,8 @@
     3.5,
     6.5,
     9.3,
-    10.7,
-    10.5,
+    10.6,
+    10.4,
     9.9,
     9.1,
     8.8,
@@ -59,7 +58,7 @@
     10.1,
     9,
     8,
-    7.7,
+    7.6,
     6.8,
     5.8,
     5.1,
@@ -73,13 +72,19 @@
     7.2,
     8.4
    ],
-   "dimensions": {
-    "BBK_DOSC_GROUP": "B30",
-    "BBK_DOSC_NAME": "R1010",
-    "BBK_DOSC_SLIDE": "G850",
-    "BBK_DO_SUFFIX": "A",
-    "BBK_STD_ADJUSTMENT": "N",
-    "BBK_STD_FREQ": "A"
+   "meta": {
+    "source": "Deutsche Bundesbank",
+    "url": "https://api.statistiken.bundesbank.de/rest/data/BBDZ1/A.B30.N.G850.R1010.A?format=sdmx_json&lang=en",
+    "title": "Real Economic Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / bulwiengesa AG commercial property price index / offices - vacancy rate / 7 major cities (A cities) - Bundesbank calculations / unadjusted figures",
+    "unit": "Prozent",
+    "unit_mult": 0,
+    "decimals": 1,
+    "comment": "Bundesbank calculations based on price data provided by bulwiengesa AG.",
+    "general_comment": null,
+    "third_party": true,
+    "valid_from": "2026-09-04T08:22:42.527Z",
+    "retrieved_at": "2026-11-02T23:30:49.881Z",
+    "sha256": "dfeffc3c7a354be4112a5c672559b454642917e46af9b980c921682d3e9e5585"
    }
   }
  }

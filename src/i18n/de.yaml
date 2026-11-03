@@ -4,12 +4,14 @@ lang.switch: English
 home.purpose: Offene Statistiken zum deutschen Gewerbeimmobilienmarkt; jede Grafik nennt Quelle und Lizenz.
 kpi.construction.title: Bautätigkeit (Genehmigungen, Fertigstellungen)
 source.line: "Quelle: {publisher}, DBnomics-Reihe {id} / Lizenz: {licence} / Daten bis {period}"
+source.line.direct: "Quelle: {publisher}, {service}, Reihe {id} / Lizenz: {licence} / Daten bis {period} / Abgerufen am {retrieved}"
+source.original: "Originalreihe wie veröffentlicht: {title}; Einheit: {unit}"
 source.own: eigene Berechnung
 footer.text: Betrieben von Terra Augury Ltd.
 note.prefix: Hinweis
-note.stale: "Letzte Beobachtung: {period}. Die Quelle hat innerhalb des erwarteten Zeitraums keine neueren Daten veröffentlicht; die Reihe ist möglicherweise nicht aktuell."
-note.fetch_failed: "Aktualisierung über DBnomics am {date} fehlgeschlagen; dargestellt sind die am {snapshot} abgerufenen Daten."
-note.revised: "Die Quelle hat frühere Werte revidiert (festgestellt am {date}). Dargestellt ist die zuletzt veröffentlichte Fassung."
+note.stale: "Letzte Beobachtung: {period}. {source} hat innerhalb des erwarteten Zeitraums keine neueren Daten veröffentlicht; die Reihe ist möglicherweise nicht aktuell."
+note.fetch_failed: "Aktualisierung ({source}) am {date} fehlgeschlagen; dargestellt sind die am {snapshot} abgerufenen Daten."
+note.revised: "{source} hat frühere Werte revidiert (festgestellt am {date}). Dargestellt ist die zuletzt veröffentlichte Fassung."
 note.short_window: "Kurze Zeitreihe ({start} bis {end})."
 note.short_cycle: "Der Zeitraum umfasst im Wesentlichen einen Zinszyklus; das Muster muss in anderen Zeiträumen nicht gelten."
 note.scope.index: "Index (2013 = 100): zeigt die Entwicklung, nicht ein Preisniveau in Euro."
@@ -32,10 +34,10 @@ link.overlay.label: "Niveau: {title}"
 link.lags.label: "Zeitversatzprofil von {kpi} und {indicator}"
 nav.sources: Quellen und Lizenzen
 sources.title: Quellen und Lizenzen
-sources.intro: "Eine Zeile je Reihe, die auf dieser Seite gezeigt wird. DBnomics bündelt die Reihen; die zugrunde liegenden Daten behalten die Lizenz des Herausgebers."
+sources.intro: "Eine Zeile je Reihe, die auf dieser Seite gezeigt wird. Die Reihen werden direkt beim Herausgeber oder über DBnomics abgerufen, das sie bündelt; die Daten behalten die Lizenz des Herausgebers."
 sources.col.series: Reihe
 sources.col.publisher: Herausgeber
-sources.col.id: DBnomics-Reihen-ID
+sources.col.id: Reihen-ID
 sources.col.licence: Lizenz
 sources.col.attribution: Quellenangabe
 nav.kpis: Kennzahlen

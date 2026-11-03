@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:30:49.881Z",
  "fetch_failed": null,
- "revised_at": null,
+ "revised_at": "2026-11-02T23:30:49.881Z",
  "parts": {
   "A.B10.N.G250.P0600.A": {
    "name": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / bulwiengesa AG commercial property price index / rents for office and retail core properties / 127 towns and cities - Bundesbank calculations / unadjusted figures",
-   "indexed_at": "2026-06-06T01:53:40.451Z",
    "frequency": "annual",
    "period": [
     "1995",
@@ -60,7 +59,7 @@
     102.9,
     106,
     109.2,
-    111.8,
+    111.7,
     114.6,
     116.5,
     118.4,
@@ -71,15 +70,21 @@
     110.7,
     107.4,
     105.3,
-    104.4
+    104.9
    ],
-   "dimensions": {
-    "BBK_DOSC_GROUP": "B10",
-    "BBK_DOSC_NAME": "P0600",
-    "BBK_DOSC_SLIDE": "G250",
-    "BBK_DO_SUFFIX": "A",
-    "BBK_STD_ADJUSTMENT": "N",
-    "BBK_STD_FREQ": "A"
+   "meta": {
+    "source": "Deutsche Bundesbank",
+    "url": "https://api.statistiken.bundesbank.de/rest/data/BBDZ1/A.B10.N.G250.P0600.A?format=sdmx_json&lang=en",
+    "title": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / bulwiengesa AG commercial property price index / rents for office and retail core properties / 127 towns and cities - Bundesbank calculations / unadjusted figures",
+    "unit": "2010=100",
+    "unit_mult": 0,
+    "decimals": 1,
+    "comment": "Bundesbank calculations based on price data provided by bulwiengesa AG.",
+    "general_comment": null,
+    "third_party": true,
+    "valid_from": "2026-09-04T08:22:42.522Z",
+    "retrieved_at": "2026-11-02T23:30:49.881Z",
+    "sha256": "74469c413b6aee60ad460b89a5c2860b42445fe1ee2f0800636fc4f8c8c7fa65"
    }
   }
  }

@@ -8,12 +8,15 @@ export type Localized = { en: string; de: string };
 export const SCOPES = ['index', 'city_class', 'combined'] as const;
 export const ADJUSTMENTS = ['nsa', 'sa'] as const;
 export const RESAMPLING = ['mean', 'none'] as const;
+export const SOURCE_KINDS = ['dbnomics', 'bundesbank', 'destatis'] as const;
 /** Manifest fields with German text; each goes through the review workflow like an interface string. */
 const TEXT_FIELDS = ['title', 'unit', 'attribution'] as const;
 
 export interface ManifestEntry {
   /** DBnomics provider code (BUBA, DESTATIS, ...), not the site operator (GLOSSARY: Provider). */
   key: string; dbnomics_provider: string; dataset: string;
+  /** Which fetcher serves the series; dbnomics unless the entry says otherwise. Bundesbank: dataset is the dataflow, ids[0] the series key. */
+  source: (typeof SOURCE_KINDS)[number];
   /** Series id; `{land}` is replaced by each code in `laender` (Destatis Land series summed to Germany). */
   ids: string[]; laender: string[]; scale: number; change: 'pct' | 'diff';
   publisher: string; attribution: Localized; licence: { name: string; url: string }; provisional: boolean;
@@ -31,7 +34,7 @@ export const manifestStrings = (entries: ManifestEntry[], lang: Lang): Record<st
 
 function build(lock: Lock): ManifestEntry[] {
   const entries = parse(readFileSync('manifest/series.yaml', 'utf8')) as ManifestEntry[];
-  for (const m of entries) { m.laender ??= ['']; m.scale ??= 1; m.provisional ??= false; m.change ??= 'pct'; m.scope ??= []; }
+  for (const m of entries) { m.source ??= 'dbnomics'; m.laender ??= ['']; m.scale ??= 1; m.provisional ??= false; m.change ??= 'pct'; m.scope ??= []; }
   checkEntries(entries, loadStrings('en'));
   const unreviewed = new Set(unreviewedKeys(manifestStrings(entries, 'en'), lock));
   for (const m of entries) for (const f of TEXT_FIELDS) // new objects: YAML anchors share them between entries
@@ -69,11 +72,15 @@ export function publicLinks<T extends { kpi: string; indicator: string }>(pairs:
   return pairs.filter((p) => keys.has(p.kpi) && keys.has(p.indicator));
 }
 
-/** DBnomics series id as shown on source lines; the 16 Länder collapse into one range unless one Land is asked for. */
-export const dbnomicsId = (m: ManifestEntry, land?: string) => `${m.dbnomics_provider}/${m.dataset}/`
+export const BBK_API = 'https://api.statistiken.bundesbank.de/rest/data';
+/** Name of the web service a direct source is fetched from, as shown on source lines. */
+export const SERVICE: Partial<Record<ManifestEntry['source'], string>> = { bundesbank: 'SDMX Web Service', destatis: 'GENESIS-Online' };
+
+/** Series id as shown on source lines: the Bundesbank's own id, or the DBnomics path. The 16 Länder collapse into one range unless one Land is asked for. */
+export const seriesId = (m: ManifestEntry, land?: string) => m.source === 'bundesbank' ? `${m.dataset}.${m.ids[0]}` : `${m.source === 'dbnomics' ? m.dbnomics_provider + '/' : ''}${m.dataset}/`
   + m.ids[0].replace('{land}', land ?? (isDerived(m) ? `{${m.laender[0]}–${m.laender.at(-1)}}` : m.laender[0]));
-/** The series page on DBnomics; a sum of Länder has no single series, so it links the dataset. */
-export const dbnomicsUrl = (m: ManifestEntry, land?: string) => `https://db.nomics.world/${m.dbnomics_provider}/${m.dataset}`
+/** Where the series can be checked: the Bundesbank data URL, the GENESIS-Online page of the statistic (cubes have no page of their own), or its page on DBnomics (a sum of Länder has no single series, so it links the dataset). */
+export const seriesUrl = (m: ManifestEntry, land?: string) => m.source === 'destatis' ? `https://genesis.destatis.de/datenbank/online/statistic/${m.dataset.slice(0, 5)}` : m.source === 'bundesbank' ? `${BBK_API}/${m.dataset}/${m.ids[0]}?lang=en` : `https://db.nomics.world/${m.dbnomics_provider}/${m.dataset}`
   + (isDerived(m) && !land ? '' : `/${m.ids[0].replace('{land}', land ?? m.laender[0])}`);
 
 /** Manifest build checks (spec sections 10, 11); any failure fails the build. */
@@ -84,6 +91,7 @@ export function checkEntries(entries: ManifestEntry[], en: Record<string, string
     if (seen.has(m.key)) errs.push(`duplicate key ${m.key}`);
     seen.add(m.key);
     for (const l of langs) if (TEXT_FIELDS.some((f) => !m[f]?.[l])) errs.push(`${m.key} needs en and de title, unit and attribution`);
+    if (!SOURCE_KINDS.includes(m.source)) errs.push(`${m.key}: source must be one of ${SOURCE_KINDS}`);
     if (!ADJUSTMENTS.includes(m.seasonal_adjustment)) errs.push(`${m.key}: seasonal_adjustment must be one of ${ADJUSTMENTS}`);
     if (!RESAMPLING.includes(m.resampling)) errs.push(`${m.key}: resampling must be one of ${RESAMPLING}`);
     if (m.short_window !== m.expected_start > 2010) errs.push(`${m.key}: short_window must be ${m.expected_start > 2010} (starts ${m.expected_start})`);

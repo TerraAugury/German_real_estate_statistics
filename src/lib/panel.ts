@@ -1,4 +1,4 @@
-import { fmt, period, t } from './i18n';
+import { fmt, locale, period, t } from './i18n';
 import { levelChart, lagChart, lineChart } from './chart';
 import { notesFor } from './notes';
 import { href, type Lang } from './routes';
@@ -11,10 +11,14 @@ const noteHtml = (ns: string[]) => ns.map((n) => `<p class="note">${esc(n)}</p>`
 
 /** Source line for one series, same wording as KPI charts. The id links the series on DBnomics, the licence our Sources & licences page. */
 export function sourceLine(s: Series, lang: Lang, own = false): string {
-  return t(lang, 'source.line', {
-    publisher: esc(s.publisher), id: `<a href="${esc(s.dbnomicsUrl)}">${esc(s.dbnomicsId)}</a>`,
+  const day = new Intl.DateTimeFormat(locale[lang], { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(s.retrievedAt));
+  const vars = {
+    publisher: esc(s.publisher), id: `<a href="${esc(s.seriesUrl)}">${esc(s.seriesId)}</a>`,
     licence: `<a href="${href('sources', lang)}">${esc(s.licence.name)}</a>`, period: period(lang, s.lastPeriod),
-  }) + (own || s.derived ? ` / ${t(lang, 'source.own')}` : '');
+  };
+  return (s.service ? t(lang, 'source.line.direct', { ...vars, service: s.service, retrieved: day }) : t(lang, 'source.line', vars))
+    + (own || s.derived ? ` / ${t(lang, 'source.own')}` : '')
+    + (s.original ? `<br>${t(lang, 'source.original', { title: esc(s.original.title), unit: esc(s.original.unit) })}` : '');
 }
 
 /** Compact chart for Home cards and Segment pages: chart, stale and fetch-failed Notes, source line (spec section 9). */

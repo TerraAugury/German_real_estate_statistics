@@ -4,7 +4,7 @@ A Link relates one real estate KPI to one economic indicator over a stated perio
 
 Each Link has three parts:
 
-- **Levels overlay.** Both series as published, one chart each, over the same periods.
+- **Levels overlay.** Both series, one chart each, over the same periods. Indicators are averaged to the KPI's frequency as described under Frequency, so the overlay shows our own calculation, not the published figures.
 - **Rank correlation of changes.** Spearman's rank correlation, with ties, of the changes of both series: year-on-year percent change for indices and money amounts, year-on-year difference in points for rates and confidence balances. It is always shown with the number of paired observations (n) and the period. No p-values or significance stars are shown.
 - **Lag profile.** The same correlation with the indicator shifted by whole periods: −8 to +8 quarters for quarterly KPIs, −3 to +3 years for annual KPIs. A positive lag means the indicator moved earlier than the KPI. The headline figure is lag 0. The strongest lag is marked, but it was chosen after looking at the data, so it is likely overstated; the site never presents a lag as a lead time.
 
@@ -27,7 +27,8 @@ Each Link has three parts:
 
 ## How to read these figures
 
-- The data comes through DBnomics, which aggregates official sources. The publishers are not responsible for this site.
+- Each series is fetched either directly from its publisher or through DBnomics, which aggregates official sources; the source line says which. The publishers are not responsible for this site.
+- For series fetched directly, the source line gives the retrieval date and the series' original title and unit as the publisher gave them. Our own titles, number formatting and rounding are not the publisher's.
 - Germany construction totals, unit conversions, year-on-year changes and Links are our own calculation and are marked as such.
 - The site shows only the latest published version of each series and keeps no revision history.
 - The Deutsche Bundesbank commercial property series are compiled from third-party data (bulwiengesa, vdp).

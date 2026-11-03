@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:10:01.086Z",
+ "retrieved_at": "2026-11-02T23:58:50.458Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
   "DG.PREIS1": {
-   "name": "Germany – Consumer price index",
-   "indexed_at": "2026-10-13T10:32:56.077Z",
+   "name": "Verbraucherpreisindex für Deutschland, Verbraucherpreisindex, Deutschland insgesamt, Monate, Jahr",
    "frequency": "monthly",
    "period": [
     "1991-01",
@@ -869,9 +868,19 @@
     125.8,
     126.6
    ],
-   "dimensions": {
-    "DINSG": "DG",
-    "ind": "PREIS1"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=61111BM001",
+    "title": "Verbraucherpreisindex für Deutschland, Verbraucherpreisindex, Deutschland insgesamt, Monate, Jahr",
+    "unit": "2020=100",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-10-12T18:02:03",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "208027765e300f8a9beaf554e2b49959e333cb05402ae4c9792fdc377ddfbf57"
    }
   }
  }

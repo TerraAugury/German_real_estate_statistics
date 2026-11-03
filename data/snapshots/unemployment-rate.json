@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:30:49.881Z",
  "fetch_failed": null,
- "revised_at": null,
+ "revised_at": "2026-11-02T23:30:49.881Z",
  "parts": {
   "M.DE.Y.UNE.UBA000.A0000.A01.D00.0.R00.A": {
    "name": "Unemployment registered pursuant to section 16 Social Security Code III / Germany / Social Security Code III and Social Security Code II / Rate / Calendar and seasonally adjusted",
-   "indexed_at": "2026-07-01T01:56:29.441Z",
    "frequency": "monthly",
    "period": [
     "1991-12",
@@ -422,7 +421,11 @@
     "2026-03",
     "2026-04",
     "2026-05",
-    "2026-06"
+    "2026-06",
+    "2026-07",
+    "2026-08",
+    "2026-09",
+    "2026-10"
    ],
    "value": [
     7.3,
@@ -821,7 +824,7 @@
     6,
     6.1,
     6.1,
-    6.2,
+    6.1,
     6.2,
     6.2,
     6.3,
@@ -839,20 +842,25 @@
     6.3,
     6.4,
     6.3,
-    6.3
+    6.3,
+    6.4,
+    6.4,
+    6.4,
+    6.4
    ],
-   "dimensions": {
-    "BBK_DOLM_AGEGENDER": "A0000",
-    "BBK_DOLM_CONCEPT": "UBA000",
-    "BBK_DOLM_JURISDICTION": "A01",
-    "BBK_DOLM_NATIONALITY": "D00",
-    "BBK_DOLM_NAVIGATION": "UNE",
-    "BBK_DOLM_RANGE": "0",
-    "BBK_DO_BASIS": "R00",
-    "BBK_DO_SUFFIX": "A",
-    "BBK_STD_ADJUSTMENT": "Y",
-    "BBK_STD_AREA_WORLD": "DE",
-    "BBK_STD_FREQ": "M"
+   "meta": {
+    "source": "Deutsche Bundesbank",
+    "url": "https://api.statistiken.bundesbank.de/rest/data/BBDL1/M.DE.Y.UNE.UBA000.A0000.A01.D00.0.R00.A?format=sdmx_json&lang=en",
+    "title": "Unemployment registered pursuant to section 16 Social Security Code III / Germany / Social Security Code III and Social Security Code II / Rate / Calendar and seasonally adjusted",
+    "unit": "Prozent",
+    "unit_mult": 0,
+    "decimals": 1,
+    "comment": "Seasonal adjustment based on data provided by the Federal Employment Agency.",
+    "general_comment": null,
+    "third_party": true,
+    "valid_from": "2026-10-30T09:11:21.073Z",
+    "retrieved_at": "2026-11-02T23:30:49.881Z",
+    "sha256": "74f118e1122a1b30331ed86f0fb0202a22593694efca39c4de4f58b056247cd4"
    }
   }
  }

@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:30:49.881Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
   "M.DE.B.A2A.D.R.1.2240.EUR.N": {
    "name": "Effective interest rates of German banks / New business / Loans to non-financial corporations over EUR 1 million, with floating rate or initial rate fixation up to 3 months / SUD149",
-   "indexed_at": "2026-07-04T01:54:22.554Z",
    "frequency": "monthly",
    "period": [
     "2010-06",
@@ -199,7 +198,11 @@
     "2026-02",
     "2026-03",
     "2026-04",
-    "2026-05"
+    "2026-05",
+    "2026-06",
+    "2026-07",
+    "2026-08",
+    "2026-09"
    ],
    "value": [
     2.22,
@@ -393,19 +396,25 @@
     3,
     3.29,
     3.27,
-    3.11
+    3.11,
+    3.52,
+    3.49,
+    3.28,
+    3.41
    ],
-   "dimensions": {
-    "BBK_BS_COUNT_SEC": "2240",
-    "BBK_BS_MATURITY_ORIG": "D",
-    "BBK_IRM_AMOUNT_CAT": "1",
-    "BBK_IRM_BUS_COV": "N",
-    "BBK_IRM_DATA_TYPE": "R",
-    "BBK_IRM_ITEM": "A2A",
-    "BBK_IRM_REF_SEC": "B",
-    "BBK_STD_AREA": "DE",
-    "BBK_STD_CURRENCY": "EUR",
-    "BBK_STD_FREQ": "M"
+   "meta": {
+    "source": "Deutsche Bundesbank",
+    "url": "https://api.statistiken.bundesbank.de/rest/data/BBIM1/M.DE.B.A2A.D.R.1.2240.EUR.N?format=sdmx_json&lang=en",
+    "title": "Effective interest rates of German banks / New business / Loans to non-financial corporations over EUR 1 million, with floating rate or initial rate fixation up to 3 months / SUD149",
+    "unit": "% p.a.",
+    "unit_mult": 0,
+    "decimals": 2,
+    "comment": null,
+    "general_comment": "The MFI interest rate statistics gathered on a harmonised basis in the euro area are collected in Germany on a sample basis (stratified sample). Volume-weighted average rates of all new agreements concluded during the reporting month. (The interest rates per stratum are calculated by weighting the reported interest rates with the reported volumes of new business. Then the interest rate for Germany is aggregated by weighting the interest rates of each stratum with the grossed-up volumes of the same stratum.) The effective interest rates are calculated either as annualised agreed interest rates or as narrowly defined effective rates. Both calculation methods cover all interest payments on deposits and loans but not any other related charges which may occur for enquiries, administration, preparation of the documents, guarantees and credit insurance. Disagios are regarded as interest payments and included in the interest rate calculation. The annualised agreed interest rate and the narrowly defined effective rate differ in the underlying method of annualising interest rate payments. The amount category refers to the single loan transaction considered as new business. Excluding overdrafts.",
+    "third_party": false,
+    "valid_from": "2026-11-02T11:17:12.895Z",
+    "retrieved_at": "2026-11-02T23:30:49.881Z",
+    "sha256": "90babaa099887d69c5cdcc8db059030345e2a6e8623ff4b53b616c51d2993754"
    }
   }
  }

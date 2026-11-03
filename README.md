@@ -13,3 +13,7 @@ Website embedding DBnomics data relevant for German real estate
 | `CLOUDFLARE_ACCOUNT_ID` | secret | Cloudflare account id |
 | `CLOUDFLARE_PAGES_PROJECT` | variable | Pages project name (a direct-upload project) |
 | `PRODUCTION_DEPLOY` | variable | `true` switches the deploy on; anything else leaves it off |
+
+## Data sources and the Destatis login
+
+Each series in `manifest/series.yaml` names its `source`: `bundesbank` (SDMX web service, no login), `destatis` (GENESIS-Online cubes, login required) or `dbnomics` (Euribor and the two OECD series). Destatis needs `DESTATIS_USER` and `DESTATIS_PASSWORD`: in CI they are repository secrets of the same names, used by the fetch step only; locally put them in `.env`, which is git-ignored. Without them the fetch keeps the committed Destatis snapshots and the charts show a failed-refresh Note. `npx tsx scripts/compare.ts <dataset>` compares a direct fetch with the committed snapshot without writing anything.

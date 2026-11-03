@@ -3,7 +3,7 @@ import { notesFor } from '../src/lib/notes';
 import type { Series } from '../src/lib/series';
 
 // Note order per context (spec section 9), through the one interface every chart uses.
-const base = { title: { en: 'Rents', de: 'Mieten' }, freq: 'Q', stale: false, fetchFailed: null, revisedAt: null, lastPeriod: '2026-Q1',
+const base = { publisher: 'Deutsche Bundesbank', fetchedFrom: 'Deutsche Bundesbank', title: { en: 'Rents', de: 'Mieten' }, freq: 'Q', stale: false, fetchFailed: null, revisedAt: null, lastPeriod: '2026-Q1',
   retrievedAt: '2026-10-01T00:00:00Z', obs: [{ period: '2013-Q1', value: 100 }, { period: '2026-Q1', value: 120 }],
   scope: [], shortWindow: false, partial: [] } as unknown as Series;
 const at = new Date('2026-11-01');
@@ -15,14 +15,24 @@ describe('Home cards and Segment charts', () => {
     const en = notesFor(s, 'en', { on: 'compact' }, at);
     expect(en).toHaveLength(2);
     expect(en[0]).toMatch(/^Note: Latest observation: 2023\./);
-    expect(en[1]).toBe('Note: Could not refresh from DBnomics on 30 October 2026; showing data retrieved on 1 October 2026.');
-    expect(notesFor(s, 'de', { on: 'compact' }, at)[1]).toBe('Hinweis: Aktualisierung über DBnomics am 30. Oktober 2026 fehlgeschlagen; dargestellt sind die am 1. Oktober 2026 abgerufenen Daten.');
+    expect(en[1]).toBe('Note: Could not refresh from Deutsche Bundesbank on 30 October 2026; showing data retrieved on 1 October 2026.');
+    // the changed German is unreviewed until the owner stamps it, so it carries [DRAFT]
+    expect(notesFor(s, 'de', { on: 'compact' }, at)[1].replace('[DRAFT] ', '')).toBe('Hinweis: Aktualisierung (Deutsche Bundesbank) am 30. Oktober 2026 fehlgeschlagen; dargestellt sind die am 1. Oktober 2026 abgerufenen Daten.');
   });
   it('revised Note comes last on KPI charts and expires after 90 days', () => {
     expect(notesFor(s, 'en', kpi, at)[2]).toMatch(/detected 1 September 2026/);
     const fresh = { ...s, stale: false, fetchFailed: null } as Series;
     expect(notesFor(fresh, 'en', kpi, new Date('2026-11-30'))).toHaveLength(1);
     expect(notesFor(fresh, 'en', kpi, new Date('2026-12-01T01:00:00Z'))).toHaveLength(0);
+  });
+});
+
+describe('fetched through DBnomics', () => {
+  it('the failed-refresh Note names DBnomics, the stale Note the publisher', () => {
+    const s = { ...base, publisher: 'Statistisches Bundesamt (Destatis)', fetchedFrom: 'DBnomics', stale: true, fetchFailed: '2026-10-30T01:00:00Z' } as Series;
+    const en = notesFor(s, 'en', { on: 'compact' }, at);
+    expect(en[0]).toMatch(/Statistisches Bundesamt \(Destatis\) has not published/);
+    expect(en[1]).toMatch(/Could not refresh from DBnomics/);
   });
 });
 
@@ -33,7 +43,7 @@ describe('KPI page charts', () => {
       'Note: Index (2013 = 100): shows change over time, not a price level in euros.',
       'Note: Aggregate for cities of supra-regional importance, not an individual city.',
       'Note: Short history (Q1 2013 to Q1 2026). This window contains essentially one interest-rate cycle, so the pattern may not hold in other periods.',
-      'Note: Latest observation: Q1 2026. The source has not published newer data within the expected interval, so this series may be out of date.',
+      'Note: Latest observation: Q1 2026. Deutsche Bundesbank has not published newer data within the expected interval, so this series may be out of date.',
     ]);
   });
   it('combined scope and short history without the cycle sentence, in German', () => {
@@ -55,7 +65,7 @@ describe('Link panels', () => {
   const ind = { ...base, title: { en: 'Euribor', de: 'Euribor' } } as Series;
   it('KPI short history, small sample, KPI series Notes, indicator series Notes; series Notes name their series', () => {
     const k = { ...annual, shortWindow: true, stale: true, scope: ['index'] } as Series;
-    const i = { ...ind, fetchFailed: '2026-10-30T01:00:00Z' } as Series;
+    const i = { ...ind, fetchedFrom: 'DBnomics', fetchFailed: '2026-10-30T01:00:00Z' } as Series;
     const out = notesFor(k, 'en', { on: 'link', indicator: i, pairs: 12 }, at);
     expect(out).toEqual([
       'Note: Rents: Short history (2015 to 2025).',

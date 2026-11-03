@@ -35,7 +35,7 @@ export type Pair = ReturnType<typeof viewLinks>[number];
 const results = new Map<string, LinkResult>();
 /** The Link of two series, computed once per build. */
 export function linkResult(kpi: Series, ind: Series): LinkResult {
-  const id = `${kpi.key}@${kpi.dbnomicsId}|${ind.key}`; // dbnomicsId names the Land
+  const id = `${kpi.key}@${kpi.seriesId}|${ind.key}`; // seriesId names the Land
   if (!results.has(id)) results.set(id, computeLink(kpi, ind));
   return results.get(id)!;
 }

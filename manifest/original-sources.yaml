@@ -1,0 +1,3 @@
+# Words that may appear in a Bundesbank "original source" comment without it counting as third-party data.
+# A comment with any other word (vdpResearch, bulwiengesa, Federal Employment Agency, ...) flags the series for licence review.
+own: [Deutsche, Bundesbank, ESCB, ECB, Eurosystem, European, Central, Bank, own, calculations, calculation, and]

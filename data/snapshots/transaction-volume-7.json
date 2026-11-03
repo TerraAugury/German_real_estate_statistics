@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:31:20.238Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
   "A.B30.N.G800.R0820.A": {
    "name": "Real Economic Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / Association of German Pfandbrief Banks (Verband deutscher Pfandbriefbanken) / commercial properties - transaction volume index: euro values / 7 major cities (A cities) / unadjusted figures",
-   "indexed_at": "2026-06-06T01:53:40.451Z",
    "frequency": "annual",
    "period": [
     "2007",
@@ -47,13 +46,19 @@
     46.7,
     82.9
    ],
-   "dimensions": {
-    "BBK_DOSC_GROUP": "B30",
-    "BBK_DOSC_NAME": "R0820",
-    "BBK_DOSC_SLIDE": "G800",
-    "BBK_DO_SUFFIX": "A",
-    "BBK_STD_ADJUSTMENT": "N",
-    "BBK_STD_FREQ": "A"
+   "meta": {
+    "source": "Deutsche Bundesbank",
+    "url": "https://api.statistiken.bundesbank.de/rest/data/BBDZ1/A.B30.N.G800.R0820.A?format=sdmx_json&lang=en",
+    "title": "Real Economic Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / Association of German Pfandbrief Banks (Verband deutscher Pfandbriefbanken) / commercial properties - transaction volume index: euro values / 7 major cities (A cities) / unadjusted figures",
+    "unit": "2010=100",
+    "unit_mult": 0,
+    "decimals": 1,
+    "comment": "Bundesbank calculations based on the extrapolation by vdpResearch GmbH on the basis on purchase price data provided by surveyor committees, excluding share-deals.",
+    "general_comment": null,
+    "third_party": true,
+    "valid_from": "2026-09-04T08:22:42.527Z",
+    "retrieved_at": "2026-11-02T23:31:20.238Z",
+    "sha256": "ffa991ff30e085a2f874a54ed57c38843a6882d669bbc51802f81a8845e51afc"
    }
   }
  }

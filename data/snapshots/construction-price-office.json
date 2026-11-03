@@ -1,11 +1,10 @@
 {
- "retrieved_at": "2026-11-01T19:21:44.893Z",
+ "retrieved_at": "2026-11-02T23:58:50.458Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
   "DG.BAULEISTBW.BPNG1.STEMW1.PRE002": {
-   "name": "Germany – Construction operations performed at the building – Office buildings – Indices including turnover tax – Construction price indices",
-   "indexed_at": "2026-10-09T10:57:29.335Z",
+   "name": "Preisindizes für die Bauwirtschaft, Baupreisindizes, Deutschland insgesamt, Bauarbeiten (Hochbau), Gebäudearten, Messzahlen mit/ohne Umsatzsteuer, Berichtsmonat im Quartal, Jahr",
    "frequency": "quarterly",
    "period": [
     "1958-Q1",
@@ -561,12 +560,19 @@
     142.7,
     144.2
    ],
-   "dimensions": {
-    "BAUAR1": "BPNG1",
-    "BAUAR4": "BAULEISTBW",
-    "DINSG": "DG",
-    "STEMW1": "STEMW1",
-    "ind": "PRE002"
+   "meta": {
+    "source": "Statistisches Bundesamt (Destatis)",
+    "url": "https://genesis.destatis.de/genesisWS/rest/2020/data/cube?name=61261BV001",
+    "title": "Preisindizes für die Bauwirtschaft, Baupreisindizes, Deutschland insgesamt, Bauarbeiten (Hochbau), Gebäudearten, Messzahlen mit/ohne Umsatzsteuer, Berichtsmonat im Quartal, Jahr",
+    "unit": "2021=100",
+    "unit_mult": 0,
+    "decimals": null,
+    "comment": null,
+    "general_comment": null,
+    "third_party": false,
+    "valid_from": "2026-10-08T18:01:35",
+    "retrieved_at": "2026-11-02T23:58:50.458Z",
+    "sha256": "dcc80cd043b61a2c0339f09d7baa404fabc894f5cef3d97b93aeb9e0efaf74a8"
    }
   }
  }

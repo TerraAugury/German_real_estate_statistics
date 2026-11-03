@@ -107,12 +107,17 @@ Findings (2026-11-02):
 
 Decision recorded: the project owner will supply a Destatis username and password for testing. Credentials must never be committed. If a login is needed in production, store it as a CI secret and read it from the environment.
 
-Next steps for this part, none started:
+### Results of the live checks (2026-11-03, ticket 07)
 
-1. Use `catalogue` and `metadata` calls to map each DBnomics id to a GENESIS table and its dimensions.
-2. Fetch one table with `data/tablefile` and compare it with the committed snapshot, as was done for the Bundesbank series.
-3. Check which attributes in the response carry unit, source and the data-status flags, and what a discontinued table returns.
-4. Decide on the raw-copy format and the retry and error handling, which differ from the SDMX-JSON path.
+- **A login is required.** `catalogue/tables` without credentials answers HTTP 401 ("not authorised"); only `helloworld/whoami` is open. The Destatis page says GENESIS-Online is usable "without registering"; for the API that did not hold in this test. Credentials go in the headers `username` and `password` of a POST. A valid login answers 200. Locally they live in `.env` (`DESTATIS_USER`, `DESTATIS_PASSWORD`, git-ignored), in CI they are secrets of the same names. A password with a `#` must not be read by `process.loadEnvFile` (it treats `#` as a comment); `src/lib/env.ts` reads `.env` without that rule.
+- **The DBnomics dataset ids are GENESIS cube names.** `31111LJ001`, `31121LJ001`, `61111BM001` and `61261BV001` work as `name` in `data/cube` on `genesis.destatis.de`, with the same classifying codes as DBnomics (`DLAND`, `BAUBR1`, `BAUTK1`, `BAUGB1`, `DINSG`, `BAUAR1`, ...) and the same measures (`FLC002` and so on). No mapping to table ids like `31111-0100` is needed. The Länder data is in GENESIS-Online, so the regional database is not used.
+- **Format:** `data/cube` with `format=csv` returns JSON whose `Object.Content` is a flat CSV: header blocks (`K;DQA` axes, `K;DQZ` time, `K;DQI` measures with unit) and one `D;` row per axis combination holding a value and a quality flag for every measure. `data/tablefile` and `data/table` return a ZIP or a printed table layout and are not used.
+- **Time axis:** the cube's time is always the year. For the monthly CPI the month is an axis (`MONAT01`..`MONAT12`); for the construction price index the quarter is the reporting month (`QUARM1`: `MONAT02`, `05`, `08`, `11` stand for Q1 to Q4).
+- **Quality flags:** `e` real value, `-` nothing to report (a true zero), `x` secret or not applicable, `.` not known. Only `e` and `-` carry a number; the number shown with `x` or `.` is meaningless.
+- **Errors:** a cube that does not exist or is withdrawn answers HTTP 200 with `Status.Code` 104 ("no objects for the selection"); success is `Status.Code` 0. The fetcher must read the body status, not only the HTTP status.
+- **Metadata:** `metadata/cube` gives a title (`Content`), the time slices and an `Updated` timestamp; the CSV itself carries the unit but no title.
+- **Comparison with the committed snapshots:** permits office, 288 values over 16 Länder and 18 years, identical; completions office, all 16 Länder identical; CPI, 429 months identical; construction price office and commercial, 275 quarters each identical. The DBnomics copies are as current as GENESIS, so the gain of the switch is provenance, not fresher values.
+- **Limits:** no rate limit is documented. The login check states that requests running longer than 15 minutes are ended when more than 3 run in parallel. The fetcher runs one request at a time.
 
 ## 8. Proposed plan (not started)
 

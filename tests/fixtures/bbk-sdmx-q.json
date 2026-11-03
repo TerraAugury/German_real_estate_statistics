@@ -1,0 +1,314 @@
+{
+ "meta": {
+  "schema": "https://raw.githubusercontent.com/sdmx-twg/sdmx-json/develop/data-message/tools/schemas/1.0/sdmx-json-data-schema.json",
+  "id": "BBDZ1_Q_B10_N_G000_P0100_A",
+  "test": false,
+  "prepared": "2026-09-04T08:22:42.000Z",
+  "contentLanguages": [
+   "de"
+  ],
+  "sender": {
+   "id": "BBK",
+   "names": {
+    "de": "Deutsche Bundesbank"
+   },
+   "contact": [
+    {
+     "name": "Deutsche Bundesbank",
+     "emails": [
+      "presse-information@bundesbank.de"
+     ]
+    }
+   ]
+  }
+ },
+ "data": {
+  "structure": {
+   "dimensions": {
+    "dataSet": [
+     {
+      "id": "DATAFLOW",
+      "name": "DATAFLOW",
+      "keyPosition": 0,
+      "default": "BBDZ1",
+      "values": [
+       {
+        "id": "BBDZ1",
+        "name": "BBDZ1"
+       }
+      ]
+     }
+    ],
+    "series": [
+     {
+      "id": "BBK_STD_FREQ",
+      "name": "BBK_STD_FREQ",
+      "keyPosition": 1,
+      "default": "Q",
+      "values": [
+       {
+        "id": "Q",
+        "name": "Q"
+       }
+      ]
+     },
+     {
+      "id": "BBK_DOSC_GROUP",
+      "name": "BBK_DOSC_GROUP",
+      "keyPosition": 2,
+      "default": "B10",
+      "values": [
+       {
+        "id": "B10",
+        "name": "B10"
+       }
+      ]
+     },
+     {
+      "id": "BBK_STD_ADJUSTMENT",
+      "name": "BBK_STD_ADJUSTMENT",
+      "keyPosition": 3,
+      "default": "N",
+      "values": [
+       {
+        "id": "N",
+        "name": "N"
+       }
+      ]
+     },
+     {
+      "id": "BBK_DOSC_SLIDE",
+      "name": "BBK_DOSC_SLIDE",
+      "keyPosition": 4,
+      "default": "G000",
+      "values": [
+       {
+        "id": "G000",
+        "name": "G000"
+       }
+      ]
+     },
+     {
+      "id": "BBK_DOSC_NAME",
+      "name": "BBK_DOSC_NAME",
+      "keyPosition": 5,
+      "default": "P0100",
+      "values": [
+       {
+        "id": "P0100",
+        "name": "P0100"
+       }
+      ]
+     },
+     {
+      "id": "BBK_DO_SUFFIX",
+      "name": "BBK_DO_SUFFIX",
+      "keyPosition": 6,
+      "default": "A",
+      "values": [
+       {
+        "id": "A",
+        "name": "A"
+       }
+      ]
+     }
+    ],
+    "observation": [
+     {
+      "id": "TIME_PERIOD",
+      "name": "TIME_PERIOD",
+      "keyPosition": 7,
+      "values": [
+       {
+        "id": "2013-Q1",
+        "name": "2013-Q1"
+       },
+       {
+        "id": "2013-Q2",
+        "name": "2013-Q2"
+       },
+       {
+        "id": "2013-Q3",
+        "name": "2013-Q3"
+       },
+       {
+        "id": "2013-Q4",
+        "name": "2013-Q4"
+       },
+       {
+        "id": "2025-Q4",
+        "name": "2025-Q4"
+       },
+       {
+        "id": "2026-Q1",
+        "name": "2026-Q1"
+       },
+       {
+        "id": "2026-Q2",
+        "name": "2026-Q2"
+       }
+      ]
+     }
+    ]
+   },
+   "attributes": {
+    "series": [
+     {
+      "id": "TIME_FORMAT",
+      "name": "TIME_FORMAT",
+      "relationship": {
+       "none": {}
+      },
+      "values": [
+       null,
+       {
+        "name": "P3M"
+       }
+      ]
+     },
+     {
+      "id": "BBK_DECIMALS",
+      "name": "BBK_DECIMALS",
+      "relationship": {
+       "none": {}
+      },
+      "values": [
+       null,
+       {
+        "name": "1"
+       }
+      ]
+     },
+     {
+      "id": "BBK_ID",
+      "name": "BBK_ID",
+      "relationship": {
+       "none": {}
+      },
+      "values": [
+       null,
+       {
+        "name": "BBDZ1.Q.B10.N.G000.P0100.A"
+       }
+      ]
+     },
+     {
+      "id": "BBK_UNIT",
+      "name": "BBK_UNIT",
+      "relationship": {
+       "none": {}
+      },
+      "values": [
+       null,
+       {
+        "name": "2013=100"
+       }
+      ]
+     },
+     {
+      "id": "BBK_UNIT_MULT",
+      "name": "BBK_UNIT_MULT",
+      "relationship": {
+       "none": {}
+      },
+      "values": [
+       null,
+       {
+        "name": "0"
+       }
+      ]
+     },
+     {
+      "id": "BBK_TITLE_ENG",
+      "name": "BBK_TITLE_ENG",
+      "relationship": {
+       "none": {}
+      },
+      "values": [
+       null,
+       {
+        "name": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / Commercial property price index / total / Germany / unadjusted figures"
+       }
+      ]
+     },
+     {
+      "id": "BBK_COMM_SRC_ENG",
+      "name": "BBK_COMM_SRC_ENG",
+      "relationship": {
+       "none": {}
+      },
+      "values": [
+       null,
+       {
+        "name": "vdpResearch GmbH and Bundesbank calculations."
+       }
+      ]
+     },
+     {
+      "id": "WEB_CATEGORY",
+      "name": "WEB_CATEGORY",
+      "relationship": {
+       "none": {}
+      },
+      "values": [
+       null,
+       {
+        "name": "ISIG"
+       }
+      ]
+     }
+    ],
+    "observation": []
+   }
+  },
+  "dataSets": [
+   {
+    "action": "Replace",
+    "validFrom": "2026-09-04T08:22:42.528Z",
+    "series": {
+     "0:0:0:0:0:0": {
+      "attributes": [
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1
+      ],
+      "observations": {
+       "0": [
+        "98.5"
+       ],
+       "1": [
+        "99.8"
+       ],
+       "2": [
+        "100.7"
+       ],
+       "3": [
+        "101.0"
+       ],
+       "4": [
+        "169.3"
+       ],
+       "5": [
+        "169.3"
+       ],
+       "6": [
+        "168.6"
+       ]
+      }
+     }
+    },
+    "links": [
+     {
+      "rel": "structure",
+      "urn": "urn:sdmx:org.sdmx.infomodel.datastructure.DataStructure=BBK:BBK_DOSC(1.0)"
+     }
+    ]
+   }
+  ]
+ }
+}

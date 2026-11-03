@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { loadManifest, dbnomicsId, dbnomicsUrl, isDerived, type Localized, type ManifestEntry } from './manifest';
+import { loadManifest, seriesId, seriesUrl, isDerived, SERVICE, type Localized, type ManifestEntry } from './manifest';
 import { validateSnapshot, isStale } from './pipeline';
 import { landName } from './kpis';
 import { langs } from './routes';
@@ -9,7 +9,9 @@ export type PartialTotal = { period: string; laender: string[] }[];
 
 export interface Series {
   key: string; title: Localized; unit: Localized;
-  publisher: string; licence: { name: string; url: string }; dbnomicsId: string; dbnomicsUrl: string;
+  publisher: string; licence: { name: string; url: string }; seriesId: string; seriesUrl: string;
+  /** Where the data was fetched from: "DBnomics" or the publisher; the web service for a direct source; the source's own title and unit when the snapshot kept them. */
+  fetchedFrom: string; service?: string; original?: { title: string; unit: string };
   obs: { period: string; value: number }[]; change: 'pct' | 'diff'; freq: 'M' | 'Q' | 'A';
   lastPeriod: string; derived: boolean; provisional: boolean;
   stale: boolean; fetchFailed: string | null; retrievedAt: string; revisedAt: string | null;
@@ -52,9 +54,12 @@ export function loadSeries(key: string, now = new Date(), land?: string): Series
   const laender = land ? [land] : m.laender;
   const { obs, partial } = sumLaender(laender.map((l) => ({ land: l, ...snap.parts[m.ids[0].replace('{land}', l)] })), m.scale);
   const lastPeriod = obs.at(-1)!.period;
+  const meta = snap.parts[m.ids[0].replace('{land}', laender[0])]?.meta;
   const title = land ? landTitle(m.title, land) : m.title;
   const s: Series = { key, title, unit: m.unit, publisher: m.publisher, licence: m.licence,
-    dbnomicsId: dbnomicsId(m, land), dbnomicsUrl: dbnomicsUrl(m, land), obs, change: m.change, freq: FREQ[m.frequency as keyof typeof FREQ],
+    seriesId: seriesId(m, land), seriesUrl: seriesUrl(m, land), obs, change: m.change, freq: FREQ[m.frequency as keyof typeof FREQ],
+    fetchedFrom: m.source === 'dbnomics' ? 'DBnomics' : m.publisher, service: SERVICE[m.source],
+    original: meta ? { title: meta.title, unit: meta.unit_mult ? `${meta.unit} (×10^${meta.unit_mult})` : meta.unit } : undefined,
     lastPeriod, derived: (isDerived(m) && !land) || m.scale !== 1, provisional: m.provisional,
     stale: isStale(lastPeriod, m.frequency, now), fetchFailed: snap.fetch_failed ?? null,
     retrievedAt: snap.retrieved_at, revisedAt: snap.revised_at ?? null,
