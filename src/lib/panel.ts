@@ -99,15 +99,15 @@ const headlineNumber = (e: InsightEntry, lang: Lang) => {
   return (n: number) => fmt(lang, n, { minimumFractionDigits: digits, maximumFractionDigits: digits });
 };
 
-/** The word that colours a verdict tag better or worse; empty where the Insight reads in line or has no better side. */
-const toneSpan = (e: InsightEntry, r: Shown, lang: Lang) => {
+/** How an Insight's tone shows: a class that tints its whole plate and a visually hidden word for screen readers; both empty where it reads in line or has no better side. */
+const toneOf = (e: InsightEntry, r: Shown, lang: Lang) => {
   const v = tone(r.verdict, e.better);
-  return v === 'neutral' ? '' : ` <span class="tone ${v}">${t(lang, `insight.tone.${v}`)}</span>`;
+  return v === 'neutral' ? { plate: '', word: '' } : { plate: `tone-${v}`, word: ` <span class="vh">(${t(lang, `insight.tone.${v}`)})</span>` };
 };
 
-/** An Insight's headline number with its unit, verdict tag and tone: the same spans lead its section, tile its index entry and open Home. */
+/** An Insight's headline number with its unit and verdict tag, then the hidden tone word: the same spans lead its section, tile its index entry and open Home. */
 const headlineSpans = (e: InsightEntry, r: Shown, lang: Lang) =>
-  `<span class="num">${headlineNumber(e, lang)(r.latest.value)}</span> <span class="unit">${t(lang, `insight.unit.${e.headline}`)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span>${toneSpan(e, r, lang)}`;
+  `<span class="num">${headlineNumber(e, lang)(r.latest.value)}</span> <span class="unit">${t(lang, `insight.unit.${e.headline}`)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span>${toneOf(e, r, lang).word}`;
 
 /** The line above the Insights index that says what "better" and "worse" mean, linking to the Methodology section that lists each direction. */
 export const renderToneLegend = (lang: Lang) =>
@@ -116,10 +116,11 @@ export const renderToneLegend = (lang: Lang) =>
 /** The grid that opens the Insights page: per Insight its title, headline number with unit and verdict tag, or why it is not shown. */
 export function renderInsightIndex(models: { entry: InsightEntry; result: InsightResult }[], lang: Lang): string {
   const items = models.map(({ entry: e, result: r }) => {
+    const plate = r.shown ? toneOf(e, r, lang).plate : '';
     const body = r.shown
       ? `<span class="headline">${headlineSpans(e, r, lang)}</span>`
       : `<span class="na">${t(lang, 'insight.not_shown', { n: String(r.n), min: String(MIN_OBS) })}</span>`;
-    return `<li><a href="#${esc(e.key)}"><span class="title">${esc(e.title[lang])}</span>${body}</a></li>`;
+    return `<li><a href="#${esc(e.key)}"${plate ? ` class="${plate}"` : ''}><span class="title">${esc(e.title[lang])}</span>${body}</a></li>`;
   });
   return `<ul class="insight-grid">${items.join('')}</ul>`;
 }
@@ -135,7 +136,7 @@ function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, no
   const chart = insightChart(r, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(r.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
   const reference = series[e.series.findIndex((x) => x.role === 'reference')];
   return {
-    reading, notes, chart, reference,
+    reading, notes, chart, reference, plate: toneOf(e, r, lang).plate,
     headlineHtml: `<p class="headline">${headlineSpans(e, r, lang)}</p>`,
     legend: r.context ? `<p class="note">${t(lang, 'insight.context.legend', { measure: esc(e.measure[lang]), title: esc(reference.title[lang]) })}</p>` : '',
   };
@@ -144,8 +145,8 @@ function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, no
 /** The Home hero: the lead Insight's headline, reading, chart and citation, with a link to the full Insight. Empty when it is not shown. */
 export function renderHero(e: InsightEntry, r: InsightResult, series: Series[], lang: Lang, now = new Date()): string {
   if (!r.shown) return '';
-  const { headlineHtml, reading, chart, legend, notes } = insightLead(e, r, series, lang, now);
-  return `<section class="hero"><h2>${esc(e.title[lang])}</h2>${headlineHtml}<p>${reading}</p>`
+  const { headlineHtml, reading, chart, legend, notes, plate } = insightLead(e, r, series, lang, now);
+  return `<section class="hero${plate && ` ${plate}`}"><h2>${esc(e.title[lang])}</h2>${headlineHtml}<p>${reading}</p>`
     + `<figure>${chart}${legend}${noteHtml(notes)}<figcaption>${sourceBlock(series, lang, true)}<br><a href="${href('insights', lang)}#${esc(e.key)}">${t(lang, 'home.hero.more')}</a></figcaption></figure></section>`;
 }
 
@@ -153,7 +154,7 @@ export function renderHero(e: InsightEntry, r: InsightResult, series: Series[], 
 export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[], lang: Lang, now = new Date()): string {
   const head = `<h2>${esc(e.title[lang])}</h2>`;
   if (!r.shown) return `<section class="insight" id="${esc(e.key)}">${head}<p class="na">${t(lang, 'insight.not_shown', { n: String(r.n), min: String(MIN_OBS) })}</p></section>`;
-  const { headlineHtml, reading, chart, legend, notes, reference } = insightLead(e, r, series, lang, now);
+  const { headlineHtml, reading, chart, legend, notes, reference, plate } = insightLead(e, r, series, lang, now);
   const kpis = series.filter((_, i) => e.series[i].role === 'kpi');
   const refTitle = e.shift ? t(lang, 'insight.shifted', { title: reference.title[lang], shift: t(lang, `insight.shift.${e.shift}`) }) : reference.title[lang];
   // The headline's lines are the first KPI series'; every other KPI series gets its own small chart over the same years.
@@ -166,7 +167,7 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
       + multiplesChart(all[i], { unit, title: t(lang, 'insight.multiples.label', { kpi: kpi.title[lang], reference: refTitle }) }, domain, lang)
       + `<p class="note">${t(lang, 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p></div>`;
   }).join('');
-  return `<section class="insight" id="${esc(e.key)}">${head}`
+  return `<section class="insight${plate && ` ${plate}`}" id="${esc(e.key)}">${head}`
     + headlineHtml
     + `<p>${reading}</p>`
     + `<figure>${chart}${legend}${multiples}${noteHtml(notes)}<figcaption>${sourceBlock(series, lang, true)}<br><a href="${href('methodology', lang)}#${slug('insights', lang)}">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
