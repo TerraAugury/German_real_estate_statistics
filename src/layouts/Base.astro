@@ -20,6 +20,7 @@ const inKpis = KPIS.some((k) => k.page === page);
   <head>
     <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{documentTitle(lang, page, title)}</title>
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <!-- Colours come from src/lib/palette.ts, the same module the build-time charts read. -->
     <style is:inline set:html={rootCss()}></style>
     <style is:global>
@@ -45,7 +46,21 @@ const inKpis = KPIS.some((k) => k.page === page);
       nav.main details > div { position: absolute; z-index: 10; top: 100%; left: -1rem; min-width: 18rem; max-width: calc(100vw - 2rem); background: var(--plate); border: 1px solid var(--rule); border-radius: 6px; padding: .5rem 0; box-shadow: 0 6px 20px var(--shadow); }
       nav.main details > div a { display: block; padding: .5rem 1rem; color: var(--ink); text-decoration: none; font-size: 15px; }
       nav.main details > div a:hover, nav.main details > div a[aria-current] { background: var(--page); }
-      @media (max-width: 560px) { nav.main details { position: static; } nav.main details > div { left: 1rem; right: 1rem; min-width: 0; } }
+      /* Phone: one masthead row (name, language, Menu); with JavaScript the nav is a panel under it that opens from Menu and lists
+         its groups inline. Without JavaScript the nav stays visible and wraps. */
+      .menu-btn { display: none; min-height: 44px; padding: 0 .85rem; font: 500 15px var(--sans); color: var(--ink); background: var(--plate); border: 1px solid var(--field); border-radius: 4px; cursor: pointer; }
+      @media (max-width: 560px) {
+        header.site { position: relative; }
+        .masthead { flex-wrap: nowrap; align-items: center; gap: .5rem .75rem; padding-top: .5rem; padding-bottom: .5rem; }
+        .masthead .name { flex: 1 1 auto; min-width: 0; font-size: 15px; line-height: 1.25; }
+        .masthead .sw { font-size: 14px; }
+        html.js .menu-btn { display: inline-block; }
+        html.js nav.main { display: none; position: absolute; z-index: 20; left: 0; right: 0; top: 100%; flex-direction: column; background: var(--plate); border-bottom: 1px solid var(--rule); box-shadow: 0 6px 20px var(--shadow); padding-top: .25rem; padding-bottom: .5rem; }
+        html.js nav.main.open { display: flex; }
+        html.js nav.main > a, html.js nav.main summary { padding: .75rem 0; border-bottom: 1px solid var(--hair); }
+        html.js nav.main details > div { position: static; min-width: 0; max-width: none; border: 0; border-radius: 0; box-shadow: none; padding: 0 0 0 1rem; }
+        nav.main details { position: static; } nav.main details > div { left: 1rem; right: 1rem; min-width: 0; }
+      }
 
       main { padding-top: 1.5rem; padding-bottom: 4rem; }
       h1 { margin: 0 0 .5rem; font-size: var(--step-3); line-height: 1.15; font-weight: 600; letter-spacing: -.015em; }
@@ -151,8 +166,9 @@ const inKpis = KPIS.some((k) => k.page === page);
       <div class="wrap masthead">
         <a class="name" href={href('home', lang)}>{t(lang, 'site.title')}</a>
         <a class="sw" href={href(page, otherLang(lang))} hreflang={otherLang(lang)}>{t(lang, 'lang.switch')}</a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">{t(lang, 'nav.menu')}</button>
       </div>
-      <nav class="wrap main">
+      <nav class="wrap main" id="site-nav">
         <a href={href('home', lang)} aria-current={current('home')}>{t(lang, 'nav.home')}</a>
         <details class={inSegments ? 'on' : undefined}><summary>{t(lang, 'nav.segments')}</summary><div>{SEGMENT_PAGES.map((g) => <a href={href(`segment-${g}`, lang)} aria-current={current(`segment-${g}`)}>{t(lang, `segment.${g}`)}</a>)}</div></details>
         <details class={inKpis ? 'on' : undefined}><summary>{t(lang, 'nav.kpis')}</summary><div>{KPIS.map((k) => <a href={href(k.page, lang)} aria-current={current(k.page)}>{t(lang, k.title)}</a>)}</div></details>
@@ -163,17 +179,25 @@ const inKpis = KPIS.some((k) => k.page === page);
       </nav>
     </header>
     <!-- The language switch keeps the selector parameters (segment, geo, freq) unchanged; KPI pages update it on change. -->
-    <!-- One dropdown open at a time: a click or focus elsewhere closes it, Escape closes it and returns to its summary. -->
+    <!-- One dropdown open at a time: a click or focus elsewhere closes it, Escape closes it and returns to its summary. On a phone the same goes for the Menu panel. -->
     <script is:inline>
       document.querySelector('a.sw').search = location.search;
       {
         const menus = [...document.querySelectorAll('nav.main details')];
-        const closeOutside = (e) => { for (const d of menus) if (!d.contains(e.target)) d.open = false; };
+        const nav = document.querySelector('nav.main'), btn = document.querySelector('.menu-btn');
+        const setMenu = (on) => { nav.classList.toggle('open', on); btn.setAttribute('aria-expanded', String(on)); };
+        btn.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+        const closeOutside = (e) => {
+          for (const d of menus) if (!d.contains(e.target)) d.open = false;
+          if (!document.querySelector('header.site').contains(e.target)) setMenu(false);
+        };
         document.addEventListener('click', closeOutside);
         document.addEventListener('focusin', closeOutside);
         document.addEventListener('keydown', (e) => {
+          if (e.key !== 'Escape') return;
           const d = menus.find((m) => m.open);
-          if (e.key === 'Escape' && d) { d.open = false; d.querySelector('summary').focus(); }
+          if (d) { d.open = false; d.querySelector('summary').focus(); }
+          else if (nav.classList.contains('open')) { setMenu(false); btn.focus(); }
         });
       }
     </script>
