@@ -133,6 +133,26 @@ describe('Insight A on real data (Provisional: preview only)', () => {
   });
 });
 
+describe('Spread Insights F, E, D and I (Provisional: preview only)', () => {
+  // Shared periods from the catalogue (insights spec section 2); growth Insights lose the first year of the levels.
+  it.each([
+    ['f', 'initial-yield-combined-7', 'loan-rate-nfc', '2011', '2025', 15],
+    ['e', 'office-vacancy-7', 'office-vacancy-127', '1995', '2025', 31],
+    ['d', 'rent-index-de-office-a', 'construction-price-office', '2005', '2025', 21],
+    ['i', 'rent-index-de-office-a', 'gdp-real', '2005', '2025', 21],
+  ])('%s: %s against %s over %s to %s', (key, kpi, reference, from, to, n) => {
+    expect(insightsPage().map((i) => i.entry.key)).not.toContain(key);
+    process.env.INCLUDE_PROVISIONAL = '1';
+    const x = insightsPage().find((i) => i.entry.key === key)!;
+    expect(x.entry.series).toEqual([{ key: kpi, role: 'kpi' }, { key: reference, role: 'reference' }]);
+    expect(x.entry.headline).toBe('spread');
+    expect(x.result).toMatchObject({ shown: true, from, to, n });
+    const h = renderInsight(x.entry, x.result, x.series, 'en');
+    expect(h).toContain(`id="${key}"`);
+    expect(h).toMatch(/The latest spread of [^.]+ is -?[\d.]+ points, (higher than|lower than|in line with) the/);
+  });
+});
+
 describe('Insight rendering', () => {
   const j = entry({ key: 'j', title: { en: 'Construction costs vs inflation', de: 'Baupreise und Inflation' }, measure: { en: 'spread of construction price growth over CPI inflation', de: 'Abstand des Baupreisanstiegs zur Inflationsrate' } });
   const series = [getSeries('construction-price-office'), getSeries('cpi')];

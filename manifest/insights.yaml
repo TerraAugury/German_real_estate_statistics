@@ -14,6 +14,37 @@
     - { key: initial-yield-combined-127, role: kpi }
     - { key: bund-yield-10y, role: reference }
 
+- key: f
+  title: { en: "Initial yield spread over the corporate loan rate", de: "Renditeabstand der Anfangsrendite zum Unternehmenskreditzins" }
+  measure: { en: "spread of the 7-city initial yield over the corporate loan rate", de: "Abstand der Anfangsrendite in den 7 Großstädten zum Unternehmenskreditzins" }
+  headline: spread
+  template: spread
+  series:
+    - { key: initial-yield-combined-7, role: kpi }
+    - { key: loan-rate-nfc, role: reference }
+
+- key: d
+  title: { en: "Office rents vs construction costs", de: "Büromieten und Baupreise" }
+  measure: { en: "spread of office rent growth over construction price growth", de: "Abstand des Mietwachstums bei Büros zum Baupreisanstieg" }
+  headline: spread
+  growth: true
+  base: 2015
+  template: spread
+  series:
+    - { key: rent-index-de-office-a, role: kpi }
+    - { key: construction-price-office, role: reference }
+
+- key: i
+  title: { en: "Office rents vs GDP", de: "Büromieten und Wirtschaftsleistung" }
+  measure: { en: "spread of office rent growth over real GDP growth", de: "Abstand des Mietwachstums bei Büros zum Wachstum des realen BIP" }
+  headline: spread
+  growth: true
+  base: 2015
+  template: spread
+  series:
+    - { key: rent-index-de-office-a, role: kpi }
+    - { key: gdp-real, role: reference }
+
 - key: c
   title: { en: "Office completions vs permits two years earlier", de: "Büro-Fertigstellungen und Baugenehmigungen zwei Jahre zuvor" }
   measure: { en: "ratio of completions to permits two years earlier", de: "Anteil der Fertigstellungen an den Baugenehmigungen zwei Jahre zuvor" }
@@ -35,3 +66,12 @@
   series:
     - { key: construction-price-office, role: kpi }
     - { key: cpi, role: reference }
+
+- key: e
+  title: { en: "Office vacancy: 7 major cities vs 127 towns", de: "Büroleerstand: A-Städte und 127 Städte" }
+  measure: { en: "spread of office vacancy in the 7 major cities over the 127 towns", de: "Abstand der Büroleerstandsquote in den 7 Großstädten zu den 127 Städten" }
+  headline: spread
+  template: spread
+  series:
+    - { key: office-vacancy-7, role: kpi }
+    - { key: office-vacancy-127, role: reference }
