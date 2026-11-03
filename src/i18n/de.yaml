@@ -3,7 +3,7 @@ nav.home: Startseite
 nav.menu: Menü
 nav.logistics: "Logistik: nicht verfügbar, siehe Verfügbarkeit"
 lang.switch: English
-home.purpose: Offene Statistiken zum deutschen Gewerbeimmobilienmarkt; jede Grafik nennt Quelle und Lizenz.
+home.purpose: Offene Statistiken zum deutschen Gewerbeimmobilienmarkt.
 kpi.construction.title: Bautätigkeit (Genehmigungen, Fertigstellungen)
 source.cite: "Quelle: {publisher} / Lizenz: {licence} / Daten bis {period}"
 source.cite.credit: "Quelle: {original}, Veröffentlichung: {publisher} / Lizenz: {licence} / Daten bis {period}"
