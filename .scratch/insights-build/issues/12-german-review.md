@@ -4,10 +4,12 @@
 
 **Blocked by:** 11
 
-**Status:** ready-for-human
+**Status:** done
 
 Spec: `.scratch/insights/spec.md`, Section 8 and Section 10 (German wording).
 
-- [ ] List the unreviewed items with `npx tsx scripts/review.ts`: the `insight.*` strings, the ten German titles and the Methodology prose
-- [ ] Stamp them with `npx tsx scripts/review.ts "<reviewer>" <items>`; bulk stamping is refused
-- [ ] A production build passes the German review check
+- [x] List the unreviewed items with `npx tsx scripts/review.ts`: the `insight.*` strings, the ten German titles and the Methodology prose
+- [x] Stamp them with `npx tsx scripts/review.ts "<reviewer>" <items>`; bulk stamping is refused
+- [x] A production build passes the German review check
+
+Closed 2026-11-03: reviewed by terra augury in commit 6177f20 (123 items, including `insight.tone.*`, `insights.tone.*` and the Methodology prose). `npx tsx scripts/review.ts` reports `unreviewed: none` and `scripts/check-review.ts` passes.

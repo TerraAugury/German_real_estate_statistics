@@ -4,12 +4,12 @@
 
 **Blocked by:** 01, 02, 04
 
-**Status:** ready-for-human
+**Status:** done
 
-- [ ] The list of new and changed keys, and the changed Methodology prose, is attached under Comments
-- [ ] A named reviewer has checked each against its English source, including the better and worse words and the **Tone** term
-- [ ] `src/i18n/de.reviewed.lock` is updated through the review script
-- [ ] `scripts/check-review.ts` passes
+- [x] The list of new and changed keys, and the changed Methodology prose, is attached under Comments
+- [x] A named reviewer has checked each against its English source, including the better and worse words and the **Tone** term
+- [x] `src/i18n/de.reviewed.lock` is updated through the review script
+- [x] `scripts/check-review.ts` passes
 
 ## Comments
 
@@ -34,3 +34,5 @@ Notes for the reviewer:
 - Both words describe how a value reads from the point of view of an investor in office property. They must not read as a cause, forecast or advice (GLOSSARY.md, Tone). The table marks two Insights as a judgement ("Redaktionelles Urteil").
 - `GLOSSARY.md` gives Tone the German draft "Bewertung"; confirm or replace it.
 - Record the review with `npx tsx scripts/review.ts "<your name>" insight.tone.better insight.tone.worse insights.tone.legend insights.tone.more`, then review the Methodology page the same way the earlier ones were. The production build still fails the review gate on many older unreviewed items (83 at the time of writing: the 4 keys above, the Methodology page and 78 from earlier efforts), so this ticket alone does not make a production build pass.
+
+Closed 2026-11-03: reviewed by terra augury in commit 6177f20 (123 items, including `insight.tone.*`, `insights.tone.*` and the Methodology prose). `npx tsx scripts/review.ts` reports `unreviewed: none` and `scripts/check-review.ts` passes.
