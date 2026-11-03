@@ -4,7 +4,7 @@
 
 **Blocked by:** `.scratch/licence-checks/issues/01-licence-checks.md` (pending)
 
-**Status:** ready-for-human
+**Status:** done
 
 Spec: `.scratch/direct-source-migration/spec.md`, Further Notes, story 24.
 
@@ -15,3 +15,6 @@ Spec: `.scratch/direct-source-migration/spec.md`, Further Notes, story 24.
 ## Comments
 
 Consolidated into `.scratch/licence-checks/issues/01-licence-checks.md`: the checks are done there. Resolve this ticket once that one is done.
+
+
+Resolved 2026-11-04: settled in `.scratch/licence-checks/issues/01-licence-checks.md`.

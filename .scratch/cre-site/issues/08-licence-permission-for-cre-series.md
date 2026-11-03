@@ -1,7 +1,7 @@
 # Written permission to redisplay the Bundesbank CRE series
 
 Label: wayfinder:task
-Status: open
+Status: resolved
 Blocked by: 07 (resolved), .scratch/licence-checks/issues/01-licence-checks.md (pending)
 
 ## Question
@@ -13,3 +13,6 @@ HITL: a human sends the requests and records the replies. Done when each answer 
 ## Comments
 
 Consolidated into `.scratch/licence-checks/issues/01-licence-checks.md`: the checks are done there. Resolve this ticket once that one is done.
+
+
+Resolved 2026-11-04: settled in `.scratch/licence-checks/issues/01-licence-checks.md`.

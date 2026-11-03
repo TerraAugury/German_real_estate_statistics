@@ -2,7 +2,7 @@
 
 Label: wayfinder:task
 Type: task (HITL)
-Status: open
+Status: resolved
 Blocked by: 12 (resolved), .scratch/licence-checks/issues/01-licence-checks.md (pending)
 
 ## Question
@@ -14,3 +14,6 @@ HITL: terms pages may block fetchers, so a human opens them in a browser. Done w
 ## Comments
 
 Consolidated into `.scratch/licence-checks/issues/01-licence-checks.md`: the checks are done there. Resolve this ticket once that one is done.
+
+
+Resolved 2026-11-04: settled in `.scratch/licence-checks/issues/01-licence-checks.md`.
