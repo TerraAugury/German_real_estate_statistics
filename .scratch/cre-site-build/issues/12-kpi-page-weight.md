@@ -35,3 +35,4 @@ Spec: `.scratch/cre-site/spec.md`, Sections 4 and 8. Follow-up from the 2026-11-
 - A bare `#link-…` with no `?segment=…` still opens the first view, as before. Links overview URLs always carry the query.
 - The budget test (`tests/page-weight.test.ts`) reads `dist/`: CI runs it after the preview build. `npm test` skips it when there is no `dist/`, but checks a stale `dist/` if one exists locally.
 - Panel ids and the `data-panel` and `data-links` attributes come from `src/pages/[lang]/[...slug].astro` (ticket 08). Keep them, because the Links overview links to them.
+- Superseded by ticket 18: the other views are now fetched fragments, and the budget is HTML size per page (300 KB).

@@ -11,12 +11,14 @@ import type { Points } from '../insight/insight';
 const cssVar = (name: keyof typeof PALETTE) => `var(--${name})`;
 const INK = cssVar('ink'), DATA = cssVar('data'), MUTED = cssVar('muted'), STRONG = cssVar('strong'), STRONG_TEXT = cssVar('strong-text'), BAR = cssVar('field'), GRID = cssVar('hair'), ABOVE = cssVar('above'), BELOW = cssVar('below');
 
+// Plot only needs a document to create detached elements, and building a JSDOM costs about as much as drawing the chart.
+const document = new JSDOM('').window.document;
+
 /**
  * Render a Plot twice, wide (720) and narrow (320) with its own tick layout; CSS shows the one that fits its box, so
  * axis text stays legible on a phone instead of shrinking with the SVG (ticket 16). Both carry the accessible label.
  */
 function render(build: (narrow: boolean) => Plot.PlotOptions, label: string): string {
-  const document = new JSDOM('').window.document;
   return [false, true].map((narrow) => {
     const svg = Plot.plot({
       document, width: narrow ? 320 : 720, marginLeft: narrow ? 36 : 50, ...build(narrow),
@@ -156,7 +158,7 @@ export function lagChart(lags: { lag: number; rho: number | null }[], strongest:
 export function sparkline(s: Series, lang: Lang): string {
   const points = s.obs.map((o) => ({ x: x(o.period), value: o.value }));
   const svg = Plot.plot({
-    document: new JSDOM('').window.document, width: 120, height: 36, margin: 4, x: { axis: null }, y: { axis: null },
+    document, width: 120, height: 36, margin: 4, x: { axis: null }, y: { axis: null },
     marks: [Plot.lineY(points, { x: 'x', y: 'value', stroke: DATA, strokeWidth: 1.75 }), Plot.dot(points.slice(-1), { x: 'x', y: 'value', r: 3, fill: DATA })],
   });
   svg.setAttribute('role', 'img');

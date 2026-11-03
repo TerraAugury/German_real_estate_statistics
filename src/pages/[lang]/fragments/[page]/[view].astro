@@ -1,0 +1,23 @@
+---
+// A KPI view that is not in the page at load: its section and the Link panels it shows that the page does not already
+// hold, fetched by the selector script the first time the view is picked (ticket 12 follow-up).
+import KpiView from '../../../../components/KpiView.astro';
+import KpiPanel from '../../../../components/KpiPanel.astro';
+import { langs, type Lang } from '../../../../lib/routes';
+import { KPIS } from '../../../../lib/kpis';
+import { kpiPage } from '../../../../lib/pages';
+
+export function getStaticPaths() {
+  return langs.flatMap((lang) => KPIS.flatMap((kpi) => {
+    const model = kpiPage(kpi);
+    return model.views.slice(1).map(({ view, links }, i) => ({
+      params: { lang, page: kpi.page, view: String(i + 1) },
+      props: { view, links, panels: model.panels.flatMap((p, order) => (links.includes(p.id) && !p.live ? [{ p, order }] : [])) },
+    }));
+  }));
+}
+const { lang } = Astro.params as { lang: Lang };
+const { view, links, panels } = Astro.props;
+---
+<KpiView view={view} links={links} lang={lang} />
+{panels.map(({ p, order }) => <KpiPanel panel={p} order={order} lang={lang} />)}
