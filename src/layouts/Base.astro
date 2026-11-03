@@ -18,7 +18,7 @@ const inKpis = KPIS.some((k) => k.page === page);
 <!doctype html>
 <html lang={lang}>
   <head>
-    <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="color-scheme" content="light dark" />
     <title>{documentTitle(lang, page, title)}</title>
     <script is:inline>document.documentElement.classList.add('js');</script>
     <!-- Colours come from src/lib/palette.ts, the same module the build-time charts read. -->
@@ -149,8 +149,8 @@ const inKpis = KPIS.some((k) => k.page === page);
       /* Links overview: a shown Link is shaded by its rank correlation (src/lib/heat.ts); ink on every shade is 4.5:1 or better. */
       td.heat { padding: 0; }
       td.heat.zero { background: var(--plate); }
-      td.heat.neg { background: color-mix(in srgb, var(--data) var(--share), var(--plate)); }
-      td.heat.pos { background: color-mix(in srgb, var(--strong) var(--share), var(--plate)); }
+      td.heat.neg { background: color-mix(in srgb, var(--heat-neg) var(--share), var(--plate)); }
+      td.heat.pos { background: color-mix(in srgb, var(--heat-pos) var(--share), var(--plate)); }
       td.heat a { display: block; padding: .65rem .75rem; color: var(--ink); }
       td.heat .rho { display: block; font: 600 17px/1.25 var(--cond); font-variant-numeric: tabular-nums; white-space: nowrap; }
       td.heat .n { display: block; font-size: 13px; white-space: nowrap; }
@@ -161,7 +161,7 @@ const inKpis = KPIS.some((k) => k.page === page);
       @media (max-width: 560px) { table.matrix tbody th { min-width: 6.5rem; max-width: 7.5rem; font-size: 14px; } }
       .legend { display: flex; align-items: center; gap: .5rem; margin: 1rem 0 .25rem; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
       .legend .ramp { flex: 0 1 16rem; height: .75rem; border: 1px solid var(--rule); border-radius: 2px;
-        background: linear-gradient(90deg, color-mix(in srgb, var(--data) var(--heat-max), var(--plate)), var(--plate), color-mix(in srgb, var(--strong) var(--heat-max), var(--plate))); }
+        background: linear-gradient(90deg, color-mix(in srgb, var(--heat-neg) var(--heat-max), var(--plate)), var(--plate), color-mix(in srgb, var(--heat-pos) var(--heat-max), var(--plate))); }
       td:empty { background: none; border-color: transparent; } /* Links overview: no such pair */
       p.na { padding: .5rem .75rem; border-radius: 4px; }
 

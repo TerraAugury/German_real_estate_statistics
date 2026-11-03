@@ -46,8 +46,8 @@ describe('Shading of the gap', () => {
     const pts = (...v: number[]) => v.map((value, i) => ({ period: String(2000 + i), value }));
     const chart = (kpi: number[], reference: number[]) => multiplesChart({ kpi: pts(...kpi), reference: pts(...reference) }, { unit: 'u', title: 't' }, [0, 10], 'en');
     const cross = chart([1, 5, 1], [3, 3, 3]);
-    expect(cross).toContain('#4e79a7');
-    expect(cross).toContain('#c0392b');
+    expect(cross).toContain('var(--above)');
+    expect(cross).toContain('var(--below)');
   });
 });
 

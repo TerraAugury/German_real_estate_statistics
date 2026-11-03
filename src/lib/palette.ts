@@ -1,6 +1,6 @@
-// The one place colours are written. src/layouts/Base.astro turns it into CSS custom properties; src/lib/chart.ts reads the
-// same values for the SVG it renders at build time, where CSS variables would not reach Plot's own styles.
-export const PALETTE = {
+// The one place colours are written. src/layouts/Base.astro turns it into CSS custom properties for both colour schemes, and
+// src/lib/chart.ts names the same properties (`var(--data)`) in the SVG it renders at build time, so charts follow the scheme.
+const LIGHT = {
   page: '#f3f5f6', plate: '#ffffff', ink: '#17202a', muted: '#4a5562', rule: '#d3d9df', hair: '#e3e7eb',
   data: '#1f4e79', strong: '#b26a00', field: '#7b8794',
   /** Ochre for text: `strong` is 4.2:1 on the plate, this is 5.4:1. Lines and bars keep `strong`. */
@@ -8,14 +8,35 @@ export const PALETTE = {
   above: '#4e79a7', below: '#c0392b',
   /** Availability: an available cell and its border; a Not available cell's hatch. */
   yes: '#e3ecf5', 'yes-rule': '#b9cde1', na: '#e9ecef',
+  /** The two hues of a heat shade (src/lib/heat.ts): negative blue, positive ochre. */
+  'heat-neg': '#1f4e79', 'heat-pos': '#b26a00',
   shadow: 'rgb(23 32 42 / .12)',
 } as const;
 
-/** Diverging scale for signed values: negative blue, neutral, positive ochre. */
-export const DIVERGING = { neg: PALETTE.data, mid: PALETTE.plate, pos: PALETTE.strong } as const;
+/** Dark mode: the same tokens. Text is at least 4.5:1 on page, plate and tints; lines and control borders at least 3:1 on the plate (tests/palette.test.ts). */
+const DARK = {
+  page: '#0e141a', plate: '#171f27', ink: '#e8edf2', muted: '#a7b3bf', rule: '#33414d', hair: '#26313b',
+  data: '#7db4e8', strong: '#d99a3d', field: '#8996a3',
+  'strong-text': '#e3ae5c',
+  above: '#6a9fd0', below: '#e0705f',
+  yes: '#1c3045', 'yes-rule': '#30506f', na: '#202a33',
+  // Darker hues than the lines: a heat shade mixes them into the plate, and light ink must stay 4.5:1 on the result.
+  'heat-neg': '#3d7ab5', 'heat-pos': '#b8741a',
+  shadow: 'rgb(0 0 0 / .5)',
+} as const satisfies Record<keyof typeof LIGHT, string>;
 
-/** Deepest share of hue in a heat shade: ink text stays at 4.5:1 or better on it (tests/heat.test.ts). */
+export const SCHEMES = { light: LIGHT, dark: DARK } as const;
+/** The light scheme, which the page uses unless the system asks for dark. */
+export const PALETTE = LIGHT;
+
+/** Diverging scale for signed values in one scheme: negative blue, neutral, positive ochre. */
+export const diverging = (c: Record<keyof typeof LIGHT, string>) => ({ neg: c['heat-neg'], mid: c.plate, pos: c['heat-pos'] });
+export const DIVERGING = diverging(LIGHT);
+
+/** Deepest share of hue in a heat shade: ink text stays at 4.5:1 or better on it in both schemes (tests/heat.test.ts). */
 export const HEAT_MAX = 0.55;
 
-/** The `:root` rule that declares every palette token as `--name`, and the heat cap as `--heat-max`. */
-export const rootCss = () => `:root { ${Object.entries(PALETTE).map(([k, v]) => `--${k}: ${v}`).join('; ')}; --heat-max: ${HEAT_MAX * 100}%; }`;
+const declare = (c: Record<string, string>) => Object.entries(c).map(([k, v]) => `--${k}: ${v}`).join('; ');
+
+/** `:root` with the light tokens, the heat cap and `color-scheme`, then the dark tokens under `prefers-color-scheme: dark`. */
+export const rootCss = () => `:root { color-scheme: light dark; ${declare(LIGHT)}; --heat-max: ${HEAT_MAX * 100}%; }\n@media (prefers-color-scheme: dark) { :root { ${declare(DARK)}; } }`;
