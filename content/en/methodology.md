@@ -25,6 +25,21 @@ Each Link has three parts:
 7. Construction price index (Destatis), quarterly: office buildings for office views and for construction of office buildings, industrial and commercial buildings for all others.
 8. OECD business confidence (OECD), monthly: retail for retail views, construction for all others. These series are not seasonally adjusted and are percentage balances, so their changes are differences in points.
 
+## Insights
+
+An Insight puts several series on one axis over a stated period, with a fixed one-line reading. Like a Link it describes what the lines show: it does not show a cause and is not a forecast. Unlike a Link it carries no correlation and no lag.
+
+- **Frequency.** An Insight runs at the coarsest frequency of its series, which is annual. Monthly and quarterly series are averaged over each calendar year; a year with missing months or quarters is dropped, never partly averaged.
+- **Shared period.** The shared period is the years that every series covers, and the average and standard deviation use all of it. An Insight needs at least 10 annual observations; with fewer, the site says "Insight not shown" and gives the number it had. With fewer than 20, a note says the average rests on little data.
+- **Headline.** The large number is a spread (the KPI minus the reference series, in percentage points), a ratio (the KPI divided by the reference series; for two indices with different base years, after both are rebased to the same year), a spread of year-on-year percent changes, or the year-on-year percent change of one series. Measures based on changes lose the first year. Spreads and growth rates are shown with one decimal and ratios with two.
+- **Real figures.** A real rent is the rent index divided by the consumer price index, then compared year on year. Rents are a flow over the year, so they are deflated with the annual-average consumer price index; a price at a point in time, such as a property price, would be deflated with the December index.
+- **Vacancy and employment.** The Insight on office vacancy and office employment shows the year-on-year change of vacancy in percentage points and the year-on-year growth of national employment in finance, real estate and business services in percent, on one axis. Only the vacancy change gets a verdict. The employment series is national, because no source publishes it for a City class, and it is an approximation of office employment.
+- **Verdict.** The tag compares the latest value with the average of the whole shared period, the latest value included. It reads "in line with" when the latest value is within half a standard deviation (population standard deviation) of the average, otherwise "higher than" or "lower than". The grey band on the chart is the average plus or minus half a standard deviation. The verdict says where the latest value sits against the past; it does not imply that values return to the average, and it is neither a cause nor a forecast.
+- **Rebasing.** The small charts show both series as an index with the base year set to 100: 2015, or the first shared year when a series has no value for 2015. 2015 is a reference point only (the year of the ECB's asset purchases); the site does not claim that it caused anything. The shading between the two lines is blue where the KPI is above the reference series and red where it is below.
+- **Shift.** Completions are compared with the permits issued two years earlier, because a permit takes about two years to become a completion. The permits series is moved forward two years and labelled as such.
+
+Insight figures, including spreads, ratios, averages and rebased series, are our own calculation and are marked as such in the source lines.
+
 ## How to read these figures
 
 - Each series is fetched either directly from its publisher or through DBnomics, which aggregates official sources; the source line says which. The publishers are not responsible for this site.

@@ -2,6 +2,7 @@
 import { t } from '../lib/i18n';
 import { href, otherLang, type Lang, type PageKey } from '../lib/routes';
 import { KPIS, SEGMENT_PAGES } from '../lib/kpis';
+import { rootCss } from '../lib/palette';
 // Self-hosted through the build: no request to a third-party host (spec section 7).
 import '@fontsource/ibm-plex-sans/400.css';
 import '@fontsource/ibm-plex-sans/500.css';
@@ -19,11 +20,12 @@ const inKpis = KPIS.some((k) => k.page === page);
   <head>
     <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} – {t(lang, 'site.title')}</title>
+    <!-- Colours come from src/lib/palette.ts, the same module the build-time charts read. -->
+    <style is:inline set:html={rootCss()}></style>
     <style is:global>
-      /* Ticket 16. Chart colours repeat in src/lib/chart.ts, which renders SVG at build time. */
       :root {
-        --page: #f3f5f6; --plate: #fff; --ink: #17202a; --muted: #4a5562; --rule: #d3d9df; --hair: #e3e7eb;
-        --data: #1f4e79; --strong: #b26a00; --field: #7b8794;
+        /* One heading scale: page title, section, plate, sub-heading; step-4 is the large headline number. */
+        --step-4: 2.5rem; --step-3: 2.25rem; --step-2: 1.6rem; --step-1: 1.3rem; --step-0: 1rem;
         --sans: 'IBM Plex Sans', system-ui, sans-serif; --cond: 'IBM Plex Sans Condensed', var(--sans); --mono: 'IBM Plex Mono', ui-monospace, monospace;
       }
       * { box-sizing: border-box; }
@@ -31,7 +33,7 @@ const inKpis = KPIS.some((k) => k.page === page);
       a { color: var(--data); text-underline-offset: 3px; text-decoration-thickness: 1px; } a:hover { color: var(--ink); }
       :focus-visible { outline: 3px solid var(--data); outline-offset: 2px; }
       .wrap { max-width: 62.5rem; margin: 0 auto; padding: 0 1.5rem; }
-      @media (max-width: 560px) { .wrap { padding: 0 1rem; } body { font-size: 16px; } }
+      @media (max-width: 560px) { .wrap { padding: 0 1rem; } body { font-size: 16px; } :root { --step-3: 1.85rem; --step-2: 1.35rem; --step-1: 1.2rem; } }
 
       header.site { background: var(--plate); border-bottom: 1px solid var(--rule); }
       .masthead { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-top: 1.25rem; }
@@ -40,23 +42,22 @@ const inKpis = KPIS.some((k) => k.page === page);
       nav.main > a, nav.main summary { color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px; padding: .85rem 0; cursor: pointer; display: block; }
       nav.main > a[aria-current], nav.main .on > summary { box-shadow: inset 0 -2px 0 var(--data); }
       nav.main details { position: relative; }
-      nav.main details > div { position: absolute; z-index: 10; top: 100%; left: -1rem; min-width: 18rem; max-width: calc(100vw - 2rem); background: var(--plate); border: 1px solid var(--rule); border-radius: 6px; padding: .5rem 0; box-shadow: 0 6px 20px rgb(23 32 42 / .12); }
+      nav.main details > div { position: absolute; z-index: 10; top: 100%; left: -1rem; min-width: 18rem; max-width: calc(100vw - 2rem); background: var(--plate); border: 1px solid var(--rule); border-radius: 6px; padding: .5rem 0; box-shadow: 0 6px 20px var(--shadow); }
       nav.main details > div a { display: block; padding: .5rem 1rem; color: var(--ink); text-decoration: none; font-size: 15px; }
       nav.main details > div a:hover, nav.main details > div a[aria-current] { background: var(--page); }
       @media (max-width: 560px) { nav.main details { position: static; } nav.main details > div { left: 1rem; right: 1rem; min-width: 0; } }
 
       main { padding-top: 1.5rem; padding-bottom: 4rem; }
-      h1 { margin: 0 0 .5rem; font-size: 2.25rem; line-height: 1.15; font-weight: 600; letter-spacing: -.015em; }
-      h2 { font-size: 1.6rem; line-height: 1.2; font-weight: 600; margin: 3rem 0 .75rem; }
-      h3 { font-size: 1.2rem; line-height: 1.3; font-weight: 600; margin: 0 0 .25rem; }
+      h1 { margin: 0 0 .5rem; font-size: var(--step-3); line-height: 1.15; font-weight: 600; letter-spacing: -.015em; }
+      h2 { font-size: var(--step-2); line-height: 1.2; font-weight: 600; margin: 3rem 0 .75rem; }
+      h3 { font-size: var(--step-1); line-height: 1.3; font-weight: 600; margin: 0 0 .25rem; }
       main > p, main > section > p { max-width: 40em; color: var(--muted); }
-      @media (max-width: 560px) { h1 { font-size: 1.85rem; } h2 { font-size: 1.35rem; } h3 { font-size: 1.1rem; } }
       nav.crumbs { font-size: 14px; color: var(--muted); margin-bottom: .75rem; }
 
       /* Plate: the chart, its notes and its source line, so a screenshot keeps them together. */
       figure, .card { background: var(--plate); border: 1px solid var(--rule); border-radius: 6px; padding: 1.5rem 2rem 1.25rem; margin: 0 0 2rem; }
       .card figure { border: 0; padding: 0; margin: 0; }
-      figure h2, figure h3 { margin: 0 0 1rem; font-size: 1.3rem; } .card h2 { margin: 0 0 .5rem; font-size: 1.3rem; } .card h3 { font-size: 1rem; font-weight: 500; color: var(--muted); }
+      figure h2, figure h3 { margin: 0 0 1rem; font-size: var(--step-1); } .card h2 { margin: 0 0 .5rem; font-size: var(--step-1); } .card h3 { font-size: var(--step-0); font-weight: 500; color: var(--muted); }
       @media (max-width: 560px) { figure, .card { padding: 1.25rem 1rem 1rem; } }
       figure svg { display: block; max-width: 100%; height: auto; overflow: visible; }
       /* Wide (720) or narrow (320) chart by the width of its own box, so 13 px axis text never shows below 11 px.
@@ -65,8 +66,15 @@ const inKpis = KPIS.some((k) => k.page === page);
       svg.narrow { display: none; width: 100%; max-width: 28rem; }
       @container (max-width: 639px) { svg.wide { display: none; } svg.narrow { display: block; } }
       figcaption { margin-top: 1.25rem; padding-top: .75rem; border-top: 1px solid var(--hair); font-size: 13px; line-height: 1.55; color: var(--muted); }
-      a[href*='db.nomics.world'] { font-family: var(--mono); font-size: 12px; overflow-wrap: anywhere; }
+      a[href*='db.nomics.world'], a[href*='genesis.destatis.de'], a[href*='api.statistiken.bundesbank.de'] { font-family: var(--mono); font-size: 12px; overflow-wrap: anywhere; }
       .note { font-size: 15px; margin: 1rem 0 0; max-width: 46em; }
+      nav.jump ul { padding-left: 1.2rem; margin: .25rem 0 0; } nav.jump h2 { font-size: var(--step-0); margin: 1.25rem 0 0; }
+      section.insight { margin-top: 2.5rem; scroll-margin-top: 1rem; }
+      .insight .headline { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem .75rem; margin: .25rem 0; }
+      .insight .num { font-size: var(--step-4); font-weight: 600; line-height: 1.1; color: var(--data); font-variant-numeric: tabular-nums; }
+      .insight .multiples { margin-top: 1.5rem; } .insight .multiples h3 { font-size: var(--step-0); margin: 0 0 .25rem; }
+      .insight .unit { color: var(--muted); }
+      .insight .tag { border: 1px solid var(--rule); border-radius: 999px; padding: .1rem .75rem; font-size: 15px; background: var(--plate); }
       .link-panel h4 { margin: 0 0 .25rem; font-size: 15px; font-weight: 500; }
       .link-panel > p { font-size: 15px; max-width: 46em; }
       .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; margin: 1.25rem 0 1.5rem; }
@@ -86,8 +94,8 @@ const inKpis = KPIS.some((k) => k.page === page);
       thead th { font: 500 14px/1.2 var(--cond); color: var(--muted); border-bottom: 2px solid var(--ink); }
       tbody th { font-weight: 500; padding-left: 0; }
       td { background: var(--plate); border: 1px solid var(--rule); border-radius: 4px; font-variant-numeric: tabular-nums; }
-      td.yes { background: #e3ecf5; border-color: #b9cde1; } td.yes a { font-weight: 500; }
-      td.na, .na { color: var(--muted); background: repeating-linear-gradient(135deg, #e9ecef 0 6px, var(--page) 6px 12px); border-color: transparent; }
+      td.yes { background: var(--yes); border-color: var(--yes-rule); } td.yes a { font-weight: 500; }
+      td.na, .na { color: var(--muted); background: repeating-linear-gradient(135deg, var(--na) 0 6px, var(--page) 6px 12px); border-color: transparent; }
       td.licence { background: var(--plate); }
       td:empty { background: none; border-color: transparent; } /* Links overview: no such pair */
       p.na { padding: .5rem .75rem; border-radius: 4px; }
@@ -108,6 +116,7 @@ const inKpis = KPIS.some((k) => k.page === page);
         <details class={inSegments ? 'on' : undefined}><summary>{t(lang, 'nav.segments')}</summary><div>{SEGMENT_PAGES.map((g) => <a href={href(`segment-${g}`, lang)} aria-current={current(`segment-${g}`)}>{t(lang, `segment.${g}`)}</a>)}</div></details>
         <details class={inKpis ? 'on' : undefined}><summary>{t(lang, 'nav.kpis')}</summary><div>{KPIS.map((k) => <a href={href(k.page, lang)} aria-current={current(k.page)}>{t(lang, k.title)}</a>)}</div></details>
         <a href={href('links', lang)} aria-current={current('links')}>{t(lang, 'nav.links')}</a>
+        <a href={href('insights', lang)} aria-current={current('insights')}>{t(lang, 'nav.insights')}</a>
         <a href={href('availability', lang)} aria-current={current('availability')}>{t(lang, 'nav.availability')}</a>
         <a href={href('methodology', lang)} aria-current={current('methodology')}>{t(lang, 'nav.methodology')}</a>
       </nav>

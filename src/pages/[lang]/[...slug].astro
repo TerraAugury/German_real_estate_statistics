@@ -8,9 +8,10 @@ import { notesFor } from '../../lib/notes';
 import { loadManifest } from '../../lib/manifest';
 import { readProse, unreviewedProse, DRAFT } from '../../lib/review';
 import { sourcesTable } from '../../lib/sources';
-import { compactChart, linkPanel, sourceLine } from '../../lib/panel';
+import { compactChart, linkPanel, renderInsight, sourceLine } from '../../lib/panel';
 import { KPIS, SEGMENTS, SEGMENT_PAGES, cell, headline, naText, viewHref, type GeoGroup, type Segment, type View } from '../../lib/kpis';
 import { availability, kpiPage, linksOverview } from '../../lib/pages';
+import { insightsPage } from '../../lib/insights';
 
 export function getStaticPaths() {
   return langs.flatMap((lang) => built.map((page) => ({ params: { lang, slug: slug(page, lang) || undefined }, props: { page } })));
@@ -24,6 +25,7 @@ const model = kpi ? kpiPage(kpi) : undefined;
 const views = model?.views ?? [];
 const panels = (model?.panels ?? []).map((p) => ({ ...p, html: linkPanel(getSeries(p.pair.kpi, p.pair.land), getSeries(p.pair.indicator), lang, t(lang, `geo.${p.geo}`), p.id) }));
 const overview = page === 'links' ? linksOverview() : undefined;
+const insights = page === 'insights' ? insightsPage() : [];
 const prose = import.meta.glob<{ Content: any }>('../../../content/*/*.md', { eager: true });
 const Methodology = prose[`../../../content/${lang}/methodology.md`]?.Content;
 const methodologyDraft = lang === 'de' && unreviewedProse(readProse()).includes('methodology');
@@ -119,6 +121,20 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
         ))}</tbody>
       </table></div>
     </>
+  ) : page === 'insights' ? (
+    <>
+      <h1>{title}</h1>
+      {insights.length === 0 ? <p>{t(lang, 'insights.empty')}</p> : (
+        <>
+          <p>{t(lang, 'insights.intro')}</p>
+          <nav class="jump" aria-label={t(lang, 'insights.jump')}>
+            <h2>{t(lang, 'insights.jump')}</h2>
+            <ul>{insights.map(({ entry }) => <li><a href={`#${entry.key}`}>{entry.title[lang]}</a></li>)}</ul>
+          </nav>
+          {insights.map(({ entry, series, result }) => <Fragment set:html={renderInsight(entry, result, series, lang)} />)}
+        </>
+      )}
+    </>
   ) : page === 'methodology' ? (
     <>
       <h1>{title}</h1>
@@ -170,6 +186,12 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
                 return p.live ? div : <template class="panel">{div}</template>;
               })}
             </>
+          )}
+          {model!.insights.length > 0 && (
+            <section>
+              <h2>{t(lang, 'kpi.insights.heading')}</h2>
+              <ul>{model!.insights.map((e) => <li><a href={`${href('insights', lang)}#${e.key}`}>{e.title[lang]}</a></li>)}</ul>
+            </section>
           )}
           <script>
             import { pickView, type Want } from '../../lib/select';

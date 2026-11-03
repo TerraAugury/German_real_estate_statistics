@@ -1,10 +1,12 @@
 import { day, fmt, period, t } from './i18n';
-import { levelChart, lagChart, lineChart } from './chart';
+import { insightChart, multiplesChart, sharedDomain, levelChart, lagChart, lineChart } from './chart';
 import { notesFor } from './notes';
-import { href, type Lang } from './routes';
+import { href, slug, type Lang } from './routes';
 import type { Series } from './series';
 import type { LinkResult } from '../link/link';
 import { linkResult } from './links';
+import { compareLines, MIN_OBS, type InsightResult } from '../insight/insight';
+import type { InsightEntry } from './manifest';
 
 export const esc = (x: string) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const noteHtml = (ns: string[]) => ns.map((n) => `<p class="note">${esc(n)}</p>`).join('');
@@ -48,3 +50,34 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
 /** Compute (once per build) and render; the Link takes the KPI's frequency (spec section 6). */
 export const linkPanel = (kpi: Series, ind: Series, lang: Lang, geography?: string, id?: string) =>
   renderPanel(kpi, ind, linkResult(kpi, ind), lang, geography, id);
+
+/** One Insight section: headline number with verdict tag, the reading, the chart (spec insights section 5). Pure given the result. */
+export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[], lang: Lang, now = new Date()): string {
+  const head = `<h2>${esc(e.title[lang])}</h2>`;
+  if (!r.shown) return `<section class="insight" id="${esc(e.key)}">${head}<p class="na">${t(lang, 'insight.not_shown', { n: String(r.n), min: String(MIN_OBS) })}</p></section>`;
+  const digits = e.headline === 'ratio' ? 2 : 1; // ratios two decimals, everything else one
+  const one = (n: number) => fmt(lang, n, { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  const unitKey = `insight.unit.${e.headline}`;
+  const reading = t(lang, `insight.template.${e.template}`, {
+    measure: esc(e.measure[lang]), latest: one(r.latest.value), verdict: t(lang, `insight.verdict.${r.verdict}`), from: r.from, to: r.to, mean: one(r.mean), emp: r.context ? one(r.context.at(-1)!.value) : '',
+  });
+  const notes = notesFor(series[0], lang, { on: 'insight', rest: series.slice(1), short: r.short ? { from: r.from, to: r.to, n: r.n } : undefined }, now);
+  const chart = insightChart(r, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(r.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
+  const reference = series[e.series.findIndex((x) => x.role === 'reference')];
+  const kpis = series.filter((_, i) => e.series[i].role === 'kpi');
+  const refTitle = e.shift ? t(lang, 'insight.shifted', { title: reference.title[lang], shift: t(lang, `insight.shift.${e.shift}`) }) : reference.title[lang];
+  // The headline's lines are the first KPI series'; every other KPI series gets its own small chart over the same years.
+  const years = r.points.map((p) => p.period);
+  const all = kpis.map((k, i) => (i === 0 ? r.lines : compareLines(k, reference, years, e)));
+  const domain = sharedDomain(all);
+  const multiples = kpis.map((kpi, i) => {
+    const unit = all[i].base ? t(lang, 'insight.axis.rebased', { year: all[i].base! }) : kpi.unit[lang];
+    return `<div class="multiples"><h3>${t(lang, 'insight.multiples.title', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</h3>`
+      + multiplesChart(all[i], { unit, title: t(lang, 'insight.multiples.label', { kpi: kpi.title[lang], reference: refTitle }) }, domain, lang)
+      + `<p class="note">${t(lang, 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p></div>`;
+  }).join('');
+  return `<section class="insight" id="${esc(e.key)}">${head}`
+    + `<p class="headline"><span class="num">${one(r.latest.value)}</span> <span class="unit">${t(lang, unitKey)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span></p>`
+    + `<p>${reading}</p>`
+    + `<figure>${chart}${r.context ? `<p class="note">${t(lang, 'insight.context.legend', { measure: esc(e.measure[lang]), title: esc(reference.title[lang]) })}</p>` : ''}${multiples}${noteHtml(notes)}<figcaption>${series.map((x) => sourceLine(x, lang, true)).join('<br>')}<br><a href="${href('methodology', lang)}#${slug('insights', lang)}">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
+}

@@ -124,3 +124,36 @@ indicator.gdp-real: Reales BIP
 indicator.unemployment-rate: Arbeitslosenquote
 indicator.construction-price: Baupreisindex
 indicator.oecd-confidence: OECD-Geschäftsklima
+nav.insights: Einblicke
+insights.title: Einblicke
+insights.intro: "Ein Einblick stellt mehrere Reihen über einen genannten Zeitraum auf einer Achse dar, mit einer festen Lesehilfe in einem Satz. Er beschreibt, was die Linien zeigen; er belegt keine Ursache und ist keine Prognose."
+insights.jump: Einblicke auf dieser Seite
+insights.empty: "Noch sind keine Einblicke veröffentlicht; die Lizenzen für die zugrunde liegenden Daten werden geklärt."
+insight.template.spread: "Der aktuelle {measure} beträgt {latest} Punkte, {verdict} {from}-{to}-Durchschnitt von {mean} Punkten."
+insight.verdict.higher: höher als der
+insight.verdict.lower: niedriger als der
+insight.verdict.in_line: im Einklang mit dem
+insight.tag.higher: höher als der Durchschnitt
+insight.tag.lower: niedriger als der Durchschnitt
+insight.tag.in_line: im Einklang mit dem Durchschnitt
+insight.average: "Durchschnitt {value}"
+insight.chart.label: "{title}: {measure} im Zeitverlauf"
+insight.unit.spread: Prozentpunkte
+insight.not_shown: "Einblick nicht angezeigt: zu wenige Beobachtungen (n = {n}); mindestens {min} sind nötig."
+insight.short_history: "Kurze Zeitreihe ({n} Jahre, {from} bis {to}): der Durchschnitt beruht auf wenigen Daten."
+insight.method: So wird gerechnet
+insight.axis.rebased: "Index, {year} = 100"
+insight.multiples.title: "{kpi} im Vergleich zu {reference}"
+insight.multiples.label: "{kpi} und {reference}, umbasiert"
+insight.multiples.legend: "Blaue Linie: {kpi}. Ockerfarbene Linie: {reference}. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt."
+insight.template.completions-permits: "Die Fertigstellungen entsprachen dem {latest}-Fachen der zwei Jahre zuvor erteilten Baugenehmigungen, {verdict} {from}-{to}-Durchschnitt von {mean}."
+insight.unit.ratio: mal
+insight.shift.2: zwei Jahre zuvor
+insight.shifted: "{title}, {shift}"
+kpi.insights.heading: Einblicke zu dieser Kennzahl
+insight.template.price-rent: "Der Preisindex liegt beim {latest}-Fachen des Mietindex, {verdict} {from}-{to}-Durchschnitt von {mean}."
+insight.template.real-rents: "Die realen Büromieten sind {to} um {latest} % gewachsen, {verdict} {from}-{to}-Durchschnitt von {mean} %."
+insight.unit.growth: Prozent
+insight.template.office-employment: "Der Büroleerstand hat sich {to} um {latest} Punkte verändert, während die Bürobeschäftigung um {emp} % gewachsen ist; die durchschnittliche Veränderung des Leerstands {from}-{to} beträgt {mean} Punkte."
+insight.unit.change: Prozentpunkte
+insight.context.legend: "Blaue Linie: {measure}, in Prozentpunkten. Ockerfarbene Linie: Wachstum von {title} gegenüber dem Vorjahr, in Prozent. Beide sind auf einer Achse dargestellt."

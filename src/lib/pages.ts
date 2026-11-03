@@ -4,6 +4,8 @@ import { INDICATORS, linkResult, viewLinks, type Indicator, type Pair } from './
 import { getSeries } from './series';
 import { GEO_GROUPS, KPIS, SEGMENTS, cell, geoGroup, headline, liveViews, type Cell, type Freq, type GeoGroup, type Kpi, type Segment, type View } from './kpis';
 import type { LinkResult } from '../link/link';
+import { insightsFor } from './insights';
+import type { InsightEntry } from './manifest';
 
 const uniq = <T,>(xs: T[]) => [...new Set(xs)];
 
@@ -12,6 +14,8 @@ export interface KpiPage {
   views: { view: View; links: string[]; live: boolean }[];
   /** Each Link pair once, in indicator order; `geo` is the geography of the first view showing it (its scope label). */
   panels: { id: string; pair: Pair; geo: string; live: boolean }[];
+  /** Insights using this KPI, below the Link panels; empty when none passes the Provisional gate. */
+  insights: InsightEntry[];
   /** Selector options in view order; geographies grouped, empty groups dropped. */
   selectors: { segment: Segment[]; geo: { group: GeoGroup; geos: string[] }[]; freq: Freq[] };
 }
@@ -28,6 +32,7 @@ export function kpiPage(kpi: Kpi): KpiPage {
   return {
     views,
     panels: [...panels.values()].sort((a, b) => INDICATORS.indexOf(a.pair.name) - INDICATORS.indexOf(b.pair.name)),
+    insights: insightsFor(kpi.page),
     selectors: {
       segment: uniq(live.map((v) => v.segment)),
       geo: GEO_GROUPS.map((group) => ({ group, geos: geos.filter((g) => geoGroup(g) === group) })).filter((g) => g.geos.length),

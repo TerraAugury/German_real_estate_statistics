@@ -1028,3 +1028,22 @@
   seasonal_adjustment: nsa
   resampling: mean
   short_window: false
+
+# Persons in employment in the office-using sections K-N (finance, real estate, professional and administrative services): national, annual, for Insight M.
+- key: office-employment
+  dbnomics_provider: DESTATIS
+  source: destatis
+  dataset: 13311BJ002
+  ids: ["DG.WZ08-K-N.ERW063"]
+  publisher: *destatis_publisher
+  licence: *destatis_licence
+  attribution: *destatis_attribution
+  provisional: false
+  title: { en: "Persons in employment: finance, real estate and business services (sections K-N), Germany", de: "Erwerbstätige: Finanzierung, Immobilien und Unternehmensdienstleistungen (Abschnitte K-N), Deutschland" }
+  unit: { en: "thousand persons", de: "Tsd. Personen" }
+  frequency: annual
+  change: pct
+  expected_start: 1991
+  seasonal_adjustment: nsa
+  resampling: none
+  short_window: false
