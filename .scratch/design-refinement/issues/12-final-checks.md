@@ -4,13 +4,13 @@
 
 **Blocked by:** 10, 11
 
-**Status:** ready-for-human
+**Status:** done
 
 - [x] vitest, tsc and astro check pass
-- [ ] The production build passes, including the review gate and the page-weight test
+- [x] The production build passes, including the review gate and the page-weight test
 - [x] No horizontal page scroll at 375 px and 320 px, EN and DE, light scheme
 - [x] The same sweep in the dark scheme
-- [ ] The `[DRAFT]` marker appears in no production page
+- [x] The `[DRAFT]` marker appears in no production page
 - [x] The glossary has any new term the work introduced (for example the diverging scale or the citation line)
 - [x] The branch is reviewed with the code-review skill and its findings are fixed or recorded
 
@@ -23,5 +23,5 @@ Run 2026-11-03 on `work`.
 - Horizontal scroll was measured on all 30 built pages (EN and DE) at 320 px and 375 px in the light scheme, and the header at 110 px or less. It found and fixed three overflows: the Geography select on the price-index page (already too wide at 375 px before this work), long German words in headings and the site name (`hyphens: auto`, `overflow-wrap`), and the nowrap change line. Dark was checked by eye at 1024 px (Home, Links, Availability, a KPI page, Insights) and at 375 px (German Home with the menu open); the layout does not depend on the scheme, and colours are covered by the contrast tests, but the 320/375 px sweep was not repeated in dark.
 - Code review (standards and spec axes, subagents) found no hard standards violation. Fixed: a `<details>` inside a `<p>` on the Home index (now a `div`), the unused `spark` field, the unused `DIVERGING` export and its circular test, a `source line` comment, the vague `v` helper and `headline` property names, the repeated first-series lookup (`firstSeries`), stale lock entries, and a missing glossary term (Heat shade). Recorded, not changed: heading sizes follow one scale of named steps but a plate heading (`--step-1`) and a section heading (`--step-2`) differ by role, so ticket 01's "no per-container override" criterion is met by tokens, not by identical sizes; every disclosure item carries its series title (needed to tell several series apart), where ticket 03 said "same wording"; ticket 07 and 09 have no automated test; the Home index rows are written in the page while the hero and Insight index are in panel.ts.
 - Dark sweep run 2026-11-03 (preview build, `prefers-color-scheme: dark` emulated and confirmed inside each frame): all 31 built pages, EN and DE, at 320 px and 375 px, 62 measurements, no horizontal overflow (`documentElement.scrollWidth` never exceeded the frame width).
-- Still open, both waiting on ticket 11's named reviewer: the production build and the `[DRAFT]` check.
+- Ticket 11 closed 2026-11-03 (reviewed by terra augury). Production `npx astro build` passes the review gate and builds 31 pages; `grep -r DRAFT dist` finds nothing. vitest 352 passed with `PAGE_WEIGHT_STRICT=1`, tsc and astro check 0 errors. Under heavy machine load (load average 42) the default 5 s timeout made one to three slow jsdom tests time out in varying places; each takes 2 to 3 s alone and the whole suite passes with `--testTimeout=60000`.
 - Status set to `ready-for-human` after code review: what remains (the production build, the `[DRAFT]` check, the dark sweep) waits on ticket 11's named reviewer or on a rerun once German is reviewed.

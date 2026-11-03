@@ -4,12 +4,12 @@
 
 **Blocked by:** 02, 03, 04, 05, 06, 07, 08, 09
 
-**Status:** ready-for-human
+**Status:** done
 
-- [ ] The list of new and changed keys is attached under Comments
-- [ ] A named reviewer has checked each against its English source
-- [ ] `src/i18n/de.reviewed.lock` is updated through the review script
-- [ ] `scripts/check-review.ts` passes
+- [x] The list of new and changed keys is attached under Comments
+- [x] A named reviewer has checked each against its English source
+- [x] `src/i18n/de.reviewed.lock` is updated through the review script
+- [x] `scripts/check-review.ts` passes
 
 ## Comments
 
@@ -38,3 +38,5 @@ Notes for the reviewer:
 - `source.chip.provisional` is the glossary term "Provisional" (DE "Vorläufig").
 - `links.legend` must describe co-movement only, never cause or forecast (GLOSSARY.md, Link).
 - Record the review with `npx tsx scripts/review.ts "<your name>" <key> ...` (a prefix such as `source.*` works). The production build still fails the review gate on many older unreviewed items beyond these 14 (the 67 noted in insights-build ticket 11, plus manifest text and the Methodology page), so this ticket alone does not make a production build pass.
+
+- 2026-11-03: reviewed by terra augury, covering the full list of 123 unreviewed items (these 14 keys, the older interface strings, manifest text, Insight titles and measures, and the Methodology page). Recorded with `scripts/review.ts`; `scripts/check-review.ts` passes.
