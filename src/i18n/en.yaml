@@ -1,5 +1,6 @@
 site.title: German commercial real estate statistics
 nav.home: Home
+nav.menu: Menu
 lang.switch: Deutsch
 home.purpose: Open statistics on German commercial real estate, with every chart naming its source and licence.
 kpi.construction.title: Construction (permits, completions)
