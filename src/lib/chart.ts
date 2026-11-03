@@ -3,6 +3,7 @@ import { JSDOM } from 'jsdom';
 import { fmt, period } from './i18n';
 import type { Lang } from './routes';
 import type { Series } from './series';
+import type { Points } from '../insight/insight';
 
 // The palette of src/layouts/Base.astro (ticket 16); SVG is rendered at build time, so CSS variables would not reach Plot's own styles.
 const INK = '#17202a', DATA = '#1f4e79', MUTED = '#4a5562', STRONG = '#b26a00', BAR = '#7b8794';
@@ -61,7 +62,7 @@ export function levelChart(pts: { period: string; value: number }[], unit: strin
 const GRID = '#e3e7eb', ABOVE = '#4e79a7', BELOW = '#c0392b';
 
 /** Headline measure over time: latest point labelled, dashed average line, grey band of average plus or minus half a standard deviation. */
-export function insightChart(r: { points: { period: string; value: number }[]; context?: { period: string; value: number }[]; from: string; to: string; mean: number; sd: number }, labels: { unit: string; average: string; title: string }, lang: Lang): string {
+export function insightChart(r: { points: Points; context?: Points; from: string; to: string; mean: number; sd: number }, labels: { unit: string; average: string; title: string }, lang: Lang): string {
   const data = r.points.map((p) => ({ x: +p.period, value: p.value }));
   const last = data.slice(-1);
   const band = [{ x1: +r.from, x2: +r.to, y1: r.mean - r.sd / 2, y2: r.mean + r.sd / 2 }];
@@ -83,14 +84,14 @@ export function insightChart(r: { points: { period: string; value: number }[]; c
 }
 
 type Lines = { kpi: { value: number }[]; reference: { value: number }[] };
-/** One y-domain for every small chart of an Insight, so their gaps compare by eye. */
+/** One y-domain for every small chart of an Insight, so their differences compare by eye. */
 export function sharedDomain(ls: Lines[]): [number, number] {
   const v = ls.flatMap((l) => [...l.kpi, ...l.reference].map((p) => p.value));
   return [Math.min(...v), Math.max(...v)];
 }
 
-/** The KPI line (blue) against the reference line (ochre), the gap shaded blue where the KPI is above and red where below. */
-export function multiplesChart(l: { kpi: { period: string; value: number }[]; reference: { period: string; value: number }[] }, labels: { unit: string; title: string }, domain: [number, number], lang: Lang): string {
+/** The KPI line (blue) against the reference line (ochre), the area between them shaded blue where the KPI is above and red where below. */
+export function multiplesChart(l: { kpi: Points; reference: Points }, labels: { unit: string; title: string }, domain: [number, number], lang: Lang): string {
   const rows = l.kpi.map((p, i) => ({ x: +p.period, kpi: p.value, reference: l.reference[i].value }));
   return render((narrow) => ({
     height: narrow ? 200 : 220, marginRight: 52, marginTop: 28,

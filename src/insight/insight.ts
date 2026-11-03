@@ -9,11 +9,11 @@ export const SHORT_OBS = 20;
 export type Headline = 'spread' | 'ratio' | 'growth' | 'change';
 export type Verdict = 'higher' | 'lower' | 'in_line';
 export type InsightSeries = Pick<LinkSeries, 'freq' | 'obs'>;
-type Points = { period: string; value: number }[];
+export type Points = { period: string; value: number }[];
 export type InsightResult =
   | { shown: false; n: number; reason: 'too_few' }
-  | { shown: true; points: { period: string; value: number }[]; from: string; to: string; n: number; short: boolean;
-      mean: number; sd: number; latest: { period: string; value: number }; verdict: Verdict;
+  | { shown: true; points: Points; from: string; to: string; n: number; short: boolean;
+      mean: number; sd: number; latest: Points[number]; verdict: Verdict;
       /** change: the reference's year-on-year percent growth over the same years, shown beside the headline and never given a verdict. */
       context?: Points;
       /** The two series over the headline period, rebased when a base year was asked for (`base` is the year actually used). */
@@ -61,6 +61,8 @@ export type InsightOptions = {
   shift?: number;
   /** ratio: take the ratio of the two series after rebasing to `base`, for index series with different bases. */
   indexed?: boolean;
+  /** Further KPI series of the Insight: their years must be covered too, so the shared period is the overlap of all series. */
+  also?: InsightSeries[];
   /** growth: deflate the KPI by the reference (a price level) first; flow uses its annual average, stock its December value. */
   deflate?: 'flow' | 'stock';
 };
@@ -85,7 +87,8 @@ export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opt
     const [a, b] = opts.growth ? [la, lb].map((l) => changes(l, 'A', 'pct')) : [la, lb];
     for (const [y, v] of a) if (b.has(y) && !(head === 'ratio' && b.get(y) === 0)) values.set(y, head === 'ratio' ? v / b.get(y)! : v - b.get(y)!);
   }
-  const years = [...values.keys()].sort((x, y) => x - y);
+  const more = (opts.also ?? []).map((x) => (opts.growth || head === 'growth' ? changes(levels(x, 'A'), 'A', 'pct') : levels(x, 'A')));
+  const years = [...values.keys()].filter((y) => more.every((m) => m.has(y))).sort((x, y) => x - y);
   if (years.length < MIN_OBS) return { shown: false, n: years.length, reason: 'too_few' };
   const ln = lines(la, lb, years, opts.base);
   const points = years.map((y, i) => ({ period: String(y), value: opts.indexed ? ln.kpi[i].value / ln.reference[i].value : values.get(y)! }));

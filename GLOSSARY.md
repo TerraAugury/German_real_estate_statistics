@@ -26,6 +26,13 @@ A curated chart that puts two or more series (Real estate KPIs, Economic indicat
 _DE_: Einblick
 _Avoid_: Analysis (too broad), comparison, spread (one kind of Insight), chart (any chart)
 
+**Headline measure**:
+The one number an Insight leads with, calculated from its series: a spread, a ratio, or a year-on-year change. The Insight's verdict and reading describe this number only. The series it compares the Real estate KPI against is the **reference series**.
+_Avoid_: Headline (also the name of a KPI's lead view in code), result
+
+**Verdict**:
+The tag on an Insight's headline measure: "higher than", "lower than" or "in line with" the average of the whole shared period, judged against half a standard deviation. It says where the latest value sits against the past, never a cause or forecast.
+
 **Lag**:
 The shift, in whole periods, between an economic indicator and a real estate KPI when a link is computed. Positive lag means the indicator moved earlier than the KPI. It describes timing of co-movement, never lead time for prediction.
 _DE_: Verschiebung (in Perioden)

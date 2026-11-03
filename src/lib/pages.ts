@@ -14,9 +14,9 @@ export interface KpiPage {
   views: { view: View; links: string[]; live: boolean }[];
   /** Each Link pair once, in indicator order; `geo` is the geography of the first view showing it (its scope label). */
   panels: { id: string; pair: Pair; geo: string; live: boolean }[];
-  /** Selector options in view order; geographies grouped, empty groups dropped. */
   /** Insights using this KPI, below the Link panels; empty when none passes the Provisional gate. */
   insights: InsightEntry[];
+  /** Selector options in view order; geographies grouped, empty groups dropped. */
   selectors: { segment: Segment[]; geo: { group: GeoGroup; geos: string[] }[]; freq: Freq[] };
 }
 

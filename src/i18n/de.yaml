@@ -136,7 +136,6 @@ insight.verdict.in_line: im Einklang mit dem
 insight.tag.higher: höher als der Durchschnitt
 insight.tag.lower: niedriger als der Durchschnitt
 insight.tag.in_line: im Einklang mit dem Durchschnitt
-insight.headline: "{value} Prozentpunkte"
 insight.average: "Durchschnitt {value}"
 insight.chart.label: "{title}: {measure} im Zeitverlauf"
 insight.unit.spread: Prozentpunkte

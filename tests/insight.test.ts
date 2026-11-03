@@ -187,3 +187,14 @@ describe('Insight module: change of one series with another as context', () => {
     if (r.shown) expect(r.context).toBeUndefined();
   });
 });
+
+describe('Insight module: every compared series counts toward the shared period', () => {
+  const ramp = (from: number, n: number) => annual(from, Array.from({ length: n }, (_, i) => 5 + i));
+  it('a further KPI series that starts later shortens the shared period and the headline', () => {
+    const r = computeInsight(ramp(2000, 14), ramp(2000, 14), { also: [ramp(2004, 10)] });
+    expect(r).toMatchObject({ shown: true, from: '2004', to: '2013', n: 10 });
+  });
+  it('and under 10 shared observations it is not shown', () => {
+    expect(computeInsight(ramp(2000, 14), ramp(2000, 14), { also: [ramp(2006, 8)] })).toEqual({ shown: false, n: 8, reason: 'too_few' });
+  });
+});

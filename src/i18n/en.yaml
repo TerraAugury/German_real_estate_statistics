@@ -136,7 +136,6 @@ insight.verdict.in_line: in line with
 insight.tag.higher: higher than the average
 insight.tag.lower: lower than the average
 insight.tag.in_line: in line with the average
-insight.headline: "{value} percentage points"
 insight.average: "average {value}"
 insight.chart.label: "{title}: {measure} over time"
 insight.unit.spread: percentage points
