@@ -10,3 +10,7 @@ if (missing.length) throw new Error(`review: no German file for ${missing.map((n
 const unreviewed = allUnreviewed(reviewStrings(), pages);
 assertReviewed(unreviewed, !isPreview());
 if (unreviewed.length) console.warn(`review: ${unreviewed.length} unreviewed German item(s) will show [DRAFT]`);
+
+// Owner facts still missing from a prose page are marked TODO(facts); production never ships them.
+const todo = Object.entries(pages).filter(([, p]) => p.en.includes('TODO(facts)')).map(([n]) => n);
+if (todo.length && !isPreview()) throw new Error(`review: TODO(facts) left in English page(s): ${todo.join(', ')}`);

@@ -222,6 +222,6 @@ const inKpis = KPIS.some((k) => k.page === page);
       }
     </script>
     <main class="wrap"><slot /></main>
-    <footer class="site"><div class="wrap"><span>{t(lang, 'footer.text')}</span><a href={href('availability', lang)}>{t(lang, 'nav.availability')}</a><a href={href('sources', lang)}>{t(lang, 'nav.sources')}</a></div></footer>
+    <footer class="site"><div class="wrap"><span>{t(lang, 'footer.text')}</span><a href={href('availability', lang)}>{t(lang, 'nav.availability')}</a><a href={href('sources', lang)}>{t(lang, 'nav.sources')}</a>{(['about', 'terms', 'privacy', 'legal-notice'] as const).map((k) => <a href={href(k, lang)}>{t(lang, `${k}.title`)}</a>)}</div></footer>
   </body>
 </html>
