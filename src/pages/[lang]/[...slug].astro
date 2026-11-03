@@ -45,7 +45,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
   {(kpi || segment) && <nav class="crumbs" aria-label={t(lang, 'nav.breadcrumb')}><a href={href('home', lang)}>{t(lang, 'nav.home')}</a> › {title}</nav>}
   {page === 'home' ? (
     <>
-      <h1>{t(lang, 'site.title')}</h1>
+      <h1 class="vh">{t(lang, 'site.title')}</h1>
       <p>{t(lang, 'home.purpose')}</p>
       {lead && <Fragment set:html={renderHero(lead.entry, lead.result, lead.series, lang)} />}
       <ul class="index">

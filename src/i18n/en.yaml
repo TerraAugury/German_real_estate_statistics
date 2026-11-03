@@ -3,7 +3,7 @@ nav.home: Home
 nav.menu: Menu
 nav.logistics: "Logistics: not available, see Availability"
 lang.switch: Deutsch
-home.purpose: Open statistics on German commercial real estate, with every chart naming its source and licence.
+home.purpose: Open statistics on German commercial real estate.
 kpi.construction.title: Construction (permits, completions)
 source.cite: "Source: {publisher} / Licence: {licence} / Data to {period}"
 source.cite.credit: "Source: {original}, published by {publisher} / Licence: {licence} / Data to {period}"
