@@ -39,6 +39,14 @@ describe('refresh with source bundesbank', () => {
     expect(next!.parts[id].meta).toBeTruthy();
     expect(next!.revised_at).toBeNull();
   });
+  it('records the ESCB terms with the source metadata, and rewrites a snapshot that lacks them even when the values are unchanged', async () => {
+    const first = (await refresh(m, undefined, { get: async () => fixture(), now }))!;
+    expect(first.parts[id].meta!.terms).toEqual({ name: 'ESCB Terms of Use for the Reuse of Statistics', url: 'https://www.bundesbank.de/en/homepage/user-information/terms-of-use-regarding-the-reuse-of-escb-statistics-621188' });
+    const { terms, ...noTerms } = first.parts[id].meta!;
+    const next = await refresh(m, { ...first, parts: { [id]: { ...first.parts[id], meta: noTerms } } }, { get: async () => fixture(), now });
+    expect(next!.parts[id].meta!.terms).toEqual(terms);
+    expect(next!.revised_at).toBeNull();
+  });
   it('404 and 410 are Unavailable', async () => {
     for (const s of [404, 410]) await expect(refresh(m, undefined, { get: async () => { throw new HttpError(s, 'u'); }, now })).rejects.toBeInstanceOf(Unavailable);
   });
