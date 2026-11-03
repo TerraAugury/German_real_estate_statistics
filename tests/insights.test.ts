@@ -109,6 +109,14 @@ describe('"Insights using this KPI" on KPI pages', () => {
   });
 });
 
+describe('Methodology', () => {
+  it.each([['en', 'insights'], ['de', 'einblicke']])('%s: an Insights section whose heading id is the anchor the Insight source lines link to', async (lang, anchor) => {
+    const { readFileSync } = await import('node:fs');
+    const heading = readFileSync(`content/${lang}/methodology.md`, 'utf8').match(/^## (Insights|Einblicke)$/m)?.[1];
+    expect(heading?.toLowerCase()).toBe(anchor); // Astro slugs the heading to its lower-case text
+  });
+});
+
 describe('Insight rendering', () => {
   const j = entry({ key: 'j', title: { en: 'Construction costs vs inflation', de: 'Baupreise und Inflation' }, measure: { en: 'spread of construction price growth over CPI inflation', de: 'Abstand des Baupreisanstiegs zur Inflationsrate' } });
   const series = [getSeries('construction-price-office'), getSeries('cpi')];
@@ -140,6 +148,7 @@ describe('Insight rendering', () => {
     for (const x of series) expect(h).toContain(x.seriesId);
     expect(h.match(/own calculation/g)).toHaveLength(2);
     expect(h).toContain('<a href="/en/methodology#insights">How this is calculated</a>');
+    expect(renderInsight(j, shown, series, 'de')).toContain('<a href="/de/methodik#einblicke">');
   });
   it('small multiples: the two rebased lines in their own chart, the base on the axis, the shading explained in text', () => {
     const h = renderInsight(j, shown, series, 'en');

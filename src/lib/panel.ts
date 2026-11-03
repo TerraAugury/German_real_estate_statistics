@@ -1,7 +1,7 @@
 import { day, fmt, period, t } from './i18n';
 import { insightChart, multiplesChart, sharedDomain, levelChart, lagChart, lineChart } from './chart';
 import { notesFor } from './notes';
-import { href, type Lang } from './routes';
+import { href, slug, type Lang } from './routes';
 import type { Series } from './series';
 import type { LinkResult } from '../link/link';
 import { linkResult } from './links';
@@ -72,5 +72,5 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
   return `<section class="insight" id="${esc(e.key)}">${head}`
     + `<p class="headline"><span class="num">${one(r.latest.value)}</span> <span class="unit">${t(lang, unitKey)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span></p>`
     + `<p>${reading}</p>`
-    + `<figure>${chart}${multiples}${noteHtml(notes)}<figcaption>${series.map((x) => sourceLine(x, lang, true)).join('<br>')}<br><a href="${href('methodology', lang)}#insights">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
+    + `<figure>${chart}${multiples}${noteHtml(notes)}<figcaption>${series.map((x) => sourceLine(x, lang, true)).join('<br>')}<br><a href="${href('methodology', lang)}#${slug('insights', lang)}">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
 }

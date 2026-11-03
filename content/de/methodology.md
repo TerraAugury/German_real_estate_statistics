@@ -30,6 +30,19 @@ Jede Verknüpfung hat drei Teile:
 7. Baupreisindex (Destatis), vierteljährlich: Bürogebäude für Büro-Ansichten und für die Bautätigkeit bei Bürogebäuden, gewerbliche Betriebsgebäude für alle übrigen.
 8. OECD-Geschäftsklima (OECD), monatlich: Einzelhandel für Einzelhandels-Ansichten, Bau für alle übrigen. Diese Reihen sind nicht saisonbereinigt und Prozentsalden, daher sind ihre Veränderungen Differenzen in Punkten.
 
+## Einblicke
+
+Ein Einblick stellt mehrere Reihen über einen genannten Zeitraum auf einer Achse dar, mit einer festen Lesehilfe in einem Satz. Wie eine Verknüpfung beschreibt er, was die Linien zeigen: Er belegt keine Ursache und ist keine Prognose. Anders als eine Verknüpfung enthält er weder eine Korrelation noch eine Verschiebung.
+
+- **Frequenz.** Ein Einblick läuft in der gröbsten Frequenz seiner Reihen, das ist jährlich. Monats- und Quartalsreihen werden über jedes Kalenderjahr gemittelt; ein Jahr mit fehlenden Monaten oder Quartalen entfällt und wird nie teilweise gemittelt.
+- **Gemeinsamer Zeitraum.** Der gemeinsame Zeitraum umfasst die Jahre, die jede Reihe abdeckt; Durchschnitt und Standardabweichung verwenden ihn vollständig. Ein Einblick braucht mindestens 10 Jahreswerte; bei weniger zeigt die Seite „Einblick nicht angezeigt“ und nennt die Zahl der Werte. Bei weniger als 20 weist ein Hinweis darauf hin, dass der Durchschnitt auf wenigen Daten beruht.
+- **Kennzahl.** Die große Zahl ist ein Abstand (die Kennzahl minus die Vergleichsreihe, in Prozentpunkten), ein Verhältnis (die Kennzahl geteilt durch die Vergleichsreihe) oder ein Abstand der prozentualen Veränderungen gegenüber dem Vorjahr, bei dem das erste Jahr entfällt. Abstände erscheinen mit einer Nachkommastelle, Verhältnisse mit zwei.
+- **Einordnung.** Das Etikett vergleicht den letzten Wert mit dem Durchschnitt des gesamten gemeinsamen Zeitraums, einschließlich des letzten Werts. Es lautet „im Einklang mit“, wenn der letzte Wert höchstens eine halbe Standardabweichung (Standardabweichung der Grundgesamtheit) vom Durchschnitt entfernt liegt, sonst „höher als“ oder „niedriger als“. Das graue Band in der Grafik ist der Durchschnitt plus/minus eine halbe Standardabweichung. Die Einordnung sagt, wo der letzte Wert im Vergleich zur Vergangenheit liegt; sie unterstellt keine Rückkehr zum Durchschnitt und ist weder eine Ursache noch eine Prognose.
+- **Umbasierung.** Die kleinen Grafiken zeigen beide Reihen als Index, dessen Basisjahr 100 ist: 2015, oder das erste gemeinsame Jahr, wenn eine Reihe für 2015 keinen Wert hat. 2015 ist nur ein Bezugspunkt (das Jahr der Anleihekäufe der EZB); die Seite behauptet nicht, dass es etwas verursacht hat. Die Schattierung zwischen den beiden Linien ist blau, wo die Kennzahl über der Vergleichsreihe liegt, und rot, wo sie darunter liegt.
+- **Verschiebung.** Fertigstellungen werden mit den zwei Jahre zuvor erteilten Baugenehmigungen verglichen, weil eine Genehmigung etwa zwei Jahre bis zur Fertigstellung braucht. Die Genehmigungsreihe wird um zwei Jahre nach vorn verschoben und entsprechend benannt.
+
+Die Zahlen der Einblicke, darunter Abstände, Verhältnisse, Durchschnitte und umbasierte Reihen, sind eigene Berechnung und in den Quellenzeilen als solche gekennzeichnet.
+
 ## So lesen Sie diese Zahlen
 
 - Jede Reihe wird entweder direkt beim Herausgeber oder über DBnomics abgerufen, das amtliche Quellen bündelt; die Quellenzeile nennt den Weg. Die Herausgeber sind für diese Seite nicht verantwortlich.
