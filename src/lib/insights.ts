@@ -8,11 +8,11 @@ import type { PageKey } from './routes';
 
 // The KPI page of each Real estate KPI series: every KPI view's series, and the construction prices, which sit with the
 // Construction KPI (Insight J has no other Real estate KPI).
-const KPI_PAGE = new Map<string, PageKey>([
-  ...KPIS.flatMap((k) => k.views.flatMap((v) => v.series.map((s): [string, PageKey] => [s.key, k.page]))),
-  ['construction-price-office', 'construction'], ['construction-price-commercial', 'construction'],
-]);
-const KPI_SERIES = new Set(KPI_PAGE.keys());
+const VIEW_PAGE = new Map(KPIS.flatMap((k) => k.views.flatMap((v) => v.series.map((s): [string, PageKey] => [s.key, k.page]))));
+const PRICE_PAGE = new Map<string, PageKey>([['construction-price-office', 'construction'], ['construction-price-commercial', 'construction']]);
+const KPI_SERIES = new Set([...VIEW_PAGE.keys(), ...PRICE_PAGE.keys()]);
+// A KPI view's series lists its Insight whatever its role (the rent index is the reference of G); a construction price does only as a `kpi` (D compares it with rents but is not about construction).
+const pageOf = (s: InsightEntry['series'][number]) => VIEW_PAGE.get(s.key) ?? (s.role === 'kpi' ? PRICE_PAGE.get(s.key) : undefined);
 
 /** Every declared Insight, hidden ones included, after the build checks. */
 export function loadInsights(): InsightEntry[] {
@@ -34,9 +34,9 @@ export interface InsightModel { entry: InsightEntry; series: Series[]; result: I
 export const insightsPage = (): InsightModel[] => visibleInsights(loadInsights()).map((entry) => {
   const series = entry.series.map((s) => getSeries(s.key));
   const [kpi, reference] = (['kpi', 'reference'] as const).map((role) => series[entry.series.findIndex((s) => s.role === role)]);
-  return { entry, series, result: computeInsight(kpi, reference, { headline: entry.headline, growth: entry.growth, base: entry.base, shift: entry.shift }) };
+  return { entry, series, result: computeInsight(kpi, reference, entry) };
 });
 
 /** The visible Insights whose Real estate KPI series belong to a KPI page, in page order. */
 export const insightsFor = (page: PageKey): InsightEntry[] =>
-  visibleInsights(loadInsights()).filter((e) => e.series.some((s) => s.role === 'kpi' && KPI_PAGE.get(s.key) === page));
+  visibleInsights(loadInsights()).filter((e) => e.series.some((s) => pageOf(s) === page));

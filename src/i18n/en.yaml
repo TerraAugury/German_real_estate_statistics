@@ -152,3 +152,6 @@ insight.unit.ratio: times
 insight.shift.2: two years earlier
 insight.shifted: "{title}, {shift}"
 kpi.insights.heading: Insights using this KPI
+insight.template.price-rent: "The price index stands at {latest} times the rent index, {verdict} the {from}-{to} average of {mean}."
+insight.template.real-rents: "Real office rents grew {latest}% in {to}, {verdict} the {from}-{to} average of {mean}%."
+insight.unit.growth: percent

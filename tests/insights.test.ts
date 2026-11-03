@@ -28,6 +28,7 @@ describe('Insight declaration checks', () => {
     ['unknown headline kind', [entry({ headline: 'median' as 'spread' })], 'headline must be one of'],
     ['base that is not a year', [entry({ base: 'x' as unknown as number })], 'base must be a year'],
     ['shift with no label', [entry({ shift: 7 })], 'no i18n key insight.shift.7'],
+    ['deflate that is neither flow nor stock', [entry({ deflate: 'yearly' as 'flow' })], 'deflate must be one of'],
     ['unknown template', [entry({ template: 'nope' })], 'no i18n key insight.template.nope'],
   ])('fails the build on: %s', (_, entries, message) => expect(() => checkInsights(entries, known, en)).toThrow(message));
 });
@@ -150,6 +151,36 @@ describe('Spread Insights F, E, D and I (Provisional: preview only)', () => {
     const h = renderInsight(x.entry, x.result, x.series, 'en');
     expect(h).toContain(`id="${key}"`);
     expect(h).toMatch(/The latest spread of [^.]+ is -?[\d.]+ points, (higher than|lower than|in line with) the/);
+  });
+});
+
+describe('Insights G and B (Provisional: preview only)', () => {
+  it('G: the price index over the rent index, both rebased to 2015, 2013 to 2025', () => {
+    expect(insightsPage().map((i) => i.entry.key)).not.toContain('g');
+    process.env.INCLUDE_PROVISIONAL = '1';
+    const g = insightsPage().find((i) => i.entry.key === 'g')!;
+    expect(g.entry).toMatchObject({ headline: 'ratio', indexed: true, base: 2015 });
+    expect(g.entry.series.map((s) => s.key)).toEqual(['price-index-de-office-a', 'rent-index-de-office-a']);
+    expect(g.result).toMatchObject({ shown: true, from: '2013', to: '2025', n: 13 });
+    if (g.result.shown) expect(g.result.points.find((p) => p.period === '2015')!.value).toBeCloseTo(1, 9);
+    expect(renderInsight(g.entry, g.result, g.series, 'en')).toMatch(/The price index stands at [\d.]+ times the rent index, (higher than|lower than|in line with) the 2013-2025 average of [\d.]+\./);
+  });
+  it('B: real office rent growth, deflated as a flow by the annual-average CPI, 2005 to 2025', () => {
+    expect(insightsPage().map((i) => i.entry.key)).not.toContain('b');
+    process.env.INCLUDE_PROVISIONAL = '1';
+    const b = insightsPage().find((i) => i.entry.key === 'b')!;
+    expect(b.entry).toMatchObject({ headline: 'growth', deflate: 'flow', base: 2015 });
+    expect(b.entry.series.map((s) => s.key)).toEqual(['rent-index-de-office-a', 'cpi']);
+    expect(b.result).toMatchObject({ shown: true, from: '2005', to: '2025', n: 21 });
+    const h = renderInsight(b.entry, b.result, b.series, 'en');
+    expect(h).toMatch(/Real office rents grew -?[\d.]+% in 2025, (higher than|lower than|in line with) the 2005-2025 average of -?[\d.]+%\./);
+    expect(h.match(/own calculation/g)).toHaveLength(2);
+  });
+  it('the DE sentences', () => {
+    process.env.INCLUDE_PROVISIONAL = '1';
+    const [g, b] = ['g', 'b'].map((k) => insightsPage().find((i) => i.entry.key === k)!);
+    expect(renderInsight(g.entry, g.result, g.series, 'de')).toMatch(/Der Preisindex liegt beim [\d,]+-Fachen des Mietindex, (höher als der|niedriger als der|im Einklang mit dem) 2013-2025-Durchschnitt von [\d,]+\./);
+    expect(renderInsight(b.entry, b.result, b.series, 'de')).toMatch(/Die realen Büromieten sind 2025 um -?[\d,]+ % gewachsen, (höher als der|niedriger als der|im Einklang mit dem) 2005-2025-Durchschnitt von -?[\d,]+ %\./);
   });
 });
 

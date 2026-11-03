@@ -152,3 +152,6 @@ insight.unit.ratio: mal
 insight.shift.2: zwei Jahre zuvor
 insight.shifted: "{title}, {shift}"
 kpi.insights.heading: Einblicke zu dieser Kennzahl
+insight.template.price-rent: "Der Preisindex liegt beim {latest}-Fachen des Mietindex, {verdict} {from}-{to}-Durchschnitt von {mean}."
+insight.template.real-rents: "Die realen Büromieten sind {to} um {latest} % gewachsen, {verdict} {from}-{to}-Durchschnitt von {mean} %."
+insight.unit.growth: Prozent

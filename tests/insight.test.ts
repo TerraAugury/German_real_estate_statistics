@@ -137,3 +137,32 @@ describe('Insight module: lines of a further compared series', () => {
     expect(l.reference[0]).toEqual({ period: '2010', value: 100 });
   });
 });
+
+describe('Insight module: indexed ratio and real growth', () => {
+  const geometric = (from: number, n: number, start: number, rate: number) => annual(from, Array.from({ length: n }, (_, i) => start * (1 + rate) ** i));
+  it('indexed: the ratio of the two series after both are rebased, so it is 1 in the base year', () => {
+    const r = computeInsight(geometric(2010, 16, 50 / 1.1 ** 5, 0.1), geometric(2010, 16, 200 / 1.05 ** 5, 0.05), { headline: 'ratio', base: 2015, indexed: true });
+    if (!r.shown) throw new Error('not shown');
+    expect(r.points.find((p) => p.period === '2015')!.value).toBeCloseTo(1, 12);
+    expect(r.latest.value).toBeCloseTo((1.1 / 1.05) ** 10, 9); // 2025
+    expect(r.lines.base).toBe('2015');
+  });
+  it('real growth: growth of the KPI divided by the deflator, in percent', () => {
+    const r = computeInsight(geometric(2000, 12, 100, 0.1), geometric(2000, 12, 100, 0.04), { headline: 'growth', deflate: 'flow' });
+    if (!r.shown) throw new Error('not shown');
+    expect(r).toMatchObject({ from: '2001', n: 11 });
+    for (const p of r.points) expect(p.value).toBeCloseTo((1.1 / 1.04 - 1) * 100, 9);
+  });
+  it('flow deflates by the annual-average price level, stock by the December one', () => {
+    // CPI is 50 in January to November and 100 + 10 i in December of year i; the KPI stays at 100
+    const kpi = annual(2000, Array(12).fill(100));
+    const cpi: InsightSeries = { freq: 'M', obs: Array.from({ length: 12 }, (_, i) => Array.from({ length: 12 }, (_, m) => ({ period: `${2000 + i}-${String(m + 1).padStart(2, '0')}`, value: m === 11 ? 100 + 10 * i : 50 }))).flat() };
+    const stock = computeInsight(kpi, cpi, { headline: 'growth', deflate: 'stock' });
+    const flow = computeInsight(kpi, cpi, { headline: 'growth', deflate: 'flow' });
+    if (!stock.shown || !flow.shown) throw new Error('not shown');
+    expect(stock.latest.value).toBeCloseTo((200 / 210 - 1) * 100, 9); // December 2010 against December 2011
+    const mean = (dec: number) => (11 * 50 + dec) / 12;
+    expect(flow.latest.value).toBeCloseTo((mean(200) / mean(210) - 1) * 100, 9);
+    expect(stock.latest.value).not.toBeCloseTo(flow.latest.value, 3);
+  });
+});

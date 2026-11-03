@@ -62,7 +62,8 @@ export function loadAllManifest(lock?: Lock): ManifestEntry[] {
 export const reviewStrings = () => ({ ...loadStrings('en'), ...manifestStrings(loadAllManifest(), 'en'), ...insightStrings(loadAllInsights(), 'en') });
 
 // Insights (spec insights section 7): hand-written in manifest/insights.yaml, one entry per curated chart, in page order.
-export const HEADLINES = ['spread', 'ratio'] as const;
+export const HEADLINES = ['spread', 'ratio', 'growth'] as const;
+export const DEFLATE = ['flow', 'stock'] as const;
 export const ROLES = ['kpi', 'reference'] as const;
 const INSIGHT_TEXT = ['title', 'measure'] as const;
 
@@ -76,6 +77,10 @@ export interface InsightEntry {
   growth: boolean;
   /** Rebase the lines behind the headline to this year = 100 (index and differently-united series). */
   base?: number;
+  /** Ratio of two index series: take it after rebasing both to `base`. */
+  indexed?: boolean;
+  /** growth: deflate the KPI by the reference price level; `flow` uses its annual average (rents), `stock` its December value (prices). */
+  deflate?: (typeof DEFLATE)[number];
   /** Pair the reference of year t - shift with the KPI of year t; the label is `insight.shift.<shift>`. */
   shift?: number;
   /** Reading template: `insight.template.<template>` in the interface strings. */
@@ -115,6 +120,7 @@ export function checkInsights(entries: InsightEntry[], known: { series: Set<stri
     for (const l of langs) if (INSIGHT_TEXT.some((f) => !e[f]?.[l])) errs.push(`${e.key} needs en and de title and measure`);
     if (!HEADLINES.includes(e.headline)) errs.push(`${e.key}: headline must be one of ${HEADLINES}`);
     if (e.base !== undefined && !Number.isInteger(e.base)) errs.push(`${e.key}: base must be a year`);
+    if (e.deflate !== undefined && !DEFLATE.includes(e.deflate)) errs.push(`${e.key}: deflate must be one of ${DEFLATE}`);
     if (e.shift !== undefined && !(`insight.shift.${e.shift}` in en)) errs.push(`${e.key}: no i18n key insight.shift.${e.shift}`);
     if (!(`insight.template.${e.template}` in en)) errs.push(`${e.key}: no i18n key insight.template.${e.template}`);
     for (const s of e.series) {
