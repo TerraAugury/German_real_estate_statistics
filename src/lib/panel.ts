@@ -19,7 +19,7 @@ const UNCONFIRMED = / \(public reuse not confirmed\)$/;
 function citation(s: Series, lang: Lang, own: boolean): string {
   const name = s.provisional ? s.licence.name.replace(UNCONFIRMED, '') : s.licence.name;
   const chip = s.provisional ? ` <span class="chip">${t(lang, 'source.chip.provisional')}</span>` : '';
-  const line = t(lang, 'source.cite', { publisher: esc(s.publisher), licence: `<a href="${href('sources', lang)}">${esc(name)}</a>${chip}`, period: period(lang, s.lastPeriod) });
+  const line = t(lang, s.credit ? 'source.cite.credit' : 'source.cite', { original: esc(s.credit ?? ''), publisher: esc(s.publisher), licence: `<a href="${href('sources', lang)}">${esc(name)}</a>${chip}`, period: period(lang, s.lastPeriod) });
   return `<span class="cite">${line}${own || s.derived ? ` / ${t(lang, 'source.own')}` : ''}</span>`;
 }
 
@@ -30,8 +30,9 @@ function lineage(s: Series, lang: Lang): string {
     ? t(lang, 'source.detail.direct', { publisher: esc(s.publisher), service: s.service, id, retrieved: day(lang, s.retrievedAt) })
     : t(lang, 'source.detail.dbnomics', { publisher: esc(s.publisher), id });
   const original = s.original ? `<br>${s.original.title ? t(lang, 'source.original', { title: esc(s.original.title), unit: esc(s.original.unit) }) : t(lang, 'source.original.unit', { unit: esc(s.original.unit) })}` : '';
+  const origin = s.original?.source ? `<br>${t(lang, 'source.original.source', { source: esc(s.original.source) })}` : '';
   const terms = s.terms ? `<br>${t(lang, s.derived ? 'source.terms.derived' : 'source.terms.original', { terms: `<a href="${esc(s.terms.url)}">${esc(s.terms.name)}</a>` })}` : '';
-  return `<span class="lineage-item"><strong>${esc(s.title[lang])}</strong><br>${how}${original}${terms}</span>`;
+  return `<span class="lineage-item"><strong>${esc(s.title[lang])}</strong><br>${how}${original}${origin}${terms}</span>`;
 }
 
 /**

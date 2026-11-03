@@ -83,7 +83,7 @@ _DE_: Vorläufig
 _Avoid_: Draft, unverified, beta
 
 **Original source**:
-The third party a series' metadata names as the maker of the data (for example vdpResearch, bulwiengesa, the Federal Employment Agency), when the publisher serving it is a different body. A series with an Original source other than the Bundesbank or ESCB stays Provisional until its permission is confirmed.
+The third party a series' metadata names as the maker of the data (for example vdpResearch, bulwiengesa, the Federal Employment Agency), when the publisher serving it is a different body. A series with an Original source other than the Bundesbank or ESCB stays Provisional until its permission is confirmed. The Citation line and the Sources page credit vdpResearch and bulwiengesa by name (the manifest `credit`), with the publisher named after them.
 _DE_: Ursprungsquelle
 _Avoid_: Provider (that is the operator of the site), Publisher (the body that serves the series, not the maker of the data)
 
