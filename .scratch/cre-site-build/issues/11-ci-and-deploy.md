@@ -20,3 +20,5 @@ Spec: `.scratch/cre-site/spec.md`, Sections 7, 11 and 13.
 - Production deploy runs only when the repository variable `PRODUCTION_DEPLOY` is `true`. While it is off, the `main` job builds with `INCLUDE_PROVISIONAL=1`, because the production build fails on the unreviewed German (ticket 09).
 - Owner decision (2026-11-01): the bot commits snapshots to `work`, then runs `scripts/merge-work-to-main.sh` and pushes both branches, so `main` changes only through the script (AGENTS.md, Branches). Tests, build and deploy run on `main`. This amends spec section 11, which said "commit changed snapshots to `main`".
 - Not verified locally: a real Actions run, the bot push and the Cloudflare upload. actionlint was not installed; the workflow was checked with a strict YAML parse.
+
+- Changed 2026-11-03 at the owner's request: the cron is weekly (`17 5 * * 1`, Mondays), no longer daily. Manual trigger and push to `main` unchanged.

@@ -3,7 +3,7 @@ Website embedding DBnomics data relevant for German real estate
 
 ## Deploy
 
-`.github/workflows/ci.yml` runs daily, on manual trigger and on every push to `main`: fetch, commit changed snapshots to `main`, then test, build and deploy `main` to Cloudflare Pages by direct upload. `main` is the only branch on GitHub; `work` is never pushed. Push `main` with `scripts/push-main.sh`, which first brings CI's snapshot commits into the local `work` and `main`. Cron and manual runs skip the build and deploy when no snapshot changed. The scheduled run uses the workflow file on the repository's default branch, which must be `main`. Pull requests get a preview build with `INCLUDE_PROVISIONAL=1`, uploaded as the `preview-site` artifact.
+`.github/workflows/ci.yml` runs weekly (Mondays), on manual trigger and on every push to `main`: fetch, commit changed snapshots to `main`, then test, build and deploy `main` to Cloudflare Pages by direct upload. `main` is the only branch on GitHub; `work` is never pushed. Push `main` with `scripts/push-main.sh`, which first brings CI's snapshot commits into the local `work` and `main`. Cron and manual runs skip the build and deploy when no snapshot changed. The scheduled run uses the workflow file on the repository's default branch, which must be `main`. Pull requests get a preview build with `INCLUDE_PROVISIONAL=1`, uploaded as the `preview-site` artifact.
 
 **Production deploy is off.** While it is off, the `main` job builds as a preview (`INCLUDE_PROVISIONAL=1`), because the production build fails on unreviewed German. It waits on launch gates 08, 14 and 15 (spec section 13). To switch it on once they resolve, set these in the GitHub repository settings (never commit them):
 

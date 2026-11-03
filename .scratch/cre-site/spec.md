@@ -281,7 +281,7 @@ The Small sample wording was approved by the owner on 2026-11-01. The cycle sent
 
 ## 11. Data pipeline (T12)
 
-**Cadence and caching.** One GitHub Actions cron per day plus manual trigger; no per-source schedules. Per series the cheap `indexed_at` is checked first; observations are downloaded only for series whose `indexed_at` moved. The last response per series is committed as JSON in `data/snapshots/` by the bot. Fetches are sequential, one request per series (about 25), descriptive User-Agent, retry with backoff.
+**Cadence and caching.** One GitHub Actions cron per week (Mondays) plus manual trigger; no per-source schedules. Per series the cheap `indexed_at` is checked first; observations are downloaded only for series whose `indexed_at` moved. The last response per series is committed as JSON in `data/snapshots/` by the bot. Fetches are sequential, one request per series (about 25), descriptive User-Agent, retry with backoff.
 
 **Job order.** Fetch and diff → commit changed snapshots to `main` → run tests → build → deploy to Cloudflare Pages by direct upload. If no snapshot changed, build and deploy are skipped. A person's push to `main` runs the same job. Pull requests get a preview build with `INCLUDE_PROVISIONAL=1`. CI runs tests before every deploy.
 

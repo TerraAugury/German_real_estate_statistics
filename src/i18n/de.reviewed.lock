@@ -1103,9 +1103,9 @@ manifest:oecd-confidence-construction.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:oecd-confidence-construction.attribution:
-  en_hash: 4f86095e64d32968
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: cc079db0d3622409
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-03
 manifest:oecd-confidence-retail.title:
   en_hash: 2b20b0814e457c32
   reviewed_by: Project owner
@@ -1115,9 +1115,9 @@ manifest:oecd-confidence-retail.unit:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:oecd-confidence-retail.attribution:
-  en_hash: 4f86095e64d32968
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: cc079db0d3622409
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-03
 nav.menu:
   en_hash: 99af6606ff9d6cd5
   reviewed_by: terra augury
