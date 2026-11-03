@@ -63,9 +63,9 @@ lang.switch:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 home.purpose:
-  en_hash: b6a88ff89413d76b
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 27f8a101dc5806a9
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-03
 kpi.construction.title:
   en_hash: 5d52e4d5249ba5a1
   reviewed_by: Project owner
@@ -427,9 +427,9 @@ links.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 links.intro:
-  en_hash: 26e193805b665f09
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 7156faea9293d641
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-03
 links.heading:
   en_hash: 48497180d9a00b3e
   reviewed_by: Project owner
@@ -1207,8 +1207,8 @@ links.cell.n:
   reviewed_by: terra augury
   reviewed_on: 2026-11-03
 links.legend:
-  en_hash: 371a13edff90ddd8
-  reviewed_by: terra augury
+  en_hash: ab364563a7e87b7d
+  reviewed_by: Olivier
   reviewed_on: 2026-11-03
 nav.insights:
   en_hash: 2a932f90172e99ea
@@ -1449,4 +1449,24 @@ insight:m.title:
 insight:m.measure:
   en_hash: 6c17c72aa89b9324
   reviewed_by: terra augury
+  reviewed_on: 2026-11-03
+insight.back:
+  en_hash: e733816182ceb0c7
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-03
+link.back:
+  en_hash: 8de5effd8fe32255
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-03
+links.scale.neg:
+  en_hash: 5f22ab1c4c6a6c6d
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-03
+links.scale.zero:
+  en_hash: a57d27d5261e30de
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-03
+links.scale.pos:
+  en_hash: 54d1d770aee3db5c
+  reviewed_by: Olivier
   reviewed_on: 2026-11-03
