@@ -54,11 +54,14 @@ describe('palette', () => {
         for (const fg of [c.ink, c.muted, c.data, c['strong-text']]) expect(contrast(fg, bg), `${scheme} ${fg} on ${bg}`).toBeGreaterThanOrEqual(4.5);
       }
     });
-    it('the better and worse colours are readable as text on the page and the plate, and differ from every other hue', () => {
-      for (const bg of [c.page, c.plate]) for (const fg of [c.better, c.worse]) expect(contrast(fg, bg), `${scheme} ${fg} on ${bg}`).toBeGreaterThanOrEqual(4.5);
+    it('the better and worse tints keep text at least 4.5:1 and graphics at least 3:1, and differ in hue from the other colours', () => {
+      for (const bg of [c['better-tint'], c['worse-tint']]) {
+        for (const fg of [c.ink, c.muted, c.data, c['strong-text']]) expect(contrast(fg, bg), `${scheme} ${fg} on ${bg}`).toBeGreaterThanOrEqual(4.5);
+        for (const g of [c.data, c.strong]) expect(contrast(g, bg), `${scheme} graphic ${g} on ${bg}`).toBeGreaterThanOrEqual(3);
+      }
       // At least 25 degrees of hue from the above/below of the small charts and the two heat hues, and from each other.
-      for (const fg of [c.better, c.worse]) for (const other of [c.above, c.below, c['heat-neg'], c['heat-pos']]) expect(hueGap(fg, other), `${scheme} ${fg} vs ${other}`).toBeGreaterThanOrEqual(25);
-      expect(hueGap(c.better, c.worse)).toBeGreaterThanOrEqual(25);
+      for (const tint of [c['better-tint'], c['worse-tint']]) for (const other of [c.above, c.below, c['heat-neg'], c['heat-pos']]) expect(hueGap(tint, other), `${scheme} ${tint} vs ${other}`).toBeGreaterThanOrEqual(25);
+      expect(hueGap(c['better-tint'], c['worse-tint'])).toBeGreaterThanOrEqual(25);
     });
     it('graphics (lines, bars, borders of controls) are at least 3:1 on the plate', () => {
       for (const g of [c.data, c.strong, c.field, c.above, c.below]) expect(contrast(g, c.plate), `${scheme} ${g}`).toBeGreaterThanOrEqual(3);

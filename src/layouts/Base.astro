@@ -112,8 +112,13 @@ const inKpis = KPIS.some((k) => k.page === page);
       .insight .multiples { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--hair); } .insight .multiples h3 { font-size: var(--step-0); margin: 0 0 .25rem; }
       .insight .unit, .hero .unit, .insight-grid .unit { color: var(--muted); }
       .insight .tag, .hero .tag, .insight-grid .tag { border: 1px solid var(--rule); border-radius: 999px; padding: .1rem .75rem; font-size: 15px; background: var(--plate); }
-      .tone { font-size: 15px; font-weight: 600; padding: .1rem .75rem; border-radius: 999px; border: 1px solid currentColor; background: var(--plate); }
-      .tone.better { color: var(--better); } .tone.worse { color: var(--worse); }
+      /* Insight tone: a light tint of the whole plate (tile, section, Home lead); the word for it is visually hidden. */
+      .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+      .insight-grid a.tone-better, section.tone-better { background: var(--better-tint); }
+      .insight-grid a.tone-worse, section.tone-worse { background: var(--worse-tint); }
+      section.tone-better, section.tone-worse { padding: 1.25rem 1.5rem; border-radius: 6px; }
+      section.tone-better > h2:first-child, section.tone-worse > h2:first-child { margin-top: 0; }
+      @media (max-width: 560px) { section.tone-better, section.tone-worse { padding: 1rem; } }
       .link-panel h4 { margin: 0 0 .25rem; font-size: 15px; font-weight: 500; }
       .link-panel > p { font-size: 15px; max-width: 46em; }
       .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; margin: 1.25rem 0 1.5rem; }
