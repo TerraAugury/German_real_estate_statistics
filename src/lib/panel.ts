@@ -93,10 +93,26 @@ export const linkPanel = (kpi: Series, ind: Series, lang: Lang, geography?: stri
 
 type Shown = Extract<InsightResult, { shown: true }>;
 
+/** An Insight's number in the page locale: ratios to two decimals, everything else to one. */
+const headlineNumber = (e: InsightEntry, lang: Lang) => {
+  const digits = e.headline === 'ratio' ? 2 : 1;
+  return (n: number) => fmt(lang, n, { minimumFractionDigits: digits, maximumFractionDigits: digits });
+};
+
+/** The grid that opens the Insights page: per Insight its title, headline number with unit and verdict tag, or why it is not shown. */
+export function renderInsightIndex(models: { entry: InsightEntry; result: InsightResult }[], lang: Lang): string {
+  const items = models.map(({ entry: e, result: r }) => {
+    const body = r.shown
+      ? `<span class="headline"><span class="num">${headlineNumber(e, lang)(r.latest.value)}</span> <span class="unit">${t(lang, `insight.unit.${e.headline}`)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span></span>`
+      : `<span class="na">${t(lang, 'insight.not_shown', { n: String(r.n), min: String(MIN_OBS) })}</span>`;
+    return `<li><a href="#${esc(e.key)}"><span class="title">${esc(e.title[lang])}</span>${body}</a></li>`;
+  });
+  return `<ul class="insight-grid">${items.join('')}</ul>`;
+}
+
 /** What leads an Insight, shared by its section and the Home hero: headline number with verdict tag, the reading, the chart, its Notes. */
 function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, now: Date) {
-  const digits = e.headline === 'ratio' ? 2 : 1; // ratios two decimals, everything else one
-  const one = (n: number) => fmt(lang, n, { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  const one = headlineNumber(e, lang);
   const unitKey = `insight.unit.${e.headline}`;
   const reading = t(lang, `insight.template.${e.template}`, {
     measure: esc(e.measure[lang]), latest: one(r.latest.value), verdict: t(lang, `insight.verdict.${r.verdict}`), from: r.from, to: r.to, mean: one(r.mean), emp: r.context ? one(r.context.at(-1)!.value) : '',
