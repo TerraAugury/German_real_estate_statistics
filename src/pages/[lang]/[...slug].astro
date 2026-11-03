@@ -1,14 +1,14 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { built, langs, slug, href, type Lang, type BuiltPage } from '../../lib/routes';
-import { t, fmt, period } from '../../lib/i18n';
-import { getSeries, type Series } from '../../lib/series';
+import { t, fmt } from '../../lib/i18n';
+import { getSeries } from '../../lib/series';
 import { lineChart } from '../../lib/chart';
 import { notesFor } from '../../lib/notes';
 import { loadManifest } from '../../lib/manifest';
 import { readProse, unreviewedProse, DRAFT } from '../../lib/review';
 import { sourcesTable } from '../../lib/sources';
-import { compactChart, linkPanel, renderInsight, sourceLine } from '../../lib/panel';
+import { compactChart, latestBlock, linkPanel, renderInsight, sourceLine } from '../../lib/panel';
 import { KPIS, SEGMENTS, SEGMENT_PAGES, cell, headline, naText, viewHref, type GeoGroup, type Segment, type View } from '../../lib/kpis';
 import { availability, kpiPage, linksOverview } from '../../lib/pages';
 import { insightsPage } from '../../lib/insights';
@@ -36,9 +36,6 @@ const segment = page.startsWith('segment-') ? (page.slice('segment-'.length) as 
 const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
   : t(lang, `${page === 'home' ? 'site' : page}.title`);
 // Home cards and Segment pages show the first series of a view as a compact chart.
-// Latest value with its unit; percentages through Intl (spec section 10: EN "3.2%", DE "3,2 %").
-const latest = (x: Series) => x.unit[lang] === '%' ? fmt(lang, x.obs.at(-1)!.value / 100, { style: 'percent', maximumFractionDigits: 2 })
-  : `${fmt(lang, x.obs.at(-1)!.value, { maximumFractionDigits: 2 })} ${x.unit[lang]}`;
 const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
 ---
 <Base lang={lang} page={page} title={title}>
@@ -56,7 +53,6 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
               <h2><a href={v ? viewHref(k, v, lang) : href(k.page, lang)}>{t(lang, k.title)}</a></h2>
               {x ? (
                 <figure>
-                  <p>{t(lang, 'home.card.latest', { value: latest(x), period: period(lang, x.lastPeriod) })}</p>
                   <h3>{x.title[lang]}</h3>
                   <Fragment set:html={compactChart(x, lang)} />
                 </figure>
@@ -169,7 +165,7 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
                 {v.series.map((r) => getSeries(r.key, r.land)).map((x) => (
                   <figure>
                     <h2>{x.title[lang]}</h2>
-                    <Fragment set:html={lineChart(x, lang)} />
+                    <Fragment set:html={latestBlock(x, lang) + lineChart(x, lang)} />
                     {notesFor(x, lang, { on: 'kpi', geography: t(lang, `geo.${v.geo}`) }).map((n) => <p class="note">{n}</p>)}
                     <figcaption set:html={sourceLine(x, lang)} />
                   </figure>

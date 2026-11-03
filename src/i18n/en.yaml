@@ -100,7 +100,9 @@ na.construction.retail: "retail buildings; Destatis has no separate building typ
 nav.segments: Segments
 nav.availability: Availability
 nav.breadcrumb: Breadcrumb
-home.card.latest: "Latest: {value} ({period})"
+latest.change.pct: "{change} on {period}"
+latest.change.diff: "{change} points on {period}"
+latest.unchanged: "No change on {period}"
 home.segments: Browse by Segment
 segment.intro: "One national chart per KPI where a source has it; each chart opens the full KPI page."
 segment.availability: Which KPI and Segment combinations exist, and why the others do not
