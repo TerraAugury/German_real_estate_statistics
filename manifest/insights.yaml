@@ -3,12 +3,15 @@
 # `headline` names how the two series are compared; `growth: true` compares their year-on-year percent changes; `base`
 # rebases the lines behind the headline to that year = 100; `indexed` takes a ratio of two indices after rebasing;
 # `deflate` (flow or stock) deflates a `growth` headline by the reference price level; `shift` pairs the reference of year t - shift.
+# `better` is the direction that is better for an office investor (higher, lower, or none where it depends on whose side you take);
+# the verdict tag is coloured by it, never by the sign of the number.
 # The first `kpi` series against the first `reference` series is the headline.
 
 - key: a
   title: { en: "Initial yield spread over the 10-year Bund, by City class", de: "Renditeabstand der Anfangsrendite zur 10-jährigen Bundesanleihe, nach Städtegruppe" }
   measure: { en: "spread of the 7-city initial yield over the 10-year Bund yield", de: "Abstand der Anfangsrendite in den 7 Großstädten zur Rendite zehnjähriger Bundesanleihen" }
   headline: spread
+  better: higher
   template: spread
   series:
     - { key: initial-yield-combined-7, role: kpi }
@@ -19,6 +22,7 @@
   title: { en: "Initial yield spread over the corporate loan rate", de: "Renditeabstand der Anfangsrendite zum Unternehmenskreditzins" }
   measure: { en: "spread of the 7-city initial yield over the corporate loan rate", de: "Abstand der Anfangsrendite in den 7 Großstädten zum Unternehmenskreditzins" }
   headline: spread
+  better: higher
   template: spread
   series:
     - { key: initial-yield-combined-7, role: kpi }
@@ -28,6 +32,7 @@
   title: { en: "Office prices vs rents", de: "Büropreise und Büromieten" }
   measure: { en: "ratio of the office price index to the rent index", de: "Verhältnis des Büropreisindex zum Mietindex" }
   headline: ratio
+  better: none
   indexed: true
   base: 2015
   template: price-rent
@@ -39,6 +44,7 @@
   title: { en: "Real office rents", de: "Reale Büromieten" }
   measure: { en: "real growth of office rents", de: "reales Wachstum der Büromieten" }
   headline: growth
+  better: higher
   deflate: flow
   base: 2015
   template: real-rents
@@ -50,6 +56,7 @@
   title: { en: "Office rents vs construction costs", de: "Büromieten und Baupreise" }
   measure: { en: "spread of office rent growth over construction price growth", de: "Abstand des Mietwachstums bei Büros zum Baupreisanstieg" }
   headline: spread
+  better: higher
   growth: true
   base: 2015
   template: spread
@@ -61,6 +68,7 @@
   title: { en: "Office rents vs GDP", de: "Büromieten und Wirtschaftsleistung" }
   measure: { en: "spread of office rent growth over real GDP growth", de: "Abstand des Mietwachstums bei Büros zum Wachstum des realen BIP" }
   headline: spread
+  better: higher
   growth: true
   base: 2015
   template: spread
@@ -72,6 +80,7 @@
   title: { en: "Office completions vs permits two years earlier", de: "Büro-Fertigstellungen und Baugenehmigungen zwei Jahre zuvor" }
   measure: { en: "ratio of completions to permits two years earlier", de: "Anteil der Fertigstellungen an den Baugenehmigungen zwei Jahre zuvor" }
   headline: ratio
+  better: none
   base: 2015
   shift: 2
   template: completions-permits
@@ -83,6 +92,7 @@
   title: { en: "Construction costs vs inflation", de: "Baupreise und Inflation" }
   measure: { en: "spread of construction price growth over CPI inflation", de: "Abstand des Baupreisanstiegs zur Inflationsrate" }
   headline: spread
+  better: lower
   growth: true
   base: 2015
   template: spread
@@ -94,6 +104,7 @@
   title: { en: "Office vacancy: 7 major cities vs 127 towns", de: "Büroleerstand: A-Städte und 127 Städte" }
   measure: { en: "spread of office vacancy in the 7 major cities over the 127 towns", de: "Abstand der Büroleerstandsquote in den 7 Großstädten zu den 127 Städten" }
   headline: spread
+  better: lower
   template: spread
   series:
     - { key: office-vacancy-7, role: kpi }
@@ -103,6 +114,7 @@
   title: { en: "Office vacancy and office employment", de: "Büroleerstand und Bürobeschäftigung" }
   measure: { en: "change in office vacancy in the 127 towns", de: "Veränderung des Büroleerstands in den 127 Städten" }
   headline: change
+  better: lower
   base: 2015
   template: office-employment
   series:

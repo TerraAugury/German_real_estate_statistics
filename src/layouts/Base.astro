@@ -112,6 +112,8 @@ const inKpis = KPIS.some((k) => k.page === page);
       .insight .multiples { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--hair); } .insight .multiples h3 { font-size: var(--step-0); margin: 0 0 .25rem; }
       .insight .unit, .hero .unit, .insight-grid .unit { color: var(--muted); }
       .insight .tag, .hero .tag, .insight-grid .tag { border: 1px solid var(--rule); border-radius: 999px; padding: .1rem .75rem; font-size: 15px; background: var(--plate); }
+      .tone { font-size: 15px; font-weight: 600; padding: .1rem .75rem; border-radius: 999px; border: 1px solid currentColor; background: var(--plate); }
+      .tone.better { color: var(--better); } .tone.worse { color: var(--worse); }
       .link-panel h4 { margin: 0 0 .25rem; font-size: 15px; font-weight: 500; }
       .link-panel > p { font-size: 15px; max-width: 46em; }
       .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; margin: 1.25rem 0 1.5rem; }
@@ -141,6 +143,8 @@ const inKpis = KPIS.some((k) => k.page === page);
 
       .scroll { overflow-x: auto; }
       table { border-collapse: separate; border-spacing: 4px; font-size: 15px; line-height: 1.35; margin: 0 -4px; }
+      /* A table written in a prose page (the Methodology direction table): long German words wrap instead of widening the page. */
+      main > table { width: 100%; } main > table th, main > table td { overflow-wrap: anywhere; hyphens: auto; }
       th, td { text-align: left; vertical-align: top; padding: .65rem .75rem; }
       thead th { font: 500 14px/1.2 var(--cond); color: var(--muted); border-bottom: 2px solid var(--ink); }
       tbody th { font-weight: 500; padding-left: 0; }

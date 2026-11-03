@@ -6,7 +6,7 @@ import { href, slug, type Lang } from './routes';
 import type { Series } from './series';
 import type { LinkResult } from '../link/link';
 import { linkResult } from './links';
-import { compareLines, MIN_OBS, type InsightResult } from '../insight/insight';
+import { compareLines, MIN_OBS, tone, type InsightResult } from '../insight/insight';
 import type { InsightEntry } from './manifest';
 
 export const esc = (x: string) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -99,9 +99,19 @@ const headlineNumber = (e: InsightEntry, lang: Lang) => {
   return (n: number) => fmt(lang, n, { minimumFractionDigits: digits, maximumFractionDigits: digits });
 };
 
-/** An Insight's headline number with its unit and verdict tag: the same spans lead its section and tile its index entry. */
+/** The word that colours a verdict tag better or worse; empty where the Insight reads in line or has no better side. */
+const toneSpan = (e: InsightEntry, r: Shown, lang: Lang) => {
+  const v = tone(r.verdict, e.better);
+  return v === 'neutral' ? '' : ` <span class="tone ${v}">${t(lang, `insight.tone.${v}`)}</span>`;
+};
+
+/** An Insight's headline number with its unit, verdict tag and tone: the same spans lead its section, tile its index entry and open Home. */
 const headlineSpans = (e: InsightEntry, r: Shown, lang: Lang) =>
-  `<span class="num">${headlineNumber(e, lang)(r.latest.value)}</span> <span class="unit">${t(lang, `insight.unit.${e.headline}`)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span>`;
+  `<span class="num">${headlineNumber(e, lang)(r.latest.value)}</span> <span class="unit">${t(lang, `insight.unit.${e.headline}`)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span>${toneSpan(e, r, lang)}`;
+
+/** The line above the Insights index that says what "better" and "worse" mean, linking to the Methodology section that lists each direction. */
+export const renderToneLegend = (lang: Lang) =>
+  `<p class="note">${t(lang, 'insights.tone.legend')} <a href="${href('methodology', lang)}#${slug('insights', lang)}">${t(lang, 'insights.tone.more')}</a></p>`;
 
 /** The grid that opens the Insights page: per Insight its title, headline number with unit and verdict tag, or why it is not shown. */
 export function renderInsightIndex(models: { entry: InsightEntry; result: InsightResult }[], lang: Lang): string {

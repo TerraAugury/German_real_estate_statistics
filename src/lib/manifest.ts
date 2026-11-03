@@ -65,6 +65,7 @@ export const reviewStrings = () => ({ ...loadStrings('en'), ...manifestStrings(l
 export const HEADLINES = ['spread', 'ratio', 'growth', 'change'] as const;
 export const DEFLATE = ['flow', 'stock'] as const;
 export const ROLES = ['kpi', 'reference'] as const;
+export const BETTER = ['higher', 'lower', 'none'] as const;
 const INSIGHT_TEXT = ['title', 'measure'] as const;
 
 export interface InsightEntry {
@@ -73,6 +74,8 @@ export interface InsightEntry {
   /** The headline measure named in the reading: "The latest {measure} is ...". */
   measure: Localized;
   headline: (typeof HEADLINES)[number];
+  /** Which way is better for an office investor: the Insight's tone follows its verdict through this, never the sign of the number. `none` where it depends on whose side you take. */
+  better: (typeof BETTER)[number];
   /** Compare year-on-year percent changes instead of levels. */
   growth: boolean;
   /** Rebase the lines behind the headline to this year = 100 (index and differently-united series). */
@@ -119,6 +122,7 @@ export function checkInsights(entries: InsightEntry[], known: { series: Set<stri
     seen.add(e.key);
     for (const l of langs) if (INSIGHT_TEXT.some((f) => !e[f]?.[l])) errs.push(`${e.key} needs en and de title and measure`);
     if (!HEADLINES.includes(e.headline)) errs.push(`${e.key}: headline must be one of ${HEADLINES}`);
+    if (!BETTER.includes(e.better)) errs.push(`${e.key}: better must be one of ${BETTER}`);
     if (e.base !== undefined && !Number.isInteger(e.base)) errs.push(`${e.key}: base must be a year`);
     if (e.deflate !== undefined && !DEFLATE.includes(e.deflate)) errs.push(`${e.key}: deflate must be one of ${DEFLATE}`);
     if (e.shift !== undefined && !(`insight.shift.${e.shift}` in en)) errs.push(`${e.key}: no i18n key insight.shift.${e.shift}`);

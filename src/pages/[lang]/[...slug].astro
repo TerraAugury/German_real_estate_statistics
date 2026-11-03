@@ -8,7 +8,7 @@ import { notesFor } from '../../lib/notes';
 import { loadManifest } from '../../lib/manifest';
 import { readProse, unreviewedProse, DRAFT } from '../../lib/review';
 import { sourcesTable } from '../../lib/sources';
-import { compactChart, latestBlock, linkPanel, renderHero, renderInsight, renderInsightIndex, sourceBlock } from '../../lib/panel';
+import { compactChart, latestBlock, linkPanel, renderHero, renderInsight, renderInsightIndex, renderToneLegend, sourceBlock } from '../../lib/panel';
 import { KPIS, SEGMENTS, SEGMENT_PAGES, cell, naText, viewHref, type GeoGroup, type Segment } from '../../lib/kpis';
 import { availability, firstSeries, homeIndex, kpiPage, linksOverview } from '../../lib/pages';
 import { insightsPage, leadInsight } from '../../lib/insights';
@@ -129,6 +129,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
       {insights.length === 0 ? <p>{t(lang, 'insights.empty')}</p> : (
         <>
           <p>{t(lang, 'insights.intro')}</p>
+          <Fragment set:html={renderToneLegend(lang)} />
           <nav class="jump" aria-label={t(lang, 'insights.jump')}>
             <h2>{t(lang, 'insights.jump')}</h2>
             <Fragment set:html={renderInsightIndex(insights, lang)} />

@@ -3,7 +3,7 @@ import { checkInsights, loadAllManifest, loadManifest, type InsightEntry } from 
 import { loadStrings } from '../src/lib/i18n';
 import { multiplesChart, sharedDomain } from '../src/lib/chart';
 import { insightsPage, loadInsights, visibleInsights } from '../src/lib/insights';
-import { renderInsight } from '../src/lib/panel';
+import { renderInsight, renderToneLegend } from '../src/lib/panel';
 import { KPIS } from '../src/lib/kpis';
 import { kpiPage } from '../src/lib/pages';
 import { getSeries } from '../src/lib/series';
@@ -12,7 +12,7 @@ import type { InsightResult } from '../src/insight/insight';
 afterEach(() => { delete process.env.INCLUDE_PROVISIONAL; });
 
 const entry = (over: Partial<InsightEntry> = {}): InsightEntry => ({
-  key: 'x', title: { en: 'Title', de: 'Titel' }, measure: { en: 'spread', de: 'Abstand' }, headline: 'spread', growth: false, template: 'spread',
+  key: 'x', title: { en: 'Title', de: 'Titel' }, measure: { en: 'spread', de: 'Abstand' }, headline: 'spread', growth: false, better: 'higher', template: 'spread',
   series: [{ key: 'kpi-a', role: 'kpi' }, { key: 'ref-b', role: 'reference' }], ...over,
 });
 const known = { series: new Set(['kpi-a', 'ref-b']), kpis: new Set(['kpi-a']) };
@@ -20,6 +20,7 @@ const en = loadStrings('en');
 
 describe('Insight declaration checks', () => {
   it('a sound entry passes', () => expect(() => checkInsights([entry()], known, en)).not.toThrow());
+  it.each(['higher', 'lower', 'none'] as const)('accepts the better direction %s', (better) => expect(() => checkInsights([entry({ better })], known, en)).not.toThrow());
   it.each<[string, InsightEntry[], string]>([
     ['unknown series', [entry({ series: [{ key: 'kpi-a', role: 'kpi' }, { key: 'nope', role: 'reference' }] })], 'unknown series nope'],
     ['no Real estate KPI series', [entry({ series: [{ key: 'ref-b', role: 'kpi' }, { key: 'ref-b', role: 'reference' }] })], 'needs a Real estate KPI'],
@@ -29,6 +30,8 @@ describe('Insight declaration checks', () => {
     ['base that is not a year', [entry({ base: 'x' as unknown as number })], 'base must be a year'],
     ['shift with no label', [entry({ shift: 7 })], 'no i18n key insight.shift.7'],
     ['deflate that is neither flow nor stock', [entry({ deflate: 'yearly' as 'flow' })], 'deflate must be one of'],
+    ['missing better direction', [entry({ better: undefined })], 'better must be one of'],
+    ['unknown better direction', [entry({ better: 'up' as 'higher' })], 'better must be one of'],
     ['unknown template', [entry({ template: 'nope' })], 'no i18n key insight.template.nope'],
   ])('fails the build on: %s', (_, entries, message) => expect(() => checkInsights(entries, known, en)).toThrow(message));
 });
@@ -107,6 +110,31 @@ describe('"Insights using this KPI" on KPI pages', () => {
     for (const e of loadInsights()) for (const k of KPIS) {
       expect(listed(k.page).includes(e.key), `${e.key} on ${k.page}`).toBe(PAGES[e.key].includes(k.page));
     }
+  });
+});
+
+describe('Methodology: what better means', () => {
+  const direction = { en: { higher: 'higher', lower: 'lower', none: 'neither' }, de: { higher: 'höher', lower: 'niedriger', none: 'keines von beiden' } };
+  it.each(['en', 'de'] as const)('%s: lists every Insight with the direction its declaration gives, so the page and the declaration cannot drift apart', async (lang) => {
+    const { readFileSync } = await import('node:fs');
+    const md = readFileSync(`content/${lang}/methodology.md`, 'utf8');
+    const { loadAllInsights } = await import('../src/lib/manifest');
+    for (const e of loadAllInsights()) {
+      const row = md.split('\n').find((l) => l.startsWith(`| ${e.title[lang].replace(/^\[DRAFT\] ?/, '')} |`));
+      expect(row, `${lang} ${e.key}`).toBeDefined();
+      expect(row!.split('|')[2].trim(), `${lang} ${e.key}`).toBe(direction[lang][e.better]);
+    }
+  });
+  it.each(['en', 'de'] as const)('%s: says the tone is a judgement from one point of view and the sign does not decide', async (lang) => {
+    const { readFileSync } = await import('node:fs');
+    const md = readFileSync(`content/${lang}/methodology.md`, 'utf8');
+    expect(md).toMatch(lang === 'en' ? /\*\*Better and worse\.\*\*/ : /\*\*Besser und schlechter\.\*\*/);
+    expect(md).toMatch(lang === 'en' ? /investor in office property/ : /Anlegern in Büroimmobilien/);
+    expect(md).toMatch(lang === 'en' ? /sign of the number does not decide/ : /Vorzeichen der Zahl entscheidet nicht/);
+  });
+  it('the legend above the Insights index links to this section in both languages', () => {
+    expect(renderToneLegend('en')).toContain('<a href="/en/methodology#insights">');
+    expect(renderToneLegend('de')).toContain('<a href="/de/methodik#einblicke">');
   });
 });
 

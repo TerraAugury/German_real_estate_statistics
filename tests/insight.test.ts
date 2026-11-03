@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { compareLines, computeInsight, verdict, type InsightSeries } from '../src/insight/insight';
+import { compareLines, computeInsight, tone, verdict, type InsightSeries } from '../src/insight/insight';
 
 const annual = (from: number, values: number[]): InsightSeries => ({
   freq: 'A', obs: values.map((value, i) => ({ period: String(from + i), value })),
@@ -196,5 +196,31 @@ describe('Insight module: every compared series counts toward the shared period'
   });
   it('and under 10 shared observations it is not shown', () => {
     expect(computeInsight(ramp(2000, 14), ramp(2000, 14), { also: [ramp(2006, 8)] })).toEqual({ shown: false, n: 8, reason: 'too_few' });
+  });
+});
+
+// Insight tone: the Verdict read through the direction the Insight declares as better. The sign of the number never decides.
+describe('Insight module: the tone of a verdict', () => {
+  it('reads by direction: higher is better where higher is better, worse where lower is better, and the reverse for lower', () => {
+    expect([tone('higher', 'higher'), tone('lower', 'higher')]).toEqual(['better', 'worse']);
+    expect([tone('higher', 'lower'), tone('lower', 'lower')]).toEqual(['worse', 'better']);
+  });
+  it('in line is neutral whichever way is better, and an Insight with no better side is always neutral', () => {
+    expect([tone('in_line', 'higher'), tone('in_line', 'lower'), tone('in_line', 'none')]).toEqual(['neutral', 'neutral', 'neutral']);
+    expect([tone('higher', 'none'), tone('lower', 'none')]).toEqual(['neutral', 'neutral']);
+  });
+  it('a negative latest value is better when it is lower than an average and lower is better (vacancy falling)', () => {
+    const r = computeInsight(annual(2000, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]), annual(2000, [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3]), { headline: 'spread' });
+    if (!r.shown) throw new Error('not shown');
+    expect(r.latest.value).toBeLessThan(0);
+    expect(tone(r.verdict, 'lower')).toBe('better');
+  });
+  it('a negative latest value above a more negative average is "higher than" and reads by direction, not by sign', () => {
+    const r = computeInsight(annual(2000, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), annual(2000, [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0.3]), { headline: 'spread' });
+    if (!r.shown) throw new Error('not shown');
+    expect(r.latest.value).toBeLessThan(0);
+    expect(r.verdict).toBe('higher');
+    expect(tone(r.verdict, 'higher')).toBe('better');
+    expect(tone(r.verdict, 'lower')).toBe('worse');
   });
 });
