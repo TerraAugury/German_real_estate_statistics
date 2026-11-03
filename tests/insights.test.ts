@@ -25,6 +25,7 @@ describe('Insight declaration checks', () => {
     ['missing German title', [entry({ title: { en: 'Title', de: '' } })], 'needs en and de title'],
     ['unknown headline kind', [entry({ headline: 'median' as 'spread' })], 'headline must be one of'],
     ['base that is not a year', [entry({ base: 'x' as unknown as number })], 'base must be a year'],
+    ['shift with no label', [entry({ shift: 7 })], 'no i18n key insight.shift.7'],
     ['unknown template', [entry({ template: 'nope' })], 'no i18n key insight.template.nope'],
   ])('fails the build on: %s', (_, entries, message) => expect(() => checkInsights(entries, known, en)).toThrow(message));
 });
@@ -55,9 +56,9 @@ describe('Provisional gate', () => {
       entry({ key: 'out', series: [{ key: some[0], role: 'kpi' }, { key: 'bund-yield-10y', role: 'reference' }] })];
     expect(visibleInsights(insights, live).map((e) => e.key)).toEqual(['in']);
   });
-  it('production shows Insight J; the declarations pass every build check', () => {
+  it('production shows exactly Insights C and J; the declarations pass every build check', () => {
     expect(() => loadInsights()).not.toThrow();
-    expect(insightsPage().map((i) => i.entry.key)).toContain('j');
+    expect(insightsPage().map((i) => i.entry.key).sort()).toEqual(['c', 'j']);
   });
   it('a preview build shows at least what production shows', () => {
     const production = insightsPage().map((i) => i.entry.key);
@@ -75,6 +76,15 @@ describe('Insight J on real data', () => {
     const j = insightsPage().find((i) => i.entry.key === 'j')!;
     expect(j.result.shown).toBe(true);
     if (j.result.shown) expect(j.result.n).toBeGreaterThanOrEqual(10);
+  });
+});
+
+describe('Insight C on real data', () => {
+  it('compares completions with the permits of two years earlier', () => {
+    const c = insightsPage().find((i) => i.entry.key === 'c')!;
+    expect(c.entry).toMatchObject({ headline: 'ratio', shift: 2 });
+    expect(c.result.shown).toBe(true);
+    if (c.result.shown) expect(+c.result.from).toBeGreaterThanOrEqual(2010);
   });
 });
 
@@ -125,5 +135,23 @@ describe('Insight rendering', () => {
   });
   it('no short-history Note when the history is long enough', () => {
     expect(renderInsight(j, shown, series, 'en')).not.toContain('Short history');
+  });
+  describe('a ratio with a shifted reference', () => {
+    const c = entry({ key: 'c', headline: 'ratio', shift: 2, template: 'completions-permits', title: { en: 'Office completions vs permits two years earlier', de: 'Büro-Fertigstellungen und Baugenehmigungen zwei Jahre zuvor' } });
+    const cs = [getSeries('construction-completions-office'), getSeries('construction-permits-office')];
+    const ratio: InsightResult = { ...shown as Extract<InsightResult, { shown: true }>, mean: 0.8, latest: { period: '2022', value: 0.8346 }, verdict: 'lower' };
+    it('EN: two decimals, "times", and the exact reading', () => {
+      const h = renderInsight(c, ratio, cs, 'en');
+      expect(h).toContain('0.83');
+      expect(h).toContain('Completions were 0.83 times the permits issued two years earlier, lower than the 2020-2022 average of 0.80.');
+    });
+    it('DE: decimal comma and the German reading', () => {
+      expect(renderInsight(c, ratio, cs, 'de')).toContain('Die Fertigstellungen entsprachen dem 0,83-Fachen der zwei Jahre zuvor erteilten Baugenehmigungen, niedriger als der 2020-2022-Durchschnitt von 0,80.');
+    });
+    it('the shifted series is named in the legend and the chart label', () => {
+      const h = renderInsight(c, ratio, cs, 'en');
+      expect(h).toContain(`Ochre line: ${cs[1].title.en}, two years earlier.`);
+      expect(h).toContain(`${cs[0].title.en} and ${cs[1].title.en}, two years earlier, rebased`);
+    });
   });
 });

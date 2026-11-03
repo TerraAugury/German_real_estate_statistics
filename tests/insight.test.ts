@@ -95,3 +95,28 @@ describe('Insight module: lines behind the headline, rebased', () => {
     expect(r.lines.base).toBe('2005');
   });
 });
+
+describe('Insight module: ratio and the shifted reference', () => {
+  const ramp = (from: number, n: number, k: number) => annual(from, Array.from({ length: n }, (_, i) => k * (1 + i)));
+  it('the ratio is KPI over reference', () => {
+    const r = computeInsight(ramp(2000, 12, 6), ramp(2000, 12, 3), { headline: 'ratio' });
+    expect(r).toMatchObject({ shown: true, n: 12, mean: 2, sd: 0, verdict: 'in_line' });
+  });
+  it('a year with a zero reference has no ratio and is left out', () => {
+    const ref = ramp(2000, 12, 3);
+    ref.obs[4].value = 0;
+    const r = computeInsight(ramp(2000, 12, 6), ref, { headline: 'ratio' });
+    expect(r).toMatchObject({ shown: true, n: 11 });
+    if (r.shown) expect(r.points.map((p) => p.period)).not.toContain('2004');
+  });
+  it('shift pairs the KPI of year t with the reference of year t minus the shift', () => {
+    // completions from 2010, permits from 2008: 2010 completions against 2008 permits
+    const r = computeInsight(ramp(2010, 16, 2), ramp(2008, 16, 1), { headline: 'ratio', shift: 2 });
+    expect(r).toMatchObject({ shown: true, from: '2010', to: '2025', n: 16, mean: 2 });
+  });
+  it('the lines follow the shift, so the shifted line sits under the year it is compared with', () => {
+    const r = computeInsight(ramp(2010, 16, 2), ramp(2008, 16, 1), { headline: 'ratio', shift: 2 });
+    if (!r.shown) throw new Error('not shown');
+    expect(r.lines.reference[0]).toEqual({ period: '2010', value: 1 }); // the 2008 value, shown at 2010
+  });
+});

@@ -139,7 +139,7 @@ insight.tag.in_line: im Einklang mit dem Durchschnitt
 insight.headline: "{value} Prozentpunkte"
 insight.average: "Durchschnitt {value}"
 insight.chart.label: "{title}: {measure} im Zeitverlauf"
-insight.unit.points: Prozentpunkte
+insight.unit.spread: Prozentpunkte
 insight.not_shown: "Einblick nicht angezeigt: zu wenige Beobachtungen (n = {n}); mindestens {min} sind nötig."
 insight.short_history: "Kurze Zeitreihe ({n} Jahre, {from} bis {to}): der Durchschnitt beruht auf wenigen Daten."
 insight.method: So wird gerechnet
@@ -147,3 +147,7 @@ insight.axis.rebased: "Index, {year} = 100"
 insight.multiples.title: "{kpi} im Vergleich zu {reference}"
 insight.multiples.label: "{kpi} und {reference}, umbasiert"
 insight.multiples.legend: "Blaue Linie: {kpi}. Ockerfarbene Linie: {reference}. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt."
+insight.template.completions-permits: "Die Fertigstellungen entsprachen dem {latest}-Fachen der zwei Jahre zuvor erteilten Baugenehmigungen, {verdict} {from}-{to}-Durchschnitt von {mean}."
+insight.unit.ratio: mal
+insight.shift.2: zwei Jahre zuvor
+insight.shifted: "{title}, {shift}"

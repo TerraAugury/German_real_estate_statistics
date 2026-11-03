@@ -6,6 +6,7 @@ export const MIN_OBS = 10;
 /** Under this many, the average rests on too little history and the page says so. */
 export const SHORT_OBS = 20;
 
+export type Headline = 'spread' | 'ratio';
 export type Verdict = 'higher' | 'lower' | 'in_line';
 export type InsightSeries = Pick<LinkSeries, 'freq' | 'obs'>;
 type Points = { period: string; value: number }[];
@@ -34,15 +35,19 @@ function lines(a: Map<number, number>, b: Map<number, number>, years: number[], 
 }
 
 /**
- * KPI minus reference, in points, over the years both series cover; with `growth`, of their year-on-year percent changes.
+ * The headline measure over the years both series cover: KPI minus reference in points (`spread`, the default) or KPI over
+ * reference (`ratio`; a year with a zero reference has none and is left out). With `growth`, of their year-on-year percent
+ * changes. With `shift`, the reference of year t - shift is paired with the KPI of year t.
  * ponytail: annual only. Every catalogued Insight runs at the coarsest frequency of its series, which is annual; add a quarterly target when one is declared.
  */
-export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opts: { growth: boolean; base?: number }): InsightResult {
-  const [la, lb] = [kpi, reference].map((s) => levels(s, 'A'));
+export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opts: { headline?: Headline; growth?: boolean; base?: number; shift?: number } = {}): InsightResult {
+  const [la, lb0] = [kpi, reference].map((s) => levels(s, 'A'));
+  const lb = new Map([...lb0].map(([y, v]) => [y + (opts.shift ?? 0), v]));
   const [a, b] = opts.growth ? [la, lb].map((l) => changes(l, 'A', 'pct')) : [la, lb];
-  const years = [...a.keys()].filter((y) => b.has(y)).sort((x, y) => x - y);
+  const ratio = opts.headline === 'ratio';
+  const years = [...a.keys()].filter((y) => b.has(y) && !(ratio && b.get(y) === 0)).sort((x, y) => x - y);
   if (years.length < MIN_OBS) return { shown: false, n: years.length, reason: 'too_few' };
-  const points = years.map((y) => ({ period: String(y), value: a.get(y)! - b.get(y)! }));
+  const points = years.map((y) => ({ period: String(y), value: ratio ? a.get(y)! / b.get(y)! : a.get(y)! - b.get(y)! }));
   const latest = points.at(-1)!;
   const mean = points.reduce((sum, p) => sum + p.value, 0) / points.length;
   const sd = Math.sqrt(points.reduce((sum, p) => sum + (p.value - mean) ** 2, 0) / points.length); // population SD, whole period

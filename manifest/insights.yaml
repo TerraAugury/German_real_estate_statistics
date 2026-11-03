@@ -14,3 +14,14 @@
   series:
     - { key: construction-price-office, role: kpi }
     - { key: cpi, role: reference }
+
+- key: c
+  title: { en: "Office completions vs permits two years earlier", de: "Büro-Fertigstellungen und Baugenehmigungen zwei Jahre zuvor" }
+  measure: { en: "ratio of completions to permits two years earlier", de: "Anteil der Fertigstellungen an den Baugenehmigungen zwei Jahre zuvor" }
+  headline: ratio
+  base: 2015
+  shift: 2
+  template: completions-permits
+  series:
+    - { key: construction-completions-office, role: kpi }
+    - { key: construction-permits-office, role: reference }

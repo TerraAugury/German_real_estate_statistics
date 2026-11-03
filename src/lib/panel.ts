@@ -55,19 +55,22 @@ export const linkPanel = (kpi: Series, ind: Series, lang: Lang, geography?: stri
 export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[], lang: Lang, now = new Date()): string {
   const head = `<h2>${esc(e.title[lang])}</h2>`;
   if (!r.shown) return `<section class="insight" id="${esc(e.key)}">${head}<p class="na">${t(lang, 'insight.not_shown', { n: String(r.n), min: String(MIN_OBS) })}</p></section>`;
-  const one = (n: number) => fmt(lang, n, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const digits = e.headline === 'ratio' ? 2 : 1; // ratios two decimals, everything else one
+  const one = (n: number) => fmt(lang, n, { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  const unitKey = `insight.unit.${e.headline}`;
   const reading = t(lang, `insight.template.${e.template}`, {
     measure: esc(e.measure[lang]), latest: one(r.latest.value), verdict: t(lang, `insight.verdict.${r.verdict}`), from: r.from, to: r.to, mean: one(r.mean),
   });
   const notes = notesFor(series[0], lang, { on: 'insight', rest: series.slice(1), short: r.short ? { from: r.from, to: r.to, n: r.n } : undefined }, now);
-  const chart = insightChart(r, { unit: t(lang, 'insight.unit.points'), average: t(lang, 'insight.average', { value: one(r.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
+  const chart = insightChart(r, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(r.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
   const [kpi, reference] = [series[e.series.findIndex((x) => x.role === 'kpi')], series[e.series.findIndex((x) => x.role === 'reference')]];
+  const refTitle = e.shift ? t(lang, 'insight.shifted', { title: reference.title[lang], shift: t(lang, `insight.shift.${e.shift}`) }) : reference.title[lang];
   const unit = r.lines.base ? t(lang, 'insight.axis.rebased', { year: r.lines.base }) : kpi.unit[lang];
-  const multiples = `<div class="multiples"><h3>${t(lang, 'insight.multiples.title', { kpi: esc(kpi.title[lang]), reference: esc(reference.title[lang]) })}</h3>`
-    + multiplesChart(r.lines, { unit, title: t(lang, 'insight.multiples.label', { kpi: kpi.title[lang], reference: reference.title[lang] }) }, sharedDomain([r.lines]), lang)
-    + `<p class="note">${t(lang, 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(reference.title[lang]) })}</p></div>`;
+  const multiples = `<div class="multiples"><h3>${t(lang, 'insight.multiples.title', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</h3>`
+    + multiplesChart(r.lines, { unit, title: t(lang, 'insight.multiples.label', { kpi: kpi.title[lang], reference: refTitle }) }, sharedDomain([r.lines]), lang)
+    + `<p class="note">${t(lang, 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p></div>`;
   return `<section class="insight" id="${esc(e.key)}">${head}`
-    + `<p class="headline"><span class="num">${one(r.latest.value)}</span> <span class="unit">${t(lang, 'insight.unit.points')}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span></p>`
+    + `<p class="headline"><span class="num">${one(r.latest.value)}</span> <span class="unit">${t(lang, unitKey)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span></p>`
     + `<p>${reading}</p>`
     + `<figure>${chart}${multiples}${noteHtml(notes)}<figcaption>${series.map((x) => sourceLine(x, lang, true)).join('<br>')}<br><a href="${href('methodology', lang)}#insights">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
 }

@@ -4,11 +4,17 @@
 
 **Blocked by:** 02, 03
 
-**Status:** ready-for-agent
+**Status:** done
 
 Spec: `.scratch/insights/spec.md`, Section 2 (C) and Section 4 (ratio template).
 
-- [ ] Shift transform: moves one series forward by whole years and records it; tests show the shift changing the shared period
-- [ ] Ratio headline and its reading template ("Completions were {latest} times the permits issued two years earlier, {verdict} the {from}-{to} average of {mean}")
-- [ ] The permits line is labelled "permits, two years earlier" in both languages
-- [ ] Production shows exactly J and C; a test pins that no other Insight is public today
+- [x] Shift transform: moves one series forward by whole years and records it; tests show the shift changing the shared period
+- [x] Ratio headline and its reading template ("Completions were {latest} times the permits issued two years earlier, {verdict} the {from}-{to} average of {mean}")
+- [x] The permits line is labelled "permits, two years earlier" in both languages
+- [x] Production shows exactly J and C; a test pins that no other Insight is public today
+
+## Notes
+
+- Declaration options: `shift: 2` pairs the reference of year t - 2 with the KPI of year t; `insight.shift.<n>` is the label ("two years earlier") and a shift with no label fails the build. A year with a zero reference has no ratio and is left out.
+- The template is `completions-permits`; Insight G gets its own ratio template. Ratios show two decimals and the unit "times"; the headline unit key follows the headline kind (`insight.unit.spread`, `insight.unit.ratio`).
+- Production shows J and C; a test pins exactly that.
