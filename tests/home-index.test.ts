@@ -22,7 +22,7 @@ describe('Home index model', () => {
     }
   });
   it('a KPI with no public series keeps a row without series (licence not confirmed)', () => {
-    const production = loadManifest(false);
+    const production = loadManifest(false).filter((m) => m.dbnomics_provider !== 'BUBA'); // as if the Bundesbank licence were withdrawn
     const rows = homeIndex(production);
     expect(rows).toHaveLength(KPIS.length);
     for (const r of rows) {

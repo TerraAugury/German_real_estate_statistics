@@ -59,12 +59,12 @@ describe('Provisional gate', () => {
     const live = loadManifest(false);
     const some = live.slice(0, 2).map((m) => m.key);
     const insights = [entry({ key: 'in', series: [{ key: some[0], role: 'kpi' }, { key: some[1], role: 'reference' }] }),
-      entry({ key: 'out', series: [{ key: some[0], role: 'kpi' }, { key: 'bund-yield-10y', role: 'reference' }] })];
+      entry({ key: 'out', series: [{ key: some[0], role: 'kpi' }, { key: 'withheld-series', role: 'reference' }] })];
     expect(visibleInsights(insights, live).map((e) => e.key)).toEqual(['in']);
   });
-  it('production shows exactly Insights C and J; the declarations pass every build check', () => {
+  it('production shows every declared Insight (every series is cleared); the declarations pass every build check', () => {
     expect(() => loadInsights()).not.toThrow();
-    expect(insightsPage().map((i) => i.entry.key).sort()).toEqual(['c', 'j']);
+    expect(insightsPage().map((i) => i.entry.key).sort()).toEqual(loadInsights().map((e) => e.key).sort());
   });
   it('a preview build shows at least what production shows', () => {
     const production = insightsPage().map((i) => i.entry.key);
@@ -101,9 +101,10 @@ describe('"Insights using this KPI" on KPI pages', () => {
     c: ['construction'], j: ['construction'], e: ['kpi-office-vacancy'], m: ['kpi-office-vacancy'],
   };
   const listed = (page: string) => kpiPage(KPIS.find((k) => k.page === page)!).insights.map((e) => e.key);
-  it('production: Construction lists C and J in page order, no other KPI page has a list', () => {
-    expect(listed('construction')).toEqual(['c', 'j']);
-    for (const k of KPIS.filter((k) => k.page !== 'construction')) expect(listed(k.page)).toEqual([]);
+  it('production lists the same Insights as preview', () => {
+    const production = KPIS.map((k) => listed(k.page));
+    process.env.INCLUDE_PROVISIONAL = '1';
+    expect(KPIS.map((k) => listed(k.page))).toEqual(production);
   });
   it('preview: every declared Insight is listed on the KPI pages of its Real estate KPI series, and only there', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
@@ -152,8 +153,7 @@ function spans(r: InsightResult, from: string, n: number) {
   if (r.shown) { expect(r.n).toBeGreaterThanOrEqual(n); expect(+r.to).toBeGreaterThanOrEqual(2025); }
 }
 
-describe('Insight A on real data (Provisional: preview only)', () => {
-  it('is hidden in production', () => expect(insightsPage().map((i) => i.entry.key)).not.toContain('a'));
+describe('Insight A on real data (cleared)', () => {
   it('preview: the 7-city yield against the annual Bund mean over 1995 to 2025, both City classes, never 120', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
     const a = insightsPage().find((i) => i.entry.key === 'a')!;
@@ -168,7 +168,7 @@ describe('Insight A on real data (Provisional: preview only)', () => {
   });
 });
 
-describe('Spread Insights F, E, D and I (Provisional: preview only)', () => {
+describe('Spread Insights F, E, D and I (cleared)', () => {
   // Shared periods from the catalogue (insights spec section 2); growth Insights lose the first year of the levels.
   it.each([
     ['f', 'initial-yield-combined-7', 'loan-rate-nfc', '2011', '2025', 15],
@@ -176,7 +176,6 @@ describe('Spread Insights F, E, D and I (Provisional: preview only)', () => {
     ['d', 'rent-index-de-office-a', 'construction-price-office', '2005', '2025', 21],
     ['i', 'rent-index-de-office-a', 'gdp-real', '2005', '2025', 21],
   ])('%s: %s against %s over %s to %s', (key, kpi, reference, from, to, n) => {
-    expect(insightsPage().map((i) => i.entry.key)).not.toContain(key);
     process.env.INCLUDE_PROVISIONAL = '1';
     const x = insightsPage().find((i) => i.entry.key === key)!;
     expect(x.entry.series).toEqual([{ key: kpi, role: 'kpi' }, { key: reference, role: 'reference' }]);
@@ -188,9 +187,8 @@ describe('Spread Insights F, E, D and I (Provisional: preview only)', () => {
   });
 });
 
-describe('Insights G and B (Provisional: preview only)', () => {
+describe('Insights G and B (cleared)', () => {
   it('G: the price index over the rent index, both rebased to 2015, 2013 to 2025', () => {
-    expect(insightsPage().map((i) => i.entry.key)).not.toContain('g');
     process.env.INCLUDE_PROVISIONAL = '1';
     const g = insightsPage().find((i) => i.entry.key === 'g')!;
     expect(g.entry).toMatchObject({ headline: 'ratio', indexed: true, base: 2015 });
@@ -200,7 +198,6 @@ describe('Insights G and B (Provisional: preview only)', () => {
     expect(renderInsight(g.entry, g.result, g.series, 'en')).toMatch(/The price index stands at [\d.]+ times the rent index, (higher than|lower than|in line with) the 2013-\d{4} average of [\d.]+\./);
   });
   it('B: real office rent growth, deflated as a flow by the annual-average CPI, 2005 to 2025', () => {
-    expect(insightsPage().map((i) => i.entry.key)).not.toContain('b');
     process.env.INCLUDE_PROVISIONAL = '1';
     const b = insightsPage().find((i) => i.entry.key === 'b')!;
     expect(b.entry).toMatchObject({ headline: 'growth', deflate: 'flow', base: 2015 });
@@ -218,9 +215,8 @@ describe('Insights G and B (Provisional: preview only)', () => {
   });
 });
 
-describe('Insight M on real data (Provisional: preview only)', () => {
+describe('Insight M on real data (cleared)', () => {
   it('office vacancy change in the 127 towns, with office employment growth as context, 1996 to 2025', () => {
-    expect(insightsPage().map((i) => i.entry.key)).not.toContain('m');
     process.env.INCLUDE_PROVISIONAL = '1';
     const m = insightsPage().find((i) => i.entry.key === 'm')!;
     expect(m.entry).toMatchObject({ headline: 'change', base: 2015 });

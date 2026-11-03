@@ -31,9 +31,12 @@ describe('Link pairs per view (spec sections 5, 6)', () => {
   it('the KPI side is the view’s first series, Land included', () => {
     expect(viewLinks(view('construction', 'office', 'de-by'), preview)[0]).toMatchObject({ kpi: 'construction-permits-office', land: '09' });
   });
-  it('default build drops pairs with a provisional series', () =>
-    expect(viewLinks(view('construction', 'office'), loadManifest(false)).map((l) => l.indicator))
-      .toEqual(['euribor-3m', 'cpi', 'construction-price-office']));
+  it('default build drops pairs with a series that is not public', () => {
+    const indicators = (m: ReturnType<typeof loadManifest>) => viewLinks(view('construction', 'office'), m).map((l) => l.indicator);
+    const withheld = loadManifest(false).filter((m) => m.key !== 'cpi');
+    expect(indicators(withheld)).not.toContain('cpi');
+    expect(indicators(withheld)).toContain('euribor-3m');
+  });
 });
 
 describe('annual minimum of 10 pairs on real data (spec section 6)', () => {

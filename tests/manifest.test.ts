@@ -28,8 +28,11 @@ describe('manifest content (spec sections 3, 4, 5)', () => {
     expect(new Set(all.map((m) => m.key)).size).toBe(all.length);
     for (const m of all) { expect(m.attribution.en).toBeTruthy(); expect(m.attribution.de).toBeTruthy(); }
   });
-  it('flags exactly Bundesbank and OECD series as provisional; ECB and Destatis are not', () => {
-    for (const m of all) expect(m.provisional, m.key).toBe(['BUBA', 'OECD'].includes(m.dbnomics_provider));
+  it('every Bundesbank and OECD series is cleared with a recorded permission; nothing is provisional', () => {
+    for (const m of all) {
+      expect(m.provisional, m.key).toBe(false);
+      expect(!!m.cleared, m.key).toBe(['BUBA', 'OECD'].includes(m.dbnomics_provider));
+    }
     expect(all.filter((m) => m.dbnomics_provider === 'BUBA' && m.dataset !== 'BBDZ1').map((m) => m.dataset).sort()).toEqual(['BBDL1', 'BBIM1', 'BBNZ1', 'BBSIS']);
   });
   it('covers the economic indicators with spec ids and start years', () => {
@@ -54,8 +57,8 @@ describe('manifest content (spec sections 3, 4, 5)', () => {
     expect(byKey('construction-completions-warehouse').dataset).toBe('31121LJ001');
     expect(byKey('construction-permits-commercial').expected_start).toBe(2015);
   });
-  it('default build keeps only ECB and Destatis series', () => {
-    expect(new Set(loadManifest(false).map((m) => m.dbnomics_provider))).toEqual(new Set(['DESTATIS', 'ECB']));
+  it('default build keeps every series', () => {
+    expect(loadManifest(false)).toHaveLength(all.length);
   });
 });
 
@@ -103,7 +106,7 @@ it('Sources table has one row per live series with publisher, id, licence, attri
     expect(html.match(/<tr>/g)).toHaveLength(live.length + 1); // + header
     expect(html).toContain(live[0].attribution[lang].replace(/&/g, '&amp;'));
     expect(html).toContain('31111LJ001/{01–16}');
-    expect(html).not.toContain('BBDZ1');
+    expect(html).toContain('BBDZ1');
   }
 });
 

@@ -22,6 +22,8 @@ export interface ManifestEntry {
   /** The original source credited by name next to the figures (vdpResearch GmbH, bulwiengesa AG): Bundesbank series made by a third party. */
   credit?: string;
   publisher: string; attribution: Localized; licence: { name: string; url: string }; provisional: boolean;
+  /** The permission that lets a third-party series go public; without it the series must stay provisional. */
+  cleared?: string;
   title: Localized; unit: Localized; frequency: string; expected_start: number;
   seasonal_adjustment: (typeof ADJUSTMENTS)[number]; resampling: (typeof RESAMPLING)[number];
   short_window: boolean; short_window_sentence?: string; scope: (typeof SCOPES)[number][];
