@@ -39,6 +39,10 @@ describe('parseCube and extractSeries', () => {
     const employment = [...head(['DINSG', 'WZ08R1'], [['ERW063', '1000']]), 'D;DG;WZ08-K-N;2024;7844;p', 'D;DG;WZ08-K-N;2025;0;..', ''].join('\n');
     expect(extractSeries(parseCube(employment, bad), 'DG.WZ08-K-N.ERW063', 'annual')).toMatchObject({ period: ['2024', '2025'], value: [7844, null], unit: '1000' });
   });
+  it('the flag "..." is missing too', () => {
+    const employment = [...head(['DINSG', 'WZ08R1'], [['ERW063', '1000']]), 'D;DG;WZ08-K-N;2024;7844;p', 'D;DG;WZ08-K-N;2025;0;...', ''].join('\n');
+    expect(extractSeries(parseCube(employment, bad), 'DG.WZ08-K-N.ERW063', 'annual').value).toEqual([7844, null]);
+  });
   it('a month axis makes monthly and quarterly periods (reporting months 2, 5, 8, 11 are Q1 to Q4)', () => {
     expect(extractSeries(parseCube(cpi, bad), 'DG.PREIS1', 'monthly').period).toEqual(['1991-01', '1991-02', '1992-01']);
     const q = extractSeries(parseCube(quarterly, bad), 'DG.BAULEISTBW.BPNG1.STEMW1.PRE002', 'quarterly');

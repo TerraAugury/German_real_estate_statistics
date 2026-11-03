@@ -118,12 +118,18 @@ describe('Methodology', () => {
   });
 });
 
+/** Real data gains a year at each annual refresh: the start year is fixed by the series, the end year and count may only grow. */
+function spans(r: InsightResult, from: string, n: number) {
+  expect(r).toMatchObject({ shown: true, from });
+  if (r.shown) { expect(r.n).toBeGreaterThanOrEqual(n); expect(+r.to).toBeGreaterThanOrEqual(2025); }
+}
+
 describe('Insight A on real data (Provisional: preview only)', () => {
   it('is hidden in production', () => expect(insightsPage().map((i) => i.entry.key)).not.toContain('a'));
   it('preview: the 7-city yield against the annual Bund mean over 1995 to 2025, both City classes, never 120', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
     const a = insightsPage().find((i) => i.entry.key === 'a')!;
-    expect(a.result).toMatchObject({ shown: true, from: '1995', to: '2025', n: 31 });
+    spans(a.result, '1995', 31);
     expect(a.entry.series.map((s) => s.key)).toEqual(['initial-yield-combined-7', 'initial-yield-combined-127', 'bund-yield-10y']);
     const h = renderInsight(a.entry, a.result, a.series, 'en');
     expect(h.match(/<svg/g)).toHaveLength(6); // main chart, then one small chart per City class
@@ -147,7 +153,7 @@ describe('Spread Insights F, E, D and I (Provisional: preview only)', () => {
     const x = insightsPage().find((i) => i.entry.key === key)!;
     expect(x.entry.series).toEqual([{ key: kpi, role: 'kpi' }, { key: reference, role: 'reference' }]);
     expect(x.entry.headline).toBe('spread');
-    expect(x.result).toMatchObject({ shown: true, from, to, n });
+    spans(x.result, from, n);
     const h = renderInsight(x.entry, x.result, x.series, 'en');
     expect(h).toContain(`id="${key}"`);
     expect(h).toMatch(/The latest spread of [^.]+ is -?[\d.]+ points, (higher than|lower than|in line with) the/);
@@ -161,9 +167,9 @@ describe('Insights G and B (Provisional: preview only)', () => {
     const g = insightsPage().find((i) => i.entry.key === 'g')!;
     expect(g.entry).toMatchObject({ headline: 'ratio', indexed: true, base: 2015 });
     expect(g.entry.series.map((s) => s.key)).toEqual(['price-index-de-office-a', 'rent-index-de-office-a']);
-    expect(g.result).toMatchObject({ shown: true, from: '2013', to: '2025', n: 13 });
+    spans(g.result, '2013', 13);
     if (g.result.shown) expect(g.result.points.find((p) => p.period === '2015')!.value).toBeCloseTo(1, 9);
-    expect(renderInsight(g.entry, g.result, g.series, 'en')).toMatch(/The price index stands at [\d.]+ times the rent index, (higher than|lower than|in line with) the 2013-2025 average of [\d.]+\./);
+    expect(renderInsight(g.entry, g.result, g.series, 'en')).toMatch(/The price index stands at [\d.]+ times the rent index, (higher than|lower than|in line with) the 2013-\d{4} average of [\d.]+\./);
   });
   it('B: real office rent growth, deflated as a flow by the annual-average CPI, 2005 to 2025', () => {
     expect(insightsPage().map((i) => i.entry.key)).not.toContain('b');
@@ -171,16 +177,16 @@ describe('Insights G and B (Provisional: preview only)', () => {
     const b = insightsPage().find((i) => i.entry.key === 'b')!;
     expect(b.entry).toMatchObject({ headline: 'growth', deflate: 'flow', base: 2015 });
     expect(b.entry.series.map((s) => s.key)).toEqual(['rent-index-de-office-a', 'cpi']);
-    expect(b.result).toMatchObject({ shown: true, from: '2005', to: '2025', n: 21 });
+    spans(b.result, '2005', 21);
     const h = renderInsight(b.entry, b.result, b.series, 'en');
-    expect(h).toMatch(/Real office rents grew -?[\d.]+% in 2025, (higher than|lower than|in line with) the 2005-2025 average of -?[\d.]+%\./);
+    expect(h).toMatch(/Real office rents grew -?[\d.]+% in \d{4}, (higher than|lower than|in line with) the 2005-\d{4} average of -?[\d.]+%\./);
     expect(h.match(/own calculation/g)).toHaveLength(2);
   });
   it('the DE sentences', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
     const [g, b] = ['g', 'b'].map((k) => insightsPage().find((i) => i.entry.key === k)!);
-    expect(renderInsight(g.entry, g.result, g.series, 'de')).toMatch(/Der Preisindex liegt beim [\d,]+-Fachen des Mietindex, (höher als der|niedriger als der|im Einklang mit dem) 2013-2025-Durchschnitt von [\d,]+\./);
-    expect(renderInsight(b.entry, b.result, b.series, 'de')).toMatch(/Die realen Büromieten sind 2025 um -?[\d,]+ % gewachsen, (höher als der|niedriger als der|im Einklang mit dem) 2005-2025-Durchschnitt von -?[\d,]+ %\./);
+    expect(renderInsight(g.entry, g.result, g.series, 'de')).toMatch(/Der Preisindex liegt beim [\d,]+-Fachen des Mietindex, (höher als der|niedriger als der|im Einklang mit dem) 2013-\d{4}-Durchschnitt von [\d,]+\./);
+    expect(renderInsight(b.entry, b.result, b.series, 'de')).toMatch(/Die realen Büromieten sind \d{4} um -?[\d,]+ % gewachsen, (höher als der|niedriger als der|im Einklang mit dem) 2005-\d{4}-Durchschnitt von -?[\d,]+ %\./);
   });
 });
 
@@ -191,11 +197,11 @@ describe('Insight M on real data (Provisional: preview only)', () => {
     const m = insightsPage().find((i) => i.entry.key === 'm')!;
     expect(m.entry).toMatchObject({ headline: 'change', base: 2015 });
     expect(m.entry.series).toEqual([{ key: 'office-vacancy-127', role: 'kpi' }, { key: 'office-employment', role: 'reference' }]);
-    expect(m.result).toMatchObject({ shown: true, from: '1996', to: '2025', n: 30 });
+    spans(m.result, '1996', 30);
     const h = renderInsight(m.entry, m.result, m.series, 'en');
-    expect(h).toMatch(/Office vacancy changed by -?[\d.]+ points in 2025 while office employment grew -?[\d.]+%; the 1996-2025 average vacancy change is -?[\d.]+ points\./);
+    expect(h).toMatch(/Office vacancy changed by -?[\d.]+ points in \d{4} while office employment grew -?[\d.]+%; the 1996-\d{4} average vacancy change is -?[\d.]+ points\./);
     expect(h).toMatch(/Ochre line: year-on-year growth of /);
-    expect(renderInsight(m.entry, m.result, m.series, 'de')).toMatch(/Der Büroleerstand hat sich 2025 um -?[\d,]+ Punkte verändert, während die Bürobeschäftigung um -?[\d,]+ % gewachsen ist/);
+    expect(renderInsight(m.entry, m.result, m.series, 'de')).toMatch(/Der Büroleerstand hat sich \d{4} um -?[\d,]+ Punkte verändert, während die Bürobeschäftigung um -?[\d,]+ % gewachsen ist/);
   });
 });
 
