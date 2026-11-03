@@ -1470,3 +1470,19 @@ links.scale.pos:
   en_hash: 54d1d770aee3db5c
   reviewed_by: Olivier
   reviewed_on: 2026-11-03
+about.title:
+  en_hash: 4efca0d10c5feb8e
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-03
+terms.title:
+  en_hash: c3e3a6edeaa57632
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-03
+privacy.title:
+  en_hash: ba445cff3898a3f2
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-03
+legal-notice.title:
+  en_hash: 1011b3a811f08490
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-03

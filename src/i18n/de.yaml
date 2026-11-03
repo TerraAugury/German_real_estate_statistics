@@ -125,6 +125,10 @@ availability.available: "Verfügbar ({geo})"
 nav.links: Verknüpfungen
 nav.methodology: Methodik
 methodology.title: Methodik
+about.title: Über uns
+terms.title: Nutzungsbedingungen
+privacy.title: Datenschutzerklärung
+legal-notice.title: Impressum
 links.title: Verknüpfungen
 links.intro: "Jede Zeile ist eine Kennzahl, jede Spalte ein Wirtschaftsindikator. Ein Feld zeigt, wie eng sich ihre Veränderungen gemeinsam bewegt haben, dazu die Zahl der Paare (n), auf denen es beruht. Wo die Verknüpfung nicht angezeigt werden kann, steht im Feld „Nicht angezeigt“. Jede Kennzahl erscheint in ihrer Hauptansicht; ein Klick auf ein Feld öffnet die vollständige Verknüpfung auf der Kennzahlseite."
 insight.back: Zurück zur Übersicht der Einblicke

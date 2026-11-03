@@ -27,7 +27,7 @@ export type PageKey = keyof typeof routes;
 
 /** Pages that exist so far; each later ticket adds its pages here. A page missing from `routes` fails the build. */
 export const built = ['home', 'segment-office', 'segment-retail', 'segment-commercial-overall', 'kpi-price-index', 'kpi-rent-index', 'kpi-initial-yield', 'kpi-office-vacancy', 'kpi-transaction-volume',
-  'construction', 'links', 'insights', 'availability', 'methodology', 'sources'] as const satisfies readonly PageKey[];
+  'construction', 'links', 'insights', 'availability', 'methodology', 'sources', 'about', 'terms', 'privacy', 'legal-notice'] as const satisfies readonly PageKey[];
 export type BuiltPage = (typeof built)[number];
 
 export function slug(key: PageKey, lang: Lang): string {

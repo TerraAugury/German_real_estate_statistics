@@ -125,6 +125,10 @@ availability.available: "Available ({geo})"
 nav.links: Links
 nav.methodology: Methodology
 methodology.title: Methodology
+about.title: About
+terms.title: Terms and conditions
+privacy.title: Privacy policy
+legal-notice.title: Legal notice
 links.title: Links
 links.intro: "Each row is a KPI and each column an economic indicator. A box shows how closely their changes moved together, with the number of pairs (n) it is based on. Where a Link cannot be shown, the box says “Not shown”. Each KPI appears in its main view; click a box to open the full Link on the KPI page."
 insight.back: Back to the Insights overview

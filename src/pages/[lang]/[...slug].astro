@@ -31,8 +31,9 @@ const homeRows = page === 'home' ? homeIndex() : [];
 // Home opens with one Insight when any is shown; otherwise it opens with the index.
 const lead = page === 'home' ? leadInsight() : undefined;
 const prose = import.meta.glob<{ Content: any }>('../../../content/*/*.md', { eager: true });
-const Methodology = prose[`../../../content/${lang}/methodology.md`]?.Content;
-const methodologyDraft = lang === 'de' && unreviewedProse(readProse()).includes('methodology');
+// Prose pages: content/<lang>/<page key>.md (the Impressum is legal-notice.md in both languages).
+const Prose = prose[`../../../content/${lang}/${page}.md`]?.Content;
+const proseDraft = lang === 'de' && unreviewedProse(readProse()).includes(page);
 // Germany-wide geographies have no optgroup on the selector; the Availability grid names them "Germany".
 const selectorGroup: Record<GeoGroup, string | null> = { germany: null, city_classes: 'select.city_classes', laender: 'select.laender' };
 const coverGroup: Record<GeoGroup, string> = { germany: 'geo.germany', city_classes: 'select.city_classes', laender: 'select.laender' };
@@ -140,11 +141,11 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
         </>
       )}
     </>
-  ) : page === 'methodology' ? (
+  ) : Prose ? (
     <>
       <h1>{title}</h1>
-      {methodologyDraft && <p class="note">{DRAFT.trim()}</p>}
-      <Methodology />
+      {proseDraft && <p class="note">{DRAFT.trim()}</p>}
+      <Prose />
     </>
   ) : page === 'sources' ? (
     <>
