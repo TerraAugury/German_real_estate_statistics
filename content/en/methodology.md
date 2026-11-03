@@ -4,13 +4,24 @@ A Link relates one real estate KPI to one economic indicator over a stated perio
 
 Each Link has three parts:
 
-- **Levels overlay.** Both series, one chart each, over the same periods. Indicators are averaged to the KPI's frequency as described under Frequency, so the overlay shows our own calculation, not the published figures.
-- **Rank correlation of changes.** Spearman's rank correlation, with ties, of the changes of both series: year-on-year percent change for indices and money amounts, year-on-year difference in points for rates and confidence balances. It is always shown with the number of paired observations (n) and the period. No p-values or significance stars are shown.
-- **Lag profile.** The same correlation with the indicator shifted by whole periods: −8 to +8 quarters for quarterly KPIs, −3 to +3 years for annual KPIs. A positive lag means the indicator moved earlier than the KPI. The headline figure is lag 0. The strongest lag is marked, but it was chosen after looking at the data, so it is likely overstated; the site never presents a lag as a lead time.
+- **The two series on one chart.** The KPI and the indicator are drawn together over the same stretch of time: the KPI against the left axis, the indicator against the right axis. Some indicators come out more often than the KPI, for example monthly against quarterly. We average them to match the KPI, as described under Frequency. So the indicator line is our own calculation, not the figure the source published.
+- **How closely they move together.** We compare *changes*, not levels. For each series we look at how much it rose or fell compared with a year earlier. That is a percent change for indices and money amounts, and a difference in points for interest rates and confidence balances. Then we ask whether the two tend to rise and fall together.
 
-**Frequency.** A Link uses the KPI's own frequency; nothing is upsampled. Monthly and quarterly indicators are averaged over each quarter or calendar year, and incomplete periods are dropped.
+  The answer is one number between −1 and +1, called Spearman's rank correlation. Near +1 means they tend to move the same way. Near −1 means they tend to move opposite ways. Near 0 means no clear pattern.
 
-**Minimum overlap.** Each lag needs at least 40 paired observations for quarterly KPIs or 10 for annual KPIs; a lag below the minimum is left blank. A Link is shown only when lag 0 and at least three lags in all meet the minimum. Otherwise the panel says "Link not shown" with the number of pairs at lag 0. Annual Links with fewer than 20 pairs at lag 0 carry a note that the pattern may be coincidental.
+  We always show *n*, the number of periods compared, and the time span.
+
+  We do not show significance tests. A significance test, often shown as a *p-value* or as stars (\*), tries to say how likely it is that a pattern this strong appeared by pure luck. We leave it out on purpose. A star can look like proof, and with only a handful of years or quarters, and several shifts tried, a good-looking result is easy to get by chance. So we show the number itself, how many periods it rests on (*n*), and the time span, and you can judge how much weight it deserves.
+- **Did one move before the other?** Sometimes one series turns first and the other follows. To test this, we shift the indicator back or forward in time and repeat the comparison each time. We shift by whole quarters (up to 8 either way) for quarterly KPIs, and by whole years (up to 3 either way) for annual KPIs.
+  - A **positive shift** means we compared the indicator with the KPI *later* in time, so the indicator moved earlier. Example: at +2 quarters, the indicator's change is set against the KPI's change two quarters afterwards.
+  - A **negative shift** is the reverse: the indicator moved after the KPI.
+  - The main figure is the one with **no shift**. It is written out above the chart, and its bar is the one in the middle, under the 0 mark. The other bars show how the match changes as the timing changes.
+  - We mark the shift whose number is **furthest from zero**, meaning the strongest match in either direction. Be careful with this mark. We picked it from several shifts after seeing the results, so it is the best-looking of several tries and probably looks stronger than it really is. A line under the chart says so and gives the number of shifts that had enough data to be counted.
+  - We never present a shift as a lead time or an advance warning. It describes the past only.
+
+**Frequency.** A Link follows the KPI's own rhythm, quarterly or yearly. We never invent in-between values. Monthly and quarterly indicators are averaged over each quarter or calendar year. A quarter or year with missing data is left out.
+
+**Minimum overlap.** A comparison on too few periods can mislead. Each shift needs at least 40 periods for quarterly KPIs or 10 for annual ones. Below that, the shift is left blank. We show a Link only if the no-shift comparison and at least three shifts in all reach that minimum. Otherwise the panel says "Link not shown" and gives the number of pairs it had with no shift. For annual Links with fewer than 20 pairs, we add a note that the pattern may be coincidence.
 
 **Geography.** Every indicator is national. On a City class or Land view, the Link compares the national indicator with that geography's KPI.
 
