@@ -119,7 +119,8 @@ methodology.title: Methodology
 links.title: Links
 links.intro: "Every KPI against every economic indicator: the rank correlation of changes at lag 0 with the number of pairs, or why the Link is not shown. Each KPI is shown at its headline view; each cell opens the full Link on the KPI page."
 links.heading: Links with economic indicators
-links.cell.shown: "{rho} (n = {n})"
+links.cell.n: "n = {n}"
+links.legend: "Shade: ochre where the changes moved in the same direction, blue where they moved in opposite directions; the deeper the shade, the larger the coefficient. It shows co-movement only, not a cause or a forecast."
 links.cell.not_shown: "Not shown (n = {n})"
 indicator.bund-yield-10y: 10-year Bund yield
 indicator.euribor-3m: Euribor 3 months

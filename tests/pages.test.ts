@@ -2,6 +2,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { INDICATORS } from '../src/lib/links';
 import { KPIS, GEO_GROUPS } from '../src/lib/kpis';
 import { availability, kpiPage, linksOverview } from '../src/lib/pages';
+import { heat } from '../src/lib/heat';
 
 // Preview build: Bundesbank KPIs and most indicators are provisional.
 beforeAll(() => { process.env.INCLUDE_PROVISIONAL = '1'; });
@@ -41,6 +42,14 @@ describe('Links overview model', () => {
     for (const r of o.rows) {
       const ids = kpiPage(r.kpi).panels.map((x) => x.id);
       for (const c of r.cells.values()) expect(ids).toContain(c.pair.id);
+    }
+  });
+  it('a shown Link cell has a shade that follows its rho; a not-shown cell has none', () => {
+    const cells = linksOverview().rows.flatMap((r) => [...r.cells.values()]);
+    expect(cells.some((c) => c.result.shown)).toBe(true);
+    for (const c of cells) {
+      if (c.result.shown) expect(c.heat).toEqual(heat(c.result.headline.rho!));
+      else expect(c.heat).toBeUndefined();
     }
   });
 });
