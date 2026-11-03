@@ -40,3 +40,7 @@ export const insightsPage = (): InsightModel[] => visibleInsights(loadInsights()
 /** The visible Insights whose Real estate KPI series belong to a KPI page, in page order. */
 export const insightsFor = (page: PageKey): InsightEntry[] =>
   visibleInsights(loadInsights()).filter((e) => e.series.some((s) => pageOf(s) === page));
+
+/** The Insight Home leads with: the yield spread (a) when it is public and shown, else the first shown Insight; none when nothing is shown. */
+export const leadInsight = (models: InsightModel[] = insightsPage()): InsightModel | undefined =>
+  models.find((m) => m.entry.key === 'a' && m.result.shown) ?? models.find((m) => m.result.shown);

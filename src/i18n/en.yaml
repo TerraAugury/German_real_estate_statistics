@@ -103,6 +103,7 @@ na.construction.retail: "retail buildings; Destatis has no separate building typ
 nav.segments: Segments
 nav.availability: Availability
 nav.breadcrumb: Breadcrumb
+home.hero.more: Open this Insight
 home.spark.label: "Trend of {title}"
 latest.change.pct: "{change} on {period}"
 latest.change.diff: "{change} points on {period}"
