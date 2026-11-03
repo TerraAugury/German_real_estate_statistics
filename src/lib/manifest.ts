@@ -62,7 +62,7 @@ export function loadAllManifest(lock?: Lock): ManifestEntry[] {
 export const reviewStrings = () => ({ ...loadStrings('en'), ...manifestStrings(loadAllManifest(), 'en'), ...insightStrings(loadAllInsights(), 'en') });
 
 // Insights (spec insights section 7): hand-written in manifest/insights.yaml, one entry per curated chart, in page order.
-export const HEADLINES = ['spread', 'ratio', 'growth'] as const;
+export const HEADLINES = ['spread', 'ratio', 'growth', 'change'] as const;
 export const DEFLATE = ['flow', 'stock'] as const;
 export const ROLES = ['kpi', 'reference'] as const;
 const INSIGHT_TEXT = ['title', 'measure'] as const;

@@ -12,8 +12,8 @@ export interface CubeMeasure { name: string; unit: string }
 export interface CubeRow { dims: Record<string, string>; time: string; values: Record<string, { value: number | null; quality: string }> }
 export interface Cube { measures: CubeMeasure[]; rows: CubeRow[] }
 
-/** Quality flags: `e` real value, `-` nothing to report (true zero), `x` secret or not applicable, `.` not known, `/` no data. Those last three carry no usable number; every other flag (provisional, estimated, corrected, ...) is a real value. */
-const NO_VALUE = new Set(['x', '.', '/', '']);
+/** Quality flags: `e` real value, `-` nothing to report (true zero), `x` secret or not applicable, `.` not known, `..` and `...` still to come (GENESIS prints 0 there), `/` no data. Those carry no usable number; every other flag (provisional, estimated, corrected, ...) is a real value. */
+const NO_VALUE = new Set(['x', '.', '..', '...', '/', '']);
 const hasValue = (q: string) => !NO_VALUE.has(q);
 
 export function parseCube(text: string, onBad: (line: string) => never): Cube {

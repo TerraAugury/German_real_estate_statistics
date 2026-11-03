@@ -184,6 +184,21 @@ describe('Insights G and B (Provisional: preview only)', () => {
   });
 });
 
+describe('Insight M on real data (Provisional: preview only)', () => {
+  it('office vacancy change in the 127 towns, with office employment growth as context, 1996 to 2025', () => {
+    expect(insightsPage().map((i) => i.entry.key)).not.toContain('m');
+    process.env.INCLUDE_PROVISIONAL = '1';
+    const m = insightsPage().find((i) => i.entry.key === 'm')!;
+    expect(m.entry).toMatchObject({ headline: 'change', base: 2015 });
+    expect(m.entry.series).toEqual([{ key: 'office-vacancy-127', role: 'kpi' }, { key: 'office-employment', role: 'reference' }]);
+    expect(m.result).toMatchObject({ shown: true, from: '1996', to: '2025', n: 30 });
+    const h = renderInsight(m.entry, m.result, m.series, 'en');
+    expect(h).toMatch(/Office vacancy changed by -?[\d.]+ points in 2025 while office employment grew -?[\d.]+%; the 1996-2025 average vacancy change is -?[\d.]+ points\./);
+    expect(h).toMatch(/Ochre line: year-on-year growth of /);
+    expect(renderInsight(m.entry, m.result, m.series, 'de')).toMatch(/Der Büroleerstand hat sich 2025 um -?[\d,]+ Punkte verändert, während die Bürobeschäftigung um -?[\d,]+ % gewachsen ist/);
+  });
+});
+
 describe('Insight rendering', () => {
   const j = entry({ key: 'j', title: { en: 'Construction costs vs inflation', de: 'Baupreise und Inflation' }, measure: { en: 'spread of construction price growth over CPI inflation', de: 'Abstand des Baupreisanstiegs zur Inflationsrate' } });
   const series = [getSeries('construction-price-office'), getSeries('cpi')];

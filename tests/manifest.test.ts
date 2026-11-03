@@ -65,7 +65,7 @@ it('manifest carries the spec section 11 fields', () => {
   expect(byKey('price-index-de-office-q')).toMatchObject({ short_window: true, short_window_sentence: 'note.short_cycle', scope: ['index'] });
   expect(byKey('rent-index-combined-7').scope).toEqual(['city_class', 'combined']);
   expect(byKey('construction-permits-commercial').short_window).toBe(true);
-  for (const m of all) expect(m.resampling, m.key).toBe(m.dbnomics_provider === 'BUBA' && m.dataset === 'BBDZ1' || m.dataset.endsWith('LJ001') ? 'none' : 'mean');
+  for (const m of all) expect(m.resampling, m.key).toBe(m.dbnomics_provider === 'BUBA' && m.dataset === 'BBDZ1' || m.dataset.endsWith('LJ001') || m.frequency === 'annual' ? 'none' : 'mean');
 });
 
 it('unreviewed German manifest text is marked [DRAFT]; English never is', () => {

@@ -98,3 +98,13 @@
   series:
     - { key: office-vacancy-7, role: kpi }
     - { key: office-vacancy-127, role: reference }
+
+- key: m
+  title: { en: "Office vacancy and office employment", de: "Büroleerstand und Bürobeschäftigung" }
+  measure: { en: "change in office vacancy in the 127 towns", de: "Veränderung des Büroleerstands in den 127 Städten" }
+  headline: change
+  base: 2015
+  template: office-employment
+  series:
+    - { key: office-vacancy-127, role: kpi }
+    - { key: office-employment, role: reference }

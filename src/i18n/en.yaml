@@ -155,3 +155,6 @@ kpi.insights.heading: Insights using this KPI
 insight.template.price-rent: "The price index stands at {latest} times the rent index, {verdict} the {from}-{to} average of {mean}."
 insight.template.real-rents: "Real office rents grew {latest}% in {to}, {verdict} the {from}-{to} average of {mean}%."
 insight.unit.growth: percent
+insight.template.office-employment: "Office vacancy changed by {latest} points in {to} while office employment grew {emp}%; the {from}-{to} average vacancy change is {mean} points."
+insight.unit.change: percentage points
+insight.context.legend: "Blue line: {measure}, in percentage points. Ochre line: year-on-year growth of {title}, in percent. Both are drawn on one axis."

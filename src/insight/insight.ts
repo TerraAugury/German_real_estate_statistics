@@ -6,7 +6,7 @@ export const MIN_OBS = 10;
 /** Under this many, the average rests on too little history and the page says so. */
 export const SHORT_OBS = 20;
 
-export type Headline = 'spread' | 'ratio' | 'growth';
+export type Headline = 'spread' | 'ratio' | 'growth' | 'change';
 export type Verdict = 'higher' | 'lower' | 'in_line';
 export type InsightSeries = Pick<LinkSeries, 'freq' | 'obs'>;
 type Points = { period: string; value: number }[];
@@ -14,6 +14,8 @@ export type InsightResult =
   | { shown: false; n: number; reason: 'too_few' }
   | { shown: true; points: { period: string; value: number }[]; from: string; to: string; n: number; short: boolean;
       mean: number; sd: number; latest: { period: string; value: number }; verdict: Verdict;
+      /** change: the reference's year-on-year percent growth over the same years, shown beside the headline and never given a verdict. */
+      context?: Points;
       /** The two series over the headline period, rebased when a base year was asked for (`base` is the year actually used). */
       lines: { kpi: Points; reference: Points; base?: string } };
 
@@ -48,7 +50,8 @@ function decemberLevels(s: InsightSeries): Map<number, number> {
 }
 
 export type InsightOptions = {
-  /** spread (default): KPI minus reference in points; ratio: KPI over reference; growth: year-on-year percent change of the KPI alone. */
+  /** spread (default): KPI minus reference in points; ratio: KPI over reference; growth: year-on-year percent change of the KPI alone;
+   * change: year-on-year change of the KPI in points, with the reference's growth as context over the years both have. */
   headline?: Headline;
   /** Compare year-on-year percent changes of both series instead of levels (spread). */
   growth?: boolean;
@@ -70,10 +73,14 @@ export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opt
   const [la, lb] = [levels(kpi, 'A'), shifted(levels(reference, 'A'), opts.shift)];
   const head = opts.headline ?? 'spread';
   const values = new Map<number, number>();
+  let growth: Map<number, number> | undefined;
   if (head === 'growth') {
     const deflator = opts.deflate === 'stock' ? decemberLevels(reference) : lb;
     const real = opts.deflate ? new Map([...la].filter(([y]) => deflator.has(y)).map(([y, v]) => [y, (v / deflator.get(y)!) * 100])) : la;
     for (const [y, v] of changes(real, 'A', 'pct')) values.set(y, v);
+  } else if (head === 'change') {
+    growth = changes(lb, 'A', 'pct');
+    for (const [y, v] of changes(la, 'A', 'diff')) if (growth.has(y)) values.set(y, v);
   } else {
     const [a, b] = opts.growth ? [la, lb].map((l) => changes(l, 'A', 'pct')) : [la, lb];
     for (const [y, v] of a) if (b.has(y) && !(head === 'ratio' && b.get(y) === 0)) values.set(y, head === 'ratio' ? v / b.get(y)! : v - b.get(y)!);
@@ -85,5 +92,6 @@ export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opt
   const latest = points.at(-1)!;
   const mean = points.reduce((sum, p) => sum + p.value, 0) / points.length;
   const sd = Math.sqrt(points.reduce((sum, p) => sum + (p.value - mean) ** 2, 0) / points.length); // population SD, whole period
-  return { shown: true, points, from: points[0].period, to: latest.period, n: points.length, short: points.length < SHORT_OBS, mean, sd, latest, verdict: verdict(latest.value, mean, sd), lines: ln };
+  return { shown: true, points, from: points[0].period, to: latest.period, n: points.length, short: points.length < SHORT_OBS, mean, sd, latest, verdict: verdict(latest.value, mean, sd), lines: ln,
+    ...(growth && { context: years.map((y) => ({ period: String(y), value: growth!.get(y)! })) }) };
 }

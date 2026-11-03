@@ -61,7 +61,7 @@ export function levelChart(pts: { period: string; value: number }[], unit: strin
 const GRID = '#e3e7eb', ABOVE = '#4e79a7', BELOW = '#c0392b';
 
 /** Headline measure over time: latest point labelled, dashed average line, grey band of average plus or minus half a standard deviation. */
-export function insightChart(r: { points: { period: string; value: number }[]; from: string; to: string; mean: number; sd: number }, labels: { unit: string; average: string; title: string }, lang: Lang): string {
+export function insightChart(r: { points: { period: string; value: number }[]; context?: { period: string; value: number }[]; from: string; to: string; mean: number; sd: number }, labels: { unit: string; average: string; title: string }, lang: Lang): string {
   const data = r.points.map((p) => ({ x: +p.period, value: p.value }));
   const last = data.slice(-1);
   const band = [{ x1: +r.from, x2: +r.to, y1: r.mean - r.sd / 2, y2: r.mean + r.sd / 2 }];
@@ -73,6 +73,7 @@ export function insightChart(r: { points: { period: string; value: number }[]; f
       Plot.rectY(band, { x1: 'x1', x2: 'x2', y1: 'y1', y2: 'y2', fill: GRID }),
       Plot.ruleY([r.mean], { stroke: MUTED, strokeDasharray: '5 4' }),
       Plot.text([{ x: +r.from, y: r.mean }], { x: 'x', y: 'y', text: () => labels.average, dy: -7, textAnchor: 'start', fill: MUTED }),
+      ...(r.context ? [Plot.lineY(r.context.map((p) => ({ x: +p.period, value: p.value })), { x: 'x', y: 'value', stroke: STRONG, strokeWidth: 2 })] : []),
       Plot.lineY(data, { x: 'x', y: 'value', stroke: DATA, strokeWidth: 2.25 }),
       Plot.dot(data, { x: 'x', y: 'value', r: 6, fill: 'transparent', title: (d) => `${d.x}: ${fmt(lang, d.value, { maximumFractionDigits: 2 })}` }),
       Plot.dot(last, { x: 'x', y: 'value', r: 4, fill: DATA }),
