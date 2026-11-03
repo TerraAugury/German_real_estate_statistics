@@ -45,6 +45,7 @@ const inKpis = KPIS.some((k) => k.page === page);
       nav.main details { position: relative; }
       nav.main details > div { position: absolute; z-index: 10; top: 100%; left: -1rem; min-width: 18rem; max-width: calc(100vw - 2rem); background: var(--plate); border: 1px solid var(--rule); border-radius: 6px; padding: .5rem 0; box-shadow: 0 6px 20px var(--shadow); }
       nav.main details > div a { display: block; padding: .5rem 1rem; color: var(--ink); text-decoration: none; font-size: 15px; }
+      nav.main details > div a.hint { color: var(--muted); font-size: 14px; border-top: 1px solid var(--hair); margin-top: .25rem; padding-top: .75rem; }
       nav.main details > div a:hover, nav.main details > div a[aria-current] { background: var(--page); }
       /* Phone: one masthead row (name, language, Menu); with JavaScript the nav is a panel under it that opens from Menu and lists
          its groups inline. Without JavaScript the nav stays visible and wraps. */
@@ -178,7 +179,7 @@ const inKpis = KPIS.some((k) => k.page === page);
       </div>
       <nav class="wrap main" id="site-nav">
         <a href={href('home', lang)} aria-current={current('home')}>{t(lang, 'nav.home')}</a>
-        <details class={inSegments ? 'on' : undefined}><summary>{t(lang, 'nav.segments')}</summary><div>{SEGMENT_PAGES.map((g) => <a href={href(`segment-${g}`, lang)} aria-current={current(`segment-${g}`)}>{t(lang, `segment.${g}`)}</a>)}</div></details>
+        <details class={inSegments ? 'on' : undefined}><summary>{t(lang, 'nav.segments')}</summary><div>{SEGMENT_PAGES.map((g) => <a href={href(`segment-${g}`, lang)} aria-current={current(`segment-${g}`)}>{t(lang, `segment.${g}`)}</a>)}<a class="hint" href={href('availability', lang)}>{t(lang, 'nav.logistics')}</a></div></details>
         <details class={inKpis ? 'on' : undefined}><summary>{t(lang, 'nav.kpis')}</summary><div>{KPIS.map((k) => <a href={href(k.page, lang)} aria-current={current(k.page)}>{t(lang, k.title)}</a>)}</div></details>
         <a href={href('links', lang)} aria-current={current('links')}>{t(lang, 'nav.links')}</a>
         <a href={href('insights', lang)} aria-current={current('insights')}>{t(lang, 'nav.insights')}</a>
