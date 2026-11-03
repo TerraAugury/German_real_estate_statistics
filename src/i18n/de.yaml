@@ -13,6 +13,8 @@ source.chip.provisional: Vorläufig
 source.original: "Originalreihe wie veröffentlicht: {title}; Einheit: {unit}"
 source.original.unit: "Originaleinheit wie veröffentlicht: {unit}"
 source.own: eigene Berechnung
+source.terms.original: "Originalstatistik und Metadaten unverändert verwendet, gemäß {terms}."
+source.terms.derived: "Aus Daten der Deutschen Bundesbank abgeleitet (eigene Berechnung), gemäß {terms}."
 footer.text: Betrieben von Terra Augury Ltd.
 note.prefix: Hinweis
 note.stale: "Letzte Beobachtung: {period}. {source} hat innerhalb des erwarteten Zeitraums keine neueren Daten veröffentlicht; die Reihe ist möglicherweise nicht aktuell."

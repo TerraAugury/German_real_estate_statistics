@@ -4,12 +4,12 @@
 
 **Blocked by:** 01
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Source metadata of a direct Bundesbank series includes the terms name and address, written on every fetch
-- [ ] Existing Bundesbank snapshots receive the field on the next fetch even when their values are unchanged
-- [ ] Series details of an original Bundesbank series state the terms and "original statistics and metadata used unmodified", in English and German
-- [ ] Series details of a derived Bundesbank series state "Derived from Deutsche Bundesbank data" and do not claim to be unmodified
-- [ ] New German strings are marked unreviewed under the existing bilingual workflow
-- [ ] Series from other sources (Destatis, DBnomics, OECD) show no Bundesbank terms line
-- [ ] Tests cover the snapshot field, the original wording and the derived wording
+- [x] Source metadata of a direct Bundesbank series includes the terms name and address, written on every fetch
+- [x] Existing Bundesbank snapshots receive the field on the next fetch even when their values are unchanged
+- [x] Series details of an original Bundesbank series state the terms and "original statistics and metadata used unmodified", in English and German
+- [x] Series details of a derived Bundesbank series state "Derived from Deutsche Bundesbank data" and do not claim to be unmodified
+- [x] New German strings are marked unreviewed under the existing bilingual workflow
+- [x] Series from other sources (Destatis, DBnomics, OECD) show no Bundesbank terms line
+- [x] Tests cover the snapshot field, the original wording and the derived wording

@@ -1,5 +1,5 @@
 {
- "retrieved_at": "2026-11-02T23:30:49.881Z",
+ "retrieved_at": "2026-11-03T11:09:10.836Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
@@ -412,8 +412,12 @@
     "comment": null,
     "general_comment": "The MFI interest rate statistics gathered on a harmonised basis in the euro area are collected in Germany on a sample basis (stratified sample). Volume-weighted average rates of all new agreements concluded during the reporting month. (The interest rates per stratum are calculated by weighting the reported interest rates with the reported volumes of new business. Then the interest rate for Germany is aggregated by weighting the interest rates of each stratum with the grossed-up volumes of the same stratum.) The effective interest rates are calculated either as annualised agreed interest rates or as narrowly defined effective rates. Both calculation methods cover all interest payments on deposits and loans but not any other related charges which may occur for enquiries, administration, preparation of the documents, guarantees and credit insurance. Disagios are regarded as interest payments and included in the interest rate calculation. The annualised agreed interest rate and the narrowly defined effective rate differ in the underlying method of annualising interest rate payments. The amount category refers to the single loan transaction considered as new business. Excluding overdrafts.",
     "third_party": false,
+    "terms": {
+     "name": "ESCB Terms of Use for the Reuse of Statistics",
+     "url": "https://www.bundesbank.de/en/homepage/user-information/terms-of-use-regarding-the-reuse-of-escb-statistics-621188"
+    },
     "valid_from": "2026-11-02T11:17:12.895Z",
-    "retrieved_at": "2026-11-02T23:30:49.881Z",
+    "retrieved_at": "2026-11-03T11:09:10.836Z",
     "sha256": "90babaa099887d69c5cdcc8db059030345e2a6e8623ff4b53b616c51d2993754"
    }
   }

@@ -1,5 +1,5 @@
 {
- "retrieved_at": "2026-11-02T23:30:49.881Z",
+ "retrieved_at": "2026-11-03T11:09:10.836Z",
  "fetch_failed": null,
  "revised_at": "2026-11-02T23:30:49.881Z",
  "parts": {
@@ -474,8 +474,12 @@
     "comment": null,
     "general_comment": "1 Source of the original data: Federal Statistical Office. - 2 Territorial definition: Germany as of 1991, prior to that western Germany. Linked over annual average of 1991 (Bundesbank calculation). - 3 Methodology: Figures are chain-linked Laspeyres indices (annual overlap). As of 1970 up to the end of 1990, data basis according to ESA 1995. As of 1991, data basis according to ESA 2010.",
     "third_party": true,
+    "terms": {
+     "name": "ESCB Terms of Use for the Reuse of Statistics",
+     "url": "https://www.bundesbank.de/en/homepage/user-information/terms-of-use-regarding-the-reuse-of-escb-statistics-621188"
+    },
     "valid_from": "2026-10-30T09:00:50.654Z",
-    "retrieved_at": "2026-11-02T23:30:49.881Z",
+    "retrieved_at": "2026-11-03T11:09:10.836Z",
     "sha256": "6c5a769f45598b23aa9e1359f639990eaf6382cce77ba41fc815f08c108ca4ae"
    }
   }

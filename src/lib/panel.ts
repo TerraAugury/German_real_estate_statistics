@@ -30,7 +30,8 @@ function lineage(s: Series, lang: Lang): string {
     ? t(lang, 'source.detail.direct', { publisher: esc(s.publisher), service: s.service, id, retrieved: day(lang, s.retrievedAt) })
     : t(lang, 'source.detail.dbnomics', { publisher: esc(s.publisher), id });
   const original = s.original ? `<br>${s.original.title ? t(lang, 'source.original', { title: esc(s.original.title), unit: esc(s.original.unit) }) : t(lang, 'source.original.unit', { unit: esc(s.original.unit) })}` : '';
-  return `<span class="lineage-item"><strong>${esc(s.title[lang])}</strong><br>${how}${original}</span>`;
+  const terms = s.terms ? `<br>${t(lang, s.derived ? 'source.terms.derived' : 'source.terms.original', { terms: `<a href="${esc(s.terms.url)}">${esc(s.terms.name)}</a>` })}` : '';
+  return `<span class="lineage-item"><strong>${esc(s.title[lang])}</strong><br>${how}${original}${terms}</span>`;
 }
 
 /**

@@ -19,6 +19,8 @@ export interface SourceMeta {
   general_comment: string | null;
   /** True when `comment` or the original data named in `general_comment` is anyone besides the Bundesbank or ESCB: licence review needed before public use. */
   third_party: boolean;
+  /** The terms this source's statistics are reused under; shown beside the series. Absent where none apply (Destatis, DBnomics) or before the field existed. */
+  terms?: { name: string; url: string };
   valid_from: string | null;
   retrieved_at: string;
   /** SHA-256 of the response body as received. */

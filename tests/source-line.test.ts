@@ -34,6 +34,27 @@ describe('source block', () => {
     expect(flat(parse(html).querySelector('details'))).toMatch(/Original unit as published: 1000 qm$/);
     expect(html).not.toMatch(/Original series/);
   });
+  describe('terms of use', () => {
+    const terms = { name: 'ESCB Terms of Use for the Reuse of Statistics', url: 'https://t/escb' };
+    const lineageOf = (s: Series, lang: 'en' | 'de' = 'en') => parse(sourceBlock(s, lang)).querySelector('details')!;
+    it('an original series states the terms and that its statistics and metadata are used unmodified', () => {
+      const d = lineageOf({ ...direct, terms } as Series);
+      expect(flat(d)).toMatch(/Original statistics and metadata used unmodified, under the ESCB Terms of Use for the Reuse of Statistics ?\.$/);
+      expect(d.querySelector('a[href="https://t/escb"]')!.textContent).toBe(terms.name);
+    });
+    it('a derived series says it is derived from Bundesbank data and does not claim to be unmodified', () => {
+      const text = flat(lineageOf({ ...direct, terms, derived: true } as Series));
+      expect(text).toMatch(/Derived from Deutsche Bundesbank data by us, under the ESCB Terms of Use for the Reuse of Statistics ?\.$/);
+      expect(text).not.toMatch(/unmodified/);
+    });
+    it('DE has the same two statements', () => {
+      expect(flat(lineageOf({ ...direct, terms } as Series, 'de'))).toMatch(/Originalstatistik und Metadaten unverändert verwendet, gemäß ESCB Terms of Use for the Reuse of Statistics ?\.$/);
+      expect(flat(lineageOf({ ...direct, terms, derived: true } as Series, 'de'))).toMatch(/Aus Daten der Deutschen Bundesbank abgeleitet \(eigene Berechnung\), gemäß ESCB Terms/);
+    });
+    it('a series without terms (Destatis, DBnomics, OECD) shows no terms line', () => {
+      expect(flat(lineageOf(direct))).not.toMatch(/unmodified|Derived from/);
+    });
+  });
   it('a DBnomics series keeps the DBnomics wording and has no original line', () => {
     const html = sourceBlock({ ...direct, service: undefined, original: undefined } as Series, 'en');
     expect(flat(parse(html).querySelector('details'))).toMatch(/Deutsche Bundesbank, DBnomics series BBDZ1\.Q\.B10$/);

@@ -1,5 +1,5 @@
 {
- "retrieved_at": "2026-11-02T23:31:20.238Z",
+ "retrieved_at": "2026-11-03T11:09:10.836Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
@@ -82,8 +82,12 @@
     "comment": "Bundesbank calculations based on price data provided by bulwiengesa AG.",
     "general_comment": null,
     "third_party": true,
+    "terms": {
+     "name": "ESCB Terms of Use for the Reuse of Statistics",
+     "url": "https://www.bundesbank.de/en/homepage/user-information/terms-of-use-regarding-the-reuse-of-escb-statistics-621188"
+    },
     "valid_from": "2026-09-04T08:22:42.523Z",
-    "retrieved_at": "2026-11-02T23:31:20.238Z",
+    "retrieved_at": "2026-11-03T11:09:10.836Z",
     "sha256": "ccd0b0817fe5bde2bafee98030347d2e17217ac199e2ea9bd6bea1f8cf507915"
    }
   }

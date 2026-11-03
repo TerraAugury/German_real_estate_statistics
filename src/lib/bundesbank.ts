@@ -6,6 +6,9 @@ import { BBK_API, type ManifestEntry } from './manifest';
 import { BadResponse, Unavailable, checkUnit, sameData, type Part, type Snapshot } from './snapshot';
 import { HttpError, partIds, revised, type Deps } from './pipeline';
 
+/** What the Bundesbank requires of anyone reusing its statistics (rule 1 and 2 of docs/bundesbank-data-licensing.md). */
+export const ESCB_TERMS = { name: 'ESCB Terms of Use for the Reuse of Statistics', url: 'https://www.bundesbank.de/en/homepage/user-information/terms-of-use-regarding-the-reuse-of-escb-statistics-621188' };
+
 const FREQ: Record<string, string> = { A: 'annual', Q: 'quarterly', M: 'monthly' };
 
 export const bundesbankUrl = (m: ManifestEntry) => `${BBK_API}/${m.dataset}/${m.ids[0]}?format=sdmx_json&lang=en`;
@@ -47,13 +50,13 @@ export function parseSdmx(res: any, m: ManifestEntry, url: string, retrievedAt: 
       source: 'Deutsche Bundesbank', url, title: attr.BBK_TITLE_ENG ?? '', unit: attr.BBK_UNIT ?? '',
       unit_mult: Number(attr.BBK_UNIT_MULT ?? 0), decimals: attr.BBK_DECIMALS == null ? null : Number(attr.BBK_DECIMALS),
       comment: attr.BBK_COMM_SRC_ENG ?? null, general_comment: attr.BBK_COMM_GEN_ENG ?? null,
-      third_party: isThirdParty(attr.BBK_COMM_SRC_ENG ?? null) || isThirdParty(originalDataSource(attr.BBK_COMM_GEN_ENG ?? null)), valid_from: data.dataSets[0].validFrom ?? null, retrieved_at: retrievedAt,
+      third_party: isThirdParty(attr.BBK_COMM_SRC_ENG ?? null) || isThirdParty(originalDataSource(attr.BBK_COMM_GEN_ENG ?? null)), terms: ESCB_TERMS, valid_from: data.dataSets[0].validFrom ?? null, retrieved_at: retrievedAt,
       sha256: createHash('sha256').update(JSON.stringify(res)).digest('hex'),
     },
   };
 }
 
-/** Refresh one Bundesbank series. Returns null when the values are unchanged and the snapshot already carries source metadata. Throws Unavailable on 404/410, BadResponse on a malformed response. */
+/** Refresh one Bundesbank series. Returns null when the values are unchanged and the snapshot already carries source metadata and terms. Throws Unavailable on 404/410, BadResponse on a malformed response. */
 export async function refreshBundesbank(m: ManifestEntry, old: Snapshot | undefined, { get, now }: Deps): Promise<Snapshot | null> {
   const id = partIds(m)[0], url = bundesbankUrl(m), iso = now.toISOString();
   let res: any;
@@ -64,6 +67,6 @@ export async function refreshBundesbank(m: ManifestEntry, old: Snapshot | undefi
   const next = parseSdmx(res, m, url, iso);
   const prev = old?.parts[id];
   checkUnit(id, prev, next);
-  if (prev?.meta && !old!.fetch_failed && sameData(prev, next)) return null;
+  if (prev?.meta?.terms && !old!.fetch_failed && sameData(prev, next)) return null;
   return { retrieved_at: iso, fetch_failed: null, revised_at: prev && revised(prev, next) ? iso : old?.revised_at ?? null, parts: { [id]: next } };
 }

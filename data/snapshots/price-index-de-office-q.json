@@ -1,5 +1,5 @@
 {
- "retrieved_at": "2026-11-02T23:30:49.881Z",
+ "retrieved_at": "2026-11-03T11:09:10.836Z",
  "fetch_failed": null,
  "revised_at": "2026-11-02T23:30:49.881Z",
  "parts": {
@@ -128,8 +128,12 @@
     "comment": "vdpResearch GmbH and Bundesbank calculations.",
     "general_comment": null,
     "third_party": true,
+    "terms": {
+     "name": "ESCB Terms of Use for the Reuse of Statistics",
+     "url": "https://www.bundesbank.de/en/homepage/user-information/terms-of-use-regarding-the-reuse-of-escb-statistics-621188"
+    },
     "valid_from": "2026-09-04T08:22:42.528Z",
-    "retrieved_at": "2026-11-02T23:30:49.881Z",
+    "retrieved_at": "2026-11-03T11:09:10.836Z",
     "sha256": "3b52f5e7e922dcbb707c5dbf6857cf5ded75c749cbca1a25ef2bc3188800bd5e"
    }
   }

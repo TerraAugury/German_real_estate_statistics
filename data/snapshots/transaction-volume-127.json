@@ -1,5 +1,5 @@
 {
- "retrieved_at": "2026-11-02T23:31:20.238Z",
+ "retrieved_at": "2026-11-03T11:09:10.836Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
@@ -56,8 +56,12 @@
     "comment": "Bundesbank calculations based on the extrapolation by vdpResearch GmbH on the basis on purchase price data provided by surveyor committees, excluding share-deals.",
     "general_comment": null,
     "third_party": true,
+    "terms": {
+     "name": "ESCB Terms of Use for the Reuse of Statistics",
+     "url": "https://www.bundesbank.de/en/homepage/user-information/terms-of-use-regarding-the-reuse-of-escb-statistics-621188"
+    },
     "valid_from": "2026-09-04T08:22:42.527Z",
-    "retrieved_at": "2026-11-02T23:31:20.238Z",
+    "retrieved_at": "2026-11-03T11:09:10.836Z",
     "sha256": "6aa16bbe3bb7f8a9b89d21bbf95e0b7764db14a681d24f7a498b1cd296691035"
    }
   }

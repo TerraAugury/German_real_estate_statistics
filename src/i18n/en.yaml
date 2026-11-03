@@ -13,6 +13,8 @@ source.chip.provisional: Provisional
 source.original: "Original series as published: {title}; unit: {unit}"
 source.original.unit: "Original unit as published: {unit}"
 source.own: own calculation
+source.terms.original: "Original statistics and metadata used unmodified, under the {terms}."
+source.terms.derived: "Derived from Deutsche Bundesbank data by us, under the {terms}."
 footer.text: Operated by Terra Augury Ltd.
 note.prefix: Note
 note.stale: "Latest observation: {period}. {source} has not published newer data within the expected interval, so this series may be out of date."
