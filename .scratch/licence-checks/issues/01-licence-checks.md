@@ -13,9 +13,13 @@ Consolidates:
 
 Background: `.scratch/cre-site/issues/07-licences-for-core-sources.md`, `docs/bundesbank-data-licensing.md`. The Bundesbank questions below overlap, so one message to the Bundesbank can cover them all.
 
+## Scope of use
+
+The site is non-commercial: no advertising, no paid content or services, and no plan to monetise. Every request should say so and ask for non-commercial permission only; commercial use is not sought. If monetisation is ever planned, the permissions must be renewed. Drafts of the vdp and bulwiengesa emails (BBDZ1) exist but are not yet sent.
+
 ## Bundesbank CRE series (BBDZ1, BBDR1)
 
-- [ ] Written confirmation from the Bundesbank statistics service, and where needed bulwiengesa AG and vdp, that the series may be redisplayed on a public website with attribution, including commercial use
+- [ ] Written confirmation from the Bundesbank statistics service, and where needed bulwiengesa AG and vdp, that the series may be redisplayed on a public website with attribution for non-commercial use, and that the site's use counts as non-commercial. A permission for non-commercial use only is enough; it is recorded as a commercial-use limit (see Scope of use)
 - [ ] BIS "Terms of permitted use of BIS statistics" opened in a browser and recorded verbatim
 - [ ] Each answer, or its absence, recorded per series; a refusal or no reply moves the series to Out of scope
 
