@@ -35,8 +35,24 @@ An Insight puts several series on one axis over a stated period, with a fixed on
 - **Real figures.** A real rent is the rent index divided by the consumer price index, then compared year on year. Rents are a flow over the year, so they are deflated with the annual-average consumer price index; a price at a point in time, such as a property price, would be deflated with the December index.
 - **Vacancy and employment.** The Insight on office vacancy and office employment shows the year-on-year change of vacancy in percentage points and the year-on-year growth of national employment in finance, real estate and business services in percent, on one axis. Only the vacancy change gets a verdict. The employment series is national, because no source publishes it for a City class, and it is an approximation of office employment.
 - **Verdict.** The tag compares the latest value with the average of the whole shared period, the latest value included. It reads "in line with" when the latest value is within half a standard deviation (population standard deviation) of the average, otherwise "higher than" or "lower than". The grey band on the chart is the average plus or minus half a standard deviation. The verdict says where the latest value sits against the past; it does not imply that values return to the average, and it is neither a cause nor a forecast.
+- **Better and worse.** Next to the verdict, some tags carry the word “better” or “worse”. This is our editorial reading from the point of view of an investor in office property, not a fact about the market, and it is neither a cause nor a forecast. For each Insight we state which direction counts as better. The tag reads better when the latest value sits on that side of the average (as the verdict judges it), worse when it sits on the other side, and carries no word when the verdict is “in line with” or when neither side is better. The sign of the number does not decide: a fall in vacancy is a negative change and is better, and a spread of -0.3 points is higher than an average of -2.0 points. Where the direction is a closer call, the table says so.
 - **Rebasing.** The small charts show both series as an index with the base year set to 100: 2015, or the first shared year when a series has no value for 2015. 2015 is a reference point only (the year of the ECB's asset purchases); the site does not claim that it caused anything. The shading between the two lines is blue where the KPI is above the reference series and red where it is below.
 - **Shift.** Completions are compared with the permits issued two years earlier, because a permit takes about two years to become a completion. The permits series is moved forward two years and labelled as such.
+
+Which direction counts as better, per Insight:
+
+| Insight | Better when the value is | Why |
+|---|---|---|
+| Initial yield spread over the 10-year Bund, by City class | higher | more income per unit of price than a government bond pays |
+| Initial yield spread over the corporate loan rate | higher | more income per unit of price than the corporate loan rate costs |
+| Office prices vs rents | neither | a buyer pays more per unit of rent when it is high, an owner holds more value: it depends on whose side you take |
+| Real office rents | higher | rents growing faster than prices generally |
+| Office rents vs construction costs | higher | rents growing faster than the cost of building |
+| Office rents vs GDP | higher | rents growing faster than the economy. Editorial judgement. |
+| Office completions vs permits two years earlier | neither | fewer completions per permit mean less new supply for owners but fewer projects for developers: it depends on whose side you take |
+| Construction costs vs inflation | lower | building and refurbishing costs rising faster than prices generally raise the cost of new capital spending. Editorial judgement. |
+| Office vacancy: 7 major cities vs 127 towns | lower | a positive spread means vacancy is higher in the 7 major cities than in the 127 towns |
+| Office vacancy and office employment | lower | a rise in vacancy is worse and a fall is better, so a negative change is better |
 
 Insight figures, including spreads, ratios, averages and rebased series, are our own calculation and are marked as such in the source lines.
 

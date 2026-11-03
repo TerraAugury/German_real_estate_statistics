@@ -35,7 +35,7 @@ The tag on an Insight's headline measure: "higher than", "lower than" or "in lin
 
 **Tone**:
 Whether an Insight's verdict reads better, worse or neutral for an investor in office property. It follows the verdict (where the latest value sits against the average) through a direction declared per Insight, never the sign of the number: a falling vacancy is better although it is negative. An Insight whose direction depends on whose side you take has no better side and stays neutral, as does a verdict "in line". An editorial reading from a stated perspective, never a cause or forecast.
-_DE_: Einordnung (draft, not yet Reviewed)
+_DE_: Bewertung (draft, not yet Reviewed; "Einordnung" already names the Verdict in the German Methodology)
 _Avoid_: Sentiment, rating, score, signal
 
 **Lead Insight**:

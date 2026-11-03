@@ -138,6 +138,7 @@ nav.insights: Einblicke
 insights.title: Einblicke
 insights.intro: "Ein Einblick stellt mehrere Reihen über einen genannten Zeitraum auf einer Achse dar, mit einer festen Lesehilfe in einem Satz. Er beschreibt, was die Linien zeigen; er belegt keine Ursache und ist keine Prognose."
 insights.jump: Einblicke auf dieser Seite
+insights.tone.more: So werden besser und schlechter beurteilt
 insights.tone.legend: "„Besser“ und „schlechter“ zeigen, wie der aktuelle Wert für Anleger in Büroimmobilien zu lesen ist. Trägt ein Etikett keines von beiden, liegt der Wert im Einklang mit dem Durchschnitt oder keine Seite ist besser. Farbe ist nie das einzige Signal."
 insights.empty: "Noch sind keine Einblicke veröffentlicht; die Lizenzen für die zugrunde liegenden Daten werden geklärt."
 insight.template.spread: "Der aktuelle {measure} beträgt {latest} Punkte, {verdict} {from}-{to}-Durchschnitt von {mean} Punkten."

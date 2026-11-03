@@ -143,6 +143,8 @@ const inKpis = KPIS.some((k) => k.page === page);
 
       .scroll { overflow-x: auto; }
       table { border-collapse: separate; border-spacing: 4px; font-size: 15px; line-height: 1.35; margin: 0 -4px; }
+      /* A table written in a prose page (the Methodology direction table): long German words wrap instead of widening the page. */
+      main > table { width: 100%; } main > table th, main > table td { overflow-wrap: anywhere; hyphens: auto; }
       th, td { text-align: left; vertical-align: top; padding: .65rem .75rem; }
       thead th { font: 500 14px/1.2 var(--cond); color: var(--muted); border-bottom: 2px solid var(--ink); }
       tbody th { font-weight: 500; padding-left: 0; }

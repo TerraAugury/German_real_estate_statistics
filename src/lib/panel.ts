@@ -109,6 +109,10 @@ const toneSpan = (e: InsightEntry, r: Shown, lang: Lang) => {
 const headlineSpans = (e: InsightEntry, r: Shown, lang: Lang) =>
   `<span class="num">${headlineNumber(e, lang)(r.latest.value)}</span> <span class="unit">${t(lang, `insight.unit.${e.headline}`)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span>${toneSpan(e, r, lang)}`;
 
+/** The line above the Insights index that says what "better" and "worse" mean, linking to the Methodology section that lists each direction. */
+export const renderToneLegend = (lang: Lang) =>
+  `<p class="note">${t(lang, 'insights.tone.legend')} <a href="${href('methodology', lang)}#${slug('insights', lang)}">${t(lang, 'insights.tone.more')}</a></p>`;
+
 /** The grid that opens the Insights page: per Insight its title, headline number with unit and verdict tag, or why it is not shown. */
 export function renderInsightIndex(models: { entry: InsightEntry; result: InsightResult }[], lang: Lang): string {
   const items = models.map(({ entry: e, result: r }) => {
