@@ -100,7 +100,9 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
     <>
       <h1>{title}</h1>
       <p>{t(lang, 'links.intro')}</p>
-      <div class="scroll"><table>
+      <div class="legend" aria-hidden="true"><span>{fmt(lang, -1)}</span><i class="ramp"></i><span>{fmt(lang, 1)}</span></div>
+      <p class="note">{t(lang, 'links.legend')}</p>
+      <div class="scroll"><table class="matrix">
         <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{overview!.columns.map((n) => <th scope="col">{t(lang, `indicator.${n}`)}</th>)}</tr></thead>
         <tbody>{overview!.rows.map(({ kpi: k, view: v, cells }) => (
           <tr>
@@ -109,9 +111,11 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
               const c = cells.get(n);
               if (!c) return <td />;
               const r = c.result;
-              const text = r.shown ? t(lang, 'links.cell.shown', { rho: fmt(lang, r.headline.rho!, { maximumFractionDigits: 2 }), n: String(r.headline.n) })
-                : t(lang, 'links.cell.not_shown', { n: String(r.n0) });
-              return <td><a href={`${viewHref(k, v, lang)}#${c.pair.id}`}>{text}</a></td>;
+              const to = `${viewHref(k, v, lang)}#${c.pair.id}`;
+              // A shown Link is shaded by its rho, with the coefficient first and n beneath; one not shown is hatched like any gap.
+              return r.shown && c.heat
+                ? <td class={`heat ${c.heat.side}`} style={`--share: ${c.heat.share}%`}><a href={to}><span class="rho">{fmt(lang, r.headline.rho!, { maximumFractionDigits: 2 })}</span><span class="n">{t(lang, 'links.cell.n', { n: String(r.headline.n) })}</span></a></td>
+                : <td class="na"><a href={to}>{t(lang, 'links.cell.not_shown', { n: String(r.shown ? 0 : r.n0) })}</a></td>;
             })}
           </tr>
         ))}</tbody>

@@ -119,7 +119,8 @@ methodology.title: Methodik
 links.title: Verknüpfungen
 links.intro: "Jede Kennzahl mit jedem Wirtschaftsindikator: die Rangkorrelation der Veränderungen bei Verschiebung 0 mit der Zahl der Paare, oder warum die Verknüpfung nicht angezeigt wird. Jede Kennzahl erscheint in ihrer Hauptansicht; jede Zelle öffnet die vollständige Verknüpfung auf der Kennzahlseite."
 links.heading: Verknüpfungen mit Wirtschaftsindikatoren
-links.cell.shown: "{rho} (n = {n})"
+links.cell.n: "n = {n}"
+links.legend: "Schattierung: ocker, wo sich die Veränderungen in dieselbe Richtung bewegt haben, blau, wo in entgegengesetzte Richtungen; je dunkler, desto größer der Koeffizient. Sie zeigt nur Gleichlauf, keine Ursache und keine Prognose."
 links.cell.not_shown: "Nicht angezeigt (n = {n})"
 indicator.bund-yield-10y: Rendite zehnjähriger Bundesanleihen
 indicator.euribor-3m: Euribor 3 Monate

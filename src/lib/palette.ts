@@ -14,5 +14,8 @@ export const PALETTE = {
 /** Diverging scale for signed values: negative blue, neutral, positive ochre. */
 export const DIVERGING = { neg: PALETTE.data, mid: PALETTE.plate, pos: PALETTE.strong } as const;
 
-/** The `:root` rule that declares every palette token as `--name`. */
-export const rootCss = () => `:root { ${Object.entries(PALETTE).map(([k, v]) => `--${k}: ${v}`).join('; ')}; }`;
+/** Deepest share of hue in a heat shade: ink text stays at 4.5:1 or better on it (tests/heat.test.ts). */
+export const HEAT_MAX = 0.55;
+
+/** The `:root` rule that declares every palette token as `--name`, and the heat cap as `--heat-max`. */
+export const rootCss = () => `:root { ${Object.entries(PALETTE).map(([k, v]) => `--${k}: ${v}`).join('; ')}; --heat-max: ${HEAT_MAX * 100}%; }`;

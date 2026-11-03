@@ -6,6 +6,7 @@ import { GEO_GROUPS, KPIS, SEGMENTS, cell, geoGroup, headline, liveViews, type C
 import type { LinkResult } from '../link/link';
 import { insightsFor } from './insights';
 import type { InsightEntry } from './manifest';
+import { heat, type Heat } from './heat';
 
 const uniq = <T,>(xs: T[]) => [...new Set(xs)];
 
@@ -45,14 +46,17 @@ export interface LinksOverview {
   /** Indicators that some row has a public pair for, in indicator order. */
   columns: Indicator[];
   /** Each KPI at its headline view (none = licence not confirmed), one cell per indicator it has a pair for. */
-  rows: { kpi: Kpi; view?: View; cells: Map<Indicator, { pair: Pair; result: LinkResult }> }[];
+  rows: { kpi: Kpi; view?: View; cells: Map<Indicator, { pair: Pair; result: LinkResult; heat?: Heat }> }[];
 }
 
 export function linksOverview(): LinksOverview {
   const rows = KPIS.map((kpi) => {
     const view = headline(kpi);
     const pairs = view ? viewLinks(view) : [];
-    return { kpi, view, cells: new Map(pairs.map((pair) => [pair.name, { pair, result: linkResult(getSeries(pair.kpi, pair.land), getSeries(pair.indicator)) }])) };
+    return { kpi, view, cells: new Map(pairs.map((pair) => {
+      const result = linkResult(getSeries(pair.kpi, pair.land), getSeries(pair.indicator));
+      return [pair.name, { pair, result, heat: result.shown ? heat(result.headline.rho!) : undefined }];
+    })) };
   });
   return { columns: INDICATORS.filter((n) => rows.some((r) => r.cells.has(n))), rows };
 }
