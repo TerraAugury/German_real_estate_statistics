@@ -25,6 +25,56 @@ it('lineChart renders one wide and one narrow SVG with the same label', () => {
   expect(narrow[0].getAttribute('aria-label')).toBe(kpi.title.en);
 });
 
+// The overlay: the KPI against the left axis, the indicator against the right axis, on one x axis spanning both histories.
+describe('Link panel chart', () => {
+  const periods = (a: number, b: number) => Array.from({ length: b - a + 1 }, (_, i) => String(a + i));
+  const early = (): LinkResult => ({
+    ...(shown(14) as Extract<LinkResult, { shown: true }>),
+    // The indicator reaches back to 1980 and the KPI starts in 2000; the scales differ by two orders of magnitude.
+    overlay: periods(1980, 2025).map((p) => ({ period: p, kpi: +p < 2000 ? null : (+p - 1990) * 1000, indicator: Math.sin(+p / 5) * 3 + 5 })),
+  });
+  const dom = (h: string) => new JSDOM(h).window.document;
+
+  it('draws one chart (a wide and a narrow SVG), not one per series', () => {
+    const d = dom(renderPanel(kpi, ind, early(), 'en'));
+    expect(d.querySelectorAll('figure.link-panel svg.wide[aria-label^="Levels of"]').length).toBe(1);
+    expect(d.querySelectorAll('figure.link-panel svg.narrow[aria-label^="Levels of"]').length).toBe(1);
+    expect(d.querySelector('.pair')).toBeNull();
+  });
+  it('puts the KPI unit on the left axis and the indicator unit on the right, each axis in its line’s colour', () => {
+    const d = dom(renderPanel(kpi, ind, early(), 'en'));
+    const ticks = (anchor: string) => d.querySelector(`svg.wide g[aria-label="y-axis tick label"][text-anchor="${anchor}"]`);
+    expect(ticks('end')?.getAttribute('fill')).toBe('var(--data)');
+    expect(ticks('start')?.getAttribute('fill')).toBe('var(--strong-text)');
+    // The unit labels: the KPI's at the top left in the data colour, the indicator's at the top right in ochre.
+    const unit = (anchor: string) => d.querySelector(`svg.wide g[aria-label="y-axis label"][text-anchor="${anchor}"]`);
+    expect([unit('start')?.textContent, unit('start')?.getAttribute('fill')]).toEqual([kpi.unit.en, 'var(--data)']);
+    expect([unit('end')?.textContent, unit('end')?.getAttribute('fill')]).toEqual([ind.unit.en, 'var(--strong-text)']);
+    const line = (colour: string) => d.querySelectorAll(`svg.wide g[aria-label="line"][stroke="${colour}"]`).length;
+    expect([line('var(--data)'), line('var(--strong)')]).toEqual([1, 1]);
+  });
+  it('spans the union of both histories: the x axis starts with the longer one', () => {
+    const d = dom(renderPanel(kpi, ind, early(), 'en'));
+    const labels = [...d.querySelectorAll('svg.wide g[aria-label="x-axis tick label"] text')].map((n) => n.textContent);
+    expect(labels).toContain('1980');
+    expect(labels).toContain('2020');
+  });
+  it('names both series in the accessible label and the legend, in both languages', () => {
+    const en = renderPanel(kpi, ind, early(), 'en');
+    expect(dom(en).querySelector('svg.wide')!.getAttribute('aria-label')).toBe(`Levels of ${kpi.title.en} and ${ind.title.en}`);
+    expect(en).toContain(`Blue line, left axis: ${kpi.title.en}. Ochre line, right axis: ${ind.title.en}.`);
+    const de = renderPanel(kpi, ind, early(), 'de');
+    // German is a draft until reviewed, so the label may carry the [DRAFT] marker.
+    expect(dom(de).querySelector('svg.wide')!.getAttribute('aria-label')).toContain(`Niveau: ${kpi.title.de} und ${ind.title.de}`);
+    expect(de).toContain(`Blaue Linie, linke Achse: ${kpi.title.de}. Ockerfarbene Linie, rechte Achse: ${ind.title.de}.`);
+  });
+  it('a series that starts later has no line before it starts', () => {
+    const d = dom(renderPanel(kpi, ind, early(), 'en'));
+    const startX = (colour: string) => +/^M([\d.]+)/.exec(d.querySelector(`svg.wide g[aria-label="line"][stroke="${colour}"] path`)!.getAttribute('d')!)![1];
+    expect(startX('var(--data)')).toBeGreaterThan(startX('var(--strong)') + 100);
+  });
+});
+
 describe('Link panel', () => {
   it('EN: exact co-movement sentence with period and n, both series named, note + strongest-of-N', () => {
     const h = renderPanel(kpi, ind, shown(14), 'en');

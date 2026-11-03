@@ -37,7 +37,8 @@ link.strongest.mark: strongest
 link.small_sample: "Based on only {n} annual observations. With a sample this small the pattern may be coincidental."
 link.lag.label: "Lag in years (positive: indicator moved earlier, negative: later)"
 link.rho.label: Spearman rho
-link.overlay.label: "Levels of {title}"
+link.overlay.chart: "Levels of {kpi} and {indicator}"
+link.overlay.legend: "Blue line, left axis: {kpi}. Ochre line, right axis: {indicator}."
 link.lags.label: "Lag profile of {kpi} and {indicator}"
 nav.sources: Sources and licences
 sources.title: Sources and licences

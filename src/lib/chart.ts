@@ -9,7 +9,7 @@ import type { Points } from '../insight/insight';
 // Colours are the page's custom properties (src/lib/palette.ts), so one build serves both colour schemes. Plot passes them
 // through as presentation attributes and browsers resolve them there.
 const cssVar = (name: keyof typeof PALETTE) => `var(--${name})`;
-const INK = cssVar('ink'), DATA = cssVar('data'), MUTED = cssVar('muted'), STRONG = cssVar('strong'), BAR = cssVar('field'), GRID = cssVar('hair'), ABOVE = cssVar('above'), BELOW = cssVar('below');
+const INK = cssVar('ink'), DATA = cssVar('data'), MUTED = cssVar('muted'), STRONG = cssVar('strong'), STRONG_TEXT = cssVar('strong-text'), BAR = cssVar('field'), GRID = cssVar('hair'), ABOVE = cssVar('above'), BELOW = cssVar('below');
 
 /**
  * Render a Plot twice, wide (720) and narrow (320) with its own tick layout; CSS shows the one that fits its box, so
@@ -51,15 +51,39 @@ export function lineChart(s: Series, lang: Lang, height = 320): string {
   }), s.title[lang]);
 }
 
-/** Levels of one series from a Link overlay; `unit` labels the y axis. The KPI is drawn in the data colour, the indicator muted. */
-export function levelChart(pts: { period: string; value: number }[], unit: string, title: string, lang: Lang, muted = false): string {
-  const data = pts.map((p) => ({ x: x(p.period), value: p.value }));
+/** Round tick values, about five steps of 1, 2 or 5 times a power of ten, whose first and last cover [lo, hi]. */
+function niceTicks(lo: number, hi: number): number[] {
+  const raw = (hi - lo || Math.abs(hi) || 1) / 5;
+  const mag = 10 ** Math.floor(Math.log10(raw));
+  const step = mag * ([1, 2, 5].find((m) => raw <= m * mag) ?? 10);
+  const first = Math.floor(lo / step), last = Math.ceil(hi / step);
+  return Array.from({ length: last - first + 1 }, (_, i) => +((first + i) * step).toPrecision(12));
+}
+
+/**
+ * Both series of a Link on one chart: the Real estate KPI against the left axis, the Economic indicator against the right
+ * axis, over one x axis that spans both histories. Each series is scaled to its own round tick range, and each axis and its
+ * unit take its line's colour (ochre text is the darker `strong-text`, which keeps 4.5:1). The scales are independent, so the
+ * picture shows co-movement only.
+ */
+export function overlayChart(kpi: Points, indicator: Points, labels: { kpiUnit: string; indicatorUnit: string; title: string }, lang: Lang): string {
+  const scaled = (pts: Points, unit: string, anchor: 'left' | 'right', lineColour: string, axisColour: string) => {
+    const values = pts.map((p) => p.value);
+    const ticks = niceTicks(Math.min(...values), Math.max(...values));
+    const [lo, hi] = [ticks[0], ticks[ticks.length - 1]];
+    const at = ticks.map((v) => (v - lo) / (hi - lo));
+    return [
+      Plot.gridY(at),
+      Plot.axisY(at, { anchor, color: axisColour, label: unit, labelArrow: 'none', tickFormat: (_: number, i: number) => fmt(lang, ticks[i]) }),
+      Plot.lineY(pts, { x: (p) => x(p.period), y: (p) => (p.value - lo) / (hi - lo), stroke: lineColour, strokeWidth: 2.25 }),
+    ];
+  };
   return render((narrow) => ({
-    height: 200, marginRight: 12, marginTop: 28,
-    x: { tickFormat: years, label: null, ticks: 4 },
-    y: { grid: true, label: unit, labelArrow: 'none', tickFormat: (d: number) => fmt(lang, d) },
-    marks: [Plot.lineY(data, { x: 'x', y: 'value', stroke: muted ? MUTED : DATA, strokeWidth: narrow ? 2 : 2.25 })],
-  }), title);
+    height: 240, marginRight: narrow ? 36 : 50, marginTop: 28,
+    x: { tickFormat: years, label: null, ticks: narrow ? 4 : undefined },
+    y: { axis: null, domain: [0, 1] },
+    marks: [...scaled(kpi, labels.kpiUnit, 'left', DATA, DATA), ...scaled(indicator, labels.indicatorUnit, 'right', STRONG, STRONG_TEXT)],
+  }), labels.title);
 }
 
 /** Headline measure over time: latest point labelled, dashed average line, grey band of average plus or minus half a standard deviation. */

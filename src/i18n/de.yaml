@@ -37,7 +37,8 @@ link.strongest.mark: stärkster
 link.small_sample: "Auf nur {n} Jahresbeobachtungen beruhend. Bei so kleiner Stichprobe kann das Muster zufällig sein."
 link.lag.label: "Zeitversatz in Jahren (positiv: Indikator lief voraus, negativ: lief nach)"
 link.rho.label: Spearman-Rho
-link.overlay.label: "Niveau: {title}"
+link.overlay.chart: "Niveau: {kpi} und {indicator}"
+link.overlay.legend: "Blaue Linie, linke Achse: {kpi}. Ockerfarbene Linie, rechte Achse: {indicator}."
 link.lags.label: "Zeitversatzprofil von {kpi} und {indicator}"
 nav.sources: Quellen und Lizenzen
 sources.title: Quellen und Lizenzen

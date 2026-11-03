@@ -1,6 +1,6 @@
 import { day, fmt, period, t } from './i18n';
 import { latestOf } from './latest';
-import { insightChart, multiplesChart, sharedDomain, levelChart, lagChart, lineChart } from './chart';
+import { insightChart, multiplesChart, sharedDomain, overlayChart, lagChart, lineChart } from './chart';
 import { notesFor } from './notes';
 import { href, slug, type Lang } from './routes';
 import type { Series } from './series';
@@ -75,10 +75,11 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
   if (!r.shown) {
     body = `<p>${t(lang, r.reason === 'constant' ? 'link.not_shown.constant' : 'link.not_shown', { n: String(r.n0) })}</p>`;
   } else {
-    const col = (k: 'kpi' | 'indicator', s: Series) =>
-      `<div><h4>${esc(s.title[lang])}</h4>` + levelChart(r.overlay.flatMap((o) => (o[k] === null ? [] : [{ period: o.period, value: o[k]! }])), s.unit[lang], t(lang, 'link.overlay.label', { title: s.title[lang] }), lang, k === 'indicator') + '</div>';
+    const pts = (k: 'kpi' | 'indicator') => r.overlay.flatMap((o) => (o[k] === null ? [] : [{ period: o.period, value: o[k]! }]));
+    const names = { kpi: kpi.title[lang], indicator: ind.title[lang] };
     const N = r.lags.filter((l) => l.rho !== null).length;
-    body = `<div class="pair">${col('kpi', kpi)}${col('indicator', ind)}</div>`
+    body = overlayChart(pts('kpi'), pts('indicator'), { kpiUnit: kpi.unit[lang], indicatorUnit: ind.unit[lang], title: t(lang, 'link.overlay.chart', names) }, lang)
+      + `<p class="note">${t(lang, 'link.overlay.legend', { kpi: esc(names.kpi), indicator: esc(names.indicator) })}</p>`
       + lagChart(r.lags, r.strongest.lag, { lag: t(lang, 'link.lag.label'), rho: t(lang, 'link.rho.label'), mark: t(lang, 'link.strongest.mark'), title: t(lang, 'link.lags.label', { kpi: kpi.title[lang], indicator: ind.title[lang] }) }, lang)
       + `<p>${t(lang, 'link.headline', { rho: fmt(lang, r.headline.rho!, { maximumFractionDigits: 2 }), n: String(r.headline.n) })}</p>`
       + `<p>${t(lang, 'link.strongest', { n: String(N) })}</p>`

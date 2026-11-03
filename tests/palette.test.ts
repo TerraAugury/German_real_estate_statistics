@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { PALETTE, SCHEMES, rootCss } from '../src/lib/palette';
-import { lineChart, lagChart, multiplesChart } from '../src/lib/chart';
+import { lineChart, lagChart, multiplesChart, overlayChart } from '../src/lib/chart';
 import { loadSeries } from '../src/lib/series';
 
 // Ticket design-refinement 01: the palette lives in one module; the page CSS and the build-time charts both read it.
@@ -72,9 +72,11 @@ describe('palette', () => {
     const lags = [{ lag: -1, rho: 0.1 }, { lag: 0, rho: -0.5 }, { lag: 1, rho: 0.3 }];
     const pts = [{ period: '2000', value: 1 }, { period: '2001', value: 2 }];
     const out = [lineChart(s, 'en'), lagChart(lags, 0, { lag: 'l', rho: 'r', mark: 'm', title: 't' }, 'en'),
-      multiplesChart({ kpi: pts, reference: pts }, { unit: 'u', title: 't' }, [0, 3], 'en')].join('');
+      multiplesChart({ kpi: pts, reference: pts }, { unit: 'u', title: 't' }, [0, 3], 'en'),
+      overlayChart(pts, pts, { kpiUnit: 'u', indicatorUnit: 'v', title: 't' }, 'en')].join('');
     expect(out).toContain('var(--data)');
     expect(out).toContain('var(--strong)');
+    expect(out).toContain('var(--strong-text)');
     expect(out.match(/#[0-9a-fA-F]{3,8}\b|rgba?\(/g) ?? []).toEqual([]);
   });
 });

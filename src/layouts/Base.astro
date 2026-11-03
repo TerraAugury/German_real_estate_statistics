@@ -79,7 +79,7 @@ const inKpis = KPIS.some((k) => k.page === page);
       figure svg { display: block; max-width: 100%; height: auto; overflow: visible; }
       /* Wide (720) or narrow (320) chart by the width of its own box, so 13 px axis text never shows below 11 px.
          The narrow one stretches up to 28rem, which keeps its text under about 18 px. */
-      figure, .pair > div { container-type: inline-size; }
+      figure { container-type: inline-size; }
       svg.narrow { display: none; width: 100%; max-width: 28rem; }
       @container (max-width: 639px) { svg.wide { display: none; } svg.narrow { display: block; } }
       figcaption { margin-top: 1.25rem; padding-top: .75rem; border-top: 1px solid var(--hair); font-size: 13px; line-height: 1.55; color: var(--muted); }
@@ -119,10 +119,8 @@ const inKpis = KPIS.some((k) => k.page === page);
       section.tone-better, section.tone-worse { padding: 1.25rem 1.5rem; border-radius: 6px; }
       section.tone-better > h2:first-child, section.tone-worse > h2:first-child { margin-top: 0; }
       @media (max-width: 560px) { section.tone-better, section.tone-worse { padding: 1rem; } }
-      .link-panel h4 { margin: 0 0 .25rem; font-size: 15px; font-weight: 500; }
       .link-panel > p { font-size: 15px; max-width: 46em; }
-      .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; margin: 1.25rem 0 1.5rem; }
-      @media (max-width: 720px) { .pair { grid-template-columns: 1fr; gap: 1rem; } }
+      .link-panel > svg { margin-top: 1.25rem; }
 
       /* Home hero: the lead Insight, the only headline number above the fold. */
       .hero { margin-top: 2rem; }
