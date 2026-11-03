@@ -1,6 +1,6 @@
 import { parse } from 'yaml';
 import { readFileSync } from 'node:fs';
-import type { Lang } from './routes';
+import type { Lang, PageKey } from './routes';
 import { DRAFT, draft, readLock, unreviewedKeys } from './review';
 
 const ph = (s: string) => [...s.matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort().join(',');
@@ -34,6 +34,9 @@ export function t(lang: Lang, key: string, vars: Record<string, string> = {}): s
   });
   return draft(out, nested || (lang === 'de' && unreviewed.has(key)));
 }
+
+/** The `<title>`: page name, then site name; Home is the site name once. */
+export const documentTitle = (lang: Lang, page: PageKey, title: string) => (page === 'home' ? title : `${title} – ${t(lang, 'site.title')}`);
 
 const locale = { en: 'en-GB', de: 'de-DE' } as const;
 /** An ISO timestamp as a long UTC date: "3 November 2026". */

@@ -1,12 +1,14 @@
 // Page models (spec section 8): what the KPI pages, the Links overview and the Availability grid show, as data with no
 // language in it. The page file translates and renders; tests call these directly, without a build.
 import { INDICATORS, linkResult, viewLinks, type Indicator, type Pair } from './links';
-import { getSeries } from './series';
+import { getSeries, type Series } from './series';
 import { GEO_GROUPS, KPIS, SEGMENTS, cell, geoGroup, headline, liveViews, type Cell, type Freq, type GeoGroup, type Kpi, type Segment, type View } from './kpis';
 import type { LinkResult } from '../link/link';
 import { insightsFor } from './insights';
 import type { InsightEntry } from './manifest';
 import { heat, type Heat } from './heat';
+import { latestOf, type Latest } from './latest';
+import { loadManifest } from './manifest';
 
 const uniq = <T,>(xs: T[]) => [...new Set(xs)];
 
@@ -68,3 +70,19 @@ export const availability = () => KPIS.map((kpi) => ({
     segment, cell: cell(kpi, segment), geos: uniq(liveViews(kpi).filter((v) => v.segment === segment).map((v) => geoGroup(v.geo))),
   })),
 }));
+
+export interface HomeRow {
+  kpi: Kpi;
+  /** The KPI's headline view and its first series, with the latest value and the points of its sparkline; all absent when no series is public (licence not confirmed). */
+  view?: View; series?: Series; latest?: Latest; spark?: number[];
+}
+
+/** Home's KPI index: one row per KPI at its headline view. */
+export function homeIndex(live = loadManifest()): HomeRow[] {
+  return KPIS.map((kpi): HomeRow => {
+    const view = headline(kpi, live);
+    if (!view) return { kpi };
+    const series = getSeries(view.series[0].key, view.series[0].land);
+    return { kpi, view, series, latest: latestOf(series), spark: series.obs.map((o) => o.value) };
+  });
+}

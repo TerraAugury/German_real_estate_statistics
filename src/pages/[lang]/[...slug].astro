@@ -3,14 +3,14 @@ import Base from '../../layouts/Base.astro';
 import { built, langs, slug, href, type Lang, type BuiltPage } from '../../lib/routes';
 import { t, fmt } from '../../lib/i18n';
 import { getSeries } from '../../lib/series';
-import { lineChart } from '../../lib/chart';
+import { lineChart, sparkline } from '../../lib/chart';
 import { notesFor } from '../../lib/notes';
 import { loadManifest } from '../../lib/manifest';
 import { readProse, unreviewedProse, DRAFT } from '../../lib/review';
 import { sourcesTable } from '../../lib/sources';
 import { compactChart, latestBlock, linkPanel, renderInsight, sourceBlock } from '../../lib/panel';
-import { KPIS, SEGMENTS, SEGMENT_PAGES, cell, headline, naText, viewHref, type GeoGroup, type Segment, type View } from '../../lib/kpis';
-import { availability, kpiPage, linksOverview } from '../../lib/pages';
+import { KPIS, SEGMENTS, SEGMENT_PAGES, cell, naText, viewHref, type GeoGroup, type Segment, type View } from '../../lib/kpis';
+import { availability, homeIndex, kpiPage, linksOverview } from '../../lib/pages';
 import { insightsPage } from '../../lib/insights';
 
 export function getStaticPaths() {
@@ -26,6 +26,7 @@ const views = model?.views ?? [];
 const panels = (model?.panels ?? []).map((p) => ({ ...p, html: linkPanel(getSeries(p.pair.kpi, p.pair.land), getSeries(p.pair.indicator), lang, t(lang, `geo.${p.geo}`), p.id) }));
 const overview = page === 'links' ? linksOverview() : undefined;
 const insights = page === 'insights' ? insightsPage() : [];
+const homeRows = page === 'home' ? homeIndex() : [];
 const prose = import.meta.glob<{ Content: any }>('../../../content/*/*.md', { eager: true });
 const Methodology = prose[`../../../content/${lang}/methodology.md`]?.Content;
 const methodologyDraft = lang === 'de' && unreviewedProse(readProse()).includes('methodology');
@@ -35,7 +36,7 @@ const coverGroup: Record<GeoGroup, string> = { germany: 'geo.germany', city_clas
 const segment = page.startsWith('segment-') ? (page.slice('segment-'.length) as Segment) : null;
 const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
   : t(lang, `${page === 'home' ? 'site' : page}.title`);
-// Home cards and Segment pages show the first series of a view as a compact chart.
+// Segment pages show the first series of a view as a compact chart; Home lists each KPI as an index row.
 const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
 ---
 <Base lang={lang} page={page} title={title}>
@@ -44,23 +45,22 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
     <>
       <h1>{t(lang, 'site.title')}</h1>
       <p>{t(lang, 'home.purpose')}</p>
-      <div class="cards">
-        {KPIS.map((k) => {
-          const v = headline(k);
-          const x = v && compact(v);
-          return (
-            <section class="card">
-              <h2><a href={v ? viewHref(k, v, lang) : href(k.page, lang)}>{t(lang, k.title)}</a></h2>
-              {x ? (
-                <figure>
-                  <h3>{x.title[lang]}</h3>
-                  <Fragment set:html={compactChart(x, lang)} />
-                </figure>
-              ) : <p class="na">{t(lang, 'kpi.not_available.licence')}</p>}
-            </section>
-          );
-        })}
-      </div>
+      <ul class="index">
+        {homeRows.map(({ kpi: k, view: v, series: x }) => (
+          <li class="row">
+            <a class="name" href={v ? viewHref(k, v, lang) : href(k.page, lang)}>{t(lang, k.title)}</a>
+            {x && v ? (
+              <>
+                <Fragment set:html={latestBlock(x, lang)} />
+                <Fragment set:html={sparkline(x, lang)} />
+                <span class="what">{x.title[lang]}</span>
+                {notesFor(x, lang, { on: 'compact' }).map((n) => <p class="note">{n}</p>)}
+                <p class="src"><Fragment set:html={sourceBlock(x, lang)} /></p>
+              </>
+            ) : <p class="na">{t(lang, 'kpi.not_available.licence')}</p>}
+          </li>
+        ))}
+      </ul>
       <h2>{t(lang, 'home.segments')}</h2>
       <ul>{SEGMENT_PAGES.map((g) => <li><a href={href(`segment-${g}`, lang)}>{t(lang, `segment.${g}`)}</a></li>)}</ul>
     </>

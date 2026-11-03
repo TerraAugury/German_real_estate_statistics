@@ -1,6 +1,6 @@
 import * as Plot from '@observablehq/plot';
 import { JSDOM } from 'jsdom';
-import { fmt, period } from './i18n';
+import { fmt, period, t } from './i18n';
 import { PALETTE } from './palette';
 import type { Lang } from './routes';
 import type { Series } from './series';
@@ -124,4 +124,16 @@ export function lagChart(lags: { lag: number; rho: number | null }[], strongest:
       Plot.ruleY([0], { stroke: MUTED }),
     ],
   }), labels.title);
+}
+
+/** A small trend line with a dot on the latest value, for the Home index: no axes, no text; the row beside it carries the numbers. */
+export function sparkline(s: Series, lang: Lang): string {
+  const points = s.obs.map((o) => ({ x: x(o.period), value: o.value }));
+  const svg = Plot.plot({
+    document: new JSDOM('').window.document, width: 120, height: 36, margin: 4, x: { axis: null }, y: { axis: null },
+    marks: [Plot.lineY(points, { x: 'x', y: 'value', stroke: DATA, strokeWidth: 1.75 }), Plot.dot(points.slice(-1), { x: 'x', y: 'value', r: 3, fill: DATA })],
+  });
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', t(lang, 'home.spark.label', { title: s.title[lang] }));
+  return svg.outerHTML;
 }
