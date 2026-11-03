@@ -115,7 +115,7 @@ export function validateSnapshot(m: ManifestEntry, snap: Snapshot): void {
     const p = snap.parts[id];
     if (!p) { errs.push(`id missing: ${id}`); continue; }
     if (p.frequency !== m.frequency) errs.push(`${id}: frequency ${p.frequency}, manifest says ${m.frequency}`);
-    if (p.meta?.third_party && !m.provisional) errs.push(`${id}: original source "${p.meta.comment ?? originalDataSource(p.meta.general_comment)}" is third-party data; set provisional: true until its licence is confirmed`);
+    if (p.meta?.third_party && !m.provisional && !m.cleared) errs.push(`${id}: original source "${p.meta.comment ?? originalDataSource(p.meta.general_comment)}" is third-party data; set provisional: true until its licence is confirmed, or set cleared to record the permission`);
     if (+p.period[0].slice(0, 4) !== m.expected_start) errs.push(`${id}: starts ${p.period[0]}, manifest says ${m.expected_start}`);
   }
   if (errs.length) throw new Error(`manifest validation, ${m.key}: ${errs.join('; ')}`);

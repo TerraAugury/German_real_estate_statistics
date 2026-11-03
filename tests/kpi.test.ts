@@ -55,8 +55,8 @@ describe('KPI catalogue (spec section 4)', () => {
       'construction-permits-office', 'construction-permits-commercial', 'construction-bbk-permits-office', 'construction-bbk-permits-wholesale-warehouse',
       'construction-completions-office', 'construction-completions-commercial', 'construction-bbk-completions-office', 'construction-bbk-completions-wholesale-warehouse']);
   });
-  it('provisional gate: Bundesbank-only KPIs have no live view; Construction keeps Destatis', () => {
-    const live = loadManifest(false);
+  it('withheld Bundesbank series: Bundesbank-only KPIs have no live view; Construction keeps Destatis', () => {
+    const live = loadManifest(false).filter((m) => m.dbnomics_provider !== 'BUBA'); // as if the Bundesbank licence were withdrawn
     expect(liveViews(kpi('kpi-price-index'), live)).toEqual([]);
     expect(liveViews(kpi('construction'), live).find((x) => x.segment === 'office' && x.geo === 'germany')!.series.map((s) => s.key))
       .toEqual(['construction-permits-office', 'construction-completions-office']);
@@ -70,8 +70,10 @@ describe('Availability grid (spec section 4)', () => {
   }).join(' '));
   it('preview build: the spec grid, columns office, retail, logistics, commercial overall', () =>
     expect(grid(loadManifest(true))).toEqual(['Y Y N Y', 'Y Y N Y', 'N N N Y', 'Y N N N', 'N N N Y', 'Y N Y Y']));
-  it('default build: Bundesbank-only cells are licence gaps, Construction stays', () =>
-    expect(grid(loadManifest(false))).toEqual(['L L N L', 'L L N L', 'N N N L', 'L N N N', 'N N N L', 'Y N Y Y']));
+  it('default build: the same grid as preview, every series is cleared', () =>
+    expect(grid(loadManifest(false))).toEqual(grid(loadManifest(true))));
+  it('withheld Bundesbank series: Bundesbank-only cells are licence gaps, Construction stays', () =>
+    expect(grid(loadManifest(false).filter((m) => m.dbnomics_provider !== 'BUBA'))).toEqual(['L L N L', 'L L N L', 'N N N L', 'L N N N', 'N N N L', 'Y N Y Y']));
   it('every source gap has a reason in both languages', () => {
     for (const k of KPIS) for (const seg of SEGMENTS) {
       const c = cell(k, seg, loadManifest(true));
@@ -86,7 +88,7 @@ describe('Availability grid (spec section 4)', () => {
     const live = loadManifest(true);
     expect(headline(kpi('kpi-price-index'), live)?.series[0].key).toBe('price-index-de-total-a');
     expect(headline(kpi('kpi-office-vacancy'), live)?.series[0].key).toBe('office-vacancy-7');
-    expect(headline(kpi('kpi-price-index'), loadManifest(false))).toBeUndefined();
+    expect(headline(kpi('kpi-price-index'), loadManifest(false).filter((m) => m.dbnomics_provider !== 'BUBA'))).toBeUndefined();
   });
 });
 

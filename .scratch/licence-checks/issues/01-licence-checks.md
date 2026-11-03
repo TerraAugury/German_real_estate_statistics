@@ -6,6 +6,8 @@
 
 **Status:** ready-for-human
 
+**Progress (2026-11-03):** the owner holds permission for all 44 provisional series; the manifest is updated (`provisional: false`, `cleared`). Still open: the permission texts recorded here, and the unticked checks below (BIS, OECD/ECB terms read, repository redistribution).
+
 Consolidates:
 - `.scratch/cre-site/issues/08-licence-permission-for-cre-series.md`
 - `.scratch/cre-site/issues/14-licences-for-indicator-sources.md`

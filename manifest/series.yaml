@@ -1,4 +1,4 @@
-# One hand-written entry per series (spec sections 3-5). `provisional: true` = public-redisplay licence unconfirmed; excluded from the default build.
+# One hand-written entry per series (spec sections 3-5). `provisional: true` = public-redisplay licence unconfirmed; excluded from the default build. `cleared` = who permitted a third-party series, required to publish it.
 # seasonal_adjustment: nsa | sa. resampling: mean for Economic indicators (rates, indices, levels), none for KPIs (native frequency).
 # short_window: starts after 2010; short_window_sentence: extra i18n key. scope: Note keys (note.scope.<key>).
 # Construction keys name Destatis building types, not Segments: commercial = Handelsgebäude (retail), warehouse = Lagergebäude (logistics).
@@ -117,17 +117,18 @@
   resampling: none
   short_window: true
 
-# Bundesbank BBDZ1/BBDR1 CRE series: all provisional (spec section 3).
+# Bundesbank BBDZ1/BBDR1 CRE series: cleared by written permission (spec section 3).
 - key: price-index-de-total-a
   dbnomics_provider: BUBA
   source: bundesbank
   dataset: BBDZ1
   ids: ["A.B10.N.G000.P0100.A"]
   publisher: &bbk_publisher "Deutsche Bundesbank"
-  licence: &bbk_licence { name: "Deutsche Bundesbank terms of use (public reuse not confirmed)", url: "https://www.bundesbank.de/en/service/terms-of-use" }
+  licence: &bbk_licence { name: "Deutsche Bundesbank terms of use", url: "https://www.bundesbank.de/en/service/terms-of-use" }
   attribution: &attr_vdp { en: "Source: vdpResearch GmbH, published by Deutsche Bundesbank", de: "Quelle: vdpResearch GmbH, Veröffentlichung: Deutsche Bundesbank" }
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: &permission "Written permission for non-commercial public redisplay with attribution (licence-checks/01)"
   title: { en: "Commercial property price index, commercial overall, Germany (annual)", de: "Gewerbeimmobilien-Preisindex, Gewerbe gesamt, Deutschland (jährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: annual
@@ -148,7 +149,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, commercial overall, Germany (quarterly)", de: "Gewerbeimmobilien-Preisindex, Gewerbe gesamt, Deutschland (vierteljährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: quarterly
@@ -169,7 +171,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, office, Germany (annual)", de: "Gewerbeimmobilien-Preisindex, Büro, Deutschland (jährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: annual
@@ -190,7 +193,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, office, Germany (quarterly)", de: "Gewerbeimmobilien-Preisindex, Büro, Deutschland (vierteljährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: quarterly
@@ -211,7 +215,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, retail, Germany (annual)", de: "Gewerbeimmobilien-Preisindex, Einzelhandel, Deutschland (jährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: annual
@@ -232,7 +237,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, retail, Germany (quarterly)", de: "Gewerbeimmobilien-Preisindex, Einzelhandel, Deutschland (vierteljährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: quarterly
@@ -253,7 +259,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, commercial overall, cities of supra-regional importance (annual)", de: "Gewerbeimmobilien-Preisindex, Gewerbe gesamt, Städte von überregionaler Bedeutung (jährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: annual
@@ -274,7 +281,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, commercial overall, cities of supra-regional importance (quarterly)", de: "Gewerbeimmobilien-Preisindex, Gewerbe gesamt, Städte von überregionaler Bedeutung (vierteljährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: quarterly
@@ -295,7 +303,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, office, cities of supra-regional importance (annual)", de: "Gewerbeimmobilien-Preisindex, Büro, Städte von überregionaler Bedeutung (jährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: annual
@@ -316,7 +325,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, office, cities of supra-regional importance (quarterly)", de: "Gewerbeimmobilien-Preisindex, Büro, Städte von überregionaler Bedeutung (vierteljährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: quarterly
@@ -337,7 +347,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, retail, cities of supra-regional importance (annual)", de: "Gewerbeimmobilien-Preisindex, Einzelhandel, Städte von überregionaler Bedeutung (jährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: annual
@@ -358,7 +369,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, retail, cities of supra-regional importance (quarterly)", de: "Gewerbeimmobilien-Preisindex, Einzelhandel, Städte von überregionaler Bedeutung (vierteljährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: quarterly
@@ -379,7 +391,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, commercial overall, Germany excluding cities of supra-regional importance (annual)", de: "Gewerbeimmobilien-Preisindex, Gewerbe gesamt, Deutschland ohne Städte von überregionaler Bedeutung (jährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: annual
@@ -400,7 +413,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, commercial overall, Germany excluding cities of supra-regional importance (quarterly)", de: "Gewerbeimmobilien-Preisindex, Gewerbe gesamt, Deutschland ohne Städte von überregionaler Bedeutung (vierteljährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: quarterly
@@ -421,7 +435,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, office, Germany excluding cities of supra-regional importance (annual)", de: "Gewerbeimmobilien-Preisindex, Büro, Deutschland ohne Städte von überregionaler Bedeutung (jährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: annual
@@ -442,7 +457,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, office, Germany excluding cities of supra-regional importance (quarterly)", de: "Gewerbeimmobilien-Preisindex, Büro, Deutschland ohne Städte von überregionaler Bedeutung (vierteljährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: quarterly
@@ -463,7 +479,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, retail, Germany excluding cities of supra-regional importance (annual)", de: "Gewerbeimmobilien-Preisindex, Einzelhandel, Deutschland ohne Städte von überregionaler Bedeutung (jährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: annual
@@ -484,7 +501,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Commercial property price index, retail, Germany excluding cities of supra-regional importance (quarterly)", de: "Gewerbeimmobilien-Preisindex, Einzelhandel, Deutschland ohne Städte von überregionaler Bedeutung (vierteljährlich)" }
   unit: { en: "index, 2013=100", de: "Index, 2013=100" }
   frequency: quarterly
@@ -505,7 +523,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Rent index (new lettings), office, Germany (annual)", de: "Mietindex (Neuvermietung), Büro, Deutschland (jährlich)" }
   unit: { en: "index", de: "Index" }
   frequency: annual
@@ -524,7 +543,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Rent index (new lettings), office, Germany (quarterly)", de: "Mietindex (Neuvermietung), Büro, Deutschland (vierteljährlich)" }
   unit: { en: "index", de: "Index" }
   frequency: quarterly
@@ -543,7 +563,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Rent index (new lettings), retail, Germany (annual)", de: "Mietindex (Neuvermietung), Einzelhandel, Deutschland (jährlich)" }
   unit: { en: "index", de: "Index" }
   frequency: annual
@@ -562,7 +583,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Rent index (new lettings), retail, Germany (quarterly)", de: "Mietindex (Neuvermietung), Einzelhandel, Deutschland (vierteljährlich)" }
   unit: { en: "index", de: "Index" }
   frequency: quarterly
@@ -581,7 +603,8 @@
   licence: *bbk_licence
   attribution: &attr_bul { en: "Source: bulwiengesa AG, published by Deutsche Bundesbank", de: "Quelle: bulwiengesa AG, Veröffentlichung: Deutsche Bundesbank" }
   credit: "bulwiengesa AG"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Rent index (new lettings), office and retail combined, 127 towns", de: "Mietindex (Neuvermietung), Büro und Einzelhandel zusammen, 127 Städte" }
   unit: { en: "index", de: "Index" }
   frequency: annual
@@ -601,7 +624,8 @@
   licence: *bbk_licence
   attribution: *attr_bul
   credit: "bulwiengesa AG"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Rent index (new lettings), office and retail combined, 120 towns", de: "Mietindex (Neuvermietung), Büro und Einzelhandel zusammen, 120 Städte" }
   unit: { en: "index", de: "Index" }
   frequency: annual
@@ -621,7 +645,8 @@
   licence: *bbk_licence
   attribution: *attr_bul
   credit: "bulwiengesa AG"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Rent index (new lettings), office and retail combined, 7 major cities", de: "Mietindex (Neuvermietung), Büro und Einzelhandel zusammen, 7 Großstädte" }
   unit: { en: "index", de: "Index" }
   frequency: annual
@@ -641,7 +666,8 @@
   licence: *bbk_licence
   attribution: *attr_bul
   credit: "bulwiengesa AG"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Initial yield, office and retail combined, 127 towns", de: "Anfangsrendite, Büro und Einzelhandel zusammen, 127 Städte" }
   unit: { en: "%", de: "%" }
   frequency: annual
@@ -661,7 +687,8 @@
   licence: *bbk_licence
   attribution: *attr_bul
   credit: "bulwiengesa AG"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Initial yield, office and retail combined, 120 towns", de: "Anfangsrendite, Büro und Einzelhandel zusammen, 120 Städte" }
   unit: { en: "%", de: "%" }
   frequency: annual
@@ -681,7 +708,8 @@
   licence: *bbk_licence
   attribution: *attr_bul
   credit: "bulwiengesa AG"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Initial yield, office and retail combined, 7 major cities", de: "Anfangsrendite, Büro und Einzelhandel zusammen, 7 Großstädte" }
   unit: { en: "%", de: "%" }
   frequency: annual
@@ -701,7 +729,8 @@
   licence: *bbk_licence
   attribution: *attr_bul
   credit: "bulwiengesa AG"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Office vacancy rate, 127 towns", de: "Büroleerstandsquote, 127 Städte" }
   unit: { en: "%", de: "%" }
   frequency: annual
@@ -721,7 +750,8 @@
   licence: *bbk_licence
   attribution: *attr_bul
   credit: "bulwiengesa AG"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Office vacancy rate, 7 major cities", de: "Büroleerstandsquote, 7 Großstädte" }
   unit: { en: "%", de: "%" }
   frequency: annual
@@ -741,7 +771,8 @@
   licence: *bbk_licence
   attribution: *attr_bul
   credit: "bulwiengesa AG"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Office vacancy rate, 120 towns", de: "Büroleerstandsquote, 120 Städte" }
   unit: { en: "%", de: "%" }
   frequency: annual
@@ -761,7 +792,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Transaction volume index, commercial overall, Germany", de: "Transaktionsvolumenindex, Gewerbe gesamt, Deutschland" }
   unit: { en: "index", de: "Index" }
   frequency: annual
@@ -780,7 +812,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Transaction volume index, commercial overall, 127 administrative districts", de: "Transaktionsvolumenindex, Gewerbe gesamt, 127 Kreise" }
   unit: { en: "index", de: "Index" }
   frequency: annual
@@ -800,7 +833,8 @@
   licence: *bbk_licence
   attribution: *attr_vdp
   credit: "vdpResearch GmbH"
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Transaction volume index, commercial overall, 7 major cities", de: "Transaktionsvolumenindex, Gewerbe gesamt, 7 Großstädte" }
   unit: { en: "index", de: "Index" }
   frequency: annual
@@ -819,7 +853,8 @@
   publisher: *bbk_publisher
   licence: *bbk_licence
   attribution: &bbk_attribution { en: "Source: Deutsche Bundesbank", de: "Quelle: Deutsche Bundesbank" }
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Building permits: office and administrative buildings, Germany (Bundesbank)", de: "Baugenehmigungen: Büro- und Verwaltungsgebäude, Deutschland (Bundesbank)" }
   unit: { en: "million m² floor space", de: "Mio. m² Nutzfläche" }
   frequency: annual
@@ -837,7 +872,8 @@
   publisher: *bbk_publisher
   licence: *bbk_licence
   attribution: *bbk_attribution
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Building permits: wholesale, retail and warehouse buildings, Germany (Bundesbank)", de: "Baugenehmigungen: Großhandels-, Einzelhandels- und Lagergebäude, Deutschland (Bundesbank)" }
   unit: { en: "million m² floor space", de: "Mio. m² Nutzfläche" }
   frequency: annual
@@ -855,7 +891,8 @@
   publisher: *bbk_publisher
   licence: *bbk_licence
   attribution: *bbk_attribution
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Building completions: office and administrative buildings, Germany (Bundesbank)", de: "Baufertigstellungen: Büro- und Verwaltungsgebäude, Deutschland (Bundesbank)" }
   unit: { en: "million m² floor space", de: "Mio. m² Nutzfläche" }
   frequency: annual
@@ -873,7 +910,8 @@
   publisher: *bbk_publisher
   licence: *bbk_licence
   attribution: *bbk_attribution
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Building completions: wholesale, retail and warehouse buildings, Germany (Bundesbank)", de: "Baufertigstellungen: Großhandels-, Einzelhandels- und Lagergebäude, Deutschland (Bundesbank)" }
   unit: { en: "million m² floor space", de: "Mio. m² Nutzfläche" }
   frequency: annual
@@ -893,7 +931,8 @@
   publisher: *bbk_publisher
   licence: *bbk_licence
   attribution: *bbk_attribution
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "10-year Bund yield", de: "Rendite 10-jähriger Bundesanleihen" }
   unit: { en: "% p.a.", de: "% p. a." }
   frequency: monthly
@@ -929,7 +968,8 @@
   publisher: *bbk_publisher
   licence: *bbk_licence
   attribution: *bbk_attribution
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "New-business loan rate, non-financial corporations, over EUR 1m", de: "Kreditzins Neugeschäft, nichtfinanzielle Kapitalgesellschaften, über 1 Mio. EUR" }
   unit: { en: "% p.a.", de: "% p. a." }
   frequency: monthly
@@ -965,7 +1005,8 @@
   publisher: *bbk_publisher
   licence: *bbk_licence
   attribution: *bbk_attribution
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Real GDP, Germany", de: "Reales Bruttoinlandsprodukt, Deutschland" }
   unit: { en: "index", de: "Index" }
   frequency: quarterly
@@ -983,7 +1024,8 @@
   publisher: *bbk_publisher
   licence: *bbk_licence
   attribution: *bbk_attribution
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "Registered unemployment rate, Germany", de: "Arbeitslosenquote (registrierte Arbeitslose), Deutschland" }
   unit: { en: "%", de: "%" }
   frequency: monthly
@@ -1034,9 +1076,10 @@
   dataset: DSD_STES@DF_BTS
   ids: ["DEU.M.BCICP.PB.F.Y._Z._Z.N"]
   publisher: &oecd_publisher "OECD"
-  licence: &oecd_licence { name: "OECD terms and conditions (public reuse not confirmed)", url: "https://www.oecd.org/en/about/terms-conditions.html" }
+  licence: &oecd_licence { name: "OECD terms and conditions", url: "https://www.oecd.org/en/about/terms-conditions.html" }
   attribution: &oecd_attribution { en: "Source: OECD", de: "Quelle: OECD" }
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "OECD business confidence, construction (not seasonally adjusted)", de: "OECD-Geschäftsklima, Bau (nicht saisonbereinigt)" }
   unit: { en: "% balance", de: "Saldo in %" }
   frequency: monthly
@@ -1053,7 +1096,8 @@
   publisher: *oecd_publisher
   licence: *oecd_licence
   attribution: *oecd_attribution
-  provisional: true
+  provisional: false
+  cleared: *permission
   title: { en: "OECD business confidence, retail (not seasonally adjusted)", de: "OECD-Geschäftsklima, Einzelhandel (nicht saisonbereinigt)" }
   unit: { en: "% balance", de: "Saldo in %" }
   frequency: monthly

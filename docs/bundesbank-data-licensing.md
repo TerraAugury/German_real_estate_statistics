@@ -134,6 +134,8 @@ Defaults assumed, not yet confirmed: no DBnomics fallback for Bundesbank series,
 
 ## 9. Open questions
 
+**Permission recorded 2026-11-03.** The owner reported holding permission for non-commercial public redisplay with attribution of all 44 formerly provisional series (42 Bundesbank, 2 OECD). Each is `provisional: false` with a `cleared` note in `manifest/series.yaml`, which `validateSnapshot` requires for third-party series. The permission texts themselves are not in the repository; record who gave each and when under ticket licence-checks/01. The permission covers non-commercial use only; if the site is ever monetised, renew it.
+
 - Is DBnomics acceptable as the route, or should the switch happen?
 - Do the ESCB terms extend to the vdpResearch, bulwiengesa, Destatis and Federal Employment Agency data? Ask the Bundesbank.
 - Is automated access to the SDMX service allowed, and at what rate? Ask the Bundesbank.

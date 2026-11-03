@@ -98,6 +98,7 @@ describe('third-party flag', () => {
     const gdp = { ...snap, parts: { [id]: { ...snap.parts[id], meta: { ...snap.parts[id].meta!, comment: null, general_comment: '1 Source of the original data: Federal Statistical Office.' } } } };
     expect(() => validateSnapshot({ ...m, provisional: false }, gdp)).toThrow(/Federal Statistical Office.*third-party/);
     validateSnapshot({ ...m, provisional: true }, snap);
+    validateSnapshot({ ...m, provisional: false, cleared: 'permission' }, snap); // a recorded permission lets it through
   });
 });
 
