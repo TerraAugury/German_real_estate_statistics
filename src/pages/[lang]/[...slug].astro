@@ -1,14 +1,15 @@
 ---
 import Base from '../../layouts/Base.astro';
+import KpiView from '../../components/KpiView.astro';
+import KpiPanel from '../../components/KpiPanel.astro';
 import { built, langs, slug, href, type Lang, type BuiltPage } from '../../lib/routes';
 import { t, fmt } from '../../lib/i18n';
-import { getSeries } from '../../lib/series';
-import { lineChart, sparkline } from '../../lib/chart';
+import { sparkline } from '../../lib/chart';
 import { notesFor } from '../../lib/notes';
 import { loadManifest } from '../../lib/manifest';
 import { readProse, unreviewedProse, DRAFT } from '../../lib/review';
 import { sourcesTable } from '../../lib/sources';
-import { compactChart, latestBlock, linkPanel, renderHero, renderInsight, renderInsightIndex, renderToneLegend, sourceBlock } from '../../lib/panel';
+import { compactChart, latestBlock, renderHero, renderInsight, renderInsightIndex, renderToneLegend, sourceBlock } from '../../lib/panel';
 import { KPIS, SEGMENTS, SEGMENT_PAGES, cell, naText, viewHref, type GeoGroup, type Segment } from '../../lib/kpis';
 import { availability, firstSeries, homeIndex, kpiPage, linksOverview } from '../../lib/pages';
 import { insightsPage, leadInsight } from '../../lib/insights';
@@ -23,7 +24,7 @@ const { page } = Astro.props as { page: BuiltPage };
 const kpi = KPIS.find((k) => k.page === page);
 const model = kpi ? kpiPage(kpi) : undefined;
 const views = model?.views ?? [];
-const panels = (model?.panels ?? []).map((p) => ({ ...p, html: linkPanel(getSeries(p.pair.kpi, p.pair.land), getSeries(p.pair.indicator), lang, t(lang, `geo.${p.geo}`), p.id) }));
+const panels = model?.panels ?? [];
 const overview = page === 'links' ? linksOverview() : undefined;
 const insights = page === 'insights' ? insightsPage() : [];
 const homeRows = page === 'home' ? homeIndex() : [];
@@ -166,28 +167,14 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
             })}</select></label>
             <label>{t(lang, 'select.freq')} <select name="freq">{model!.selectors.freq.map((x) => <option value={x}>{t(lang, `freq.${x}`)}</option>)}</select></label>
           </form>
-          {views.map(({ view: v, links, live }) => {
-            const section = (
-              <section class="view" data-segment={v.segment} data-geo={v.geo} data-freq={v.freq} data-links={links.join(' ')}>
-                {v.series.map((r) => getSeries(r.key, r.land)).map((x) => (
-                  <figure>
-                    <h2>{x.title[lang]}</h2>
-                    <Fragment set:html={latestBlock(x, lang) + lineChart(x, lang)} />
-                    {notesFor(x, lang, { on: 'kpi', geography: t(lang, `geo.${v.geo}`) }).map((n) => <p class="note">{n}</p>)}
-                    <figcaption set:html={sourceBlock(x, lang)} />
-                  </figure>
-                ))}
-              </section>
-            );
-            return live ? section : <template class="view">{section}</template>;
-          })}
+          {/* Only the first view is in the page; each other waits as an empty marker the script fills from its fragment. */}
+          {views.map(({ view: v, links, live }, i) => live
+            ? <KpiView view={v} links={links} lang={lang} />
+            : <template class="view" data-segment={v.segment} data-geo={v.geo} data-freq={v.freq} data-links={links.join(' ')} data-src={`/${lang}/fragments/${page}/${i}/`}></template>)}
           {panels.length > 0 && (
             <>
               <h2>{t(lang, 'links.heading')}</h2>
-              {panels.map((p) => {
-                const div = <div data-panel={p.id}><Fragment set:html={p.html} /></div>;
-                return p.live ? div : <template class="panel">{div}</template>;
-              })}
+              <div id="panels">{panels.map((p, order) => p.live && <KpiPanel panel={p} order={order} lang={lang} />)}</div>
             </>
           )}
           {model!.insights.length > 0 && (
@@ -199,33 +186,50 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
           <script>
             import { pickView, type Want } from '../../lib/select';
             const form = document.querySelector<HTMLFormElement>('form.selectors')!;
-            // Page weight (ticket 12): only the first view and its panels are live at load; every other one waits in a
-            // <template> and its content moves into the page the first time it is shown.
-            const inner = (el: HTMLElement) => (el instanceof HTMLTemplateElement ? (el.content.firstElementChild as HTMLElement) : el);
-            const setShown = (x: { el: HTMLElement }, on: boolean) => {
-              if (x.el instanceof HTMLTemplateElement) {
-                if (!on) return;
-                const el = inner(x.el);
-                x.el.replaceWith(el);
-                x.el = el;
-              }
-              x.el.hidden = !on;
-            };
-            const views = [...document.querySelectorAll<HTMLElement>('section.view, template.view')].map((el) => ({ el, ...(inner(el).dataset as Want) }));
-            const panels = [...document.querySelectorAll<HTMLElement>('[data-panel], template.panel')].map((el) => ({ el, id: inner(el).dataset.panel! }));
+            // Page weight (ticket 12): the page holds the first view and its panels. Every other view is an empty
+            // <template> marker with the URL of its fragment; the first time it is picked its section and panels are
+            // fetched and move into the page, and from then on it only hides and shows.
+            const views = [...document.querySelectorAll<HTMLElement>('section.view, template.view')].map((el) => ({ el, ...(el.dataset as Want), src: el.dataset.src }));
+            const panels = new Map([...document.querySelectorAll<HTMLElement>('[data-panel]')].map((el) => [el.dataset.panel!, el]));
             const keys = ['segment', 'geo', 'freq'] as const;
+            const load = async (v: (typeof views)[number]) => {
+              if (!v.src) return;
+              const res = await fetch(v.src);
+              if (!res.ok) throw new Error(v.src);
+              const box = document.createElement('div');
+              box.innerHTML = await res.text();
+              const section = box.querySelector<HTMLElement>('section.view')!;
+              section.hidden = true;
+              v.el.replaceWith(section);
+              v.el = section;
+              v.src = undefined;
+              // Panels keep the page's order: each goes before the first held panel that comes after it.
+              for (const p of box.querySelectorAll<HTMLElement>('[data-panel]')) {
+                if (panels.has(p.dataset.panel!)) continue;
+                p.hidden = true;
+                const next = [...panels.values()].find((q) => +q.dataset.order! > +p.dataset.order!);
+                next ? next.before(p) : document.getElementById('panels')!.append(p);
+                panels.set(p.dataset.panel!, p);
+              }
+            };
+            let shown = views[0], latest = 0;
             // Show the closest view and its Link panels; the URL and the language switch then name exactly that view.
-            const show = (want: Partial<Want>, changed?: keyof Want) => {
+            const show = async (want: Partial<Want>, changed?: keyof Want) => {
               const v = pickView(views, want, changed);
-              for (const x of views) setShown(x, x === v);
-              const ids = v.el.dataset.links!.split(' ');
-              for (const p of panels) setShown(p, ids.includes(p.id));
-              for (const k of keys) (form.elements.namedItem(k) as HTMLSelectElement).value = v[k];
-              history.replaceState(null, '', '?' + new URLSearchParams({ segment: v.segment, geo: v.geo, freq: v.freq }) + location.hash);
+              const turn = ++latest;
+              const loaded = await load(v).then(() => true, () => false);
+              if (turn !== latest) return;
+              const target = loaded ? v : shown; // a failed fetch keeps the view on screen
+              for (const x of views) x.el.hidden = x !== target;
+              const ids = target.el.dataset.links!.split(' ');
+              for (const [id, el] of panels) el.hidden = !ids.includes(id);
+              shown = target;
+              for (const k of keys) (form.elements.namedItem(k) as HTMLSelectElement).value = target[k];
+              history.replaceState(null, '', '?' + new URLSearchParams({ segment: target.segment, geo: target.geo, freq: target.freq }) + location.hash);
               document.querySelector<HTMLAnchorElement>('a.sw')!.search = location.search;
             };
             const q = new URLSearchParams(location.search);
-            if (keys.some((k) => q.has(k))) show(Object.fromEntries(keys.flatMap((k) => (q.has(k) ? [[k, q.get(k)!]] : []))));
+            if (keys.some((k) => q.has(k))) await show(Object.fromEntries(keys.flatMap((k) => (q.has(k) ? [[k, q.get(k)!]] : []))));
             // A Links overview cell names a panel that was hidden at load, so the browser could not scroll to it.
             if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
             form.addEventListener('change', (e) => show(Object.fromEntries(new FormData(form)) as Want, (e.target as HTMLSelectElement).name as keyof Want));

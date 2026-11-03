@@ -1,0 +1,21 @@
+---
+// One KPI selector state: a section per series. The page renders the first; the rest are fetched as fragments (ticket 12).
+import { getSeries } from '../lib/series';
+import { lineChart } from '../lib/chart';
+import { notesFor } from '../lib/notes';
+import { latestBlock, sourceBlock } from '../lib/panel';
+import { t } from '../lib/i18n';
+import type { View } from '../lib/kpis';
+import type { Lang } from '../lib/routes';
+const { view: v, links, lang } = Astro.props as { view: View; links: string[]; lang: Lang };
+---
+<section class="view" data-segment={v.segment} data-geo={v.geo} data-freq={v.freq} data-links={links.join(' ')}>
+  {v.series.map((r) => getSeries(r.key, r.land)).map((x) => (
+    <figure>
+      <h2>{x.title[lang]}</h2>
+      <Fragment set:html={latestBlock(x, lang) + lineChart(x, lang)} />
+      {notesFor(x, lang, { on: 'kpi', geography: t(lang, `geo.${v.geo}`) }).map((n) => <p class="note">{n}</p>)}
+      <figcaption set:html={sourceBlock(x, lang)} />
+    </figure>
+  ))}
+</section>
