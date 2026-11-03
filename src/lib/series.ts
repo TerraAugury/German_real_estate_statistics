@@ -14,6 +14,8 @@ export interface Series {
   fetchedFrom: string; service?: string; original?: { title?: string; unit: string };
   obs: { period: string; value: number }[]; change: 'pct' | 'diff'; freq: 'M' | 'Q' | 'A';
   lastPeriod: string; derived: boolean; provisional: boolean;
+  /** Decimals the source published; only for an original (not derived) series, so its values can be shown as published. */
+  decimals?: number;
   stale: boolean; fetchFailed: string | null; unavailable: string | null; retrievedAt: string; revisedAt: string | null;
   /** KPI-page Note inputs: manifest scope keys, short-history sentence key (true = no extra sentence), Partial total years. */
   scope: ManifestEntry['scope']; shortWindow: string | boolean; partial: PartialTotal;
@@ -56,12 +58,13 @@ export function loadSeries(key: string, now = new Date(), land?: string): Series
   const lastPeriod = obs.at(-1)!.period;
   const meta = snap.parts[m.ids[0].replace('{land}', laender[0])]?.meta;
   const title = land ? landTitle(m.title, land) : m.title;
+  const derived = (isDerived(m) && !land) || m.scale !== 1 || m.resampling === 'mean';
   const s: Series = { key, title, unit: m.unit, publisher: m.publisher, licence: m.licence,
     seriesId: seriesId(m, land), seriesUrl: seriesUrl(m, land), obs, change: m.change, freq: FREQ[m.frequency as keyof typeof FREQ],
     fetchedFrom: m.source === 'dbnomics' ? 'DBnomics' : m.publisher, service: SERVICE[m.source],
     // only the Bundesbank gives a title of the series itself; a GENESIS cube's title lists every measure of the cube
     original: meta ? { title: m.source === 'bundesbank' ? meta.title : undefined, unit: meta.unit_mult ? `${meta.unit} (×10^${meta.unit_mult})` : meta.unit } : undefined,
-    lastPeriod, derived: (isDerived(m) && !land) || m.scale !== 1 || m.resampling === 'mean', provisional: m.provisional,
+    lastPeriod, derived, provisional: m.provisional, decimals: !derived && meta?.decimals != null ? meta.decimals : undefined,
     stale: isStale(lastPeriod, m.frequency, now), fetchFailed: snap.fetch_failed ?? null, unavailable: snap.unavailable ?? null,
     retrievedAt: snap.retrieved_at, revisedAt: snap.revised_at ?? null,
     scope: m.scope, shortWindow: m.short_window && (m.short_window_sentence ?? true), partial };

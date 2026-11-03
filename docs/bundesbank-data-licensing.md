@@ -24,6 +24,8 @@ Source: Bundesbank page "Terms of use regarding the reuse of ESCB statistics".
 
 ## 3. Audit of the code against the requirements
 
+> Historical (2026-11-02). Gaps 1, 2, 3 (retrieval date), 5, 7 and 8 were closed by direct-source-migration tickets 01 to 09. See "Gaps remaining" in section 9.
+
 The site fetches the Bundesbank series through DBnomics (`src/lib/pipeline.ts`), not from the Bundesbank API.
 
 | # | Gap | Rule |
@@ -119,7 +121,7 @@ Decision recorded: the project owner will supply a Destatis username and passwor
 - **Comparison with the committed snapshots:** permits office, 288 values over 16 Länder and 18 years, identical; completions office, all 16 Länder identical; CPI, 429 months identical; construction price office and commercial, 275 quarters each identical. The DBnomics copies are as current as GENESIS, so the gain of the switch is provenance, not fresher values.
 - **Limits:** no rate limit is documented. The login check states that requests running longer than 15 minutes are ended when more than 3 run in parallel. The fetcher runs one request at a time.
 
-## 8. Proposed plan (not started)
+## 8. Proposed plan (implemented as direct-source-migration tickets 01 to 06)
 
 1. Add a Bundesbank fetcher for the 42 entries, selected by a `source` field in the manifest. Use `format=sdmx_json&lang=en`, with the existing retry and backoff.
 2. Store the raw JSON response unmodified, and extend the snapshot with unit, multiplier, original title, source comment, `validFrom`, source URL and retrieval time.
@@ -138,3 +140,28 @@ Defaults assumed, not yet confirmed: no DBnomics fallback for Bundesbank series,
 - Is showing the original title and unit enough to meet "metadata unaltered" while the site also uses its own wording and rounding?
 - Is the repository public, and does that make the snapshots a redistribution?
 - Does GENESIS-Online need a login for data calls, and are the Länder-level construction tables there or in the regional database?
+
+### Original source of the 42 Bundesbank series (checked 2026-11-03)
+
+Read from the `BBK_COMM_SRC_ENG` attribute of the Bundesbank SDMX-JSON response for each series in `manifest/series.yaml` (`source: bundesbank`); all 42 answered HTTP 200. The attribute names the originator only. It says nothing about reuse terms, so each third-party row still needs an answer to "do the ESCB terms cover this".
+
+| Source comment | Dataset | Series (manifest keys) | To ask |
+|---|---|---|---|
+| vdpResearch GmbH and Bundesbank calculations | BBDZ1 | 18: `price-index-{de,cities,excl}-{total,office,retail}-{a,q}` | vdp |
+| vdpResearch GmbH | BBDZ1 | 4: `rent-index-de-{office,retail}-{a,q}` | vdp |
+| Bundesbank calculations based on price data provided by bulwiengesa AG | BBDZ1 | 9: `rent-index-combined-{127,120,7}`, `initial-yield-combined-{127,120,7}`, `office-vacancy-{127,120,7}` | bulwiengesa |
+| Bundesbank calculations based on the extrapolation by vdpResearch GmbH on the basis of purchase price data provided by surveyor committees, excluding share-deals | BBDZ1 | 3: `transaction-volume-{de,127,7}` | vdp, and the surveyor committees as the underlying source |
+| Bundesbank calculations based on data provided by the Federal Statistical Office | BBDZ1 | 4: `construction-bbk-{permits,completions}-{office,wholesale-warehouse}` | Destatis |
+| Seasonal adjustment based on data provided by the Federal Employment Agency | BBDL1 | 1: `unemployment-rate` | Federal Employment Agency |
+| none | BBSIS, BBIM1, BBNZ1 | 3: `bund-yield-10y`, `loan-rate-nfc`, `gdp-real` | `bund-yield-10y` and `loan-rate-nfc`: nothing (their general comment is methodology only). `gdp-real`: its general comment (`BBK_COMM_GEN_ENG`) says "Source of the original data: Federal Statistical Office", so it is third-party and is flagged by the fetcher (`third_party: true`) | Destatis (`gdp-real` only) |
+
+38 of 42 name a third party in `BBK_COMM_SRC_ENG`; `gdp-real` makes 39 through its general comment. Only `bund-yield-10y` and `loan-rate-nfc` look like plain Bundesbank/ESCB series. The fetcher (`isThirdParty`, ticket direct-source-migration/03) already sets `third_party` on these from both fields, and `validateSnapshot` fails the build when a third-party series is not `provisional: true`.
+
+### Gaps remaining (checked 2026-11-03)
+
+- **Rule 1, terms statement.** The source line gives publisher, service, series id and "New data last retrieved {date}", but no page text says "original statistics and metadata used unmodified" or names the ESCB terms (nothing in `src/i18n`). The licence label still reads "public reuse not confirmed" by design until ticket licence-checks/01 clears a series.
+- **Rule 1, snapshots.** `data/snapshots/*.json` carry source, url and retrieval time in `meta`, but no attribution or terms field. Whether committing them to a public repository is redistribution is undecided (question above).
+- **Rule 2, rounding.** Displayed numbers are rounded by `Intl`. The original title and unit are now shown beside the site's wording; whether that satisfies "metadata unaltered" is undecided (question above).
+- **Rule 5, audit trail.** Fetches still log to the console only. The snapshot keeps the source URL and retrieval time, so only a separate run log is missing.
+- **Exports.** The site has no CSV, JSON or other download, so the export-attribution rules and tests do not apply yet. Any future export must carry the required block.
+- **Not Bundesbank.** `euribor-3m`, `oecd-confidence-construction` and `oecd-confidence-retail` are still on DBnomics without source metadata.
