@@ -33,7 +33,7 @@ Jede Verknüpfung hat drei Teile:
 ## So lesen Sie diese Zahlen
 
 - Jede Reihe wird entweder direkt beim Herausgeber oder über DBnomics abgerufen, das amtliche Quellen bündelt; die Quellenzeile nennt den Weg. Die Herausgeber sind für diese Seite nicht verantwortlich.
-- Bei direkt abgerufenen Reihen nennt die Quellenzeile das Abrufdatum sowie den Originaltitel und die Originaleinheit des Herausgebers. Unsere eigenen Titel, Zahlenformate und Rundungen stammen nicht vom Herausgeber.
+- Bei direkt abgerufenen Reihen nennt die Quellenzeile das Datum, an dem zuletzt neue Daten abgerufen wurden, sowie die Originaleinheit (bei der Bundesbank auch den Originaltitel) des Herausgebers. Unsere eigenen Titel, Zahlenformate und Rundungen stammen nicht vom Herausgeber.
 - Deutschland-Summen der Bautätigkeit, Einheitenumrechnungen, Veränderungen gegenüber dem Vorjahr und Verknüpfungen sind eigene Berechnung und als solche gekennzeichnet.
 - Die Seite zeigt nur die zuletzt veröffentlichte Fassung jeder Reihe und führt keine Revisionshistorie.
 - Die Gewerbeimmobilienreihen der Deutschen Bundesbank beruhen auf Daten Dritter (bulwiengesa, vdp).

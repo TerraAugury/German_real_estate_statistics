@@ -19,12 +19,17 @@ const entry = (over: Partial<ManifestEntry>) => ({ key: 'k', source: 'destatis',
 const now = new Date('2026-11-03T08:00:00Z');
 const env = { DESTATIS_USER: 'u', DESTATIS_PASSWORD: 'p#1' };
 /** A fake GENESIS: data/cube returns `content`, metadata/cube the title. */
-const genesis = (content: string, status = 0) => vi.fn(async (url: string, _form?: Record<string, string>, _headers?: Record<string, string>) => url.endsWith('metadata/cube')
-  ? { Status: { Code: 0 }, Object: { Content: 'Statistik der Baugenehmigungen', Updated: '14.09.2026 18:22:09h' } }
+const genesis = (content: string, status = 0, updated = '14.09.2026 18:22:09h') => vi.fn(async (url: string, _form?: Record<string, string>, _headers?: Record<string, string>) => url.endsWith('metadata/cube')
+  ? { Status: { Code: 0 }, Object: { Content: 'Statistik der Baugenehmigungen', Updated: updated } }
   : { Status: { Code: status, Content: status ? 'no objects' : 'erfolgreich' }, Object: status ? undefined : { Content: content } });
 const get = vi.fn();
 
 describe('parseCube and extractSeries', () => {
+  it('provisional and estimated flags still carry a number; x . and / do not', () => {
+    const c = parseCube(laender.replace('2009;5;e;9;e', '2009;5;p;9;s').replace('GBD-NW-S;2008;5;e;99;e', 'GBD-NW-S;2008;5;e;99;/'), bad);
+    expect(extractSeries(c, '02.BAUART1.BTK-GEB.GBD-NW-BV.FLC002', 'annual').value).toEqual([null, 9]);
+    expect(extractSeries(c, '01.BAUART1.BTK-GEB.GBD-NW-S.FLC002', 'annual').value).toEqual([null]);
+  });
   it('only e and - carry a number; x and . are missing', () => {
     const c = parseCube(laender, bad);
     expect(extractSeries(c, '02.BAUART1.BTK-GEB.GBD-NW-BV.FLC002', 'annual')).toMatchObject({ period: ['2008', '2009'], value: [null, 9], unit: '1000 qm' });
@@ -46,13 +51,22 @@ describe('refresh with source destatis', () => {
   it('logs in per request, one cube for the whole dataset, and keeps the original metadata', async () => {
     const post = genesis(laender);
     const snap = (await refresh(entry({}), undefined, { get, post, env, now }))!;
-    expect(post).toHaveBeenCalledTimes(2); // data/cube and metadata/cube, for 2 Länder
+    expect(post).toHaveBeenCalledTimes(2); // metadata/cube and data/cube, for 2 Länder
     expect(post.mock.calls[0][2]).toEqual({ username: 'u', password: 'p#1' });
-    expect(post.mock.calls[0][1]).toMatchObject({ name: 'D', format: 'csv' });
+    expect(post.mock.calls[1][1]).toMatchObject({ name: 'D', format: 'csv' });
     const p = snap.parts['02.BAUART1.BTK-GEB.GBD-NW-BV.FLC002'];
     expect(p.value).toEqual([null, 9]);
     expect(p.meta).toMatchObject({ source: 'Statistisches Bundesamt (Destatis)', unit: '1000 qm', title: 'Statistik der Baugenehmigungen', valid_from: '2026-09-14T18:22:09', third_party: false });
     expect(p.meta!.sha256).toMatch(/^[0-9a-f]{64}$/);
+  });
+  it('skips the download when the cube update time matches the snapshot', async () => {
+    const first = (await refresh(entry({}), undefined, { get, post: genesis(laender), env, now }))!;
+    const post = genesis(laender);
+    expect(await refresh(entry({}), first, { get, post, env, now })).toBeNull();
+    expect(post).toHaveBeenCalledTimes(1); // metadata/cube only
+    const moved = vi.fn(async (url: string) => url.endsWith('metadata/cube') ? { Status: { Code: 0 }, Object: { Content: 't', Updated: '15.09.2026 09:00:00h' } } : { Status: { Code: 0 }, Object: { Content: laender } });
+    expect(await refresh(entry({}), first, { get, post: moved, env, now })).toBeNull(); // downloaded, values equal
+    expect(moved).toHaveBeenCalledTimes(2);
   });
   it('series of one dataset share one cube per run', async () => {
     const post = genesis(laender), deps = { get, post, env, now };
@@ -70,7 +84,7 @@ describe('refresh with source destatis', () => {
   it('null when unchanged, a revision when an older value moves', async () => {
     const first = (await refresh(entry({}), undefined, { get, post: genesis(laender), env, now }))!;
     expect(await refresh(entry({}), first, { get, post: genesis(laender), env, now })).toBeNull();
-    const next = (await refresh(entry({}), first, { get, post: genesis(laender.replace(';62;e', ';63;e').replace('2009;5;e;9;e', '2010;5;e;9;e')), env, now }))!;
+    const next = (await refresh(entry({}), first, { get, post: genesis(laender.replace(';62;e', ';63;e').replace('2009;5;e;9;e', '2010;5;e;9;e'), 0, '15.09.2026 09:00:00h'), env, now }))!;
     expect(next.revised_at).toBe(now.toISOString());
   });
   it('a snapshot without source metadata is rewritten even when the values are equal', async () => {
@@ -87,7 +101,7 @@ describe('refresh with source destatis', () => {
     for (const c of ['hello', head(['DLAND'], []).join('\n')]) await expect(refresh(entry({}), undefined, { get, post: genesis(c), env, now })).rejects.toBeInstanceOf(BadResponse);
     await expect(refresh(entry({ ids: ['{land}.BAUART1.BTK-GEB.GBD-NW-BV.NOPE'] }), undefined, { get, post: genesis(laender), env, now })).rejects.toBeInstanceOf(BadResponse);
     const first = (await refresh(entry({}), undefined, { get, post: genesis(laender), env, now }))!;
-    await expect(refresh(entry({}), first, { get, post: genesis(laender.replace('1000 qm', '1000 sqm')), env, now })).rejects.toThrow(/unit changed/);
+    await expect(refresh(entry({}), first, { get, post: genesis(laender.replace('1000 qm', '1000 sqm'), 0, '15.09.2026 09:00:00h'), env, now })).rejects.toThrow(/unit changed/);
   });
   it('monthly series from a cube with a month axis', async () => {
     const snap = (await refresh(entry({ ids: ['DG.PREIS1'], laender: [''], frequency: 'monthly', expected_start: 1991 }), undefined, { get, post: genesis(cpi), env, now }))!;

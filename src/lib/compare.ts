@@ -10,7 +10,8 @@ export function compareParts(old: Pick<Part, 'period' | 'value'>, next: Pick<Par
   const now = new Map(next.period.map((p, i) => [p, num(next.value[i])]));
   const changed: Comparison['changed'] = [];
   let same = 0;
-  for (const [p, v] of now) if (was.has(p)) { if (Math.abs((was.get(p) ?? NaN) - (v ?? NaN)) > 1e-9 || was.get(p) !== v && (was.get(p) == null || v == null)) changed.push({ period: p, was: was.get(p)!, now: v }); else same++; }
+  const equal = (a: number | null, b: number | null) => a === b || (a !== null && b !== null && Math.abs(a - b) <= 1e-9);
+  for (const [p, v] of now) if (was.has(p)) { const w = was.get(p)!; if (equal(w, v)) same++; else changed.push({ period: p, was: w, now: v }); }
   return { added: [...now.keys()].filter((p) => !was.has(p)), missing: [...was.keys()].filter((p) => !now.has(p)), changed, same };
 }
 

@@ -1,11 +1,9 @@
 // Notes (spec section 9): every chart gets its Notes here, so the fixed order lives in one place.
-import { period, t } from './i18n';
+import { day, period, t } from './i18n';
 import { landName } from './kpis';
 import type { Lang } from './routes';
 import type { Series } from './series';
 
-const locale = { en: 'en-GB', de: 'de-DE' } as const;
-const day = (lang: Lang, iso: string) => new Intl.DateTimeFormat(locale[lang], { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(iso));
 const REVISED_DAYS = 90;
 const SMALL = 20; // annual Links with fewer lag-0 pairs get the Small sample Note
 

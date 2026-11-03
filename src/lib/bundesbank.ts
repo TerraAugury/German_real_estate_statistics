@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { parse } from 'yaml';
 import { BBK_API, type ManifestEntry } from './manifest';
 import { BadResponse, Unavailable, type Part, type Snapshot } from './snapshot';
-import { partIds, revised, type Deps } from './pipeline';
+import { HttpError, partIds, revised, type Deps } from './pipeline';
 
 const FREQ: Record<string, string> = { A: 'annual', Q: 'quarterly', M: 'monthly' };
 
@@ -54,7 +54,7 @@ export async function refreshBundesbank(m: ManifestEntry, old: Snapshot | undefi
   const id = partIds(m)[0], url = bundesbankUrl(m), iso = now.toISOString();
   let res: any;
   try { res = await get(url); } catch (e) {
-    if (/^(404|410)\b/.test(String((e as Error).message))) throw new Unavailable(`${id}: ${(e as Error).message} at ${url}`);
+    if (e instanceof HttpError && (e.status === 404 || e.status === 410)) throw new Unavailable(`${id}: ${(e as Error).message} at ${url}`);
     throw e;
   }
   const next = parseSdmx(res, m, url, iso);
