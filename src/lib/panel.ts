@@ -99,11 +99,15 @@ const headlineNumber = (e: InsightEntry, lang: Lang) => {
   return (n: number) => fmt(lang, n, { minimumFractionDigits: digits, maximumFractionDigits: digits });
 };
 
+/** An Insight's headline number with its unit and verdict tag: the same spans lead its section and tile its index entry. */
+const headlineSpans = (e: InsightEntry, r: Shown, lang: Lang) =>
+  `<span class="num">${headlineNumber(e, lang)(r.latest.value)}</span> <span class="unit">${t(lang, `insight.unit.${e.headline}`)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span>`;
+
 /** The grid that opens the Insights page: per Insight its title, headline number with unit and verdict tag, or why it is not shown. */
 export function renderInsightIndex(models: { entry: InsightEntry; result: InsightResult }[], lang: Lang): string {
   const items = models.map(({ entry: e, result: r }) => {
     const body = r.shown
-      ? `<span class="headline"><span class="num">${headlineNumber(e, lang)(r.latest.value)}</span> <span class="unit">${t(lang, `insight.unit.${e.headline}`)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span></span>`
+      ? `<span class="headline">${headlineSpans(e, r, lang)}</span>`
       : `<span class="na">${t(lang, 'insight.not_shown', { n: String(r.n), min: String(MIN_OBS) })}</span>`;
     return `<li><a href="#${esc(e.key)}"><span class="title">${esc(e.title[lang])}</span>${body}</a></li>`;
   });
@@ -122,7 +126,7 @@ function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, no
   const reference = series[e.series.findIndex((x) => x.role === 'reference')];
   return {
     reading, notes, chart, reference,
-    headlineHtml: `<p class="headline"><span class="num">${one(r.latest.value)}</span> <span class="unit">${t(lang, unitKey)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span></p>`,
+    headlineHtml: `<p class="headline">${headlineSpans(e, r, lang)}</p>`,
     legend: r.context ? `<p class="note">${t(lang, 'insight.context.legend', { measure: esc(e.measure[lang]), title: esc(reference.title[lang]) })}</p>` : '',
   };
 }

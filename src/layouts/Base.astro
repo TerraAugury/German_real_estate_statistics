@@ -200,7 +200,7 @@ const inKpis = KPIS.some((k) => k.page === page);
         btn.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
         const closeOutside = (e) => {
           for (const d of menus) if (!d.contains(e.target)) d.open = false;
-          if (!document.querySelector('header.site').contains(e.target)) setMenu(false);
+          if (!nav.contains(e.target) && !btn.contains(e.target)) setMenu(false);
         };
         document.addEventListener('click', closeOutside);
         document.addEventListener('focusin', closeOutside);

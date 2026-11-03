@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { heat } from '../src/lib/heat';
-import { HEAT_MAX, SCHEMES, diverging } from '../src/lib/palette';
+import { HEAT_MAX, SCHEMES } from '../src/lib/palette';
 
 // Design refinement 04: a Link cell is shaded by the sign and size of its rank correlation.
 const channels = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
@@ -25,7 +25,7 @@ describe('heat', () => {
   });
   it('the cap is the one the CSS uses', () => expect(HEAT_MAX).toBe(0.55));
   it.each(['light', 'dark'] as const)('%s scheme: ink on every shade, on either side, is at least 4.5:1', (scheme) => {
-    const c = SCHEMES[scheme], d = diverging(c);
+    const c = SCHEMES[scheme], d = { neg: c['heat-neg'], pos: c['heat-pos'] };
     for (let r = -100; r <= 100; r++) {
       const { side, share } = heat(r / 100);
       const bg = side === 'neg' ? mixed(d.neg, share, c.plate) : side === 'pos' ? mixed(d.pos, share, c.plate) : channels(c.plate);

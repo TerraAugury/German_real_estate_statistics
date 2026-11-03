@@ -27,10 +27,7 @@ const DARK = {
 
 export const SCHEMES = { light: LIGHT, dark: DARK } as const;
 /** The light scheme, which the page uses unless the system asks for dark. */
-export const PALETTE = LIGHT;
-
-/** Diverging scale for signed values in one scheme: negative blue, neutral, positive ochre. */
-export const diverging = (c: Record<keyof typeof LIGHT, string>) => ({ neg: c['heat-neg'], mid: c.plate, pos: c['heat-pos'] });
+export const PALETTE = SCHEMES.light;
 
 /** Deepest share of hue in a heat shade: ink text stays at 4.5:1 or better on it in both schemes (tests/heat.test.ts). */
 export const HEAT_MAX = 0.55;
@@ -38,4 +35,4 @@ export const HEAT_MAX = 0.55;
 const declare = (c: Record<string, string>) => Object.entries(c).map(([k, v]) => `--${k}: ${v}`).join('; ');
 
 /** `:root` with the light tokens, the heat cap and `color-scheme`, then the dark tokens under `prefers-color-scheme: dark`. */
-export const rootCss = () => `:root { color-scheme: light dark; ${declare(LIGHT)}; --heat-max: ${HEAT_MAX * 100}%; }\n@media (prefers-color-scheme: dark) { :root { ${declare(DARK)}; } }`;
+export const rootCss = () => `:root { color-scheme: light dark; ${declare(SCHEMES.light)}; --heat-max: ${HEAT_MAX * 100}%; }\n@media (prefers-color-scheme: dark) { :root { ${declare(SCHEMES.dark)}; } }`;
