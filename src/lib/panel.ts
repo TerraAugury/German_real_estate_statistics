@@ -1,4 +1,5 @@
 import { day, fmt, period, t } from './i18n';
+import { latestOf } from './latest';
 import { insightChart, multiplesChart, sharedDomain, levelChart, lagChart, lineChart } from './chart';
 import { notesFor } from './notes';
 import { href, slug, type Lang } from './routes';
@@ -22,8 +23,28 @@ export function sourceLine(s: Series, lang: Lang, own = false): string {
     + (s.original ? `<br>${s.original.title ? t(lang, 'source.original', { title: esc(s.original.title), unit: esc(s.original.unit) }) : t(lang, 'source.original.unit', { unit: esc(s.original.unit) })}` : '');
 }
 
-/** Compact chart for Home cards and Segment pages: chart, stale and fetch-failed Notes, source line (spec section 9). */
-export const compactChart = (s: Series, lang: Lang) => lineChart(s, lang, 200)
+const GLYPH = { up: '▲', down: '▼', flat: '▬' };
+/**
+ * The latest value in large numerals with its unit and period, and its change since the previous period as text and a
+ * glyph, so direction never rests on colour. It describes the move and does not judge it. A percent unit is the numeral's own suffix.
+ */
+export function latestBlock(s: Series, lang: Lang): string {
+  const l = latestOf(s), pct = s.unit[lang] === '%';
+  const num = pct ? fmt(lang, l.value / 100, { style: 'percent', maximumFractionDigits: 2 }) : fmt(lang, l.value, { maximumFractionDigits: 2 });
+  const c = l.change;
+  let delta = '';
+  if (c) {
+    const since = period(lang, c.since), sign = { signDisplay: 'exceptZero', maximumFractionDigits: 1 } as const;
+    const text = c.direction === 'flat' ? t(lang, 'latest.unchanged', { period: since })
+      : c.kind === 'pct' ? t(lang, 'latest.change.pct', { change: fmt(lang, c.amount, { ...sign, style: 'percent' }), period: since })
+      : t(lang, 'latest.change.diff', { change: fmt(lang, c.amount, sign), period: since });
+    delta = ` <span class="delta ${c.direction}"><span aria-hidden="true">${GLYPH[c.direction]}</span> ${text}</span>`;
+  }
+  return `<p class="latest"><span class="num">${num}</span>${pct ? '' : ` <span class="unit">${esc(s.unit[lang])}</span>`} <span class="when">${period(lang, l.period)}</span>${delta}</p>`;
+}
+
+/** Compact chart for Home cards and Segment pages: latest value, chart, stale and fetch-failed Notes, source line (spec section 9). */
+export const compactChart = (s: Series, lang: Lang) => latestBlock(s, lang) + lineChart(s, lang, 200)
   + noteHtml(notesFor(s, lang, { on: 'compact' })) + `<figcaption>${sourceLine(s, lang)}</figcaption>`;
 
 /** Link panel HTML for one KPI x indicator pair. Pure given the result, so it tests without the Link module. */
