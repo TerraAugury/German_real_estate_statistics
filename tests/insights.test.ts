@@ -3,6 +3,7 @@ import { checkInsights, loadAllManifest, loadManifest, type InsightEntry } from 
 import { loadStrings } from '../src/lib/i18n';
 import { insightsPage, loadInsights, visibleInsights } from '../src/lib/insights';
 import { renderInsight } from '../src/lib/panel';
+import { getSeries } from '../src/lib/series';
 import type { InsightResult } from '../src/insight/insight';
 
 afterEach(() => { delete process.env.INCLUDE_PROVISIONAL; });
@@ -59,9 +60,10 @@ describe('Insight J on real data', () => {
 
 describe('Insight rendering', () => {
   const j = entry({ key: 'j', title: { en: 'Construction costs vs inflation', de: 'Baupreise und Inflation' }, measure: { en: 'spread of construction price growth over CPI inflation', de: 'Abstand des Baupreisanstiegs zur Inflationsrate' } });
+  const series = [getSeries('construction-price-office'), getSeries('cpi')];
   const shown: InsightResult = { shown: true, points: [{ period: '2020', value: 1 }, { period: '2021', value: 1.5 }, { period: '2022', value: 2.46 }], from: '2020', to: '2022', n: 3, short: false, mean: 1.65, sd: 0.5, latest: { period: '2022', value: 2.46 }, verdict: 'higher' };
   it('EN: headline, verdict tag and the exact reading sentence, one decimal', () => {
-    const h = renderInsight(j, shown, 'en');
+    const h = renderInsight(j, shown, series, 'en');
     expect(h).toContain('id="j"');
     expect(h).toContain('Construction costs vs inflation');
     expect(h).toContain('2.5');
@@ -70,15 +72,30 @@ describe('Insight rendering', () => {
     expect(h).toContain('<svg');
   });
   it('DE: decimal comma and the German reading sentence', () => {
-    const h = renderInsight(j, shown, 'de');
+    const h = renderInsight(j, shown, series, 'de');
     expect(h).toContain('Der aktuelle Abstand des Baupreisanstiegs zur Inflationsrate beträgt 2,5 Punkte, höher als der 2020-2022-Durchschnitt von 1,7 Punkten.');
   });
   it('a verdict of in line reads "in line with"', () => {
-    expect(renderInsight(j, { ...shown, verdict: 'in_line' } as InsightResult, 'en')).toContain('in line with the 2020-2022 average');
+    expect(renderInsight(j, { ...shown, verdict: 'in_line' } as InsightResult, series, 'en')).toContain('in line with the 2020-2022 average');
   });
   it('too few observations: the section stays, with the reason and no chart', () => {
-    const h = renderInsight(j, { shown: false, n: 7, reason: 'too_few' }, 'en');
+    const h = renderInsight(j, { shown: false, n: 7, reason: 'too_few' }, series, 'en');
     expect(h).toContain('Insight not shown: too few observations (n = 7); at least 10 are needed.');
     expect(h).not.toContain('<svg');
+  });
+  it('a source line per series, each tagged own calculation, and a link to Methodology', () => {
+    const h = renderInsight(j, shown, series, 'en');
+    for (const x of series) expect(h).toContain(x.seriesId);
+    expect(h.match(/own calculation/g)).toHaveLength(2);
+    expect(h).toContain('<a href="/en/methodology#insights">How this is calculated</a>');
+  });
+  it('Notes come first: a short history is named, then the series\' own Notes', () => {
+    const h = renderInsight(j, { ...shown, short: true }, [{ ...series[0], stale: true }, series[1]], 'en');
+    expect(h).toContain('Note: Short history (3 years, 2020 to 2022): the average rests on little data.');
+    expect(h.indexOf('Short history')).toBeLessThan(h.indexOf('<figcaption>'));
+    expect(h).toContain(`Note: ${series[0].title.en}: Latest observation`);
+  });
+  it('no short-history Note when the history is long enough', () => {
+    expect(renderInsight(j, shown, series, 'en')).not.toContain('Short history');
   });
 });

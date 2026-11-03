@@ -3,7 +3,7 @@ import { computeInsight, type InsightResult } from '../insight/insight';
 import { checkInsights, loadAllInsights, loadAllManifest, loadManifest, type InsightEntry, type ManifestEntry } from './manifest';
 import { loadStrings } from './i18n';
 import { KPIS } from './kpis';
-import { getSeries } from './series';
+import { getSeries, type Series } from './series';
 
 // The series whose Insights count as having a Real estate KPI: every KPI view's series, and the construction prices
 // the Construction KPI sits beside (Insight J has no other Real estate KPI).
@@ -22,10 +22,12 @@ export const visibleInsights = (entries: InsightEntry[], live: ManifestEntry[] =
   return entries.filter((e) => e.series.every((s) => keys.has(s.key)));
 };
 
-export interface InsightModel { entry: InsightEntry; result: InsightResult }
+/** `series` are the Insight's series in declaration order. */
+export interface InsightModel { entry: InsightEntry; series: Series[]; result: InsightResult }
 
 /** The visible Insights in page order, each with its result. */
 export const insightsPage = (): InsightModel[] => visibleInsights(loadInsights()).map((entry) => {
-  const [kpi, reference] = (['kpi', 'reference'] as const).map((role) => getSeries(entry.series.find((s) => s.role === role)!.key));
-  return { entry, result: computeInsight(kpi, reference, { growth: entry.growth }) };
+  const series = entry.series.map((s) => getSeries(s.key));
+  const [kpi, reference] = (['kpi', 'reference'] as const).map((role) => series[entry.series.findIndex((s) => s.role === role)]);
+  return { entry, series, result: computeInsight(kpi, reference, { growth: entry.growth }) };
 });

@@ -131,7 +131,7 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
             <h2>{t(lang, 'insights.jump')}</h2>
             <ul>{insights.map(({ entry }) => <li><a href={`#${entry.key}`}>{entry.title[lang]}</a></li>)}</ul>
           </nav>
-          {insights.map(({ entry, result }) => <Fragment set:html={renderInsight(entry, result, lang)} />)}
+          {insights.map(({ entry, series, result }) => <Fragment set:html={renderInsight(entry, result, series, lang)} />)}
         </>
       )}
     </>

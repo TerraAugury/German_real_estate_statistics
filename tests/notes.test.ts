@@ -89,3 +89,28 @@ describe('Link panels', () => {
     expect(small(base, 12)).toBe(false);
   });
 });
+
+describe('Insights', () => {
+  const a = { ...base, key: 'kpi-a', title: { en: 'Rent index', de: 'Mietindex' }, scope: ['index'] } as Series;
+  const b = { ...base, key: 'ref-b', title: { en: 'CPI', de: 'VPI' }, scope: ['index'], stale: true, lastPeriod: '2023' } as Series;
+  const ctx = (rest: Series[], short?: { from: string; to: string; n: number }) => ({ on: 'insight', rest, short }) as const;
+  it('the short-history Note first, then each series\' Notes named by series, then scope Notes once', () => {
+    expect(notesFor(a, 'en', ctx([b], { from: '2013', to: '2025', n: 13 }), at)).toEqual([
+      'Note: Short history (13 years, 2013 to 2025): the average rests on little data.',
+      'Note: CPI: Latest observation: 2023. Deutsche Bundesbank has not published newer data within the expected interval, so this series may be out of date.',
+      'Note: Index (2013 = 100): shows change over time, not a price level in euros.',
+    ]);
+  });
+  it('no short-history Note without short history, and nothing when every series is fresh', () => {
+    expect(notesFor({ ...a, scope: [] } as Series, 'en', ctx([{ ...b, stale: false, scope: [] } as Series]), at)).toEqual([]);
+  });
+  it('a City class scope Note names the class of each series', () => {
+    const c7 = { ...base, key: 'initial-yield-combined-7', scope: ['city_class', 'combined'] } as Series;
+    const c127 = { ...base, key: 'initial-yield-combined-127', scope: ['city_class', 'combined'] } as Series;
+    expect(notesFor(c7, 'en', ctx([c127]), at)).toEqual([
+      'Note: Aggregate for 7 major cities (A-Städte), not an individual city.',
+      'Note: Aggregate for 127 towns and cities, not an individual city.',
+      'Note: Office and retail combined; no separate office or retail figure.',
+    ]);
+  });
+});
