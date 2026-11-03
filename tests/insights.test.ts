@@ -117,6 +117,22 @@ describe('Methodology', () => {
   });
 });
 
+describe('Insight A on real data (Provisional: preview only)', () => {
+  it('is hidden in production', () => expect(insightsPage().map((i) => i.entry.key)).not.toContain('a'));
+  it('preview: the 7-city yield against the annual Bund mean over 1995 to 2025, both City classes, never 120', () => {
+    process.env.INCLUDE_PROVISIONAL = '1';
+    const a = insightsPage().find((i) => i.entry.key === 'a')!;
+    expect(a.result).toMatchObject({ shown: true, from: '1995', to: '2025', n: 31 });
+    expect(a.entry.series.map((s) => s.key)).toEqual(['initial-yield-combined-7', 'initial-yield-combined-127', 'bund-yield-10y']);
+    const h = renderInsight(a.entry, a.result, a.series, 'en');
+    expect(h.match(/<svg/g)).toHaveLength(6); // main chart, then one small chart per City class
+    expect(h).toContain('7 major cities');
+    expect(h).toContain('127 towns');
+    expect(h).not.toMatch(/120 towns|combined-120/);
+    expect(h.match(/not an individual city/g)).toHaveLength(2); // a scope Note for each City class
+  });
+});
+
 describe('Insight rendering', () => {
   const j = entry({ key: 'j', title: { en: 'Construction costs vs inflation', de: 'Baupreise und Inflation' }, measure: { en: 'spread of construction price growth over CPI inflation', de: 'Abstand des Baupreisanstiegs zur Inflationsrate' } });
   const series = [getSeries('construction-price-office'), getSeries('cpi')];

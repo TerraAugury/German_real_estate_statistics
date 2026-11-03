@@ -5,7 +5,7 @@ import { href, slug, type Lang } from './routes';
 import type { Series } from './series';
 import type { LinkResult } from '../link/link';
 import { linkResult } from './links';
-import { MIN_OBS, type InsightResult } from '../insight/insight';
+import { compareLines, MIN_OBS, type InsightResult } from '../insight/insight';
 import type { InsightEntry } from './manifest';
 
 export const esc = (x: string) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -63,12 +63,19 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
   });
   const notes = notesFor(series[0], lang, { on: 'insight', rest: series.slice(1), short: r.short ? { from: r.from, to: r.to, n: r.n } : undefined }, now);
   const chart = insightChart(r, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(r.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
-  const [kpi, reference] = [series[e.series.findIndex((x) => x.role === 'kpi')], series[e.series.findIndex((x) => x.role === 'reference')]];
+  const reference = series[e.series.findIndex((x) => x.role === 'reference')];
+  const kpis = series.filter((_, i) => e.series[i].role === 'kpi');
   const refTitle = e.shift ? t(lang, 'insight.shifted', { title: reference.title[lang], shift: t(lang, `insight.shift.${e.shift}`) }) : reference.title[lang];
-  const unit = r.lines.base ? t(lang, 'insight.axis.rebased', { year: r.lines.base }) : kpi.unit[lang];
-  const multiples = `<div class="multiples"><h3>${t(lang, 'insight.multiples.title', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</h3>`
-    + multiplesChart(r.lines, { unit, title: t(lang, 'insight.multiples.label', { kpi: kpi.title[lang], reference: refTitle }) }, sharedDomain([r.lines]), lang)
-    + `<p class="note">${t(lang, 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p></div>`;
+  // The headline's lines are the first KPI series'; every other KPI series gets its own small chart over the same years.
+  const years = r.points.map((p) => p.period);
+  const all = kpis.map((k, i) => (i === 0 ? r.lines : compareLines(k, reference, years, e)));
+  const domain = sharedDomain(all);
+  const multiples = kpis.map((kpi, i) => {
+    const unit = all[i].base ? t(lang, 'insight.axis.rebased', { year: all[i].base! }) : kpi.unit[lang];
+    return `<div class="multiples"><h3>${t(lang, 'insight.multiples.title', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</h3>`
+      + multiplesChart(all[i], { unit, title: t(lang, 'insight.multiples.label', { kpi: kpi.title[lang], reference: refTitle }) }, domain, lang)
+      + `<p class="note">${t(lang, 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p></div>`;
+  }).join('');
   return `<section class="insight" id="${esc(e.key)}">${head}`
     + `<p class="headline"><span class="num">${one(r.latest.value)}</span> <span class="unit">${t(lang, unitKey)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span></p>`
     + `<p>${reading}</p>`

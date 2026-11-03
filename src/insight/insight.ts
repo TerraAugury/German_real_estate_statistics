@@ -34,6 +34,14 @@ function lines(a: Map<number, number>, b: Map<number, number>, years: number[], 
   return { kpi: scale(a), reference: scale(b), base: String(year) };
 }
 
+const shifted = (m: Map<number, number>, by = 0) => new Map([...m].map(([y, v]) => [y + by, v]));
+
+/** The lines of one more compared series, over the given years where both series have a value; rebased and shifted like the headline. */
+export function compareLines(kpi: InsightSeries, reference: InsightSeries, years: string[], opts: { base?: number; shift?: number }) {
+  const [a, b] = [levels(kpi, 'A'), shifted(levels(reference, 'A'), opts.shift)];
+  return lines(a, b, years.map(Number).filter((y) => a.has(y) && b.has(y)), opts.base);
+}
+
 /**
  * The headline measure over the years both series cover: KPI minus reference in points (`spread`, the default) or KPI over
  * reference (`ratio`; a year with a zero reference has none and is left out). With `growth`, of their year-on-year percent
@@ -41,8 +49,7 @@ function lines(a: Map<number, number>, b: Map<number, number>, years: number[], 
  * ponytail: annual only. Every catalogued Insight runs at the coarsest frequency of its series, which is annual; add a quarterly target when one is declared.
  */
 export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opts: { headline?: Headline; growth?: boolean; base?: number; shift?: number } = {}): InsightResult {
-  const [la, lb0] = [kpi, reference].map((s) => levels(s, 'A'));
-  const lb = new Map([...lb0].map(([y, v]) => [y + (opts.shift ?? 0), v]));
+  const [la, lb] = [levels(kpi, 'A'), shifted(levels(reference, 'A'), opts.shift)];
   const [a, b] = opts.growth ? [la, lb].map((l) => changes(l, 'A', 'pct')) : [la, lb];
   const ratio = opts.headline === 'ratio';
   const years = [...a.keys()].filter((y) => b.has(y) && !(ratio && b.get(y) === 0)).sort((x, y) => x - y);

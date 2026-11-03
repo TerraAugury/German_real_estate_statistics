@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { computeInsight, verdict, type InsightSeries } from '../src/insight/insight';
+import { compareLines, computeInsight, verdict, type InsightSeries } from '../src/insight/insight';
 
 const annual = (from: number, values: number[]): InsightSeries => ({
   freq: 'A', obs: values.map((value, i) => ({ period: String(from + i), value })),
@@ -118,5 +118,22 @@ describe('Insight module: ratio and the shifted reference', () => {
     const r = computeInsight(ramp(2010, 16, 2), ramp(2008, 16, 1), { headline: 'ratio', shift: 2 });
     if (!r.shown) throw new Error('not shown');
     expect(r.lines.reference[0]).toEqual({ period: '2010', value: 1 }); // the 2008 value, shown at 2010
+  });
+});
+
+describe('Insight module: lines of a further compared series', () => {
+  const ramp = (from: number, n: number, start: number) => annual(from, Array.from({ length: n }, (_, i) => start + i));
+  it('the same lines the headline uses, over the years asked for and the series has', () => {
+    const years = ['2002', '2003', '2004', '2005'];
+    const l = compareLines(ramp(2003, 10, 10), ramp(2000, 12, 1), years, {});
+    expect(l.kpi).toEqual([{ period: '2003', value: 10 }, { period: '2004', value: 11 }, { period: '2005', value: 12 }]);
+    expect(l.reference.map((p) => p.period)).toEqual(['2003', '2004', '2005']);
+    expect(l.base).toBeUndefined();
+  });
+  it('rebased and shifted like the headline', () => {
+    const l = compareLines(ramp(2010, 16, 2), ramp(2008, 16, 1), ['2010', '2011'], { base: 2015, shift: 2 });
+    expect(l.base).toBe('2010'); // 2015 is not among the years asked for
+    expect(l.kpi[0]).toEqual({ period: '2010', value: 100 });
+    expect(l.reference[0]).toEqual({ period: '2010', value: 100 });
   });
 });

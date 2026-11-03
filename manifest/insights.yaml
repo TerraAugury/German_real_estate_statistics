@@ -4,6 +4,16 @@
 # the lines behind the headline to that year = 100.
 # The first `kpi` series against the first `reference` series is the headline.
 
+- key: a
+  title: { en: "Initial yield spread over the 10-year Bund, by City class", de: "Renditeabstand der Anfangsrendite zur 10-jährigen Bundesanleihe, nach Städtegruppe" }
+  measure: { en: "spread of the 7-city initial yield over the 10-year Bund yield", de: "Abstand der Anfangsrendite in den 7 Großstädten zur Rendite zehnjähriger Bundesanleihen" }
+  headline: spread
+  template: spread
+  series:
+    - { key: initial-yield-combined-7, role: kpi }
+    - { key: initial-yield-combined-127, role: kpi }
+    - { key: bund-yield-10y, role: reference }
+
 - key: c
   title: { en: "Office completions vs permits two years earlier", de: "Büro-Fertigstellungen und Baugenehmigungen zwei Jahre zuvor" }
   measure: { en: "ratio of completions to permits two years earlier", de: "Anteil der Fertigstellungen an den Baugenehmigungen zwei Jahre zuvor" }
