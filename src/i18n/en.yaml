@@ -151,3 +151,4 @@ insight.template.completions-permits: "Completions were {latest} times the permi
 insight.unit.ratio: times
 insight.shift.2: two years earlier
 insight.shifted: "{title}, {shift}"
+kpi.insights.heading: Insights using this KPI

@@ -151,3 +151,4 @@ insight.template.completions-permits: "Die Fertigstellungen entsprachen dem {lat
 insight.unit.ratio: mal
 insight.shift.2: zwei Jahre zuvor
 insight.shifted: "{title}, {shift}"
+kpi.insights.heading: Einblicke zu dieser Kennzahl

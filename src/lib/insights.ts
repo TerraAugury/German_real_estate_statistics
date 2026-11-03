@@ -4,10 +4,15 @@ import { checkInsights, loadAllInsights, loadAllManifest, loadManifest, type Ins
 import { loadStrings } from './i18n';
 import { KPIS } from './kpis';
 import { getSeries, type Series } from './series';
+import type { PageKey } from './routes';
 
-// The series whose Insights count as having a Real estate KPI: every KPI view's series, and the construction prices
-// the Construction KPI sits beside (Insight J has no other Real estate KPI).
-const KPI_SERIES = new Set([...KPIS.flatMap((k) => k.views.flatMap((v) => v.series.map((s) => s.key))), 'construction-price-office', 'construction-price-commercial']);
+// The KPI page of each Real estate KPI series: every KPI view's series, and the construction prices, which sit with the
+// Construction KPI (Insight J has no other Real estate KPI).
+const KPI_PAGE = new Map<string, PageKey>([
+  ...KPIS.flatMap((k) => k.views.flatMap((v) => v.series.map((s): [string, PageKey] => [s.key, k.page]))),
+  ['construction-price-office', 'construction'], ['construction-price-commercial', 'construction'],
+]);
+const KPI_SERIES = new Set(KPI_PAGE.keys());
 
 /** Every declared Insight, hidden ones included, after the build checks. */
 export function loadInsights(): InsightEntry[] {
@@ -31,3 +36,7 @@ export const insightsPage = (): InsightModel[] => visibleInsights(loadInsights()
   const [kpi, reference] = (['kpi', 'reference'] as const).map((role) => series[entry.series.findIndex((s) => s.role === role)]);
   return { entry, series, result: computeInsight(kpi, reference, { headline: entry.headline, growth: entry.growth, base: entry.base, shift: entry.shift }) };
 });
+
+/** The visible Insights whose Real estate KPI series belong to a KPI page, in page order. */
+export const insightsFor = (page: PageKey): InsightEntry[] =>
+  visibleInsights(loadInsights()).filter((e) => e.series.some((s) => s.role === 'kpi' && KPI_PAGE.get(s.key) === page));

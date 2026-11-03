@@ -4,6 +4,8 @@ import { loadStrings } from '../src/lib/i18n';
 import { multiplesChart, sharedDomain } from '../src/lib/chart';
 import { insightsPage, loadInsights, visibleInsights } from '../src/lib/insights';
 import { renderInsight } from '../src/lib/panel';
+import { KPIS } from '../src/lib/kpis';
+import { kpiPage } from '../src/lib/pages';
 import { getSeries } from '../src/lib/series';
 import type { InsightResult } from '../src/insight/insight';
 
@@ -85,6 +87,25 @@ describe('Insight C on real data', () => {
     expect(c.entry).toMatchObject({ headline: 'ratio', shift: 2 });
     expect(c.result.shown).toBe(true);
     if (c.result.shown) expect(+c.result.from).toBeGreaterThanOrEqual(2010);
+  });
+});
+
+describe('"Insights using this KPI" on KPI pages', () => {
+  // Which KPI page lists which Insight (insights spec section 6); Insights not declared yet are skipped.
+  const PAGES: Record<string, string[]> = {
+    a: ['kpi-initial-yield'], f: ['kpi-initial-yield'], g: ['kpi-price-index', 'kpi-rent-index'], b: ['kpi-rent-index'], d: ['kpi-rent-index'], i: ['kpi-rent-index'],
+    c: ['construction'], j: ['construction'], e: ['kpi-office-vacancy'], m: ['kpi-office-vacancy'],
+  };
+  const listed = (page: string) => kpiPage(KPIS.find((k) => k.page === page)!).insights.map((e) => e.key);
+  it('production: Construction lists C and J in page order, no other KPI page has a list', () => {
+    expect(listed('construction')).toEqual(['c', 'j']);
+    for (const k of KPIS.filter((k) => k.page !== 'construction')) expect(listed(k.page)).toEqual([]);
+  });
+  it('preview: every declared Insight is listed on the KPI pages of its Real estate KPI series, and only there', () => {
+    process.env.INCLUDE_PROVISIONAL = '1';
+    for (const e of loadInsights()) for (const k of KPIS) {
+      expect(listed(k.page).includes(e.key), `${e.key} on ${k.page}`).toBe(PAGES[e.key].includes(k.page));
+    }
   });
 });
 

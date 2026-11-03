@@ -187,6 +187,12 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
               })}
             </>
           )}
+          {model!.insights.length > 0 && (
+            <section>
+              <h2>{t(lang, 'kpi.insights.heading')}</h2>
+              <ul>{model!.insights.map((e) => <li><a href={`${href('insights', lang)}#${e.key}`}>{e.title[lang]}</a></li>)}</ul>
+            </section>
+          )}
           <script>
             import { pickView, type Want } from '../../lib/select';
             const form = document.querySelector<HTMLFormElement>('form.selectors')!;
