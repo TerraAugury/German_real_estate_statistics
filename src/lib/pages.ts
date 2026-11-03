@@ -7,7 +7,6 @@ import type { LinkResult } from '../link/link';
 import { insightsFor } from './insights';
 import type { InsightEntry } from './manifest';
 import { heat, type Heat } from './heat';
-import { latestOf, type Latest } from './latest';
 import { loadManifest } from './manifest';
 
 const uniq = <T,>(xs: T[]) => [...new Set(xs)];
@@ -76,8 +75,8 @@ export const firstSeries = (v: View) => getSeries(v.series[0].key, v.series[0].l
 
 export interface HomeRow {
   kpi: Kpi;
-  /** The KPI's headline view and its first series, with the latest value; all absent when no series is public (licence not confirmed). */
-  view?: View; series?: Series; latest?: Latest;
+  /** The KPI's headline view and its first series; both absent when no series is public (licence not confirmed). */
+  view?: View; series?: Series;
 }
 
 /** Home's KPI index: one row per KPI at its headline view. */
@@ -86,6 +85,6 @@ export function homeIndex(live = loadManifest()): HomeRow[] {
     const view = headline(kpi, live);
     if (!view) return { kpi };
     const series = firstSeries(view);
-    return { kpi, view, series, latest: latestOf(series) };
+    return { kpi, view, series };
   });
 }
