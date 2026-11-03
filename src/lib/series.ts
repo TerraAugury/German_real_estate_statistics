@@ -11,11 +11,13 @@ export interface Series {
   key: string; title: Localized; unit: Localized;
   publisher: string; licence: { name: string; url: string }; seriesId: string; seriesUrl: string;
   /** Where the data was fetched from: "DBnomics" or the publisher; the web service for a direct source; the source's own title and unit when the snapshot kept them. */
-  fetchedFrom: string; service?: string; original?: { title?: string; unit: string };
+  fetchedFrom: string; service?: string; original?: { title?: string; unit: string; source?: string };
   obs: { period: string; value: number }[]; change: 'pct' | 'diff'; freq: 'M' | 'Q' | 'A';
   lastPeriod: string; derived: boolean; provisional: boolean;
   /** Decimals the source published; only for an original (not derived) series, so its values can be shown as published. */
   decimals?: number;
+  /** Original source credited by name in the citation (manifest `credit`). */
+  credit?: string;
   /** Terms the source's statistics are reused under (the Bundesbank's ESCB terms), when its snapshot records them. */
   terms?: { name: string; url: string };
   stale: boolean; fetchFailed: string | null; unavailable: string | null; retrievedAt: string; revisedAt: string | null;
@@ -65,8 +67,8 @@ export function loadSeries(key: string, now = new Date(), land?: string): Series
     seriesId: seriesId(m, land), seriesUrl: seriesUrl(m, land), obs, change: m.change, freq: FREQ[m.frequency as keyof typeof FREQ],
     fetchedFrom: m.source === 'dbnomics' ? 'DBnomics' : m.publisher, service: SERVICE[m.source],
     // only the Bundesbank gives a title of the series itself; a GENESIS cube's title lists every measure of the cube
-    original: meta ? { title: m.source === 'bundesbank' ? meta.title : undefined, unit: meta.unit_mult ? `${meta.unit} (×10^${meta.unit_mult})` : meta.unit } : undefined,
-    lastPeriod, derived, provisional: m.provisional, decimals: !derived && meta?.decimals != null ? meta.decimals : undefined, terms: meta?.terms,
+    original: meta ? { title: m.source === 'bundesbank' ? meta.title : undefined, unit: meta.unit_mult ? `${meta.unit} (×10^${meta.unit_mult})` : meta.unit, source: m.credit ? meta.comment ?? undefined : undefined } : undefined,
+    lastPeriod, derived, provisional: m.provisional, decimals: !derived && meta?.decimals != null ? meta.decimals : undefined, terms: meta?.terms, credit: m.credit,
     stale: isStale(lastPeriod, m.frequency, now), fetchFailed: snap.fetch_failed ?? null, unavailable: snap.unavailable ?? null,
     retrievedAt: snap.retrieved_at, revisedAt: snap.revised_at ?? null,
     scope: m.scope, shortWindow: m.short_window && (m.short_window_sentence ?? true), partial };

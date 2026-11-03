@@ -34,6 +34,22 @@ describe('source block', () => {
     expect(flat(parse(html).querySelector('details'))).toMatch(/Original unit as published: 1000 qm$/);
     expect(html).not.toMatch(/Original series/);
   });
+  describe('credit to the original source', () => {
+    const credited = { ...direct, credit: 'bulwiengesa AG', original: { title: 'Rents, 127 towns', unit: '2010=100', source: 'Bundesbank calculations based on price data provided by bulwiengesa AG.' } } as Series;
+    it('the citation credits the firm first and names the Bundesbank as publisher', () => {
+      expect(flat(parse(sourceBlock(credited, 'en')).querySelector('.cite'))).toBe('Source: bulwiengesa AG, published by Deutsche Bundesbank / Licence: L / Data to Q2 2026');
+      expect(flat(parse(sourceBlock(credited, 'de')).querySelector('.cite'))).toBe('Quelle: bulwiengesa AG, Veröffentlichung: Deutsche Bundesbank / Lizenz: L / Daten bis Q2 2026');
+    });
+    it('the details give the Bundesbank comment on the original source', () => {
+      expect(flat(parse(sourceBlock(credited, 'en')).querySelector('details'))).toMatch(/Original source as named by the publisher: Bundesbank calculations based on price data provided by bulwiengesa AG\./);
+      expect(flat(parse(sourceBlock(credited, 'de')).querySelector('details'))).toMatch(/Ursprungsquelle laut Herausgeber: Bundesbank calculations/);
+    });
+    it('a series without a credit keeps the plain citation and no source comment line', () => {
+      const html = sourceBlock(direct, 'en');
+      expect(flat(parse(html).querySelector('.cite'))).toBe('Source: Deutsche Bundesbank / Licence: L / Data to Q2 2026');
+      expect(html).not.toMatch(/Original source as named/);
+    });
+  });
   describe('terms of use', () => {
     const terms = { name: 'ESCB Terms of Use for the Reuse of Statistics', url: 'https://t/escb' };
     const lineageOf = (s: Series, lang: 'en' | 'de' = 'en') => parse(sourceBlock(s, lang)).querySelector('details')!;

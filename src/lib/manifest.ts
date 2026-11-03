@@ -19,6 +19,8 @@ export interface ManifestEntry {
   source: (typeof SOURCE_KINDS)[number];
   /** Series id; `{land}` is replaced by each code in `laender` (Destatis Land series summed to Germany). */
   ids: string[]; laender: string[]; scale: number; change: 'pct' | 'diff';
+  /** The original source credited by name next to the figures (vdpResearch GmbH, bulwiengesa AG): Bundesbank series made by a third party. */
+  credit?: string;
   publisher: string; attribution: Localized; licence: { name: string; url: string }; provisional: boolean;
   title: Localized; unit: Localized; frequency: string; expected_start: number;
   seasonal_adjustment: (typeof ADJUSTMENTS)[number]; resampling: (typeof RESAMPLING)[number];
