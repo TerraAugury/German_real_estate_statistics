@@ -126,10 +126,15 @@ nav.links: Verknüpfungen
 nav.methodology: Methodik
 methodology.title: Methodik
 links.title: Verknüpfungen
-links.intro: "Jede Kennzahl mit jedem Wirtschaftsindikator: die Rangkorrelation der Veränderungen bei Verschiebung 0 mit der Zahl der Paare, oder warum die Verknüpfung nicht angezeigt wird. Jede Kennzahl erscheint in ihrer Hauptansicht; jede Zelle öffnet die vollständige Verknüpfung auf der Kennzahlseite."
+links.intro: "Jede Zeile ist eine Kennzahl, jede Spalte ein Wirtschaftsindikator. Ein Feld zeigt, wie eng sich ihre Veränderungen gemeinsam bewegt haben, dazu die Zahl der Paare (n), auf denen es beruht. Wo die Verknüpfung nicht angezeigt werden kann, steht im Feld „Nicht angezeigt“. Jede Kennzahl erscheint in ihrer Hauptansicht; ein Klick auf ein Feld öffnet die vollständige Verknüpfung auf der Kennzahlseite."
+insight.back: Zurück zur Übersicht der Einblicke
+link.back: Zurück zur Verknüpfungstabelle
 links.heading: Verknüpfungen mit Wirtschaftsindikatoren
 links.cell.n: "n = {n}"
-links.legend: "Schattierung: ocker, wo sich die Veränderungen in dieselbe Richtung bewegt haben, blau, wo in entgegengesetzte Richtungen; je dunkler, desto größer der Koeffizient. Sie zeigt nur Gleichlauf, keine Ursache und keine Prognose."
+links.scale.neg: "-1: gegenläufig"
+links.scale.zero: "0: kein Muster"
+links.scale.pos: "+1: gleichläufig"
+links.legend: "Farbe: ocker bedeutet, dass beide eher gemeinsam stiegen und fielen; blau bedeutet, dass die eine eher stieg, wenn die andere fiel. Je dunkler die Farbe, desto enger der Zusammenhang. Das zeigt, dass sie sich gemeinsam bewegen, nicht, dass eine die andere verursacht oder vorhersagt."
 links.cell.not_shown: "Nicht angezeigt (n = {n})"
 indicator.bund-yield-10y: Rendite zehnjähriger Bundesanleihen
 indicator.euribor-3m: Euribor 3 Monate

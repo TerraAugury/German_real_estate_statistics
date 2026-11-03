@@ -103,7 +103,8 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
     <>
       <h1>{title}</h1>
       <p>{t(lang, 'links.intro')}</p>
-      <div class="legend" aria-hidden="true"><span>{fmt(lang, -1)}</span><i class="ramp"></i><span>{fmt(lang, 1)}</span></div>
+      <div class="legend" aria-hidden="true"><i class="ramp"></i></div>
+      <p class="scale"><span>{t(lang, 'links.scale.neg')}</span><span>{t(lang, 'links.scale.zero')}</span><span>{t(lang, 'links.scale.pos')}</span></p>
       <p class="note">{t(lang, 'links.legend')}</p>
       <div class="scroll"><table class="matrix">
         <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{overview!.columns.map((n) => <th scope="col">{t(lang, `indicator.${n}`)}</th>)}</tr></thead>
@@ -131,7 +132,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
         <>
           <p>{t(lang, 'insights.intro')}</p>
           <Fragment set:html={renderToneLegend(lang)} />
-          <nav class="jump" aria-label={t(lang, 'insights.jump')}>
+          <nav class="jump" id="index" aria-label={t(lang, 'insights.jump')}>
             <h2>{t(lang, 'insights.jump')}</h2>
             <Fragment set:html={renderInsightIndex(insights, lang)} />
           </nav>
