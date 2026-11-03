@@ -124,3 +124,20 @@ indicator.gdp-real: Real GDP
 indicator.unemployment-rate: Unemployment rate
 indicator.construction-price: Construction price index
 indicator.oecd-confidence: OECD business confidence
+nav.insights: Insights
+insights.title: Insights
+insights.intro: "Each Insight puts several series on one axis over a stated period, with a fixed one-line reading. It describes what the lines show; it does not show a cause and is not a forecast."
+insights.jump: Insights on this page
+insights.empty: "No Insights are published yet; the licences for their data are being confirmed."
+insight.template.spread: "The latest {measure} is {latest} points, {verdict} the {from}-{to} average of {mean} points."
+insight.verdict.higher: higher than
+insight.verdict.lower: lower than
+insight.verdict.in_line: in line with
+insight.tag.higher: higher than the average
+insight.tag.lower: lower than the average
+insight.tag.in_line: in line with the average
+insight.headline: "{value} percentage points"
+insight.average: "average {value}"
+insight.chart.label: "{title}: {measure} over time"
+insight.unit.points: percentage points
+insight.not_shown: "Insight not shown: too few observations (n = {n}); at least {min} are needed."

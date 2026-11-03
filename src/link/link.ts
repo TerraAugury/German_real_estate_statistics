@@ -42,7 +42,7 @@ const daysIn = (i: number, t: Target) =>
     : (Date.UTC(Math.floor(i / 4), (i % 4) * 3 + 3, 1) - Date.UTC(Math.floor(i / 4), (i % 4) * 3, 1)) / DAY;
 
 /** Period means at the target frequency; incomplete periods dropped, gaps stay gaps. */
-function levels(s: LinkSeries, t: Target): Map<number, number> {
+export function levels(s: Pick<LinkSeries, 'freq' | 'obs'>, t: Target): Map<number, number> {
   const pts = s.obs
     .filter((o): o is { period: string; value: number } => o.value !== null)
     .sort((a, b) => (a.period < b.period ? -1 : 1));
@@ -74,7 +74,7 @@ function levels(s: LinkSeries, t: Target): Map<number, number> {
   return out;
 }
 
-function changes(lv: Map<number, number>, t: Target, rule: LinkSeries['change']) {
+export function changes(lv: Map<number, number>, t: Target, rule: LinkSeries['change']) {
   const step = t === 'A' ? 1 : 4;
   const out = new Map<number, number>();
   for (const [i, v] of lv) {

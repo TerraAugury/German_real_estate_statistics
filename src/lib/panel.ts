@@ -1,10 +1,12 @@
 import { day, fmt, period, t } from './i18n';
-import { levelChart, lagChart, lineChart } from './chart';
+import { insightChart, levelChart, lagChart, lineChart } from './chart';
 import { notesFor } from './notes';
 import { href, type Lang } from './routes';
 import type { Series } from './series';
 import type { LinkResult } from '../link/link';
 import { linkResult } from './links';
+import { MIN_OBS, type InsightResult } from '../insight/insight';
+import type { InsightEntry } from './manifest';
 
 export const esc = (x: string) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const noteHtml = (ns: string[]) => ns.map((n) => `<p class="note">${esc(n)}</p>`).join('');
@@ -48,3 +50,17 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
 /** Compute (once per build) and render; the Link takes the KPI's frequency (spec section 6). */
 export const linkPanel = (kpi: Series, ind: Series, lang: Lang, geography?: string, id?: string) =>
   renderPanel(kpi, ind, linkResult(kpi, ind), lang, geography, id);
+
+/** One Insight section: headline number with verdict tag, the reading, the chart (spec insights section 5). Pure given the result. */
+export function renderInsight(e: InsightEntry, r: InsightResult, lang: Lang): string {
+  const head = `<h2>${esc(e.title[lang])}</h2>`;
+  if (!r.shown) return `<section class="insight" id="${esc(e.key)}">${head}<p class="na">${t(lang, 'insight.not_shown', { n: String(r.n), min: String(MIN_OBS) })}</p></section>`;
+  const one = (n: number) => fmt(lang, n, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const reading = t(lang, `insight.template.${e.template}`, {
+    measure: esc(e.measure[lang]), latest: one(r.latest.value), verdict: t(lang, `insight.verdict.${r.verdict}`), from: r.from, to: r.to, mean: one(r.mean),
+  });
+  const chart = insightChart(r, { unit: t(lang, 'insight.unit.points'), average: t(lang, 'insight.average', { value: one(r.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
+  return `<section class="insight" id="${esc(e.key)}">${head}`
+    + `<p class="headline"><span class="num">${one(r.latest.value)}</span> <span class="unit">${t(lang, 'insight.unit.points')}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span></p>`
+    + `<p>${reading}</p>${chart}</section>`;
+}

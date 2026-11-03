@@ -58,8 +58,68 @@ export function loadAllManifest(lock?: Lock): ManifestEntry[] {
   return committed.entries;
 }
 
-/** Everything under review: interface strings plus manifest text, English side. */
-export const reviewStrings = () => ({ ...loadStrings('en'), ...manifestStrings(loadAllManifest(), 'en') });
+/** Everything under review: interface strings plus manifest and Insight text, English side. */
+export const reviewStrings = () => ({ ...loadStrings('en'), ...manifestStrings(loadAllManifest(), 'en'), ...insightStrings(loadAllInsights(), 'en') });
+
+// Insights (spec insights section 7): hand-written in manifest/insights.yaml, one entry per curated chart, in page order.
+export const HEADLINES = ['spread'] as const;
+export const ROLES = ['kpi', 'reference'] as const;
+const INSIGHT_TEXT = ['title', 'measure'] as const;
+
+export interface InsightEntry {
+  /** Section id on the Insights page and the target of KPI-page links. */
+  key: string; title: Localized;
+  /** The headline measure named in the reading: "The latest {measure} is ...". */
+  measure: Localized;
+  headline: (typeof HEADLINES)[number];
+  /** Compare year-on-year percent changes instead of levels. */
+  growth: boolean;
+  /** Reading template: `insight.template.<template>` in the interface strings. */
+  template: string;
+  /** The first KPI series against the first reference series is the headline; the order is the order shown. */
+  series: { key: string; role: (typeof ROLES)[number] }[];
+}
+
+/** Insight text in one language as review strings, keyed `insight:<key>.<field>`. */
+export const insightStrings = (entries: InsightEntry[], lang: Lang): Record<string, string> =>
+  Object.fromEntries(entries.flatMap((e) => INSIGHT_TEXT.map((f) => [`insight:${e.key}.${f}`, e[f][lang]])));
+
+function buildInsights(lock: Lock): InsightEntry[] {
+  const entries = parse(readFileSync('manifest/insights.yaml', 'utf8')) as InsightEntry[];
+  for (const e of entries) e.growth ??= false;
+  const unreviewed = new Set(unreviewedKeys(insightStrings(entries, 'en'), lock));
+  for (const e of entries) for (const f of INSIGHT_TEXT) e[f] = { ...e[f], de: draft(e[f].de, unreviewed.has(`insight:${e.key}.${f}`)) };
+  return entries;
+}
+
+let committedInsights: { stamp: string; entries: InsightEntry[] } | undefined;
+/** Every declared Insight, hidden ones included; cached like `loadAllManifest`. The page model applies the Provisional gate. */
+export function loadAllInsights(lock?: Lock): InsightEntry[] {
+  if (lock) return buildInsights(lock);
+  const stamp = ['manifest/insights.yaml', LOCK_PATH].map((f) => statSync(f, { throwIfNoEntry: false })?.mtimeMs ?? 0).join();
+  if (committedInsights?.stamp !== stamp) committedInsights = { stamp, entries: buildInsights(readLock()) };
+  return committedInsights.entries;
+}
+
+/** Insight build checks: any failure fails the build. `kpis` are the Real estate KPI series keys, `series` every manifest key. */
+export function checkInsights(entries: InsightEntry[], known: { series: Set<string>; kpis: Set<string> }, en: Record<string, string>): void {
+  const errs: string[] = [];
+  const seen = new Set<string>();
+  for (const e of entries) {
+    if (seen.has(e.key)) errs.push(`duplicate key ${e.key}`);
+    seen.add(e.key);
+    for (const l of langs) if (INSIGHT_TEXT.some((f) => !e[f]?.[l])) errs.push(`${e.key} needs en and de title and measure`);
+    if (!HEADLINES.includes(e.headline)) errs.push(`${e.key}: headline must be one of ${HEADLINES}`);
+    if (!(`insight.template.${e.template}` in en)) errs.push(`${e.key}: no i18n key insight.template.${e.template}`);
+    for (const s of e.series) {
+      if (!ROLES.includes(s.role)) errs.push(`${e.key}: role must be one of ${ROLES}`);
+      if (!known.series.has(s.key)) errs.push(`${e.key}: unknown series ${s.key}`);
+    }
+    if (!e.series.some((s) => s.role === 'kpi' && known.kpis.has(s.key))) errs.push(`${e.key}: needs a Real estate KPI series`);
+    if (!e.series.some((s) => s.role === 'reference')) errs.push(`${e.key}: needs a reference series`);
+  }
+  if (errs.length) throw new Error('insights: ' + errs.join('; '));
+}
 
 /** Provisional gate (spec section 11): provisional series are out unless this is a preview build. */
 export const gate = (entries: ManifestEntry[], includeProvisional: boolean) => (includeProvisional ? entries : entries.filter((m) => !m.provisional));

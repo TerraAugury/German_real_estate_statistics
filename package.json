@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "INCLUDE_PROVISIONAL=1 astro dev",
     "build": "tsx scripts/fetch.ts && astro build",
     "test": "vitest run",
     "check": "astro check"
