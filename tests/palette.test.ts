@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { PALETTE, DIVERGING, rootCss } from '../src/lib/palette';
+import { PALETTE, SCHEMES, DIVERGING, rootCss } from '../src/lib/palette';
+import { lineChart, lagChart, multiplesChart } from '../src/lib/chart';
+import { loadSeries } from '../src/lib/series';
 
 // Ticket design-refinement 01: the palette lives in one module; the page CSS and the build-time charts both read it.
 const luminance = (hex: string) => {
@@ -28,6 +30,35 @@ describe('palette', () => {
       expect(contrast(PALETTE['strong-text'], bg)).toBeGreaterThanOrEqual(4.5);
       expect(contrast(PALETTE.strong, bg)).toBeGreaterThanOrEqual(3);
     }
+  });
+  it('dark mode declares every token for prefers-color-scheme: dark, and the root asks for both schemes', () => {
+    const css = rootCss();
+    expect(css).toContain('color-scheme: light dark');
+    const dark = css.slice(css.indexOf('@media (prefers-color-scheme: dark)'));
+    expect(dark).not.toBe('');
+    expect(Object.keys(SCHEMES.dark)).toEqual(Object.keys(SCHEMES.light));
+    for (const [name, value] of Object.entries(SCHEMES.dark)) expect(dark).toContain(`--${name}: ${value}`);
+  });
+  describe.each(['light', 'dark'] as const)('%s scheme contrast', (scheme) => {
+    const c = SCHEMES[scheme];
+    it('text is at least 4.5:1 on the page, the plate and the availability tints', () => {
+      for (const bg of [c.page, c.plate, c.yes, c.na]) {
+        for (const fg of [c.ink, c.muted, c.data, c['strong-text']]) expect(contrast(fg, bg), `${scheme} ${fg} on ${bg}`).toBeGreaterThanOrEqual(4.5);
+      }
+    });
+    it('graphics (lines, bars, borders of controls) are at least 3:1 on the plate', () => {
+      for (const g of [c.data, c.strong, c.field, c.above, c.below]) expect(contrast(g, c.plate), `${scheme} ${g}`).toBeGreaterThanOrEqual(3);
+    });
+  });
+  it('charts name their colours as CSS variables, so they follow the scheme without a rebuild', () => {
+    const s = loadSeries('construction-permits-office');
+    const lags = [{ lag: -1, rho: 0.1 }, { lag: 0, rho: -0.5 }, { lag: 1, rho: 0.3 }];
+    const pts = [{ period: '2000', value: 1 }, { period: '2001', value: 2 }];
+    const out = [lineChart(s, 'en'), lagChart(lags, 0, { lag: 'l', rho: 'r', mark: 'm', title: 't' }, 'en'),
+      multiplesChart({ kpi: pts, reference: pts }, { unit: 'u', title: 't' }, [0, 3], 'en')].join('');
+    expect(out).toContain('var(--data)');
+    expect(out).toContain('var(--strong)');
+    expect(out.match(/#[0-9a-fA-F]{3,8}\b|rgba?\(/g) ?? []).toEqual([]);
   });
   it('the diverging scale runs blue, neutral, ochre', () => {
     expect(DIVERGING).toEqual({ neg: PALETTE.data, mid: PALETTE.plate, pos: PALETTE.strong });

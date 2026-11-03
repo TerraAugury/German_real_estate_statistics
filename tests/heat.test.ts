@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { heat } from '../src/lib/heat';
-import { HEAT_MAX, PALETTE, DIVERGING } from '../src/lib/palette';
+import { HEAT_MAX, SCHEMES, diverging } from '../src/lib/palette';
 
 // Design refinement 04: a Link cell is shaded by the sign and size of its rank correlation.
 const channels = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
@@ -13,7 +13,7 @@ const contrast = (a: number[], b: number[]) => {
   return (hi + 0.05) / (lo + 0.05);
 };
 /** What CSS `color-mix(in srgb, hue share%, plate)` paints. */
-const mixed = (hue: string, share: number) => channels(hue).map((c, i) => c * (share / 100) + channels(PALETTE.plate)[i] * (1 - share / 100));
+const mixed = (hue: string, share: number, plate: string) => channels(hue).map((c, i) => c * (share / 100) + channels(plate)[i] * (1 - share / 100));
 
 describe('heat', () => {
   it('negative runs blue, positive ochre, zero is neutral; the shade grows with |rho| up to the cap', () => {
@@ -24,11 +24,12 @@ describe('heat', () => {
     expect(heat(0.2).share).toBeLessThan(heat(0.6).share);
   });
   it('the cap is the one the CSS uses', () => expect(HEAT_MAX).toBe(0.55));
-  it('ink on every shade, on either side, is at least 4.5:1', () => {
+  it.each(['light', 'dark'] as const)('%s scheme: ink on every shade, on either side, is at least 4.5:1', (scheme) => {
+    const c = SCHEMES[scheme], d = diverging(c);
     for (let r = -100; r <= 100; r++) {
       const { side, share } = heat(r / 100);
-      const bg = side === 'neg' ? mixed(DIVERGING.neg, share) : side === 'pos' ? mixed(DIVERGING.pos, share) : channels(PALETTE.plate);
-      expect(contrast(channels(PALETTE.ink), bg), `rho ${r / 100}`).toBeGreaterThanOrEqual(4.5);
+      const bg = side === 'neg' ? mixed(d.neg, share, c.plate) : side === 'pos' ? mixed(d.pos, share, c.plate) : channels(c.plate);
+      expect(contrast(channels(c.ink), bg), `${scheme} rho ${r / 100}`).toBeGreaterThanOrEqual(4.5);
     }
   });
 });

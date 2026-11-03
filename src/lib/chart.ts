@@ -6,8 +6,10 @@ import type { Lang } from './routes';
 import type { Series } from './series';
 import type { Points } from '../insight/insight';
 
-// SVG is rendered at build time, so CSS variables would not reach Plot's own styles: read the palette module instead.
-const { ink: INK, data: DATA, muted: MUTED, strong: STRONG, field: BAR, hair: GRID, above: ABOVE, below: BELOW } = PALETTE;
+// Colours are the page's custom properties (src/lib/palette.ts), so one build serves both colour schemes. Plot passes them
+// through as presentation attributes and browsers resolve them there.
+const v = (name: keyof typeof PALETTE) => `var(--${name})`;
+const INK = v('ink'), DATA = v('data'), MUTED = v('muted'), STRONG = v('strong'), BAR = v('field'), GRID = v('hair'), ABOVE = v('above'), BELOW = v('below');
 
 /**
  * Render a Plot twice, wide (720) and narrow (320) with its own tick layout; CSS shows the one that fits its box, so
