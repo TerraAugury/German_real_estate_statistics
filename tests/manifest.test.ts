@@ -120,6 +120,14 @@ describe('source field', () => {
   });
 });
 
+describe('committed snapshots', () => {
+  it('validate against the manifest, and no third-party series is public', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { validateSnapshot } = await import('../src/lib/pipeline');
+    for (const m of all) validateSnapshot(m, JSON.parse(readFileSync(`data/snapshots/${m.key}.json`, 'utf8')));
+  });
+});
+
 describe('Destatis login', () => {
   it('is a CI secret on the fetch step only and .env is git-ignored', async () => {
     const { readFileSync } = await import('node:fs');

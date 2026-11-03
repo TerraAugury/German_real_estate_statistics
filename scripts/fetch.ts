@@ -15,7 +15,7 @@ for (const m of loadAllManifest()) { // sequential: one series at a time
   try {
     const next = await refresh(m, old, deps);
     if (next) writeFileSync(file, JSON.stringify(next, null, 1));
-    console.log(next ? 'fetched' : 'unchanged', m.key, next?.revised_at === deps.now.toISOString() ? '(values revised)' : '');
+    console.log(next ? 'fetched' : 'unchanged', m.key, next?.revised_at === deps.now.toISOString() ? '(values revised)' : '', next ? Object.values(next.parts)[0].meta?.url ?? '' : '');
   } catch (e) {
     if (e instanceof BadResponse) throw e; // malformed response is a bug, not an outage
     if (e instanceof MissingCredentials) { console.warn('skipped, snapshot untouched:', String(e)); continue; } // a missing secret is not an outage: no failure flag

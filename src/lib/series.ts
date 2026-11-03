@@ -14,7 +14,7 @@ export interface Series {
   fetchedFrom: string; service?: string; original?: { title?: string; unit: string };
   obs: { period: string; value: number }[]; change: 'pct' | 'diff'; freq: 'M' | 'Q' | 'A';
   lastPeriod: string; derived: boolean; provisional: boolean;
-  stale: boolean; fetchFailed: string | null; retrievedAt: string; revisedAt: string | null;
+  stale: boolean; fetchFailed: string | null; unavailable: string | null; retrievedAt: string; revisedAt: string | null;
   /** KPI-page Note inputs: manifest scope keys, short-history sentence key (true = no extra sentence), Partial total years. */
   scope: ManifestEntry['scope']; shortWindow: string | boolean; partial: PartialTotal;
 }
@@ -61,8 +61,8 @@ export function loadSeries(key: string, now = new Date(), land?: string): Series
     fetchedFrom: m.source === 'dbnomics' ? 'DBnomics' : m.publisher, service: SERVICE[m.source],
     // only the Bundesbank gives a title of the series itself; a GENESIS cube's title lists every measure of the cube
     original: meta ? { title: m.source === 'bundesbank' ? meta.title : undefined, unit: meta.unit_mult ? `${meta.unit} (×10^${meta.unit_mult})` : meta.unit } : undefined,
-    lastPeriod, derived: (isDerived(m) && !land) || m.scale !== 1, provisional: m.provisional,
-    stale: isStale(lastPeriod, m.frequency, now), fetchFailed: snap.fetch_failed ?? null,
+    lastPeriod, derived: (isDerived(m) && !land) || m.scale !== 1 || m.resampling === 'mean', provisional: m.provisional,
+    stale: isStale(lastPeriod, m.frequency, now), fetchFailed: snap.fetch_failed ?? null, unavailable: snap.unavailable ?? null,
     retrievedAt: snap.retrieved_at, revisedAt: snap.revised_at ?? null,
     scope: m.scope, shortWindow: m.short_window && (m.short_window_sentence ?? true), partial };
   if (!s.freq) throw new Error(`${key}: unknown frequency ${m.frequency}`);
