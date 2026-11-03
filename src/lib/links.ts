@@ -19,6 +19,9 @@ const seriesOf = (name: Indicator, segment: Segment, kpi: string) =>
     : name === 'oecd-confidence' ? (segment === 'retail' ? 'oecd-confidence-retail' : 'oecd-confidence-construction')
       : name;
 
+/** Pairs that are computable but say nothing: dropped from every KPI page and the Links overview. */
+const NO_INFORMATION = new Set(['office-vacancy-7|cpi']);
+
 /**
  * One view's Link pairs: its first series against each indicator, minus pairs the provisional gate drops. `id` is the
  * panel's HTML id, which KPI pages and the Links overview anchors share.
@@ -28,7 +31,7 @@ export function viewLinks(v: View, live: ManifestEntry[] = loadManifest()) {
   return publicLinks(INDICATORS.map((name) => {
     const indicator = seriesOf(name, v.segment, key);
     return { name, kpi: key, land, indicator, id: `link-${key}-${land ?? 'de'}-${indicator}` };
-  }), live);
+  }).filter((p) => !NO_INFORMATION.has(`${p.kpi}|${p.indicator}`)), live);
 }
 export type Pair = ReturnType<typeof viewLinks>[number];
 

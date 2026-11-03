@@ -23,6 +23,11 @@ describe('Link pairs per view (spec sections 5, 6)', () => {
     expect(prices('commercial-overall')).toBe('construction-price-office'); // its first series is office permits
     expect(prices('logistics')).toBe('construction-price-commercial');
   });
+  it('office vacancy in the 7 major cities has no Link against the consumer price index', () => {
+    const ind = (geo: string) => viewLinks(view('kpi-office-vacancy', 'office', geo), preview).map((l) => l.indicator);
+    expect(ind('7-cities')).not.toContain('cpi');
+    expect(ind('127-towns')).toContain('cpi');
+  });
   it('the KPI side is the view’s first series, Land included', () => {
     expect(viewLinks(view('construction', 'office', 'de-by'), preview)[0]).toMatchObject({ kpi: 'construction-permits-office', land: '09' });
   });
