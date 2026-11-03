@@ -1,12 +1,13 @@
 import * as Plot from '@observablehq/plot';
 import { JSDOM } from 'jsdom';
 import { fmt, period } from './i18n';
+import { PALETTE } from './palette';
 import type { Lang } from './routes';
 import type { Series } from './series';
 import type { Points } from '../insight/insight';
 
-// The palette of src/layouts/Base.astro (ticket 16); SVG is rendered at build time, so CSS variables would not reach Plot's own styles.
-const INK = '#17202a', DATA = '#1f4e79', MUTED = '#4a5562', STRONG = '#b26a00', BAR = '#7b8794';
+// SVG is rendered at build time, so CSS variables would not reach Plot's own styles: read the palette module instead.
+const { ink: INK, data: DATA, muted: MUTED, strong: STRONG, field: BAR, hair: GRID, above: ABOVE, below: BELOW } = PALETTE;
 
 /**
  * Render a Plot twice, wide (720) and narrow (320) with its own tick layout; CSS shows the one that fits its box, so
@@ -58,8 +59,6 @@ export function levelChart(pts: { period: string; value: number }[], unit: strin
     marks: [Plot.lineY(data, { x: 'x', y: 'value', stroke: muted ? MUTED : DATA, strokeWidth: narrow ? 2 : 2.25 })],
   }), title);
 }
-
-const GRID = '#e3e7eb', ABOVE = '#4e79a7', BELOW = '#c0392b';
 
 /** Headline measure over time: latest point labelled, dashed average line, grey band of average plus or minus half a standard deviation. */
 export function insightChart(r: { points: Points; context?: Points; from: string; to: string; mean: number; sd: number }, labels: { unit: string; average: string; title: string }, lang: Lang): string {
