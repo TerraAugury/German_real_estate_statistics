@@ -9,8 +9,8 @@ import { loadManifest } from '../../lib/manifest';
 import { readProse, unreviewedProse, DRAFT } from '../../lib/review';
 import { sourcesTable } from '../../lib/sources';
 import { compactChart, latestBlock, linkPanel, renderHero, renderInsight, renderInsightIndex, sourceBlock } from '../../lib/panel';
-import { KPIS, SEGMENTS, SEGMENT_PAGES, cell, naText, viewHref, type GeoGroup, type Segment, type View } from '../../lib/kpis';
-import { availability, homeIndex, kpiPage, linksOverview } from '../../lib/pages';
+import { KPIS, SEGMENTS, SEGMENT_PAGES, cell, naText, viewHref, type GeoGroup, type Segment } from '../../lib/kpis';
+import { availability, firstSeries, homeIndex, kpiPage, linksOverview } from '../../lib/pages';
 import { insightsPage, leadInsight } from '../../lib/insights';
 
 export function getStaticPaths() {
@@ -39,7 +39,6 @@ const segment = page.startsWith('segment-') ? (page.slice('segment-'.length) as 
 const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
   : t(lang, `${page === 'home' ? 'site' : page}.title`);
 // Segment pages show the first series of a view as a compact chart; Home lists each KPI as an index row.
-const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
 ---
 <Base lang={lang} page={page} title={title}>
   {(kpi || segment) && <nav class="crumbs" aria-label={t(lang, 'nav.breadcrumb')}><a href={href('home', lang)}>{t(lang, 'nav.home')}</a> › {title}</nav>}
@@ -58,7 +57,7 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
                 <Fragment set:html={sparkline(x, lang)} />
                 <span class="what">{x.title[lang]}</span>
                 {notesFor(x, lang, { on: 'compact' }).map((n) => <p class="note">{n}</p>)}
-                <p class="src"><Fragment set:html={sourceBlock(x, lang)} /></p>
+                <div class="src"><Fragment set:html={sourceBlock(x, lang)} /></div>
               </>
             ) : <p class="na">{t(lang, 'kpi.not_available.licence')}</p>}
           </li>
@@ -74,7 +73,7 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
       {KPIS.map((k) => {
         const c = cell(k, segment);
         if (!('view' in c)) return <section><h2>{t(lang, k.title)}</h2><p class="na">{naText(c, lang)}</p></section>;
-        const x = compact(c.view);
+        const x = firstSeries(c.view);
         return (
           <section>
             <h2><a href={viewHref(k, c.view, lang)}>{t(lang, k.title)}</a></h2>
@@ -109,7 +108,7 @@ const compact = (v: View) => getSeries(v.series[0].key, v.series[0].land);
         <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{overview!.columns.map((n) => <th scope="col">{t(lang, `indicator.${n}`)}</th>)}</tr></thead>
         <tbody>{overview!.rows.map(({ kpi: k, view: v, cells }) => (
           <tr>
-            <th scope="row"><a href={href(k.page, lang)}>{t(lang, k.title)}</a>{v && <><br /><small>{compact(v).title[lang]}</small></>}</th>
+            <th scope="row"><a href={href(k.page, lang)}>{t(lang, k.title)}</a>{v && <><br /><small>{firstSeries(v).title[lang]}</small></>}</th>
             {!v ? <td class="na licence" colspan={overview!.columns.length}>{t(lang, 'kpi.not_available.licence')}</td> : overview!.columns.map((n) => {
               const c = cells.get(n);
               if (!c) return <td />;

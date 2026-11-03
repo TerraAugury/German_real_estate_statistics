@@ -12,7 +12,7 @@ beforeAll(() => { process.env.INCLUDE_PROVISIONAL = '1'; });
 afterAll(() => { delete process.env.INCLUDE_PROVISIONAL; });
 
 describe('Home index model', () => {
-  it('one row per KPI in catalogue order; a live KPI has its headline view, series, latest and sparkline points', () => {
+  it('one row per KPI in catalogue order; a live KPI has its headline view, series and latest value', () => {
     const rows = homeIndex();
     expect(rows.map((r) => r.kpi.page)).toEqual(KPIS.map((k) => k.page));
     for (const r of rows) {
@@ -20,7 +20,6 @@ describe('Home index model', () => {
       const s = getSeries(r.view!.series[0].key, r.view!.series[0].land);
       expect(r.series).toBe(s);
       expect(r.latest).toMatchObject({ value: s.obs.at(-1)!.value, period: s.lastPeriod });
-      expect(r.spark).toEqual(s.obs.map((o) => o.value));
     }
   });
   it('a KPI with no public series keeps a row without series (licence not confirmed)', () => {
@@ -29,7 +28,7 @@ describe('Home index model', () => {
     expect(rows).toHaveLength(KPIS.length);
     for (const r of rows) {
       if (headline(r.kpi, production)) expect(r.series).toBeDefined();
-      else expect([r.view, r.series, r.latest, r.spark]).toEqual([undefined, undefined, undefined, undefined]);
+      else expect([r.view, r.series, r.latest]).toEqual([undefined, undefined, undefined]);
     }
     expect(rows.some((r) => !r.series)).toBe(true);
   });

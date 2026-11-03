@@ -31,7 +31,6 @@ export const PALETTE = LIGHT;
 
 /** Diverging scale for signed values in one scheme: negative blue, neutral, positive ochre. */
 export const diverging = (c: Record<keyof typeof LIGHT, string>) => ({ neg: c['heat-neg'], mid: c.plate, pos: c['heat-pos'] });
-export const DIVERGING = diverging(LIGHT);
 
 /** Deepest share of hue in a heat shade: ink text stays at 4.5:1 or better on it in both schemes (tests/heat.test.ts). */
 export const HEAT_MAX = 0.55;

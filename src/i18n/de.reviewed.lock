@@ -70,10 +70,6 @@ kpi.construction.title:
   en_hash: 5d52e4d5249ba5a1
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
-source.line:
-  en_hash: e4bc10f929ea7c20
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
 source.own:
   en_hash: 600f487bbc2fdb17
   reviewed_by: Project owner
@@ -390,10 +386,6 @@ nav.breadcrumb:
   en_hash: 2bd873d6c734e63e
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
-home.card.latest:
-  en_hash: 75503139448d36c3
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
 home.segments:
   en_hash: a1f4586540a869aa
   reviewed_by: Project owner
@@ -444,10 +436,6 @@ links.intro:
   reviewed_on: 2026-11-02
 links.heading:
   en_hash: 48497180d9a00b3e
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
-links.cell.shown:
-  en_hash: 636abdb0e322fbd3
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 links.cell.not_shown:

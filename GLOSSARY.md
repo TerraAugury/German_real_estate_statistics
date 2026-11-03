@@ -42,6 +42,11 @@ The short source line under a chart: publisher, licence and the date of the late
 _DE_: Quellenangabe
 _Avoid_: Source line (that is the full lineage), footnote
 
+**Heat shade**:
+The tint of a cell in the Links overview: blue where a Link's changes moved in opposite directions, ochre where they moved together, deeper for a larger rank correlation. The coefficient stays printed in the cell; the shade describes co-movement only.
+_DE_: Farbabstufung
+_Avoid_: Heatmap (the overview is a table), strength of effect
+
 **Lag**:
 The shift, in whole periods, between an economic indicator and a real estate KPI when a link is computed. Positive lag means the indicator moved earlier than the KPI. It describes timing of co-movement, never lead time for prediction.
 _DE_: Verschiebung (in Perioden)

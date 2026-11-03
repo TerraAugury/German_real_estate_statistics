@@ -18,3 +18,4 @@
 - `src/lib/palette.ts` is the one palette; `Base.astro` injects it as `:root` custom properties and `chart.ts` reads the same values. A test fails if either file gains a colour literal.
 - Heading scale: `--step-4` to `--step-0` custom properties (large number, page title, section, plate, body-size sub-heading); phone sizes redefine them in one media query. Plate headings went from 1.3rem to 1.2rem at phone width, the only visible change.
 - Ochre text uses the new `strong-text` (5.4:1 on the plate); `strong` (4.2:1) stays for lines and bars. Nothing renders ochre text yet.
+- Review note: every heading size is a step of the scale, but plate headings (`--step-1`) and section headings (`--step-2`) are still two sizes by role, so "no per-container overrides" holds for the tokens, not for identical sizes.
