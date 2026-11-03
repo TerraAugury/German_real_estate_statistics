@@ -1,4 +1,4 @@
-import { day, fmt, period, t } from './i18n';
+import { day, fmt, period, t, valueFormat } from './i18n';
 import { latestOf } from './latest';
 import { insightChart, multiplesChart, sharedDomain, overlayChart, lagChart, lineChart } from './chart';
 import { notesFor } from './notes';
@@ -49,7 +49,7 @@ const GLYPH = { up: '▲', down: '▼', flat: '▬' };
  */
 export function latestBlock(s: Series, lang: Lang): string {
   const l = latestOf(s), pct = s.unit[lang] === '%';
-  const num = pct ? fmt(lang, l.value / 100, { style: 'percent', maximumFractionDigits: 2 }) : fmt(lang, l.value, { maximumFractionDigits: 2 });
+  const num = pct ? fmt(lang, l.value / 100, { ...valueFormat(s), style: 'percent' }) : fmt(lang, l.value, valueFormat(s));
   const c = l.change;
   let delta = '';
   if (c) {

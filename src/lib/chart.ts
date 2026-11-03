@@ -1,6 +1,6 @@
 import * as Plot from '@observablehq/plot';
 import { JSDOM } from 'jsdom';
-import { fmt, period, t } from './i18n';
+import { fmt, period, t, valueFormat } from './i18n';
 import { PALETTE } from './palette';
 import type { Lang } from './routes';
 import type { Series } from './series';
@@ -44,9 +44,9 @@ export function lineChart(s: Series, lang: Lang, height = 320): string {
     marks: [
       Plot.lineY(points, { x: 'x', y: 'value', stroke: DATA, strokeWidth: 2.25 }),
       // Invisible hover targets keep a tooltip on every point without drawing one.
-      Plot.dot(points, { x: 'x', y: 'value', r: 6, fill: 'transparent', title: (d) => `${period(lang, d.period)}: ${fmt(lang, d.value, { maximumFractionDigits: 2 })}` }),
+      Plot.dot(points, { x: 'x', y: 'value', r: 6, fill: 'transparent', title: (d) => `${period(lang, d.period)}: ${fmt(lang, d.value, valueFormat(s))}` }),
       Plot.dot(last, { x: 'x', y: 'value', r: 4, fill: DATA }),
-      Plot.text(last, { x: 'x', y: 'value', text: (d) => fmt(lang, d.value, { maximumFractionDigits: 2 }), dx: 8, textAnchor: 'start', fill: DATA, fontWeight: 600, fontSize: narrow ? 14 : 15 }),
+      Plot.text(last, { x: 'x', y: 'value', text: (d) => fmt(lang, d.value, valueFormat(s)), dx: 8, textAnchor: 'start', fill: DATA, fontWeight: 600, fontSize: narrow ? 14 : 15 }),
     ],
   }), s.title[lang]);
 }

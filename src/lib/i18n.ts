@@ -43,6 +43,9 @@ const locale = { en: 'en-GB', de: 'de-DE' } as const;
 export const day = (lang: Lang, iso: string) => new Intl.DateTimeFormat(locale[lang], { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(iso));
 // Page-locale number formatting: EN "1,234.5", DE "1.234,5".
 export const fmt = (lang: Lang, n: number, o: Intl.NumberFormatOptions = {}) => new Intl.NumberFormat(locale[lang], o).format(n);
+/** Number format for a series' own values: the decimals its source published when it has them, else at most two. */
+export const valueFormat = (s: { decimals?: number }): Intl.NumberFormatOptions =>
+  s.decimals == null ? { maximumFractionDigits: 2 } : { minimumFractionDigits: s.decimals, maximumFractionDigits: s.decimals };
 /** A period as shown (spec section 10): "2026-Q1" -> "Q1 2026" in both languages, "2026" as is, months through Intl. */
 export function period(lang: Lang, p: string): string {
   const [y, rest] = p.split('-');
