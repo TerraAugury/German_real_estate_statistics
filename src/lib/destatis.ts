@@ -12,8 +12,9 @@ export interface CubeMeasure { name: string; unit: string }
 export interface CubeRow { dims: Record<string, string>; time: string; values: Record<string, { value: number | null; quality: string }> }
 export interface Cube { measures: CubeMeasure[]; rows: CubeRow[] }
 
-/** Quality flags: `e` real value, `-` nothing to report (true zero), `x` secret or not applicable, `.` not known. Only `e` and `-` carry a number. */
-const hasValue = (q: string) => q === 'e' || q === '-';
+/** Quality flags: `e` real value, `-` nothing to report (true zero), `x` secret or not applicable, `.` not known, `/` no data. Those last three carry no usable number; every other flag (provisional, estimated, corrected, ...) is a real value. */
+const NO_VALUE = new Set(['x', '.', '/', '']);
+const hasValue = (q: string) => !NO_VALUE.has(q);
 
 export function parseCube(text: string, onBad: (line: string) => never): Cube {
   const names: string[] = [], measures: CubeMeasure[] = [];
@@ -74,7 +75,6 @@ export function extractSeries(cube: Cube, id: string, frequency: string): { peri
 export class MissingCredentials extends Error {}
 
 type Body = { Status?: { Code?: number; Content?: string }; Object?: Record<string, any> };
-const cache = new WeakMap<object, Map<string, Promise<{ cube: Cube; sha256: string; title: string; updated: string | null }>>>();
 
 /** "14.09.2026 18:22:09h" (Berlin time as GENESIS prints it) -> "2026-09-14T18:22:09". */
 const isoLocal = (s: string | undefined) => { const m = s?.match(/^(\d\d)\.(\d\d)\.(\d{4}) (\d\d:\d\d:\d\d)/); return m ? `${m[3]}-${m[2]}-${m[1]}T${m[4]}` : null; };
@@ -88,27 +88,41 @@ async function call(deps: Deps, user: string, password: string, path: string, fo
   return body.Object;
 }
 
-/** A cube, fetched once per run: the series of one dataset share it. */
-function fetchCube(deps: Deps, name: string, user: string, password: string) {
-  const mine = cache.get(deps) ?? cache.set(deps, new Map()).get(deps)!;
-  if (!mine.has(name)) mine.set(name, (async () => {
-    const data = await call(deps, user, password, 'data/cube', { name, area: 'all', values: 'true', metadata: 'false', additionals: 'false', format: 'csv' });
-    const meta = await call(deps, user, password, 'metadata/cube', { name });
-    const cube = parseCube(String(data!.Content), (l) => { throw new BadResponse(`${name}: malformed cube line: ${l.slice(0, 80)}`); });
-    return { cube, sha256: createHash('sha256').update(String(data!.Content).replace(/^\*.*\n/, '')).digest('hex'), title: String(meta!.Content ?? ''), updated: isoLocal(meta!.Updated) };
-  })());
+type Cached<T> = WeakMap<object, Map<string, Promise<T>>>;
+/** Run `make` once per dataset and run (`deps` is the run), so the series of one dataset share the request. */
+function once<T>(store: Cached<T>, deps: Deps, name: string, make: () => Promise<T>): Promise<T> {
+  const mine = store.get(deps) ?? store.set(deps, new Map()).get(deps)!;
+  if (!mine.has(name)) mine.set(name, make());
   return mine.get(name)!;
 }
+const infos: Cached<{ title: string; updated: string | null }> = new WeakMap();
+const cubes: Cached<{ cube: Cube; sha256: string }> = new WeakMap();
+
+/** The cube's title and last-update time: one small call that tells whether the data download can be skipped. */
+const fetchInfo = (deps: Deps, name: string, user: string, password: string) => once(infos, deps, name, async () => {
+  const meta = await call(deps, user, password, 'metadata/cube', { name });
+  return { title: String(meta!.Content ?? ''), updated: isoLocal(meta!.Updated) };
+});
+
+const fetchData = (deps: Deps, name: string, user: string, password: string) => once(cubes, deps, name, async () => {
+  const data = await call(deps, user, password, 'data/cube', { name, area: 'all', values: 'true', metadata: 'false', additionals: 'false', format: 'csv' });
+  const content = String(data!.Content);
+  const cube = parseCube(content, (l) => { throw new BadResponse(`${name}: malformed cube line: ${l.slice(0, 80)}`); });
+  return { cube, sha256: createHash('sha256').update(content.replace(/^\*.*\n/, '')).digest('hex') }; // the first line names the user who exported
+});
 
 /**
  * Refresh one Destatis series from its GENESIS cube (dataset = cube name, ids[0] = series id with {land}). The login comes
- * from DESTATIS_USER and DESTATIS_PASSWORD. Returns null when nothing changed and the snapshot already has source metadata.
+ * from DESTATIS_USER and DESTATIS_PASSWORD. Returns null when the cube's update time or the values are unchanged and the snapshot already has source metadata.
  */
 export async function refreshDestatis(m: ManifestEntry, old: Snapshot | undefined, deps: Deps): Promise<Snapshot | null> {
   const env = deps.env ?? process.env, user = env.DESTATIS_USER, password = env.DESTATIS_PASSWORD;
   if (!user || !password) throw new MissingCredentials(`${m.key}: DESTATIS_USER and DESTATIS_PASSWORD are not set`);
   if (!deps.post) throw new Error('no post function for a source that needs a login');
-  const { cube, sha256, title, updated } = await fetchCube(deps, m.dataset, user, password);
+  const { title, updated } = await fetchInfo(deps, m.dataset, user, password);
+  // Same update time as the snapshot already holds: nothing to download.
+  if (updated && old && !old.fetch_failed && partIds(m).every((id) => old.parts[id]?.meta?.valid_from === updated)) return null;
+  const { cube, sha256 } = await fetchData(deps, m.dataset, user, password);
   const url = `${GENESIS}/data/cube?name=${m.dataset}`, iso = deps.now.toISOString();
   const parts: Record<string, Part> = {};
   let changed = !old || !!old.fetch_failed, wasRevised = false;

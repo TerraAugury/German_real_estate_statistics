@@ -28,7 +28,7 @@ Each Link has three parts:
 ## How to read these figures
 
 - Each series is fetched either directly from its publisher or through DBnomics, which aggregates official sources; the source line says which. The publishers are not responsible for this site.
-- For series fetched directly, the source line gives the retrieval date and the series' original title and unit as the publisher gave them. Our own titles, number formatting and rounding are not the publisher's.
+- For series fetched directly, the source line gives the date new data was last retrieved and the original unit (and, for the Bundesbank, the original title) as the publisher gave them. Our own titles, number formatting and rounding are not the publisher's.
 - Germany construction totals, unit conversions, year-on-year changes and Links are our own calculation and are marked as such.
 - The site shows only the latest published version of each series and keeps no revision history.
 - The Deutsche Bundesbank commercial property series are compiled from third-party data (bulwiengesa, vdp).

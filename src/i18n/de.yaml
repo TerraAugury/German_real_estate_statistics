@@ -4,8 +4,9 @@ lang.switch: English
 home.purpose: Offene Statistiken zum deutschen Gewerbeimmobilienmarkt; jede Grafik nennt Quelle und Lizenz.
 kpi.construction.title: Bautätigkeit (Genehmigungen, Fertigstellungen)
 source.line: "Quelle: {publisher}, DBnomics-Reihe {id} / Lizenz: {licence} / Daten bis {period}"
-source.line.direct: "Quelle: {publisher}, {service}, Reihe {id} / Lizenz: {licence} / Daten bis {period} / Abgerufen am {retrieved}"
+source.line.direct: "Quelle: {publisher}, {service}, Reihe {id} / Lizenz: {licence} / Daten bis {period} / Letzte neue Daten abgerufen am {retrieved}"
 source.original: "Originalreihe wie veröffentlicht: {title}; Einheit: {unit}"
+source.original.unit: "Originaleinheit wie veröffentlicht: {unit}"
 source.own: eigene Berechnung
 footer.text: Betrieben von Terra Augury Ltd.
 note.prefix: Hinweis

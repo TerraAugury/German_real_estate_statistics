@@ -35,7 +35,9 @@ export function t(lang: Lang, key: string, vars: Record<string, string> = {}): s
   return draft(out, nested || (lang === 'de' && unreviewed.has(key)));
 }
 
-export const locale = { en: 'en-GB', de: 'de-DE' } as const;
+const locale = { en: 'en-GB', de: 'de-DE' } as const;
+/** An ISO timestamp as a long UTC date: "3 November 2026". */
+export const day = (lang: Lang, iso: string) => new Intl.DateTimeFormat(locale[lang], { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(iso));
 // Page-locale number formatting: EN "1,234.5", DE "1.234,5".
 export const fmt = (lang: Lang, n: number, o: Intl.NumberFormatOptions = {}) => new Intl.NumberFormat(locale[lang], o).format(n);
 /** A period as shown (spec section 10): "2026-Q1" -> "Q1 2026" in both languages, "2026" as is, months through Intl. */
