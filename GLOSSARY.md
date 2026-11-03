@@ -33,6 +33,15 @@ _Avoid_: Headline (also the name of a KPI's lead view in code), result
 **Verdict**:
 The tag on an Insight's headline measure: "higher than", "lower than" or "in line with" the average of the whole shared period, judged against half a standard deviation. It says where the latest value sits against the past, never a cause or forecast.
 
+**Lead Insight**:
+The one Insight that Home opens with: the yield spread when it is public and shown, otherwise the first Insight that is shown. Home shows no lead when no Insight is shown.
+_Avoid_: Featured insight, hero (the hero is how Home draws it)
+
+**Citation line**:
+The short source line under a chart: publisher, licence and the date of the latest data, with a Provisional marker where the licence is not confirmed. The full lineage (series id, service, retrieval date, original series and unit) sits behind "Series details".
+_DE_: Quellenangabe
+_Avoid_: Source line (that is the full lineage), footnote
+
 **Lag**:
 The shift, in whole periods, between an economic indicator and a real estate KPI when a link is computed. Positive lag means the indicator moved earlier than the KPI. It describes timing of co-movement, never lead time for prediction.
 _DE_: Verschiebung (in Perioden)
