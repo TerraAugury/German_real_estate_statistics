@@ -3,8 +3,11 @@ nav.home: Startseite
 lang.switch: English
 home.purpose: Offene Statistiken zum deutschen Gewerbeimmobilienmarkt; jede Grafik nennt Quelle und Lizenz.
 kpi.construction.title: Bautätigkeit (Genehmigungen, Fertigstellungen)
-source.line: "Quelle: {publisher}, DBnomics-Reihe {id} / Lizenz: {licence} / Daten bis {period}"
-source.line.direct: "Quelle: {publisher}, {service}, Reihe {id} / Lizenz: {licence} / Daten bis {period} / Letzte neue Daten abgerufen am {retrieved}"
+source.cite: "Quelle: {publisher} / Lizenz: {licence} / Daten bis {period}"
+source.details: Angaben zur Reihe
+source.detail.dbnomics: "{publisher}, DBnomics-Reihe {id}"
+source.detail.direct: "{publisher}, {service}, Reihe {id} / Letzte neue Daten abgerufen am {retrieved}"
+source.chip.provisional: Vorläufig
 source.original: "Originalreihe wie veröffentlicht: {title}; Einheit: {unit}"
 source.original.unit: "Originaleinheit wie veröffentlicht: {unit}"
 source.own: eigene Berechnung

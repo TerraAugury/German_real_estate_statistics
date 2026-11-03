@@ -12,15 +12,34 @@ import type { InsightEntry } from './manifest';
 export const esc = (x: string) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const noteHtml = (ns: string[]) => ns.map((n) => `<p class="note">${esc(n)}</p>`).join('');
 
-/** Source line for one series, same wording as KPI charts. The id links the series on DBnomics, the licence our Sources & licences page. */
-export function sourceLine(s: Series, lang: Lang, own = false): string {
-  const vars = {
-    publisher: esc(s.publisher), id: `<a href="${esc(s.seriesUrl)}">${esc(s.seriesId)}</a>`,
-    licence: `<a href="${href('sources', lang)}">${esc(s.licence.name)}</a>`, period: period(lang, s.lastPeriod),
-  };
-  return (s.service ? t(lang, 'source.line.direct', { ...vars, service: s.service, retrieved: day(lang, s.retrievedAt) }) : t(lang, 'source.line', vars))
-    + (own || s.derived ? ` / ${t(lang, 'source.own')}` : '')
-    + (s.original ? `<br>${s.original.title ? t(lang, 'source.original', { title: esc(s.original.title), unit: esc(s.original.unit) }) : t(lang, 'source.original.unit', { unit: esc(s.original.unit) })}` : '');
+/** The caveat a provisional licence name carries; the status chip says it instead. */
+const UNCONFIRMED = / \(public reuse not confirmed\)$/;
+
+/** Short citation of one series: publisher, licence (our Sources and licences page) and data date, with a Provisional chip. */
+function citation(s: Series, lang: Lang, own: boolean): string {
+  const name = s.provisional ? s.licence.name.replace(UNCONFIRMED, '') : s.licence.name;
+  const chip = s.provisional ? ` <span class="chip">${t(lang, 'source.chip.provisional')}</span>` : '';
+  const line = t(lang, 'source.cite', { publisher: esc(s.publisher), licence: `<a href="${href('sources', lang)}">${esc(name)}</a>${chip}`, period: period(lang, s.lastPeriod) });
+  return `<span class="cite">${line}${own || s.derived ? ` / ${t(lang, 'source.own')}` : ''}</span>`;
+}
+
+/** Where one series came from: publisher and service, the id (links the series), retrieval date, and the original title and unit. */
+function lineage(s: Series, lang: Lang): string {
+  const id = `<a href="${esc(s.seriesUrl)}">${esc(s.seriesId)}</a>`;
+  const how = s.service
+    ? t(lang, 'source.detail.direct', { publisher: esc(s.publisher), service: s.service, id, retrieved: day(lang, s.retrievedAt) })
+    : t(lang, 'source.detail.dbnomics', { publisher: esc(s.publisher), id });
+  const original = s.original ? `<br>${s.original.title ? t(lang, 'source.original', { title: esc(s.original.title), unit: esc(s.original.unit) }) : t(lang, 'source.original.unit', { unit: esc(s.original.unit) })}` : '';
+  return `<span class="lineage-item"><strong>${esc(s.title[lang])}</strong><br>${how}${original}</span>`;
+}
+
+/**
+ * A plate's source footer, in two tiers: one short citation per series, then one closed disclosure with every
+ * series' lineage. A native <details>, so it works without JavaScript. `own` marks a series as our own calculation.
+ */
+export function sourceBlock(series: Series | Series[], lang: Lang, own = false): string {
+  const all = Array.isArray(series) ? series : [series];
+  return `${all.map((s) => citation(s, lang, own)).join('<br>')}<details class="lineage"><summary>${t(lang, 'source.details')}</summary>${all.map((s) => lineage(s, lang)).join('')}</details>`;
 }
 
 const GLYPH = { up: '▲', down: '▼', flat: '▬' };
@@ -45,7 +64,7 @@ export function latestBlock(s: Series, lang: Lang): string {
 
 /** Compact chart for Home cards and Segment pages: latest value, chart, stale and fetch-failed Notes, source line (spec section 9). */
 export const compactChart = (s: Series, lang: Lang) => latestBlock(s, lang) + lineChart(s, lang, 200)
-  + noteHtml(notesFor(s, lang, { on: 'compact' })) + `<figcaption>${sourceLine(s, lang)}</figcaption>`;
+  + noteHtml(notesFor(s, lang, { on: 'compact' })) + `<figcaption>${sourceBlock(s, lang)}</figcaption>`;
 
 /** Link panel HTML for one KPI x indicator pair. Pure given the result, so it tests without the Link module. */
 export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang, geography = t(lang, 'geo.germany'), id?: string): string {
@@ -65,7 +84,7 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
       + `<p>${t(lang, 'link.strongest', { n: String(N) })}</p>`
       + `<p>${t(lang, 'link.sentence', { period: t(lang, 'link.period', { from: period(lang, r.span[0]), to: period(lang, r.span[1]) }), n: String(r.headline.n) })}</p>`;
   }
-  return `<figure class="link-panel"${id ? ` id="${esc(id)}"` : ''}>${head}${noteHtml(notes)}${body}<figcaption>${sourceLine(kpi, lang, true)}<br>${sourceLine(ind, lang, true)}</figcaption></figure>`;
+  return `<figure class="link-panel"${id ? ` id="${esc(id)}"` : ''}>${head}${noteHtml(notes)}${body}<figcaption>${sourceBlock([kpi, ind], lang, true)}</figcaption></figure>`;
 }
 
 /** Compute (once per build) and render; the Link takes the KPI's frequency (spec section 6). */
@@ -100,5 +119,5 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
   return `<section class="insight" id="${esc(e.key)}">${head}`
     + `<p class="headline"><span class="num">${one(r.latest.value)}</span> <span class="unit">${t(lang, unitKey)}</span> <span class="tag ${r.verdict}">${t(lang, `insight.tag.${r.verdict}`)}</span></p>`
     + `<p>${reading}</p>`
-    + `<figure>${chart}${r.context ? `<p class="note">${t(lang, 'insight.context.legend', { measure: esc(e.measure[lang]), title: esc(reference.title[lang]) })}</p>` : ''}${multiples}${noteHtml(notes)}<figcaption>${series.map((x) => sourceLine(x, lang, true)).join('<br>')}<br><a href="${href('methodology', lang)}#${slug('insights', lang)}">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
+    + `<figure>${chart}${r.context ? `<p class="note">${t(lang, 'insight.context.legend', { measure: esc(e.measure[lang]), title: esc(reference.title[lang]) })}</p>` : ''}${multiples}${noteHtml(notes)}<figcaption>${sourceBlock(series, lang, true)}<br><a href="${href('methodology', lang)}#${slug('insights', lang)}">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
 }

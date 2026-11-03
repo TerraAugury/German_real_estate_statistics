@@ -3,8 +3,11 @@ nav.home: Home
 lang.switch: Deutsch
 home.purpose: Open statistics on German commercial real estate, with every chart naming its source and licence.
 kpi.construction.title: Construction (permits, completions)
-source.line: "Source: {publisher}, DBnomics series {id} / Licence: {licence} / Data to {period}"
-source.line.direct: "Source: {publisher}, {service}, series {id} / Licence: {licence} / Data to {period} / New data last retrieved {retrieved}"
+source.cite: "Source: {publisher} / Licence: {licence} / Data to {period}"
+source.details: Series details
+source.detail.dbnomics: "{publisher}, DBnomics series {id}"
+source.detail.direct: "{publisher}, {service}, series {id} / New data last retrieved {retrieved}"
+source.chip.provisional: Provisional
 source.original: "Original series as published: {title}; unit: {unit}"
 source.original.unit: "Original unit as published: {unit}"
 source.own: own calculation
