@@ -2,7 +2,7 @@
 # never declared here: it follows from its series (an Insight with any Provisional series is hidden in production).
 # `headline` names how the two series are compared; `growth: true` compares their year-on-year percent changes; `base`
 # rebases the lines behind the headline to that year = 100; `indexed` takes a ratio of two indices after rebasing;
-# `deflate` (flow or stock) deflates a `growth` headline by the reference price level; `shift` pairs the reference of year t - shift.
+# `deflate` (flow or stock) deflates a `growth` headline by the reference price level, or a `growth` spread by its `deflator` series; `shift` pairs the reference of year t - shift.
 # `better` is the direction that is better for an office investor (higher, lower, or none where it depends on whose side you take);
 # the verdict tag is coloured by it, never by the sign of the number.
 # The first `kpi` series against the first `reference` series is the headline.
@@ -65,16 +65,18 @@
     - { key: construction-price-office, role: reference }
 
 - key: i
-  title: { en: "Office rents vs GDP", de: "Büromieten und Wirtschaftsleistung" }
-  measure: { en: "spread of office rent growth over real GDP growth", de: "Abstand des Mietwachstums bei Büros zum Wachstum des realen BIP" }
+  title: { en: "Real office rents vs real GDP", de: "Reale Büromieten und reale Wirtschaftsleistung" }
+  measure: { en: "spread of real office rent growth over real GDP growth", de: "Abstand des realen Mietwachstums bei Büros zum Wachstum des realen BIP" }
   headline: spread
   better: higher
   growth: true
+  deflate: flow
   base: 2015
   template: spread
   series:
     - { key: rent-index-de-office-a, role: kpi }
     - { key: gdp-real, role: reference }
+    - { key: cpi, role: deflator }
 
 - key: c
   title: { en: "Office completions vs permits two years earlier", de: "Büro-Fertigstellungen und Baugenehmigungen zwei Jahre zuvor" }

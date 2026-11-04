@@ -44,6 +44,10 @@ function lines(a: Map<number, number>, b: Map<number, number>, years: number[], 
   return { kpi: scale(a), reference: scale(b), base: String(year) };
 }
 
+/** `levels` divided by the deflator's level of the same year (x 100), over the years both have: a real series, e.g. rents over the annual-average CPI. */
+const real = (levels: Map<number, number>, deflator: Map<number, number>) =>
+  new Map([...levels].filter(([y]) => deflator.has(y)).map(([y, v]) => [y, (v / deflator.get(y)!) * 100]));
+
 const shifted = (m: Map<number, number>, by = 0) => new Map([...m].map(([y, v]) => [y + by, v]));
 
 /** The lines of one more compared series, over the given years where both series have a value; rebased and shifted like the headline. */
@@ -73,6 +77,8 @@ export type InsightOptions = {
   also?: InsightSeries[];
   /** growth: deflate the KPI by the reference (a price level) first; flow uses its annual average, stock its December value. */
   deflate?: 'flow' | 'stock';
+  /** spread with growth: the price level the KPI is deflated by first (as for the growth headline), so a real KPI growth is compared with the reference. */
+  deflator?: InsightSeries;
 };
 
 /**
@@ -80,14 +86,14 @@ export type InsightOptions = {
  * ponytail: annual only. Every catalogued Insight runs at the coarsest frequency of its series, which is annual; add a quarterly target when one is declared.
  */
 export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opts: InsightOptions = {}): InsightResult {
-  const [la, lb] = [levels(kpi, 'A'), shifted(levels(reference, 'A'), opts.shift)];
+  const [nominal, lb] = [levels(kpi, 'A'), shifted(levels(reference, 'A'), opts.shift)];
   const head = opts.headline ?? 'spread';
+  const la = opts.deflator ? real(nominal, opts.deflate === 'stock' ? decemberLevels(opts.deflator) : levels(opts.deflator, 'A')) : nominal;
   const values = new Map<number, number>();
   let growth: Map<number, number> | undefined;
   if (head === 'growth') {
     const deflator = opts.deflate === 'stock' ? decemberLevels(reference) : lb;
-    const real = opts.deflate ? new Map([...la].filter(([y]) => deflator.has(y)).map(([y, v]) => [y, (v / deflator.get(y)!) * 100])) : la;
-    for (const [y, v] of changes(real, 'A', 'pct')) values.set(y, v);
+    for (const [y, v] of changes(opts.deflate ? real(la, deflator) : la, 'A', 'pct')) values.set(y, v);
   } else if (head === 'change') {
     growth = changes(lb, 'A', 'pct');
     for (const [y, v] of changes(la, 'A', 'diff')) if (growth.has(y)) values.set(y, v);
