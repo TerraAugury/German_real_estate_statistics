@@ -92,6 +92,8 @@ export interface InsightEntry {
   deflate?: (typeof DEFLATE)[number];
   /** Pair the reference of year t - shift with the KPI of year t; the label is `insight.shift.<shift>`. */
   shift?: number;
+  /** Caveats shown as Notes under the Insight's chart: interface string keys (`insight.note.<name>`), in order. */
+  notes?: string[];
   /** Reading template: `insight.template.<template>` in the interface strings. */
   template: string;
   /** The first KPI series against the first reference series is the headline; the order is the order shown. */
@@ -132,6 +134,7 @@ export function checkInsights(entries: InsightEntry[], known: { series: Set<stri
     if (e.base !== undefined && !Number.isInteger(e.base)) errs.push(`${e.key}: base must be a year`);
     if (e.deflate !== undefined && !DEFLATE.includes(e.deflate)) errs.push(`${e.key}: deflate must be one of ${DEFLATE}`);
     if (e.shift !== undefined && !(`insight.shift.${e.shift}` in en)) errs.push(`${e.key}: no i18n key insight.shift.${e.shift}`);
+    for (const k of e.notes ?? []) if (!(k in en)) errs.push(`${e.key}: no i18n key ${k}`);
     if (!(`insight.template.${e.template}` in en)) errs.push(`${e.key}: no i18n key insight.template.${e.template}`);
     for (const s of e.series) {
       if (!ROLES.includes(s.role)) errs.push(`${e.key}: role must be one of ${ROLES}`);
