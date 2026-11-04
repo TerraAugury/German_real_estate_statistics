@@ -17,6 +17,8 @@ export interface ManifestEntry {
   key: string; dbnomics_provider: string; dataset: string;
   /** Which fetcher serves the series; dbnomics unless the entry says otherwise. Bundesbank: dataset is the dataflow, ids[0] the series key. */
   source: (typeof SOURCE_KINDS)[number];
+  /** Leave out the years in which one of the summed parts has no value, instead of a partial total (sections, not Länder). */
+  complete_only?: boolean;
   /** Series id; `{land}` is replaced by each code in `laender` (Destatis Land series summed to Germany). */
   ids: string[]; laender: string[]; scale: number; change: 'pct' | 'diff';
   /** The original source credited by name next to the figures (vdpResearch GmbH, bulwiengesa AG): Bundesbank series made by a third party. */
@@ -158,7 +160,7 @@ export const SERVICE: Partial<Record<ManifestEntry['source'], string>> = { bunde
 
 /** Series id as shown on source lines: the Bundesbank's own id, or the DBnomics path. The 16 Länder collapse into one range unless one Land is asked for. */
 export const seriesId = (m: ManifestEntry, land?: string) => m.source === 'bundesbank' ? `${m.dataset}.${m.ids[0]}` : `${m.source === 'dbnomics' ? m.dbnomics_provider + '/' : ''}${m.dataset}/`
-  + m.ids[0].replace('{land}', land ?? (isDerived(m) ? `{${m.laender[0]}–${m.laender.at(-1)}}` : m.laender[0]));
+  + m.ids[0].replace('{land}', land ?? (isDerived(m) ? (m.complete_only ? `{${m.laender.join(', ')}}` : `{${m.laender[0]}–${m.laender.at(-1)}}`) : m.laender[0]));
 /** Where the series can be checked: the Bundesbank data URL, the GENESIS-Online page of the statistic (cubes have no page of their own), or its page on DBnomics (a sum of Länder has no single series, so it links the dataset). */
 export const seriesUrl = (m: ManifestEntry, land?: string) => m.source === 'destatis' ? `https://genesis.destatis.de/datenbank/online/statistic/${m.dataset.slice(0, 5)}` : m.source === 'bundesbank' ? `${BBK_API}/${m.dataset}/${m.ids[0]}?lang=en` : `https://db.nomics.world/${m.dbnomics_provider}/${m.dataset}`
   + (isDerived(m) && !land ? '' : `/${m.ids[0].replace('{land}', land ?? m.laender[0])}`);

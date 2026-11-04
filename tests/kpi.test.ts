@@ -117,3 +117,19 @@ it('periods: "Q1 2026" in both languages, annual as the year, months through Int
   expect(period('en', '2026-03')).toBe('March 2026');
   expect(period('de', '2026-03')).toBe('März 2026');
 });
+
+describe('office-employment: sections J + K-N summed from the committed snapshot', () => {
+  it('equals the sum of the two source series in every year, and leaves out a year where one has no value', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { getSeries } = await import('../src/lib/series');
+    const parts = Object.values(JSON.parse(readFileSync('data/snapshots/office-employment.json', 'utf8')).parts) as { period: string[]; value: (number | null)[] }[];
+    expect(parts).toHaveLength(2);
+    const s = getSeries('office-employment');
+    for (const o of s.obs) expect(o.value).toBe(parts.reduce((n, p) => n + p.value[p.period.indexOf(o.period)]!, 0));
+    for (const y of ['2000', '2015', '2024']) expect(s.obs.some((o) => o.period === y)).toBe(true);
+    const missing = parts.flatMap((p) => p.period.filter((y, i) => p.value[i] === null));
+    for (const y of missing) expect(s.obs.some((o) => o.period === y)).toBe(false);
+    expect(s.obs.some((o) => o.period === '1999')).toBe(false); // J has no value before 2000
+    expect(s.partial).toEqual([]);
+  });
+});
