@@ -133,3 +133,12 @@ describe('office-employment: sections J + K-N summed from the committed snapshot
     expect(s.partial).toEqual([]);
   });
 });
+
+describe('index-valued cards show their base year (ticket 9)', () => {
+  it('every KPI view series with an index unit names its base, in both languages', () => {
+    const units = new Map(loadAllManifest().map((m) => [m.key, m.unit]));
+    const index = KPIS.flatMap((k) => k.views.flatMap((v) => v.series.map((s) => s.key))).filter((key) => /^index/i.test(units.get(key)!.en));
+    expect(index.length).toBeGreaterThan(0);
+    for (const key of index) { expect(units.get(key)!.en).toMatch(/^index, \d{4}=100$/); expect(units.get(key)!.de.replace('[DRAFT] ', '')).toMatch(/^Index, \d{4}=100$/); }
+  });
+});

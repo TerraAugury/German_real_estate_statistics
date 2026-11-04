@@ -526,7 +526,7 @@
   provisional: false
   cleared: *permission
   title: { en: "Rent index (new lettings), office, Germany (annual)", de: "Mietindex (Neuvermietung), Büro, Deutschland (jährlich)" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2010=100", de: "Index, 2010=100" }
   frequency: annual
   change: pct
   expected_start: 2004
@@ -546,7 +546,7 @@
   provisional: false
   cleared: *permission
   title: { en: "Rent index (new lettings), office, Germany (quarterly)", de: "Mietindex (Neuvermietung), Büro, Deutschland (vierteljährlich)" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2010=100", de: "Index, 2010=100" }
   frequency: quarterly
   change: pct
   expected_start: 2010
@@ -566,7 +566,7 @@
   provisional: false
   cleared: *permission
   title: { en: "Rent index (new lettings), retail, Germany (annual)", de: "Mietindex (Neuvermietung), Einzelhandel, Deutschland (jährlich)" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2010=100", de: "Index, 2010=100" }
   frequency: annual
   change: pct
   expected_start: 2004
@@ -586,7 +586,7 @@
   provisional: false
   cleared: *permission
   title: { en: "Rent index (new lettings), retail, Germany (quarterly)", de: "Mietindex (Neuvermietung), Einzelhandel, Deutschland (vierteljährlich)" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2010=100", de: "Index, 2010=100" }
   frequency: quarterly
   change: pct
   expected_start: 2010
@@ -606,7 +606,7 @@
   provisional: false
   cleared: *permission
   title: { en: "Rent index (new lettings), office and retail combined, 127 towns", de: "Mietindex (Neuvermietung), Büro und Einzelhandel zusammen, 127 Städte" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2010=100", de: "Index, 2010=100" }
   frequency: annual
   change: pct
   expected_start: 1995
@@ -627,7 +627,7 @@
   provisional: false
   cleared: *permission
   title: { en: "Rent index (new lettings), office and retail combined, 120 towns", de: "Mietindex (Neuvermietung), Büro und Einzelhandel zusammen, 120 Städte" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2010=100", de: "Index, 2010=100" }
   frequency: annual
   change: pct
   expected_start: 1995
@@ -648,7 +648,7 @@
   provisional: false
   cleared: *permission
   title: { en: "Rent index (new lettings), office and retail combined, 7 major cities", de: "Mietindex (Neuvermietung), Büro und Einzelhandel zusammen, 7 Großstädte" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2010=100", de: "Index, 2010=100" }
   frequency: annual
   change: pct
   expected_start: 1995
@@ -795,7 +795,7 @@
   provisional: false
   cleared: *permission
   title: { en: "Transaction volume index, commercial overall, Germany", de: "Transaktionsvolumenindex, Gewerbe gesamt, Deutschland" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2010=100", de: "Index, 2010=100" }
   frequency: annual
   change: pct
   expected_start: 2007
@@ -815,7 +815,7 @@
   provisional: false
   cleared: *permission
   title: { en: "Transaction volume index, commercial overall, 127 administrative districts", de: "Transaktionsvolumenindex, Gewerbe gesamt, 127 Kreise" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2010=100", de: "Index, 2010=100" }
   frequency: annual
   change: pct
   expected_start: 2007
@@ -836,7 +836,7 @@
   provisional: false
   cleared: *permission
   title: { en: "Transaction volume index, commercial overall, 7 major cities", de: "Transaktionsvolumenindex, Gewerbe gesamt, 7 Großstädte" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2010=100", de: "Index, 2010=100" }
   frequency: annual
   change: pct
   expected_start: 2007
