@@ -1,7 +1,7 @@
 ---
-en_hash: 0e049a868df78cff
+en_hash: 71f905c7abb96783
 reviewed_by: Olivier
-reviewed_on: 2026-11-03
+reviewed_on: 2026-11-04
 ---
 Diese Seite stellt öffentliche Statistiken zum deutschen Gewerbeimmobilienmarkt zusammen mit ausgewählten Wirtschaftsindikatoren dar. So lässt sich sehen, wie sie sich im Zeitverlauf und gemeinsam entwickelt haben.
 
