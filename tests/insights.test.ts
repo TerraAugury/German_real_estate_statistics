@@ -217,7 +217,7 @@ describe('Insights G and B (cleared)', () => {
   it('B: real office rent growth, deflated as a flow by the annual-average CPI, 2005 to 2025', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
     const b = insightsPage().find((i) => i.entry.key === 'b')!;
-    expect(b.entry).toMatchObject({ headline: 'growth', deflate: 'flow', base: 2015 });
+    expect(b.entry).toMatchObject({ headline: 'growth', deflate: 'flow' });
     expect(b.entry.series.map((s) => s.key)).toEqual(['rent-index-de-office-a', 'cpi']);
     spans(b.result, '2005', 21);
     const h = renderInsight(b.entry, b.result, b.series, 'en');
@@ -336,5 +336,31 @@ describe('Rates are never rebased (ticket 4)', () => {
     const h = renderInsight(m.entry, m.result, m.series, 'en');
     expect(h).toContain('Blue line, left axis');
     expect(h).toContain('index, 2015 = 100');
+  });
+});
+
+describe('Growth Insights draw year-on-year growth lines (ticket 5)', () => {
+  it.each([['d', 0], ['i', 0], ['j', 0]])('%s: the gap between the two lines in the latest year is the headline number', (key) => {
+    process.env.INCLUDE_PROVISIONAL = '1';
+    const x = insightsPage().find((i) => i.entry.key === key)!;
+    if (!x.result.shown) throw new Error('not shown');
+    const { lines, latest } = x.result;
+    expect(lines.growth).toBe(true);
+    expect(lines.base).toBeUndefined();
+    expect(lines.kpi.at(-1)!.value - lines.reference.at(-1)!.value).toBeCloseTo(latest.value, 9);
+    expect(renderInsight(x.entry, x.result, x.series, 'en')).toContain('year-on-year change, %');
+  });
+  it('b: nominal rent growth against CPI inflation, within a few tenths of the real growth headline, with the note in both languages', () => {
+    process.env.INCLUDE_PROVISIONAL = '1';
+    const b = insightsPage().find((i) => i.entry.key === 'b')!;
+    if (!b.result.shown) throw new Error('not shown');
+    expect(Math.abs(b.result.lines.kpi.at(-1)!.value - b.result.lines.reference.at(-1)!.value - b.result.latest.value)).toBeLessThan(0.5);
+    expect(renderInsight(b.entry, b.result, b.series, 'en')).toContain('Real growth = (1 + rent growth) / (1 + inflation) − 1, so it differs slightly from the gap between the two lines.');
+    expect(renderInsight(b.entry, b.result, b.series, 'de')).toContain('Reales Wachstum = (1 + Mietwachstum) / (1 + Inflation) − 1');
+    const d = insightsPage().find((i) => i.entry.key === 'd')!;
+    expect(renderInsight(d.entry, d.result, d.series, 'en')).not.toContain('Real growth =');
+  });
+  it('the remaining level charts (G, C) are still rebased', () => {
+    for (const k of ['g', 'c']) { const x = insightsPage().find((i) => i.entry.key === k)!; if (x.result.shown) expect(x.result.lines.base).toBe('2015'); }
   });
 });
