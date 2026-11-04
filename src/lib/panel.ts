@@ -136,7 +136,8 @@ function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, no
   const reading = t(lang, `insight.template.${e.template}`, {
     measure: esc(e.measure[lang]), latest: one(r.latest.value), verdict: t(lang, `insight.verdict.${r.verdict}`), from: r.from, to: r.to, mean: one(r.mean), emp: r.context ? one(r.context.at(-1)!.value) : '',
   });
-  const notes = notesFor(series[0], lang, { on: 'insight', rest: series.slice(1), short: r.short ? { from: r.from, to: r.to, n: r.n } : undefined }, now);
+  const notes = [...notesFor(series[0], lang, { on: 'insight', rest: series.slice(1), short: r.short ? { from: r.from, to: r.to, n: r.n } : undefined }, now),
+    ...(e.notes ?? []).map((k) => `${t(lang, 'note.prefix')}: ${t(lang, k)}`)];
   const chart = insightChart(r, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(r.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
   const reference = series[e.series.findIndex((x) => x.role === 'reference')];
   return {
@@ -176,6 +177,7 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
     return `<div class="multiples"><h3>${t(lang, 'insight.multiples.title', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</h3>`
       + chart
       + `<p class="note">${t(lang, dual[i] ? 'insight.multiples.legend_dual' : growth ? (e.series.some((x) => x.role === 'deflator') ? 'insight.multiples.legend_growth_real' : 'insight.multiples.legend_growth') : 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p>`
+      + (!dual[i] && !growth && all[i].base ? `<p class="note">${t(lang, 'insight.multiples.base_note', { year: all[i].base! })}</p>` : '')
       + (growth && e.headline === 'growth' ? `<p class="note">${t(lang, 'insight.multiples.real_growth')}</p>` : '') + '</div>';
   }).join('');
   return `<section class="insight${plate && ` ${plate}`}" id="${esc(e.key)}">${head}`

@@ -5,7 +5,7 @@
 # except series in % (never rebased); `indexed` takes a ratio of two indices after rebasing;
 # `deflate` (flow or stock) deflates a `growth` headline by the reference price level, or a `growth` spread by its `deflator` series; `shift` pairs the reference of year t - shift.
 # `better` is the direction that is better for an office investor (higher, lower, or none where it depends on whose side you take);
-# the verdict tag is coloured by it, never by the sign of the number.
+# the verdict tag is coloured by it, never by the sign of the number. `notes` lists interface string keys shown as Notes under the chart.
 # The first `kpi` series against the first `reference` series is the headline.
 
 - key: a
@@ -24,6 +24,7 @@
   measure: { en: "spread of the 7-city initial yield over the corporate loan rate", de: "Abstand der Anfangsrendite in den 7 Großstädten zum Unternehmenskreditzins" }
   headline: spread
   better: higher
+  notes: [insight.note.near_zero_rates]
   template: spread
   series:
     - { key: initial-yield-combined-7, role: kpi }
@@ -36,6 +37,7 @@
   better: none
   indexed: true
   base: 2015
+  notes: [insight.note.near_zero_rates, insight.note.price_yield_coverage]
   template: price-rent
   series:
     - { key: price-index-de-office-a, role: kpi }

@@ -364,3 +364,36 @@ describe('Growth Insights draw year-on-year growth lines (ticket 5)', () => {
     for (const k of ['g', 'c']) { const x = insightsPage().find((i) => i.entry.key === k)!; if (x.result.shown) expect(x.result.lines.base).toBe('2015'); }
   });
 });
+
+describe('Base-year note on rebased level charts (ticket 6)', () => {
+  it('appears on every chart that still shows two rebased levels, and on no other', () => {
+    process.env.INCLUDE_PROVISIONAL = '1';
+    const withNote: string[] = [];
+    for (const x of insightsPage()) {
+      if (!x.result.shown) continue;
+      const en = renderInsight(x.entry, x.result, x.series, 'en'), de = renderInsight(x.entry, x.result, x.series, 'de');
+      const has = en.includes('Both series set to 2015 = 100; the size of the gap depends on this choice.');
+      if (has) { withNote.push(x.entry.key); expect(de).toContain('Beide Reihen auf 2015 = 100 gesetzt; die Größe des Abstands hängt von dieser Wahl ab.'); }
+      else expect(de).not.toContain('Beide Reihen auf');
+      const rebasedLevels = !!x.result.lines.base && !x.result.lines.growth && x.result.lines.rebased?.kpi !== false && x.result.lines.rebased?.reference !== false;
+      expect(has).toBe(rebasedLevels);
+    }
+    expect(withNote.sort()).toEqual(['c', 'g']);
+  });
+});
+
+describe('Insight notes (tickets 7 and 8)', () => {
+  const NEAR_ZERO = 'The period is dominated by near-zero interest rates (to 2022); its average may not reflect normal conditions.';
+  const COVERAGE = 'Prices and rents are vdp series covering offices across Germany. The initial yields elsewhere on this site are bulwiengesa series for office and retail core properties in the 7 major cities, so they are not directly comparable.';
+  it('near-zero note on F and G only, coverage note on G only, in both languages', () => {
+    process.env.INCLUDE_PROVISIONAL = '1';
+    for (const x of insightsPage()) {
+      if (!x.result.shown) continue;
+      const [en, de] = (['en', 'de'] as const).map((l) => renderInsight(x.entry, x.result, x.series, l));
+      expect(en.includes(NEAR_ZERO)).toBe(['f', 'g'].includes(x.entry.key));
+      expect(de.includes('Der Zeitraum ist von Nullzinsen geprägt')).toBe(['f', 'g'].includes(x.entry.key));
+      expect(en.includes(COVERAGE)).toBe(x.entry.key === 'g');
+      expect(de.includes('Preise und Mieten sind vdp-Reihen')).toBe(x.entry.key === 'g');
+    }
+  });
+});
