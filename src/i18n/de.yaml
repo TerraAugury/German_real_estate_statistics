@@ -142,7 +142,7 @@ links.legend: "Farbe: ocker bedeutet, dass beide eher gemeinsam stiegen und fiel
 links.cell.not_shown: "Nicht angezeigt (n = {n})"
 indicator.bund-yield-10y: Rendite zehnjähriger Bundesanleihen
 indicator.euribor-3m: Euribor 3 Monate
-indicator.loan-rate-nfc: Kreditzins, nichtfinanzielle Unternehmen
+indicator.loan-rate-nfc: Kreditzins, nichtfinanzielle Unternehmen, Zinsbindung über 5 Jahre
 indicator.cpi: Verbraucherpreisindex
 indicator.gdp-real: Reales BIP
 indicator.unemployment-rate: Arbeitslosenquote

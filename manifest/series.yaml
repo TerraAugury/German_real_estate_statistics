@@ -964,17 +964,17 @@
   dbnomics_provider: BUBA
   source: bundesbank
   dataset: BBIM1
-  ids: ["M.DE.B.A2A.D.R.1.2240.EUR.N"]
+  ids: ["M.DE.B.A2A.J.R.1.2240.EUR.N"]
   publisher: *bbk_publisher
   licence: *bbk_licence
   attribution: *bbk_attribution
   provisional: false
   cleared: *permission
-  title: { en: "New-business loan rate, non-financial corporations, over EUR 1m", de: "Kreditzins Neugeschäft, nichtfinanzielle Kapitalgesellschaften, über 1 Mio. EUR" }
+  title: { en: "New-business loan rate, non-financial corporations, over EUR 1m, fixation over 5 years", de: "Kreditzins Neugeschäft, nichtfinanzielle Kapitalgesellschaften, über 1 Mio. EUR, Zinsbindung über 5 Jahre" }
   unit: { en: "% p.a.", de: "% p. a." }
   frequency: monthly
   change: diff
-  expected_start: 2010
+  expected_start: 2003
   seasonal_adjustment: nsa
   resampling: mean
   short_window: false

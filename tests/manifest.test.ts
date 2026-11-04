@@ -38,7 +38,7 @@ describe('manifest content (spec sections 3, 4, 5)', () => {
   it('covers the economic indicators with spec ids and start years', () => {
     const want: [string, string, number][] = [
       ['bund-yield-10y', 'M.I.ZAR.ZI.EUR.S1311.B.A604.R10XX.R.A.A._Z._Z.A', 1972], ['euribor-3m', 'M.U2.EUR.RT.MM.EURIBOR3MD_.HSTA', 1994],
-      ['loan-rate-nfc', 'M.DE.B.A2A.D.R.1.2240.EUR.N', 2010], ['cpi', 'DG.PREIS1', 1991], ['gdp-real', 'Q.DE.N.H.0000.L', 1970],
+      ['loan-rate-nfc', 'M.DE.B.A2A.J.R.1.2240.EUR.N', 2003], ['cpi', 'DG.PREIS1', 1991], ['gdp-real', 'Q.DE.N.H.0000.L', 1970],
       ['unemployment-rate', 'M.DE.Y.UNE.UBA000.A0000.A01.D00.0.R00.A', 1991],
       ['construction-price-office', 'DG.BAULEISTBW.BPNG1.STEMW1.PRE002', 1958], ['construction-price-commercial', 'DG.BAULEISTBW.BPNG2.STEMW1.PRE002', 1958],
       ['oecd-confidence-construction', 'DEU.M.BCICP.PB.F.Y._Z._Z.N', 1985], ['oecd-confidence-retail', 'DEU.M.BCICP.PB.G47.Y._Z._Z.N', 1985]];
