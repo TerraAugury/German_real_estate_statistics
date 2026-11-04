@@ -142,7 +142,7 @@ links.legend: "Colour: ochre means the two tended to rise and fall together; blu
 links.cell.not_shown: "Not shown (n = {n})"
 indicator.bund-yield-10y: 10-year Bund yield
 indicator.euribor-3m: Euribor 3 months
-indicator.loan-rate-nfc: Loan rate, non-financial corporations
+indicator.loan-rate-nfc: Loan rate, non-financial corporations, fixation over 5 years
 indicator.cpi: Consumer price index
 indicator.gdp-real: Real GDP
 indicator.unemployment-rate: Unemployment rate

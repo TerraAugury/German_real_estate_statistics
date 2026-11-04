@@ -172,7 +172,7 @@ describe('Insight A on real data (cleared)', () => {
 describe('Spread Insights F, E, D and I (cleared)', () => {
   // Shared periods from the catalogue (insights spec section 2); growth Insights lose the first year of the levels.
   it.each([
-    ['f', 'initial-yield-combined-7', 'loan-rate-nfc', '2011', '2025', 15],
+    ['f', 'initial-yield-combined-7', 'loan-rate-nfc', '2003', '2025', 23],
     ['e', 'office-vacancy-7', 'office-vacancy-127', '1995', '2025', 31],
     ['d', 'rent-index-de-office-a', 'construction-price-office', '2005', '2025', 21],
     ['i', 'rent-index-de-office-a', 'gdp-real', '2005', '2025', 21],

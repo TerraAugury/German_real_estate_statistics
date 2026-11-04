@@ -29,7 +29,7 @@ Each Link has three parts:
 
 1. 10-year Bund yield (Deutsche Bundesbank), monthly.
 2. Euribor 3 months, monthly average (European Central Bank), standing in for the ECB policy rate.
-3. Interest rate on new loans to non-financial corporations over EUR 1 million (Deutsche Bundesbank), monthly.
+3. Interest rate on new loans to non-financial corporations over EUR 1 million with an initial rate fixation of over 5 years (Deutsche Bundesbank), monthly. Commercial property is mostly financed at long fixed rates, so we use the long-fixation bucket, not the floating rate.
 4. Consumer price index (Destatis), monthly.
 5. Real GDP (Deutsche Bundesbank), quarterly.
 6. Registered unemployment rate (Deutsche Bundesbank), monthly.

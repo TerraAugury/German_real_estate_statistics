@@ -34,7 +34,7 @@ Jede Verknüpfung hat drei Teile:
 
 1. Rendite zehnjähriger Bundesanleihen (Deutsche Bundesbank), monatlich.
 2. Euribor 3 Monate, Monatsdurchschnitt (Europäische Zentralbank), stellvertretend für den Leitzins der EZB.
-3. Zinssatz für neue Kredite an nichtfinanzielle Unternehmen über 1 Mio. Euro (Deutsche Bundesbank), monatlich.
+3. Zinssatz für neue Kredite an nichtfinanzielle Unternehmen über 1 Mio. Euro mit anfänglicher Zinsbindung von über 5 Jahren (Deutsche Bundesbank), monatlich. Gewerbeimmobilien werden meist mit langen Festzinsen finanziert, daher nehmen wir die Laufzeitklasse mit langer Zinsbindung und nicht den variablen Zins.
 4. Verbraucherpreisindex (Destatis), monatlich.
 5. Reales Bruttoinlandsprodukt (Deutsche Bundesbank), vierteljährlich.
 6. Registrierte Arbeitslosenquote (Deutsche Bundesbank), monatlich.
