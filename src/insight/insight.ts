@@ -10,7 +10,9 @@ export type Headline = 'spread' | 'ratio' | 'growth' | 'change';
 export type Verdict = 'higher' | 'lower' | 'in_line';
 export type Better = 'higher' | 'lower' | 'none';
 export type Tone = 'better' | 'worse' | 'neutral';
-export type InsightSeries = Pick<LinkSeries, 'freq' | 'obs'>;
+export type InsightSeries = Pick<LinkSeries, 'freq' | 'obs'> & { unit?: { en: string } };
+/** A rate or percentage (unit "%", "% p.a.", "% balance"): never rebased to an index, always shown in its own unit. */
+export const isRate = (s: InsightSeries) => s.unit?.en.startsWith('%') ?? false;
 export type Points = { period: string; value: number }[];
 export type InsightResult =
   | { shown: false; n: number; reason: 'too_few' }
@@ -19,7 +21,7 @@ export type InsightResult =
       /** change: the reference's year-on-year percent growth over the same years, shown beside the headline and never given a verdict. */
       context?: Points;
       /** The two series over the headline period, rebased when a base year was asked for (`base` is the year actually used). */
-      lines: { kpi: Points; reference: Points; base?: string } };
+      lines: { kpi: Points; reference: Points; base?: string; /** Which line is an index: a rate stays in its own unit, so a chart with one of each needs two axes. */ rebased?: { kpi: boolean; reference: boolean } } };
 
 /** In line when the latest value is within half a standard deviation of the mean (boundary included); a zero deviation reads in line. */
 export function verdict(latest: number, mean: number, sd: number): Verdict {
@@ -35,13 +37,14 @@ export const tone = (v: Verdict, better: Better): Tone => (v === 'in_line' || be
 
 /**
  * Both series over `years`, each divided by its value in the base year and scaled to 100. The base year is `base` when
- * both series have a value then, else the first of `years`, so the two lines always meet at 100 in one year.
+ * both series have a value then, else the first of `years`, so the two lines always meet at 100 in one year. A rate (`rate`) is
+ * never rebased and stays in its own unit; two rates are not rebased at all.
  */
-function lines(a: Map<number, number>, b: Map<number, number>, years: number[], base?: number) {
-  if (base === undefined) return { kpi: years.map((y) => ({ period: String(y), value: a.get(y)! })), reference: years.map((y) => ({ period: String(y), value: b.get(y)! })) };
+function lines(a: Map<number, number>, b: Map<number, number>, years: number[], base?: number, rate = { kpi: false, reference: false }) {
+  if (base === undefined || (rate.kpi && rate.reference)) return { kpi: years.map((y) => ({ period: String(y), value: a.get(y)! })), reference: years.map((y) => ({ period: String(y), value: b.get(y)! })) };
   const year = years.includes(base) ? base : years[0];
-  const scale = (m: Map<number, number>) => years.map((y) => ({ period: String(y), value: (m.get(y)! / m.get(year)!) * 100 }));
-  return { kpi: scale(a), reference: scale(b), base: String(year) };
+  const scale = (m: Map<number, number>, isRated: boolean) => years.map((y) => ({ period: String(y), value: isRated ? m.get(y)! : (m.get(y)! / m.get(year)!) * 100 }));
+  return { kpi: scale(a, rate.kpi), reference: scale(b, rate.reference), base: String(year), rebased: { kpi: !rate.kpi, reference: !rate.reference } };
 }
 
 /** `levels` divided by the deflator's level of the same year (x 100), over the years both have: a real series, e.g. rents over the annual-average CPI. */
@@ -53,7 +56,7 @@ const shifted = (m: Map<number, number>, by = 0) => new Map([...m].map(([y, v]) 
 /** The lines of one more compared series, over the given years where both series have a value; rebased and shifted like the headline. */
 export function compareLines(kpi: InsightSeries, reference: InsightSeries, years: string[], opts: { base?: number; shift?: number }) {
   const [a, b] = [levels(kpi, 'A'), shifted(levels(reference, 'A'), opts.shift)];
-  return lines(a, b, years.map(Number).filter((y) => a.has(y) && b.has(y)), opts.base);
+  return lines(a, b, years.map(Number).filter((y) => a.has(y) && b.has(y)), opts.base, { kpi: isRate(kpi), reference: isRate(reference) });
 }
 
 /** The value of the December observation of each year (a stock, as at year end); a year without one has no value. */
@@ -104,7 +107,7 @@ export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opt
   const more = (opts.also ?? []).map((x) => (opts.growth || head === 'growth' ? changes(levels(x, 'A'), 'A', 'pct') : levels(x, 'A')));
   const years = [...values.keys()].filter((y) => more.every((m) => m.has(y))).sort((x, y) => x - y);
   if (years.length < MIN_OBS) return { shown: false, n: years.length, reason: 'too_few' };
-  const ln = lines(la, lb, years, opts.base);
+  const ln = lines(la, lb, years, opts.base, { kpi: isRate(kpi), reference: isRate(reference) });
   const points = years.map((y, i) => ({ period: String(y), value: opts.indexed ? ln.kpi[i].value / ln.reference[i].value : values.get(y)! }));
   const latest = points.at(-1)!;
   const mean = points.reduce((sum, p) => sum + p.value, 0) / points.length;

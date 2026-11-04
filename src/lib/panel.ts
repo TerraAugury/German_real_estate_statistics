@@ -164,12 +164,17 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
   // The headline's lines are the first KPI series'; every other KPI series gets its own small chart over the same years.
   const years = r.points.map((p) => p.period);
   const all = kpis.map((k, i) => (i === 0 ? r.lines : compareLines(k, reference, years, e)));
-  const domain = sharedDomain(all);
+  // A chart that mixes a rate (own unit) with an index needs two axes, as on the Links; the rest share one domain.
+  const dual = all.map((l) => !!l.rebased && l.rebased.kpi !== l.rebased.reference);
+  const domain = sharedDomain(all.filter((_, i) => !dual[i]));
   const multiples = kpis.map((kpi, i) => {
-    const unit = all[i].base ? t(lang, 'insight.axis.rebased', { year: all[i].base! }) : kpi.unit[lang];
+    const rebased = all[i].base ? t(lang, 'insight.axis.rebased', { year: all[i].base! }) : '';
+    const title = t(lang, 'insight.multiples.label', { kpi: kpi.title[lang], reference: refTitle });
+    const [kpiUnit, refUnit] = dual[i] ? [all[i].rebased!.kpi ? rebased : kpi.unit[lang], all[i].rebased!.reference ? rebased : reference.unit[lang]] : [all[i].base ? rebased : kpi.unit[lang], ''];
+    const chart = dual[i] ? overlayChart(all[i].kpi, all[i].reference, { kpiUnit, indicatorUnit: refUnit, title }, lang) : multiplesChart(all[i], { unit: kpiUnit, title }, domain, lang);
     return `<div class="multiples"><h3>${t(lang, 'insight.multiples.title', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</h3>`
-      + multiplesChart(all[i], { unit, title: t(lang, 'insight.multiples.label', { kpi: kpi.title[lang], reference: refTitle }) }, domain, lang)
-      + `<p class="note">${t(lang, 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p></div>`;
+      + chart
+      + `<p class="note">${t(lang, dual[i] ? 'insight.multiples.legend_dual' : 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p></div>`;
   }).join('');
   return `<section class="insight${plate && ` ${plate}`}" id="${esc(e.key)}">${head}`
     + headlineHtml
