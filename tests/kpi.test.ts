@@ -142,3 +142,20 @@ describe('index-valued cards show their base year (ticket 9)', () => {
     for (const key of index) { expect(units.get(key)!.en).toMatch(/^index, \d{4}=100$/); expect(units.get(key)!.de.replace('[DRAFT] ', '')).toMatch(/^Index, \d{4}=100$/); }
   });
 });
+
+describe('every index-unit series carries its base year (ticket 9)', () => {
+  it('names a base in both languages, equal to the base the source publishes', async () => {
+    const { readFileSync, existsSync } = await import('node:fs');
+    const covered: string[] = [];
+    for (const m of loadAllManifest()) {
+      if (!/^index/i.test(m.unit.en)) continue;
+      expect(m.unit.en, m.key).toMatch(/^index, \d{4}=100$/);
+      expect(m.unit.de.replace('[DRAFT] ', ''), m.key).toMatch(/^Index, \d{4}=100$/);
+      const file = `data/snapshots/${m.key}.json`;
+      if (existsSync(file)) for (const part of Object.values(JSON.parse(readFileSync(file, 'utf8')).parts) as { meta?: { unit?: string } }[]) expect(part.meta?.unit, m.key).toBe(m.unit.en.replace('index, ', ''));
+      covered.push(`${m.key} (${m.unit.en})`);
+    }
+    console.log(`index-unit series covered (${covered.length}):\n${covered.join('\n')}`);
+    expect(covered.length).toBeGreaterThan(0);
+  });
+});

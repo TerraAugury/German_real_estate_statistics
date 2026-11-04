@@ -989,7 +989,7 @@
   attribution: *destatis_attribution
   provisional: false
   title: { en: "Consumer price index, Germany", de: "Verbraucherpreisindex, Deutschland" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2020=100", de: "Index, 2020=100" }
   frequency: monthly
   change: pct
   expected_start: 1991
@@ -1008,7 +1008,7 @@
   provisional: false
   cleared: *permission
   title: { en: "Real GDP, Germany", de: "Reales Bruttoinlandsprodukt, Deutschland" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2020=100", de: "Index, 2020=100" }
   frequency: quarterly
   change: pct
   expected_start: 1970
@@ -1045,7 +1045,7 @@
   attribution: *destatis_attribution
   provisional: false
   title: { en: "Construction price index, office buildings", de: "Baupreisindex, Bürogebäude" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2021=100", de: "Index, 2021=100" }
   frequency: quarterly
   change: pct
   expected_start: 1958
@@ -1063,7 +1063,7 @@
   attribution: *destatis_attribution
   provisional: false
   title: { en: "Construction price index, industrial and commercial buildings", de: "Baupreisindex, gewerbliche Betriebsgebäude" }
-  unit: { en: "index", de: "Index" }
+  unit: { en: "index, 2021=100", de: "Index, 2021=100" }
   frequency: quarterly
   change: pct
   expected_start: 1958
