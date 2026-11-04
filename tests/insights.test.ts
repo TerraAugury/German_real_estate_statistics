@@ -315,3 +315,26 @@ describe('Insight rendering', () => {
     });
   });
 });
+
+describe('Rates are never rebased (ticket 4)', () => {
+  it('no Insight line of a % series is rebased; M draws vacancy in %, employment as an index, on two axes', () => {
+    process.env.INCLUDE_PROVISIONAL = '1';
+    for (const m of insightsPage()) {
+      if (!m.result.shown) continue;
+      const [kpi, reference] = ['kpi', 'reference'].map((role) => m.series[m.entry.series.findIndex((s) => s.role === role)]);
+      for (const [side, s] of [['kpi', kpi], ['reference', reference]] as const) {
+        if (!s.unit.en.startsWith('%')) continue;
+        const raw = new Map(s.obs.map((o) => [o.period.slice(0, 4), o.value]));
+        for (const p of m.result.lines[side]) if (s.freq === 'A') expect(p.value).toBe(raw.get(p.period));
+      }
+    }
+    const m = insightsPage().find((i) => i.entry.key === 'm')!;
+    if (!m.result.shown) throw new Error('M not shown');
+    expect(m.result.lines.rebased).toEqual({ kpi: false, reference: true });
+    expect(m.result.lines.reference.find((p) => p.period === '2015')!.value).toBeCloseTo(100, 9);
+    expect(m.result.lines.kpi.find((p) => p.period === '2015')!.value).not.toBeCloseTo(100, 0);
+    const h = renderInsight(m.entry, m.result, m.series, 'en');
+    expect(h).toContain('Blue line, left axis');
+    expect(h).toContain('index, 2015 = 100');
+  });
+});

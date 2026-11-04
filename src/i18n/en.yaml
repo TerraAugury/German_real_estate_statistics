@@ -174,6 +174,7 @@ insight.axis.rebased: "index, {year} = 100"
 insight.multiples.title: "{kpi} against {reference}"
 insight.multiples.label: "{kpi} and {reference}, rebased"
 insight.multiples.legend: "Blue line: {kpi}. Ochre line: {reference}. The shading is blue where the blue line is above the ochre line and red where it is below."
+insight.multiples.legend_dual: "Blue line, left axis: {kpi}. Ochre line, right axis: {reference}. The axes have different units, so the lines are not compared by height."
 insight.template.completions-permits: "Completions were {latest} times the permits issued two years earlier, {verdict} the {from}-{to} average of {mean}."
 insight.unit.ratio: times
 insight.shift.2: two years earlier
