@@ -68,7 +68,7 @@ export const reviewStrings = () => ({ ...loadStrings('en'), ...manifestStrings(l
 // Insights (spec insights section 7): hand-written in manifest/insights.yaml, one entry per curated chart, in page order.
 export const HEADLINES = ['spread', 'ratio', 'growth', 'change'] as const;
 export const DEFLATE = ['flow', 'stock'] as const;
-export const ROLES = ['kpi', 'reference'] as const;
+export const ROLES = ['kpi', 'reference', 'deflator'] as const;
 export const BETTER = ['higher', 'lower', 'none'] as const;
 const INSIGHT_TEXT = ['title', 'measure'] as const;
 
@@ -86,7 +86,7 @@ export interface InsightEntry {
   base?: number;
   /** Ratio of two index series: take it after rebasing both to `base`. */
   indexed?: boolean;
-  /** growth: deflate the KPI by the reference price level; `flow` uses its annual average (rents), `stock` its December value (prices). */
+  /** growth: deflate the KPI by the reference price level (or, for a spread, by the `deflator` series); `flow` uses its annual average (rents), `stock` its December value (prices). */
   deflate?: (typeof DEFLATE)[number];
   /** Pair the reference of year t - shift with the KPI of year t; the label is `insight.shift.<shift>`. */
   shift?: number;

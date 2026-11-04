@@ -33,8 +33,8 @@ export interface InsightModel { entry: InsightEntry; series: Series[]; result: I
 /** The visible Insights in page order, each with its result. */
 export const insightsPage = (): InsightModel[] => visibleInsights(loadInsights()).map((entry) => {
   const series = entry.series.map((s) => getSeries(s.key));
-  const [kpi, reference] = (['kpi', 'reference'] as const).map((role) => series[entry.series.findIndex((s) => s.role === role)]);
-  return { entry, series, result: computeInsight(kpi, reference, { ...entry, also: series.filter((x, i) => entry.series[i].role === 'kpi' && x !== kpi) }) };
+  const [kpi, reference, deflator] = (['kpi', 'reference', 'deflator'] as const).map((role) => series[entry.series.findIndex((s) => s.role === role)]);
+  return { entry, series, result: computeInsight(kpi, reference, { ...entry, deflator, also: series.filter((x, i) => entry.series[i].role === 'kpi' && x !== kpi) }) };
 });
 
 /** The visible Insights whose Real estate KPI series belong to a KPI page, in page order. */

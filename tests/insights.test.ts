@@ -1,3 +1,4 @@
+import { changes, levels } from '../src/link/link';
 import { afterEach, describe, expect, it } from 'vitest';
 import { checkInsights, loadAllManifest, loadManifest, type InsightEntry } from '../src/lib/manifest';
 import { loadStrings } from '../src/lib/i18n';
@@ -178,12 +179,28 @@ describe('Spread Insights F, E, D and I (cleared)', () => {
   ])('%s: %s against %s over %s to %s', (key, kpi, reference, from, to, n) => {
     process.env.INCLUDE_PROVISIONAL = '1';
     const x = insightsPage().find((i) => i.entry.key === key)!;
-    expect(x.entry.series).toEqual([{ key: kpi, role: 'kpi' }, { key: reference, role: 'reference' }]);
+    expect(x.entry.series.slice(0, 2)).toEqual([{ key: kpi, role: 'kpi' }, { key: reference, role: 'reference' }]);
     expect(x.entry.headline).toBe('spread');
     spans(x.result, from, n);
     const h = renderInsight(x.entry, x.result, x.series, 'en');
     expect(h).toContain(`id="${key}"`);
     expect(h).toMatch(/The latest spread of [^.]+ is -?[\d.]+ points, (higher than|lower than|in line with) the/);
+  });
+});
+
+describe('Insight I: real office rents vs real GDP', () => {
+  it('compares B real rent growth with GDP growth: 2025 about +1.0 point, real rents equal B year by year', () => {
+    process.env.INCLUDE_PROVISIONAL = '1';
+    const [i, b] = ['i', 'b'].map((k) => insightsPage().find((x) => x.entry.key === k)!);
+    expect(i.entry.series[2]).toEqual({ key: 'cpi', role: 'deflator' });
+    if (!i.result.shown || !b.result.shown) throw new Error('not shown');
+    expect(i.result.latest.period).toBe('2025');
+    expect(i.result.latest.value).toBeGreaterThan(0.5);
+    expect(i.result.latest.value).toBeLessThan(1.5);
+    // Real rent growth (B) equals I's spread plus GDP growth, year by year.
+    const gdp = changes(levels(i.series[1], 'A'), 'A', 'pct');
+    const real = new Map(b.result.points.map((p) => [p.period, p.value]));
+    for (const p of i.result.points) expect(p.value + gdp.get(+p.period)!).toBeCloseTo(real.get(p.period)!, 9);
   });
 });
 
