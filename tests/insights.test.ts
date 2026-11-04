@@ -233,14 +233,15 @@ describe('Insights G and B (cleared)', () => {
 });
 
 describe('Insight M on real data (cleared)', () => {
-  it('office vacancy change in the 127 towns, with office employment growth as context, 1996 to 2025', () => {
+  it('office vacancy change in the 127 towns, with office employment growth as context, from 2001', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
     const m = insightsPage().find((i) => i.entry.key === 'm')!;
     expect(m.entry).toMatchObject({ headline: 'change', base: 2015 });
     expect(m.entry.series).toEqual([{ key: 'office-vacancy-127', role: 'kpi' }, { key: 'office-employment', role: 'reference' }]);
-    spans(m.result, '1996', 30);
+    // J has no value before 2000 or for 2025 yet, so the shared period is 2001 to 2024.
+    expect(m.result).toMatchObject({ shown: true, from: '2001', to: '2024', n: 24 });
     const h = renderInsight(m.entry, m.result, m.series, 'en');
-    expect(h).toMatch(/Office vacancy changed by -?[\d.]+ points in \d{4} while office employment grew -?[\d.]+%; the 1996-\d{4} average vacancy change is -?[\d.]+ points\./);
+    expect(h).toMatch(/Office vacancy changed by -?[\d.]+ points in \d{4} while office employment grew -?[\d.]+%; the 2001-\d{4} average vacancy change is -?[\d.]+ points\./);
     expect(h).toMatch(/Ochre line: year-on-year growth of /);
     expect(renderInsight(m.entry, m.result, m.series, 'de')).toMatch(/Der Büroleerstand hat sich \d{4} um -?[\d,]+ Punkte verändert, während die Bürobeschäftigung um -?[\d,]+ % gewachsen ist/);
   });
