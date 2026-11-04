@@ -168,13 +168,15 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
   const dual = all.map((l) => !!l.rebased && l.rebased.kpi !== l.rebased.reference);
   const domain = sharedDomain(all.filter((_, i) => !dual[i]));
   const multiples = kpis.map((kpi, i) => {
+    const growth = !!all[i].growth;
     const rebased = all[i].base ? t(lang, 'insight.axis.rebased', { year: all[i].base! }) : '';
-    const title = t(lang, 'insight.multiples.label', { kpi: kpi.title[lang], reference: refTitle });
-    const [kpiUnit, refUnit] = dual[i] ? [all[i].rebased!.kpi ? rebased : kpi.unit[lang], all[i].rebased!.reference ? rebased : reference.unit[lang]] : [all[i].base ? rebased : kpi.unit[lang], ''];
+    const title = t(lang, growth ? 'insight.multiples.label_growth' : 'insight.multiples.label', { kpi: kpi.title[lang], reference: refTitle });
+    const [kpiUnit, refUnit] = dual[i] ? [all[i].rebased!.kpi ? rebased : kpi.unit[lang], all[i].rebased!.reference ? rebased : reference.unit[lang]] : [growth ? t(lang, 'insight.axis.growth') : all[i].base ? rebased : kpi.unit[lang], ''];
     const chart = dual[i] ? overlayChart(all[i].kpi, all[i].reference, { kpiUnit, indicatorUnit: refUnit, title }, lang) : multiplesChart(all[i], { unit: kpiUnit, title }, domain, lang);
     return `<div class="multiples"><h3>${t(lang, 'insight.multiples.title', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</h3>`
       + chart
-      + `<p class="note">${t(lang, dual[i] ? 'insight.multiples.legend_dual' : 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p></div>`;
+      + `<p class="note">${t(lang, dual[i] ? 'insight.multiples.legend_dual' : growth ? (e.series.some((x) => x.role === 'deflator') ? 'insight.multiples.legend_growth_real' : 'insight.multiples.legend_growth') : 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p>`
+      + (growth && e.headline === 'growth' ? `<p class="note">${t(lang, 'insight.multiples.real_growth')}</p>` : '') + '</div>';
   }).join('');
   return `<section class="insight${plate && ` ${plate}`}" id="${esc(e.key)}">${head}`
     + headlineHtml

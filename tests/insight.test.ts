@@ -88,11 +88,14 @@ describe('Insight module: lines behind the headline, rebased', () => {
     expect(r.lines.base).toBeUndefined();
     expect(r.lines.kpi.slice(0, 2)).toEqual([{ period: '2000', value: 3 }, { period: '2001', value: 4 }]);
   });
-  it('a growth headline starts a year after its levels; the lines follow the headline period', () => {
+  it('a growth headline draws year-on-year changes, not rebased levels, starting a year after the levels', () => {
     const r = computeInsight(ramp(2000, 12, 10), ramp(2000, 12, 100), { growth: true, base: 2005 });
     if (!r.shown) throw new Error('not shown');
+    expect(r.lines.growth).toBe(true);
+    expect(r.lines.base).toBeUndefined();
     expect(r.lines.kpi[0].period).toBe('2001');
-    expect(r.lines.base).toBe('2005');
+    expect(r.lines.kpi[0].value).toBeCloseTo(10, 9); // the first year-on-year change of the 10-per-year ramp
+    expect(r.lines.kpi.at(-1)!.value - r.lines.reference.at(-1)!.value).toBeCloseTo(r.latest.value, 9);
   });
 });
 

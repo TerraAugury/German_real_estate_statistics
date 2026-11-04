@@ -1,7 +1,8 @@
 # Insights (insights spec section 7): one entry per curated chart, in page order. An Insight's Provisional status is
 # never declared here: it follows from its series (an Insight with any Provisional series is hidden in production).
-# `headline` names how the two series are compared; `growth: true` compares their year-on-year percent changes; `base`
-# rebases the lines behind the headline to that year = 100; `indexed` takes a ratio of two indices after rebasing;
+# `headline` names how the two series are compared; `growth: true` compares their year-on-year percent changes; a growth Insight (this or
+# a `growth` headline) draws those year-on-year changes as its lines; any other `base` rebases the lines behind the headline to that year = 100,
+# except series in % (never rebased); `indexed` takes a ratio of two indices after rebasing;
 # `deflate` (flow or stock) deflates a `growth` headline by the reference price level, or a `growth` spread by its `deflator` series; `shift` pairs the reference of year t - shift.
 # `better` is the direction that is better for an office investor (higher, lower, or none where it depends on whose side you take);
 # the verdict tag is coloured by it, never by the sign of the number.
@@ -46,7 +47,6 @@
   headline: growth
   better: higher
   deflate: flow
-  base: 2015
   template: real-rents
   series:
     - { key: rent-index-de-office-a, role: kpi }
@@ -58,7 +58,6 @@
   headline: spread
   better: higher
   growth: true
-  base: 2015
   template: spread
   series:
     - { key: rent-index-de-office-a, role: kpi }
@@ -71,7 +70,6 @@
   better: higher
   growth: true
   deflate: flow
-  base: 2015
   template: spread
   series:
     - { key: rent-index-de-office-a, role: kpi }
@@ -96,7 +94,6 @@
   headline: spread
   better: lower
   growth: true
-  base: 2015
   template: spread
   series:
     - { key: construction-price-office, role: kpi }

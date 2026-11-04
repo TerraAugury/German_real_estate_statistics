@@ -21,7 +21,7 @@ export type InsightResult =
       /** change: the reference's year-on-year percent growth over the same years, shown beside the headline and never given a verdict. */
       context?: Points;
       /** The two series over the headline period, rebased when a base year was asked for (`base` is the year actually used). */
-      lines: { kpi: Points; reference: Points; base?: string; /** Which line is an index: a rate stays in its own unit, so a chart with one of each needs two axes. */ rebased?: { kpi: boolean; reference: boolean } } };
+      lines: { kpi: Points; reference: Points; base?: string; /** year-on-year percent changes, not levels: the lines of an Insight whose headline is a growth rate or a gap between two. */ growth?: boolean; /** Which line is an index: a rate stays in its own unit, so a chart with one of each needs two axes. */ rebased?: { kpi: boolean; reference: boolean } } };
 
 /** In line when the latest value is within half a standard deviation of the mean (boundary included); a zero deviation reads in line. */
 export function verdict(latest: number, mean: number, sd: number): Verdict {
@@ -40,7 +40,7 @@ export const tone = (v: Verdict, better: Better): Tone => (v === 'in_line' || be
  * both series have a value then, else the first of `years`, so the two lines always meet at 100 in one year. A rate (`rate`) is
  * never rebased and stays in its own unit; two rates are not rebased at all.
  */
-function lines(a: Map<number, number>, b: Map<number, number>, years: number[], base?: number, rate = { kpi: false, reference: false }) {
+function lines(a: Map<number, number>, b: Map<number, number>, years: number[], base?: number, rate = { kpi: false, reference: false }): Extract<InsightResult, { shown: true }>['lines'] {
   if (base === undefined || (rate.kpi && rate.reference)) return { kpi: years.map((y) => ({ period: String(y), value: a.get(y)! })), reference: years.map((y) => ({ period: String(y), value: b.get(y)! })) };
   const year = years.includes(base) ? base : years[0];
   const scale = (m: Map<number, number>, isRated: boolean) => years.map((y) => ({ period: String(y), value: isRated ? m.get(y)! : (m.get(y)! / m.get(year)!) * 100 }));
@@ -93,6 +93,8 @@ export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opt
   const head = opts.headline ?? 'spread';
   const la = opts.deflator ? real(nominal, opts.deflate === 'stock' ? decemberLevels(opts.deflator) : levels(opts.deflator, 'A')) : nominal;
   const values = new Map<number, number>();
+  // Year-on-year changes of both series (the real KPI for a deflated spread): the lines drawn for a growth headline, and the terms of a growth spread.
+  const growthLines = opts.growth || head === 'growth' ? [la, lb].map((l) => changes(l, 'A', 'pct')) : undefined;
   let growth: Map<number, number> | undefined;
   if (head === 'growth') {
     const deflator = opts.deflate === 'stock' ? decemberLevels(reference) : lb;
@@ -101,13 +103,15 @@ export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opt
     growth = changes(lb, 'A', 'pct');
     for (const [y, v] of changes(la, 'A', 'diff')) if (growth.has(y)) values.set(y, v);
   } else {
-    const [a, b] = opts.growth ? [la, lb].map((l) => changes(l, 'A', 'pct')) : [la, lb];
+    const [a, b] = growthLines ?? [la, lb];
     for (const [y, v] of a) if (b.has(y) && !(head === 'ratio' && b.get(y) === 0)) values.set(y, head === 'ratio' ? v / b.get(y)! : v - b.get(y)!);
   }
   const more = (opts.also ?? []).map((x) => (opts.growth || head === 'growth' ? changes(levels(x, 'A'), 'A', 'pct') : levels(x, 'A')));
   const years = [...values.keys()].filter((y) => more.every((m) => m.has(y))).sort((x, y) => x - y);
   if (years.length < MIN_OBS) return { shown: false, n: years.length, reason: 'too_few' };
-  const ln = lines(la, lb, years, opts.base, { kpi: isRate(kpi), reference: isRate(reference) });
+  const ln = growthLines
+    ? { kpi: years.map((y) => ({ period: String(y), value: growthLines[0].get(y)! })), reference: years.map((y) => ({ period: String(y), value: growthLines[1].get(y)! })), growth: true }
+    : lines(la, lb, years, opts.base, { kpi: isRate(kpi), reference: isRate(reference) });
   const points = years.map((y, i) => ({ period: String(y), value: opts.indexed ? ln.kpi[i].value / ln.reference[i].value : values.get(y)! }));
   const latest = points.at(-1)!;
   const mean = points.reduce((sum, p) => sum + p.value, 0) / points.length;

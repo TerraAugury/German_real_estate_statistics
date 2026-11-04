@@ -175,6 +175,11 @@ insight.multiples.title: "{kpi} im Vergleich zu {reference}"
 insight.multiples.label: "{kpi} und {reference}, umbasiert"
 insight.multiples.legend: "Blaue Linie: {kpi}. Ockerfarbene Linie: {reference}. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt."
 insight.multiples.legend_dual: "Blaue Linie, linke Achse: {kpi}. Ockerfarbene Linie, rechte Achse: {reference}. Die Achsen haben unterschiedliche Einheiten, daher werden die Linien nicht nach ihrer Höhe verglichen."
+insight.axis.growth: "Veränderung gegenüber dem Vorjahr, %"
+insight.multiples.label_growth: "{kpi} und {reference}, Veränderung gegenüber dem Vorjahr"
+insight.multiples.legend_growth: "Blaue Linie: Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt; der Abstand der Linien im letzten Jahr ist die große Zahl."
+insight.multiples.legend_growth_real: "Blaue Linie: preisbereinigte Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt; der Abstand der Linien im letzten Jahr ist die große Zahl."
+insight.multiples.real_growth: "Reales Wachstum = (1 + Mietwachstum) / (1 + Inflation) − 1, daher weicht es leicht vom Abstand der beiden Linien ab."
 insight.template.completions-permits: "Die Fertigstellungen entsprachen dem {latest}-Fachen der zwei Jahre zuvor erteilten Baugenehmigungen, {verdict} {from}-{to}-Durchschnitt von {mean}."
 insight.unit.ratio: mal
 insight.shift.2: zwei Jahre zuvor
