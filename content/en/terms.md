@@ -2,9 +2,11 @@
 
 These terms apply to your use of this website. It is provided by Terra Augury Ltd, Limassol, Cyprus (we); contact details are in the [Legal notice](/en/legal-notice).
 
-## 2. Information only
+## 2. Information only — no investment advice
 
-For information only. This site presents public statistics and is not investment, tax or legal advice, and not an offer or recommendation to buy or sell any asset. Figures come from third-party sources and may be incomplete, delayed or revised.
+This website does not provide investment advice. The statistics, charts and analysis are provided for general information only. They do not constitute tax or legal advice or an offer or recommendation to buy, sell or hold any asset.
+
+Figures come from third-party sources and may be incomplete, delayed or revised.
 
 ## 3. No warranty on content
 
@@ -12,7 +14,7 @@ We take care in presenting the data but give no warranty that it is complete, ac
 
 ## 4. Sources and derived values
 
-The publishers of the data, and DBnomics, which aggregates much of it, do not endorse this site and are not responsible for it. Values we derive, such as the averaged indicator lines and the Links, are our own calculation and not figures published by the source.
+The publishers of the data do not endorse this site and are not responsible for it. Values we derive, such as the averaged indicator lines and the Links, are our own calculation and not figures published by the source.
 
 ## 5. Liability
 

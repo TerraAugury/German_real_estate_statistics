@@ -1,15 +1,17 @@
 ---
-en_hash: 67adb57c5a74fb58
+en_hash: decbe549a1173fbf
 reviewed_by: Olivier
-reviewed_on: 2026-11-03
+reviewed_on: 2026-11-04
 ---
 ## 1. Geltungsbereich und Anbieter
 
 Diese Bedingungen gelten für die Nutzung dieser Website. Anbieter ist Terra Augury Ltd, Limassol, Zypern (wir); die Kontaktdaten stehen im [Impressum](/de/impressum).
 
-## 2. Nur zur Information
+## 2. Nur zur Information — keine Anlageberatung
 
-Nur zur Information. Diese Seite stellt öffentliche Statistiken dar und ist keine Anlage-, Steuer- oder Rechtsberatung und kein Angebot und keine Empfehlung zum Kauf oder Verkauf von Vermögenswerten. Die Zahlen stammen von Dritten und können unvollständig, verspätet oder revidiert sein.
+Diese Website bietet keine Anlageberatung. Die Statistiken, Diagramme und Analysen dienen ausschließlich der allgemeinen Information. Sie stellen weder eine Steuer- oder Rechtsberatung noch ein Angebot oder eine Empfehlung zum Kauf, Verkauf oder Halten von Vermögenswerten dar.
+
+Die Zahlen stammen von Dritten und können unvollständig, verspätet oder revidiert sein.
 
 ## 3. Keine Gewähr für Inhalte
 
@@ -17,7 +19,7 @@ Wir stellen die Daten sorgfältig dar, übernehmen aber keine Gewähr für Volls
 
 ## 4. Quellen und abgeleitete Werte
 
-Die Herausgeber der Daten und DBnomics, das einen Großteil davon zusammenführt, unterstützen diese Seite nicht und sind für sie nicht verantwortlich. Werte, die wir ableiten, etwa die gemittelten Indikatorlinien und die Verknüpfungen, sind unsere eigene Berechnung und keine von der Quelle veröffentlichten Zahlen.
+Die Herausgeber der Daten unterstützen diese Seite nicht und sind für sie nicht verantwortlich. Werte, die wir ableiten, etwa die gemittelten Indikatorlinien und die Verknüpfungen, sind unsere eigene Berechnung und keine von der Quelle veröffentlichten Zahlen.
 
 ## 5. Haftung
 

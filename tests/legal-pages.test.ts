@@ -5,8 +5,8 @@ import { join } from 'node:path';
 const read = (p: string) => readFileSync(p, 'utf8');
 const walk = (d: string): string[] => readdirSync(d).flatMap((f) => (statSync(join(d, f)).isDirectory() ? walk(join(d, f)) : [join(d, f)]));
 const DISCLAIMER = {
-  en: 'For information only. This site presents public statistics and is not investment, tax or legal advice, and not an offer or recommendation to buy or sell any asset. Figures come from third-party sources and may be incomplete, delayed or revised.',
-  de: 'Nur zur Information. Diese Seite stellt öffentliche Statistiken dar und ist keine Anlage-, Steuer- oder Rechtsberatung und kein Angebot und keine Empfehlung zum Kauf oder Verkauf von Vermögenswerten. Die Zahlen stammen von Dritten und können unvollständig, verspätet oder revidiert sein.',
+  en: 'This website does not provide investment advice. The statistics, charts and analysis are provided for general information only. They do not constitute tax or legal advice or an offer or recommendation to buy, sell or hold any asset.\n\nFigures come from third-party sources and may be incomplete, delayed or revised.',
+  de: 'Diese Website bietet keine Anlageberatung. Die Statistiken, Diagramme und Analysen dienen ausschließlich der allgemeinen Information. Sie stellen weder eine Steuer- oder Rechtsberatung noch ein Angebot oder eine Empfehlung zum Kauf, Verkauf oder Halten von Vermögenswerten dar.\n\nDie Zahlen stammen von Dritten und können unvollständig, verspätet oder revidiert sein.',
 };
 const legal = ['about', 'terms', 'privacy', 'legal-notice'];
 
