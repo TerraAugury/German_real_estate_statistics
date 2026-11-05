@@ -33,6 +33,8 @@ Each Link has three parts:
 
 **Nominal and real.** Rents and transaction volume are in nominal euros, as are CPI and construction prices, so their links to those two indicators partly reflect shared inflation. Real GDP is adjusted for inflation, so a link between a nominal KPI and real GDP compares nominal with real. The rent and transaction volume rows on the Links page, and their Link panels against these three indicators, carry a note saying so. We do not adjust the figures for inflation in a Link.
 
+**Rows and areas.** The rows of the Links page cover different segments and areas, and each row starts with a tag naming its own: commercial overall or office, Germany or the 7 major cities, and for initial yield office and retail combined. Every indicator is national, so reading down a column compares unlike things.
+
 **Geography.** Every indicator is national. On a City class or Land view, the Link compares the national indicator with that geography's KPI.
 
 ## The eight indicators
