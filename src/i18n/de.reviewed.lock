@@ -1207,9 +1207,9 @@ links.cell.n:
   reviewed_by: terra augury
   reviewed_on: 2026-11-03
 links.legend:
-  en_hash: ab364563a7e87b7d
+  en_hash: 69d8eb216b2210c5
   reviewed_by: Olivier
-  reviewed_on: 2026-11-03
+  reviewed_on: 2026-11-05
 nav.insights:
   en_hash: 2a932f90172e99ea
   reviewed_by: terra augury
@@ -1486,3 +1486,91 @@ legal-notice.title:
   en_hash: 1011b3a811f08490
   reviewed_by: Olivier
   reviewed_on: 2026-11-03
+links.lag.label:
+  en_hash: de6df7e5cebaea4f
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.lag.0:
+  en_hash: f10eaf00e7da2c35
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.lag.1:
+  en_hash: 43f2ac58fc647433
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.lag.2:
+  en_hash: 9f5ad7df6f829c41
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.cell.preset:
+  en_hash: ea0ecfe0fbe6160b
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.preset.note:
+  en_hash: c566baacdde9dd07
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.noise.legend:
+  en_hash: 59e63c3a821722d8
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.chance.note:
+  en_hash: cd30aacf9f562ac2
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.nominal.tag:
+  en_hash: b2b5ec135f599c22
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.nominal.note:
+  en_hash: 048bf616b5ab10f2
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.row.kpi-price-index:
+  en_hash: 4f6b0f6b7cba67af
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.row.kpi-rent-index:
+  en_hash: 3312dfecfbf76f5a
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.row.kpi-initial-yield:
+  en_hash: e09287dc4efb70f9
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.row.kpi-office-vacancy:
+  en_hash: 69a973dcf3f75764
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.row.kpi-transaction-volume:
+  en_hash: 4f6b0f6b7cba67af
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.row.construction:
+  en_hash: 3312dfecfbf76f5a
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.rows.note:
+  en_hash: f7fb808403a23b01
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+link.preset.mark:
+  en_hash: 8feedf6b61a8879c
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+link.band.legend:
+  en_hash: b281a8261532fc7b
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+link.band.adjusted:
+  en_hash: 821052df1069e444
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+note.nominal.inflation:
+  en_hash: fe120d2ae879c532
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+note.nominal.gdp:
+  en_hash: 4ed94669eb4289ce
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
