@@ -29,6 +29,8 @@ Each Link has three parts:
 
 **Grey boxes and the band on the bars.** A correlation based on few years can look strong by chance. For every box we therefore work out a band of ±2/√(n−1), using that box's own n at the chosen timing. A box whose number lies inside the band is shown in grey, with the number still visible; the same band is drawn as a light strip on the bars of each Link panel. This is a rough guide, not a significance test: we show no stars and no p-values, for the reasons given above. For quarterly KPIs, each change is compared with a year earlier, so neighbouring quarters overlap and are not independent; the band then uses an adjusted n of n ÷ 4, rounded down, and the panel shows both numbers.
 
+**Many boxes at once.** The Links page shows many comparisons together, so a few boxes will look strong by chance alone, in the same way that several shifts tried on one Link produce a good-looking one. Treat a single strong box with caution, especially when n is small.
+
 **Geography.** Every indicator is national. On a City class or Land view, the Link compares the national indicator with that geography's KPI.
 
 ## The eight indicators
