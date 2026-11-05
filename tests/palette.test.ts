@@ -63,6 +63,10 @@ describe('palette', () => {
       for (const tint of [c['better-tint'], c['worse-tint']]) for (const other of [c.above, c.below, c['heat-neg'], c['heat-pos']]) expect(hueGap(tint, other), `${scheme} ${tint} vs ${other}`).toBeGreaterThanOrEqual(25);
       expect(hueGap(c['better-tint'], c['worse-tint'])).toBeGreaterThanOrEqual(25);
     });
+    it('the two heat hues (Links matrix) are at least 25 degrees of hue from every colour that means something on the Insights pages (ticket 17)', () => {
+      const meaning = [c.data, c.strong, c['strong-text'], c.above, c.below, c['better-tint'], c['worse-tint'], c.yes];
+      for (const heat of [c['heat-neg'], c['heat-pos']]) for (const m of meaning) expect(hueGap(heat, m), `${scheme} ${heat} vs ${m}`).toBeGreaterThanOrEqual(25);
+    });
     it('graphics (lines, bars, borders of controls) are at least 3:1 on the plate', () => {
       for (const g of [c.data, c.strong, c.field, c.above, c.below]) expect(contrast(g, c.plate), `${scheme} ${g}`).toBeGreaterThanOrEqual(3);
     });
