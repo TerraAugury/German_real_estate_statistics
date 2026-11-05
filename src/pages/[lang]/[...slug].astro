@@ -129,6 +129,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
         ))}</tbody>
       </table></div>
       <p class="note">{t(lang, 'links.preset.note')}</p>
+      <p class="note">{t(lang, 'links.chance.note')}</p>
       <script>
         import { lagFromHash } from '../../lib/select';
         const sel = document.querySelector<HTMLSelectElement>('#lag')!;

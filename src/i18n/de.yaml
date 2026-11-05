@@ -204,3 +204,4 @@ links.preset.note: "Auf Bewertungen beruhende Renditen und Preise reagieren mit 
 link.band.legend: "Graues Band: der Bereich der Rangkorrelation, den allein der Zufall bei n = {n} häufig erzeugt (±{band}). Eine grobe Orientierung, kein Signifikanztest."
 link.band.adjusted: "Quartalsveränderungen werden jeweils mit dem Vorjahr verglichen, benachbarte Quartale überlappen also; das Band verwendet ein angepasstes n = {eff} (n ÷ 4, abgerundet)."
 links.noise.legend: "Grau: innerhalb des Bereichs, den allein der Zufall bei dieser Zahl von Jahren häufig erzeugt."
+links.chance.note: "Bei so vielen Vergleichen sehen einige Felder allein durch Zufall stark aus. Ein einzelnes starkes Feld sollte man mit Vorsicht behandeln, besonders wenn n klein ist."

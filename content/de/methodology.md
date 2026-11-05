@@ -34,6 +34,8 @@ Jede Verknüpfung hat drei Teile:
 
 **Graue Felder und das Band an den Balken.** Eine Korrelation aus wenigen Jahren kann zufällig stark aussehen. Für jedes Feld berechnen wir deshalb ein Band von ±2/√(n−1) mit dem eigenen n des Feldes beim gewählten Zeitversatz. Liegt die Zahl eines Feldes innerhalb des Bandes, wird es grau dargestellt, die Zahl bleibt sichtbar; dasselbe Band ist als helle Fläche an den Balken jeder Verknüpfungsgrafik eingezeichnet. Das ist eine grobe Orientierung, kein Signifikanztest: Wir zeigen keine Sterne und keine p-Werte, aus den oben genannten Gründen. Bei Quartalskennzahlen wird jede Veränderung mit dem Vorjahr verglichen, benachbarte Quartale überlappen sich also und sind nicht unabhängig; das Band verwendet dann ein angepasstes n von n ÷ 4, abgerundet, und die Grafik zeigt beide Zahlen.
 
+**Viele Felder auf einmal.** Die Seite Verknüpfungen zeigt viele Vergleiche gleichzeitig, daher sehen einige Felder allein durch Zufall stark aus, ebenso wie mehrere an einer Verknüpfung ausprobierte Verschiebungen eine gut aussehende ergeben. Ein einzelnes starkes Feld sollte man mit Vorsicht behandeln, besonders wenn n klein ist.
+
 **Geografie.** Jeder Indikator ist bundesweit. Bei einer Städtegruppe oder einem Land vergleicht die Verknüpfung den bundesweiten Indikator mit der Kennzahl dieser Geografie.
 
 ## Die acht Indikatoren
