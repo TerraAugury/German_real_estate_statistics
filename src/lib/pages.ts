@@ -61,9 +61,20 @@ export interface LinksOverview {
   rows: { kpi: Kpi; view?: View; cells: Map<Indicator, OverviewCell> }[];
 }
 
+/**
+ * The view a Links row opens. Construction's headline view is Commercial overall, which draws commercial buildings beside
+ * office ones; its row is office permits, so it opens the Office view of the same geography (ticket 18).
+ */
+function rowView(kpi: Kpi): View | undefined {
+  const h = headline(kpi);
+  return h?.series[0].key.endsWith('-office')
+    ? liveViews(kpi).find((v) => v.segment === 'office' && v.geo === h.geo && v.freq === h.freq && v.series[0].key === h.series[0].key) ?? h
+    : h;
+}
+
 export function linksOverview(): LinksOverview {
   const rows = KPIS.map((kpi) => {
-    const view = headline(kpi);
+    const view = rowView(kpi);
     const pairs = view ? viewLinks(view) : [];
     return { kpi, view, cells: new Map(pairs.map((pair) => {
       const result = linkResult(getSeries(pair.kpi, pair.land), getSeries(pair.indicator));
