@@ -7,7 +7,7 @@ export const targetOf = (kpiFreq: 'D' | 'M' | 'Q' | 'A'): 'Q' | 'A' => (kpiFreq 
 /** Observations that count for the noise band: quarterly changes are each taken against a year earlier, so neighbours overlap and n counts ÷ 4, rounded down. */
 export const effectiveN = (n: number, t: 'Q' | 'A') => (t === 'A' ? n : Math.floor(n / 4));
 /** Rough guide, not a significance test: the range of rank correlation chance alone often produces, ±2/√(n−1). */
-export const noiseBand = (n: number, t: 'Q' | 'A') => 2 / Math.sqrt(effectiveN(n, t) - 1);
+export const noiseBand = (n: number, t: 'Q' | 'A') => (effectiveN(n, t) > 1 ? 2 / Math.sqrt(effectiveN(n, t) - 1) : Infinity);
 
 /** Lag, in periods, of an indicator taken `years` years earlier: +1 / +2 for annual KPIs, +4 / +8 quarters otherwise. */
 export const lagFor = (kpiFreq: 'D' | 'M' | 'Q' | 'A', years: 0 | 1 | 2) => years * (kpiFreq === 'A' ? 1 : 4);

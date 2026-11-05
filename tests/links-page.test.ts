@@ -80,6 +80,11 @@ describe.skipIf(built.length === 0)('Links page', () => {
     }
     expect(checked).toBe(48 * 3); // one link per lag in each cell
   });
+  it.each(built)('%s: a within-chance cell also says so in text, not only in grey', (l) => {
+    const doc = page(l as 'en');
+    for (const a of doc.querySelectorAll('td.lagcell a.noise')) expect(a.querySelector('.vh')?.textContent?.replace(DRAFT, '')).toBe(l === 'en' ? 'within chance range' : 'im Zufallsbereich');
+    expect(doc.querySelectorAll('td.lagcell a.noise').length).toBeGreaterThan(0);
+  });
   it('the line reads as specified in English', () => {
     expect(t('en', 'links.chance.note')).toBe('With this many comparisons, a few boxes will look strong by chance alone. Treat a single strong box with caution, especially when n is small.');
   });
