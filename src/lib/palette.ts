@@ -10,8 +10,8 @@ const LIGHT = {
   'better-tint': '#e3f2ea', 'worse-tint': '#fbe6ef',
   /** Availability: an available cell and its border; a Not available cell's hatch. */
   yes: '#e3ecf5', 'yes-rule': '#b9cde1', na: '#e9ecef',
-  /** The two hues of a heat shade (src/lib/heat.ts): negative blue, positive ochre. */
-  'heat-neg': '#1f4e79', 'heat-pos': '#b26a00',
+  /** The two hues of a heat shade (src/lib/heat.ts): negative violet, positive olive. Used nowhere else on the site (tests/palette.test.ts). */
+  'heat-neg': '#4b2a85', 'heat-pos': '#6f8f14',
   shadow: 'rgb(23 32 42 / .12)',
 } as const;
 
@@ -24,7 +24,7 @@ const DARK = {
   'better-tint': '#16322a', 'worse-tint': '#3a2030',
   yes: '#1c3045', 'yes-rule': '#30506f', na: '#202a33',
   // Darker hues than the lines: a heat shade mixes them into the plate, and light ink must stay 4.5:1 on the result.
-  'heat-neg': '#3d7ab5', 'heat-pos': '#b8741a',
+  'heat-neg': '#6a45a8', 'heat-pos': '#8aa52e',
   shadow: 'rgb(0 0 0 / .5)',
 } as const satisfies Record<keyof typeof LIGHT, string>;
 

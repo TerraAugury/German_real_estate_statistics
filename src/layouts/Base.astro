@@ -158,8 +158,8 @@ const inKpis = KPIS.some((k) => k.page === page);
       td.licence { background: var(--plate); }
       /* Links overview: a shown Link is shaded by its rank correlation (src/lib/heat.ts); ink on every shade is 4.5:1 or better. */
       /* Each cell holds one link per lag (ticket 10); the table's data-lag shows the selected one. Without script: same year. */
-      td.lagcell { padding: 0; }
-      td.lagcell a { display: none; padding: .65rem .75rem; color: var(--ink); }
+      td.lagcell { padding: 0; height: 1px; } /* 1px lets the link fill the cell's full row height */
+      td.lagcell a { display: none; box-sizing: border-box; height: 100%; padding: .65rem .75rem; color: var(--ink); }
       table.matrix[data-lag="0"] a[data-lag="0"], table.matrix[data-lag="1"] a[data-lag="1"], table.matrix[data-lag="2"] a[data-lag="2"] { display: block; }
       td.lagcell a.zero { background: var(--plate); }
       td.lagcell a.neg { background: color-mix(in srgb, var(--heat-neg) var(--share), var(--plate)); }

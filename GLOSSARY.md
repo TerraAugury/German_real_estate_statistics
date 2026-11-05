@@ -48,7 +48,7 @@ _DE_: Quellenangabe
 _Avoid_: Source line (that is the full lineage), footnote
 
 **Heat shade**:
-The tint of a cell in the Links overview: blue where a Link's changes moved in opposite directions, ochre where they moved together, deeper for a larger rank correlation. The coefficient stays printed in the cell; the shade describes co-movement only.
+The tint of a cell in the Links overview: violet where a Link's changes moved in opposite directions, olive green where they moved together, deeper for a larger rank correlation. The coefficient stays printed in the cell; the shade describes co-movement only.
 _DE_: Farbabstufung
 _Avoid_: Heatmap (the overview is a table), strength of effect
 

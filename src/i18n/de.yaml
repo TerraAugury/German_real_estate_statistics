@@ -138,7 +138,7 @@ links.cell.n: "n = {n}"
 links.scale.neg: "-1: gegenläufig"
 links.scale.zero: "0: kein Muster"
 links.scale.pos: "+1: gleichläufig"
-links.legend: "Farbe: ocker bedeutet, dass beide eher gemeinsam stiegen und fielen; blau bedeutet, dass die eine eher stieg, wenn die andere fiel. Je dunkler die Farbe, desto enger der Zusammenhang. Das zeigt, dass sie sich gemeinsam bewegen, nicht, dass eine die andere verursacht oder vorhersagt."
+links.legend: "Farbe: olivgrün bedeutet, dass beide eher gemeinsam stiegen und fielen; violett bedeutet, dass die eine eher stieg, wenn die andere fiel. Je dunkler die Farbe, desto enger der Zusammenhang. Das zeigt, dass sie sich gemeinsam bewegen, nicht, dass eine die andere verursacht oder vorhersagt."
 links.cell.not_shown: "Nicht angezeigt (n = {n})"
 indicator.bund-yield-10y: Rendite zehnjähriger Bundesanleihen
 indicator.euribor-3m: Euribor 3 Monate

@@ -52,6 +52,12 @@ describe.skipIf(built.length === 0)('Links page', () => {
     const panel = readFileSync(`dist/${l}/${slug('kpi-initial-yield', l as 'en')}/index.html`, 'utf8');
     expect(panel).toContain(l === 'en' ? 'fixation over 5 years' : 'Zinsbindung über 5 Jahre');
   });
+  it.each(built)('%s: the legend names the matrix colours, not the Insights colours (ticket 17)', (l) => {
+    const text = [...page(l as 'en').querySelectorAll('p.note')].map((p) => p.textContent).join(' ');
+    expect(text).toMatch(l === 'en' ? /violet/ : /violett/);
+    expect(text).toMatch(l === 'en' ? /olive/ : /olivgrün/);
+    expect(text).not.toMatch(/ochre|ocker|blue|blau/i);
+  });
   it('the line reads as specified in English', () => {
     expect(t('en', 'links.chance.note')).toBe('With this many comparisons, a few boxes will look strong by chance alone. Treat a single strong box with caution, especially when n is small.');
   });
