@@ -1,12 +1,21 @@
 {
- "retrieved_at": "2026-11-01T19:10:01.086Z",
+ "retrieved_at": "2026-11-05T15:04:21.155Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
   "M.U2.EUR.RT.MM.EURIBOR3MD_.HSTA": {
    "name": "Monthly – Euro area (changing composition) – Euro – Refinitiv – Money Market – Euribor 3-month (EURIBOR3MD_) – Historical close, average of observations through period",
-   "indexed_at": "2026-10-31T06:58:42.817Z",
+   "indexed_at": "2026-11-05T07:39:16.034Z",
    "frequency": "monthly",
+   "dimensions": {
+    "CURRENCY": "EUR",
+    "DATA_TYPE_FM": "HSTA",
+    "FREQ": "M",
+    "INSTRUMENT_FM": "MM",
+    "PROVIDER_FM": "RT",
+    "PROVIDER_FM_ID": "EURIBOR3MD_",
+    "REF_AREA": "U2"
+   },
    "period": [
     "1994-01",
     "1994-02",
@@ -796,16 +805,7 @@
     2.4253913,
     2.5131429,
     2.6350455
-   ],
-   "dimensions": {
-    "CURRENCY": "EUR",
-    "DATA_TYPE_FM": "HSTA",
-    "FREQ": "M",
-    "INSTRUMENT_FM": "MM",
-    "PROVIDER_FM": "RT",
-    "PROVIDER_FM_ID": "EURIBOR3MD_",
-    "REF_AREA": "U2"
-   }
+   ]
   }
  }
 }
