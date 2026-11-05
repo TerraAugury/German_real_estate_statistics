@@ -1559,7 +1559,7 @@ link.preset.mark:
   reviewed_by: Olivier
   reviewed_on: 2026-11-05
 link.band.legend:
-  en_hash: b281a8261532fc7b
+  en_hash: 7fd07c1a3544adab
   reviewed_by: Olivier
   reviewed_on: 2026-11-05
 link.band.adjusted:
@@ -1572,5 +1572,9 @@ note.nominal.inflation:
   reviewed_on: 2026-11-05
 note.nominal.gdp:
   en_hash: 4ed94669eb4289ce
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+links.cell.noise:
+  en_hash: 69ec55635c7db4cc
   reviewed_by: Olivier
   reviewed_on: 2026-11-05
