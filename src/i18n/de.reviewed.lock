@@ -1614,3 +1614,7 @@ insight.multiples.real_growth:
   en_hash: 52eb85c63a6c1a55
   reviewed_by: Olivier
   reviewed_on: 2026-11-05
+links.cell.preset_other:
+  en_hash: 66cd776ffe6592c1
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
