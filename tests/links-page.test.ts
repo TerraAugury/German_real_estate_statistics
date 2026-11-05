@@ -44,6 +44,14 @@ describe.skipIf(built.length === 0)('Links page', () => {
     expect(cells).toHaveLength(48);
     expect(cells.filter((td) => !td.textContent!.trim())).toEqual([]);
   });
+  it.each(built)('%s: the loan-rate column, its Link panels and the Methodology name the 5-year-fixation series (ticket 16)', (l) => {
+    const fix = l === 'en' ? 'fixation over 5 years' : 'Zinsbindung über 5 Jahre';
+    expect([...page(l as 'en').querySelectorAll('table.matrix thead th')].some((th) => th.textContent!.includes(fix))).toBe(true);
+    const meth = readFileSync(`content/${l}/methodology.md`, 'utf8');
+    expect(meth).toContain(l === 'en' ? 'initial rate fixation of over 5 years' : 'Zinsbindung von über 5 Jahren');
+    const panel = readFileSync(`dist/${l}/${slug('kpi-initial-yield', l as 'en')}/index.html`, 'utf8');
+    expect(panel).toContain(l === 'en' ? 'fixation over 5 years' : 'Zinsbindung über 5 Jahre');
+  });
   it('the line reads as specified in English', () => {
     expect(t('en', 'links.chance.note')).toBe('With this many comparisons, a few boxes will look strong by chance alone. Treat a single strong box with caution, especially when n is small.');
   });
