@@ -4,7 +4,7 @@ import { insightChart, multiplesChart, sharedDomain, overlayChart, lagChart, lin
 import { notesFor } from './notes';
 import { href, slug, type Lang } from './routes';
 import type { Series } from './series';
-import { lagFor, type LinkResult } from '../link/link';
+import { effectiveN, lagFor, noiseBand, targetOf, type LinkResult } from '../link/link';
 import { linkResult } from './links';
 import { compareLines, MIN_OBS, tone, type InsightResult } from '../insight/insight';
 import type { InsightEntry } from './manifest';
@@ -83,7 +83,8 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
     const N = r.lags.filter((l) => l.rho !== null).length;
     body = overlayChart(pts('kpi'), pts('indicator'), { kpiUnit: kpi.unit[lang], indicatorUnit: ind.unit[lang], title: t(lang, 'link.overlay.chart', names) }, lang)
       + `<p class="note">${t(lang, 'link.overlay.legend', { kpi: esc(names.kpi), indicator: esc(names.indicator) })}</p>`
-      + lagChart(r.lags, r.strongest.lag, { lag: t(lang, 'link.lag.label'), rho: t(lang, 'link.rho.label'), mark: t(lang, 'link.strongest.mark'), preset: preset ? { lag: lagFor(kpi.freq, 1), label: t(lang, 'link.preset.mark') } : undefined, title: t(lang, 'link.lags.label', { kpi: kpi.title[lang], indicator: ind.title[lang] }) }, lang)
+      + lagChart(r.lags, r.strongest.lag, { lag: t(lang, 'link.lag.label'), rho: t(lang, 'link.rho.label'), mark: t(lang, 'link.strongest.mark'), bands: r.lags.filter((l) => l.rho !== null).map((l) => ({ lag: l.lag, band: noiseBand(l.n, targetOf(kpi.freq)) })), preset: preset ? { lag: lagFor(kpi.freq, 1), label: t(lang, 'link.preset.mark') } : undefined, title: t(lang, 'link.lags.label', { kpi: kpi.title[lang], indicator: ind.title[lang] }) }, lang)
+      + `<p class="note">${t(lang, 'link.band.legend', { n: String(r.headline.n), band: fmt(lang, noiseBand(r.headline.n, targetOf(kpi.freq)), { maximumFractionDigits: 2 }) })}${targetOf(kpi.freq) === 'Q' ? ' ' + t(lang, 'link.band.adjusted', { eff: String(effectiveN(r.headline.n, 'Q')) }) : ''}</p>`
       + `<p>${t(lang, 'link.headline', { rho: fmt(lang, r.headline.rho!, { maximumFractionDigits: 2 }), n: String(r.headline.n) })}</p>`
       + `<p>${t(lang, 'link.strongest', { n: String(N) })}</p>`
       + `<p>${t(lang, 'link.sentence', { period: t(lang, 'link.period', { from: period(lang, r.span[0]), to: period(lang, r.span[1]) }), n: String(r.headline.n) })}</p>`;

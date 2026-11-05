@@ -27,6 +27,8 @@ Each Link has three parts:
 
 **A pre-set timing for appraisal-based KPIs.** Initial yield and the commercial property price index rest largely on appraisals, which follow interest rates with a delay. For these two KPIs against the 10-year Bund yield, Euribor 3 months and the loan rate, one year earlier (N-1) is therefore set in advance on economic grounds, not chosen from the results. These boxes are marked "pre-set lag" whichever timing is selected, and on the Link panels the +1 bar carries the same label, apart from the "strongest" mark. Switching between timings and keeping the one that looks strongest overstates the link, for the same reason as the "strongest" marker.
 
+**Grey boxes and the band on the bars.** A correlation based on few years can look strong by chance. For every box we therefore work out a band of ±2/√(n−1), using that box's own n at the chosen timing. A box whose number lies inside the band is shown in grey, with the number still visible; the same band is drawn as a light strip on the bars of each Link panel. This is a rough guide, not a significance test: we show no stars and no p-values, for the reasons given above. For quarterly KPIs, each change is compared with a year earlier, so neighbouring quarters overlap and are not independent; the band then uses an adjusted n of n ÷ 4, rounded down, and the panel shows both numbers.
+
 **Geography.** Every indicator is national. On a City class or Land view, the Link compares the national indicator with that geography's KPI.
 
 ## The eight indicators

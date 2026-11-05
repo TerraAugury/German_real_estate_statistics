@@ -107,6 +107,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
       <div class="legend" aria-hidden="true"><i class="ramp"></i></div>
       <p class="scale"><span>{t(lang, 'links.scale.neg')}</span><span>{t(lang, 'links.scale.zero')}</span><span>{t(lang, 'links.scale.pos')}</span></p>
       <p class="note">{t(lang, 'links.legend')}</p>
+      <p class="note">{t(lang, 'links.noise.legend')}</p>
       <div class="selectors"><label>{t(lang, 'links.lag.label')}<select id="lag">{[0, 1, 2].map((y) => <option value={y}>{t(lang, `links.lag.${y}`)}</option>)}</select></label></div>
       <div class="scroll"><table class="matrix" data-lag="0">
         <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{overview!.columns.map((n) => <th scope="col">{t(lang, `indicator.${n}`)}</th>)}</tr></thead>
@@ -121,7 +122,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
               // One link per lag; the selector shows one. A shown Link is shaded by its rho, with the coefficient first and n
               // beneath; one not shown (or under the minimum overlap at that lag) is hatched like any gap.
               return <td class="lagcell">{c.lags.map((l, y) => l.heat && l.rho !== null
-                ? <a data-lag={y} href={to} class={l.heat.side} style={`--share: ${l.heat.share}%`}><span class="rho">{fmt(lang, l.rho, { maximumFractionDigits: 2 })}</span><span class="n">{t(lang, 'links.cell.n', { n: String(l.n) })}</span>{c.pair.preset && <span class="preset">{t(lang, 'links.cell.preset')}</span>}</a>
+                ? <a data-lag={y} href={to} class={`${l.heat.side}${l.noise ? ' noise' : ''}`} style={`--share: ${l.heat.share}%`}><span class="rho">{fmt(lang, l.rho, { maximumFractionDigits: 2 })}</span><span class="n">{t(lang, 'links.cell.n', { n: String(l.n) })}</span>{c.pair.preset && <span class="preset">{t(lang, 'links.cell.preset')}</span>}</a>
                 : <a data-lag={y} href={to} class="na">{t(lang, 'links.cell.not_shown', { n: String(l.n) })}{c.pair.preset && <span class="preset">{t(lang, 'links.cell.preset')}</span>}</a>)}</td>;
             })}
           </tr>

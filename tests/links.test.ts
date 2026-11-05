@@ -6,7 +6,7 @@ import { linksOverview } from '../src/lib/pages';
 import { KPIS } from '../src/lib/kpis';
 import { loadManifest } from '../src/lib/manifest';
 import { getSeries } from '../src/lib/series';
-import { MIN } from '../src/link/link';
+import { MIN, noiseBand } from '../src/link/link';
 
 const view = (page: string, segment: string, geo = 'germany', freq = 'annual') =>
   KPIS.find((k) => k.page === page)!.views.find((v) => v.segment === segment && v.geo === geo && v.freq === freq)!;
@@ -91,6 +91,26 @@ describe('matrix lag selector (ticket 10)', () => {
     for (const l of scope('kpi-initial-yield')) expect(l.preset).toBe(['bund-yield-10y', 'euribor-3m', 'loan-rate-nfc'].includes(l.name));
     for (const l of scope('kpi-price-index')) expect(l.preset).toBe(['bund-yield-10y', 'euribor-3m', 'loan-rate-nfc'].includes(l.name));
     for (const l of scope('kpi-rent-index')) expect(l.preset).toBe(false);
+  });
+  // Ticket 11: the noise band is 2/sqrt(n-1) from each cell's own n at the selected lag.
+  it('same year: the cells outside the noise band are these ten', () => {
+    const outside = cells().filter((c) => !c.lags[0].noise && c.lags[0].rho !== null).map((c) => `${c.page}|${c.pair.name}`).sort();
+    expect(outside).toEqual([
+      'kpi-price-index|cpi', 'kpi-rent-index|construction-price', 'kpi-initial-yield|cpi', 'kpi-initial-yield|gdp-real',
+      'kpi-initial-yield|oecd-confidence', 'kpi-office-vacancy|unemployment-rate', 'kpi-office-vacancy|gdp-real',
+      'kpi-transaction-volume|gdp-real', 'kpi-transaction-volume|oecd-confidence', 'construction|oecd-confidence'].sort());
+    expect(cells().filter((c) => c.lags[0].rho !== null)).toHaveLength(47);
+  });
+  it('the band follows the n of the selected lag', () => {
+    const c = cells().find((x) => x.page === 'kpi-initial-yield' && x.pair.name === 'euribor-3m')!;
+    expect([c.lags[0].n, c.lags[2].n]).toEqual([30, 29]);
+    expect(c.lags[0].band).toBeCloseTo(2 / Math.sqrt(29), 10);
+    expect(c.lags[2].band).toBeCloseTo(2 / Math.sqrt(28), 10);
+  });
+  it('a quarterly Link counts n / 4 effective observations (rounded down) in its band', () => {
+    expect(noiseBand(44, 'Q')).toBeCloseTo(2 / Math.sqrt(11 - 1), 10);
+    expect(noiseBand(47, 'Q')).toBeCloseTo(2 / Math.sqrt(11 - 1), 10);
+    expect(noiseBand(30, 'A')).toBeCloseTo(2 / Math.sqrt(29), 10);
   });
   it('a hash selects the lag; anything else is same year', () => {
     expect(lagFromHash('#lag-1')).toBe(1);

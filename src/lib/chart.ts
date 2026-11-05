@@ -136,7 +136,7 @@ export function multiplesChart(l: { kpi: Points; reference: Points }, labels: { 
 const signed = (lag: number) => (lag > 0 ? `+${lag}` : String(lag));
 
 /** Lag profile bars; blank lags stay on the axis, the strongest bar is ochre and labelled. */
-export function lagChart(lags: { lag: number; rho: number | null }[], strongest: number, labels: { lag: string; rho: string; mark: string; preset?: { lag: number; label: string }; title: string }, lang: Lang): string {
+export function lagChart(lags: { lag: number; rho: number | null }[], strongest: number, labels: { lag: string; rho: string; mark: string; preset?: { lag: number; label: string }; bands?: { lag: number; band: number }[]; title: string }, lang: Lang): string {
   const bars = lags.filter((l) => l.rho !== null);
   const top = bars.filter((l) => l.lag === strongest);
   // The label grows away from the nearer edge, so an edge lag's label stays inside the plot.
@@ -147,6 +147,8 @@ export function lagChart(lags: { lag: number; rho: number | null }[], strongest:
     x: { type: 'band', domain: lags.map((l) => l.lag), label: labels.lag, labelArrow: 'none', labelAnchor: 'center', tickFormat: signed },
     y: { domain: [-1, 1], grid: true, label: labels.rho, labelArrow: 'none', tickFormat: (d: number) => fmt(lang, d) },
     marks: [
+      // The noise band (ticket 11): a light strip around zero, ±2/√(n−1) with each lag's own n.
+      Plot.barY(labels.bands ?? [], { x: 'lag', y1: (d) => -d.band, y2: (d) => d.band, fill: MUTED, fillOpacity: 0.18 }),
       Plot.barY(bars, { x: 'lag', y: 'rho', fill: (d) => (d.lag === strongest ? STRONG : BAR), inset: narrow ? 3 : 8, title: (d) => `${signed(d.lag)}: ${fmt(lang, d.rho, { maximumFractionDigits: 2 })}` }),
       Plot.text(top, { x: 'lag', y: 'rho', text: (d) => `${fmt(lang, d.rho, { maximumFractionDigits: 2 })} ${labels.mark}`, dy: (top[0]?.rho ?? 0) < 0 ? 14 : -10, textAnchor: anchor, dx: anchor === 'start' ? -6 : anchor === 'end' ? 6 : 0, fill: INK, fontWeight: 600 }),
       // The pre-set lag (ticket 10): a dashed outline and a label at the base of the bar, apart from the "strongest" label at its tip.

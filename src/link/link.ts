@@ -2,6 +2,13 @@
 
 /** Minimum paired observations per lag. The one constant tests and build invariants use. */
 export const MIN = { Q: 40, A: 10 } as const;
+/** The Link target frequency of a KPI series: annual KPIs compare years, all others quarters. */
+export const targetOf = (kpiFreq: 'D' | 'M' | 'Q' | 'A'): 'Q' | 'A' => (kpiFreq === 'A' ? 'A' : 'Q');
+/** Observations that count for the noise band: quarterly changes are each taken against a year earlier, so neighbours overlap and n counts ÷ 4, rounded down. */
+export const effectiveN = (n: number, t: 'Q' | 'A') => (t === 'A' ? n : Math.floor(n / 4));
+/** Rough guide, not a significance test: the range of rank correlation chance alone often produces, ±2/√(n−1). */
+export const noiseBand = (n: number, t: 'Q' | 'A') => 2 / Math.sqrt(effectiveN(n, t) - 1);
+
 /** Lag, in periods, of an indicator taken `years` years earlier: +1 / +2 for annual KPIs, +4 / +8 quarters otherwise. */
 export const lagFor = (kpiFreq: 'D' | 'M' | 'Q' | 'A', years: 0 | 1 | 2) => years * (kpiFreq === 'A' ? 1 : 4);
 const MAX_LAG = { Q: 8, A: 3 } as const;
@@ -114,7 +121,7 @@ function spearman(x: number[], y: number[]): number | null {
 
 /** Positive lag = the indicator moved earlier than the KPI. */
 export function computeLink(kpi: LinkSeries, indicator: LinkSeries): LinkResult {
-  const t: Target = kpi.freq === 'A' ? 'A' : 'Q';
+  const t: Target = targetOf(kpi.freq);
   const [lk, li] = [levels(kpi, t), levels(indicator, t)];
   const [ck, ci] = [changes(lk, t, kpi.change), changes(li, t, indicator.change)];
   const lags: Lag[] = [];

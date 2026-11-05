@@ -3,7 +3,7 @@
 import { INDICATORS, linkResult, viewLinks, type Indicator, type Pair } from './links';
 import { getSeries, type Series } from './series';
 import { GEO_GROUPS, KPIS, SEGMENTS, cell, geoGroup, headline, liveViews, type Cell, type Freq, type GeoGroup, type Kpi, type Segment, type View } from './kpis';
-import { lagFor, type LinkResult } from '../link/link';
+import { lagFor, noiseBand, targetOf, type LinkResult } from '../link/link';
 import { insightsFor } from './insights';
 import type { InsightEntry } from './manifest';
 import { heat, type Heat } from './heat';
@@ -51,7 +51,8 @@ export interface OverviewCell {
   pair: Pair; result: LinkResult; heat?: Heat;
   lags: CellLag[];
 }
-export interface CellLag { rho: number | null; n: number; heat?: Heat }
+/** `band` and `noise` exist where there is a rho: noise = inside the ±2/√(n−1) band of that lag's own n. */
+export interface CellLag { rho: number | null; n: number; heat?: Heat; band?: number; noise?: boolean }
 
 export interface LinksOverview {
   /** Indicators that some row has a public pair for, in indicator order. */
@@ -68,8 +69,11 @@ export function linksOverview(): LinksOverview {
       const result = linkResult(getSeries(pair.kpi, pair.land), getSeries(pair.indicator));
       const at = (years: 0 | 1 | 2): CellLag => {
         if (!result.shown) return { rho: null, n: result.n0 };
-        const { rho, n } = result.lags.find((l) => l.lag === lagFor(getSeries(pair.kpi, pair.land).freq, years))!;
-        return { rho, n, heat: rho === null ? undefined : heat(rho) };
+        const freq = getSeries(pair.kpi, pair.land).freq;
+        const { rho, n } = result.lags.find((l) => l.lag === lagFor(freq, years))!;
+        if (rho === null) return { rho, n };
+        const band = noiseBand(n, targetOf(freq));
+        return { rho, n, heat: heat(rho), band, noise: Math.abs(rho) <= band };
       };
       return [pair.name, { pair, result, heat: result.shown ? heat(result.headline.rho!) : undefined, lags: [at(0), at(1), at(2)] }];
     })) };

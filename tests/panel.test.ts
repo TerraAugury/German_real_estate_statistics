@@ -33,6 +33,18 @@ it('the pre-set lag label appears on a Link panel only for a pair in scope', () 
   expect(new JSDOM(renderPanel(kpi, ind, shown(14), 'de', undefined, undefined, true)).window.document.body.textContent!).toContain('vorab gewählter Versatz');
 });
 
+// Ticket 11: the noise band on the bars, and n with the adjusted n for quarterly Links.
+it('the Link panel says what the band is; a quarterly Link shows n and the adjusted n', () => {
+  const annual = renderPanel(kpi, ind, shown(14), 'en');
+  expect(annual).toContain('chance alone often produces for n = 14');
+  const q = loadSeries('price-index-de-total-q');
+  const text = (h: string) => new JSDOM(h).window.document.body.textContent!;
+  const r = { ...shown(44), lags: [lag(-1, 0.1), { lag: 0, n: 44, rho: 0.5 }, { lag: 1, n: 43, rho: 0.2 }] } as LinkResult;
+  expect(text(renderPanel(q, ind, r, 'en'))).toContain('adjusted n = 11');
+  expect(text(renderPanel(kpi, ind, shown(14), 'en'))).not.toContain('adjusted n');
+  expect(text(renderPanel(q, ind, r, 'de'))).toContain('angepasstes n = 11');
+});
+
 // The overlay: the KPI against the left axis, the indicator against the right axis, on one x axis spanning both histories.
 describe('Link panel chart', () => {
   const periods = (a: number, b: number) => Array.from({ length: b - a + 1 }, (_, i) => String(a + i));
