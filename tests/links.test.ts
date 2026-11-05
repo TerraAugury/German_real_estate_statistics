@@ -119,10 +119,10 @@ describe('matrix lag selector (ticket 10)', () => {
     expect(noiseBand(1, 'A')).toBe(Infinity); // too few years: everything is within chance, never NaN
     expect(noiseBand(4, 'Q')).toBe(Infinity);
   });
-  it('a hash selects the lag; anything else is same year', () => {
-    expect(lagFromHash('#lag-1')).toBe(1);
+  it('a hash selects the lag; anything else is the pre-set N-1', () => {
+    expect(lagFromHash('#lag-0')).toBe(0);
     expect(lagFromHash('#lag-2')).toBe(2);
-    for (const h of ['', '#', '#lag-0', '#lag-3', '#lag-', '#foo', '#lag-1x', '#link-x']) expect(lagFromHash(h), h).toBe(0);
+    for (const h of ['', '#', '#lag-1', '#lag-3', '#lag-', '#foo', '#lag-0x', '#link-x']) expect(lagFromHash(h), h).toBe(1); // the pre-set N-1
   });
 });
 

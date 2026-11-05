@@ -109,8 +109,8 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
       <p class="scale"><span>{t(lang, 'links.scale.neg')}</span><span>{t(lang, 'links.scale.zero')}</span><span>{t(lang, 'links.scale.pos')}</span></p>
       <p class="note">{t(lang, 'links.legend')}</p>
       <p class="note">{t(lang, 'links.noise.legend')}</p>
-      <div class="selectors lag-selector"><label>{t(lang, 'links.lag.label')}<select id="lag">{[0, 1, 2].map((y) => <option value={y}>{t(lang, `links.lag.${y}`)}</option>)}</select></label></div>
-      <div class="scroll"><table class="matrix" data-lag="0">
+      <div class="selectors lag-selector"><label>{t(lang, 'links.lag.label')}<select id="lag">{[0, 1, 2].map((y) => <option value={y} selected={y === 1}>{t(lang, `links.lag.${y}`)}</option>)}</select></label></div>
+      <div class="scroll"><table class="matrix" data-lag="1">
         <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{overview!.columns.map((n) => <th scope="col">{t(lang, `indicator.${n}`)}</th>)}</tr></thead>
         <tbody>{overview!.rows.map(({ kpi: k, view: v, cells }) => (
           <tr>
@@ -123,8 +123,8 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
               // One link per lag; the selector shows one. A shown Link is shaded by its rho, with the coefficient first and n
               // beneath; one not shown (or under the minimum overlap at that lag) is hatched like any gap.
               return <td class="lagcell">{c.lags.map((l, y) => l.heat && l.rho !== null
-                ? <a data-lag={y} href={to} class={`${l.heat.side}${l.noise ? ' noise' : ''}`} style={`--share: ${l.heat.share}%`}><span class="rho">{fmt(lang, l.rho, { maximumFractionDigits: 2 })}</span><span class="n">{t(lang, 'links.cell.n', { n: String(l.n) })}</span>{l.noise && <span class="vh">{t(lang, 'links.cell.noise')}</span>}{c.pair.preset && <span class="preset">{t(lang, 'links.cell.preset')}</span>}</a>
-                : <a data-lag={y} href={to} class="na">{t(lang, 'links.cell.not_shown', { n: String(l.n) })}{c.pair.preset && <span class="preset">{t(lang, 'links.cell.preset')}</span>}</a>)}</td>;
+                ? <a data-lag={y} href={to} class={`${l.heat.side}${l.noise ? ' noise' : ''}`} style={`--share: ${l.heat.share}%`}><span class="rho">{fmt(lang, l.rho, { maximumFractionDigits: 2 })}</span><span class="n">{t(lang, 'links.cell.n', { n: String(l.n) })}</span>{l.noise && <span class="vh">{t(lang, 'links.cell.noise')}</span>}{c.pair.preset && <span class="preset">{t(lang, y === 1 ? 'links.cell.preset' : 'links.cell.preset_other')}</span>}</a>
+                : <a data-lag={y} href={to} class="na">{t(lang, 'links.cell.not_shown', { n: String(l.n) })}{c.pair.preset && <span class="preset">{t(lang, y === 1 ? 'links.cell.preset' : 'links.cell.preset_other')}</span>}</a>)}</td>;
             })}
           </tr>
         ))}</tbody>
@@ -141,8 +141,8 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
         const fromHash = () => { sel.value = String(lagFromHash(location.hash)); apply(); };
         fromHash();
         addEventListener('hashchange', fromHash);
-        // The view is shareable: #lag-1 / #lag-2, no hash for same year.
-        sel.addEventListener('change', () => { apply(); history.replaceState(null, '', sel.value === '0' ? location.pathname + location.search : '#lag-' + sel.value); });
+        // The view is shareable: #lag-0 / #lag-2, no hash for the pre-set N-1.
+        sel.addEventListener('change', () => { apply(); history.replaceState(null, '', sel.value === '1' ? location.pathname + location.search : '#lag-' + sel.value); });
       </script>
     </>
   ) : page === 'insights' ? (
