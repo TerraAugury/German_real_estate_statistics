@@ -22,9 +22,6 @@ const seriesOf = (name: Indicator, segment: Segment, kpi: string) =>
 /** KPIs in nominal euros (rent and transaction volume): their links to inflation-driven series partly reflect shared inflation (ticket 13). */
 export const isNominalKpi = (kpiKey: string) => kpiKey.startsWith('rent-index-') || kpiKey.startsWith('transaction-volume-');
 
-/** Pairs that are computable but say nothing: dropped from every KPI page and the Links overview. */
-const NO_INFORMATION = new Set(['office-vacancy-7|cpi']);
-
 /**
  * Appraisal-based KPIs (initial yield, price index, any segment or area) react to interest rates with a delay, so one year
  * earlier (N-1) is set in advance for these indicators (ticket 10). Chosen on economic grounds, not from the results.
@@ -41,7 +38,7 @@ export function viewLinks(v: View, live: ManifestEntry[] = loadManifest()) {
   return publicLinks(INDICATORS.map((name) => {
     const indicator = seriesOf(name, v.segment, key);
     return { name, kpi: key, land, indicator, preset: presetKpi(key) && PRESET_INDICATORS.has(name), id: `link-${key}-${land ?? 'de'}-${indicator}` };
-  }).filter((p) => !NO_INFORMATION.has(`${p.kpi}|${p.indicator}`)), live);
+  }), live);
 }
 export type Pair = ReturnType<typeof viewLinks>[number];
 

@@ -39,6 +39,11 @@ describe.skipIf(built.length === 0)('Links page', () => {
     }
     expect([...doc.querySelectorAll('p.note')].some((p) => p.textContent === t(l as 'en', 'links.rows.note'))).toBe(true);
   });
+  it.each(built)('%s: no cell is blank', (l) => {
+    const cells = [...page(l as 'en').querySelectorAll('table.matrix tbody td')];
+    expect(cells).toHaveLength(48);
+    expect(cells.filter((td) => !td.textContent!.trim())).toEqual([]);
+  });
   it('the line reads as specified in English', () => {
     expect(t('en', 'links.chance.note')).toBe('With this many comparisons, a few boxes will look strong by chance alone. Treat a single strong box with caution, especially when n is small.');
   });
