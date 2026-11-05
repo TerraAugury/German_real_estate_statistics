@@ -25,9 +25,9 @@ describe('Link pairs per view (spec sections 5, 6)', () => {
     expect(prices('commercial-overall')).toBe('construction-price-office'); // its first series is office permits
     expect(prices('logistics')).toBe('construction-price-commercial');
   });
-  it('office vacancy in the 7 major cities has no Link against the consumer price index', () => {
+  it('office vacancy in the 7 major cities has a Link against the consumer price index, like every other pair (ticket 15)', () => {
     const ind = (geo: string) => viewLinks(view('kpi-office-vacancy', 'office', geo), preview).map((l) => l.indicator);
-    expect(ind('7-cities')).not.toContain('cpi');
+    expect(ind('7-cities')).toContain('cpi');
     expect(ind('127-towns')).toContain('cpi');
   });
   it('the KPI side is the view’s first series, Land included', () => {
@@ -93,13 +93,18 @@ describe('matrix lag selector (ticket 10)', () => {
     for (const l of scope('kpi-rent-index')) expect(l.preset).toBe(false);
   });
   // Ticket 11: the noise band is 2/sqrt(n-1) from each cell's own n at the selected lag.
+  it('no cell of the matrix is empty: every row has a value or a "Not shown" for every column', () => {
+    const o = linksOverview();
+    for (const r of o.rows) expect(o.columns.filter((n) => !r.cells.has(n)), r.kpi.page).toEqual([]);
+    expect(cells()).toHaveLength(o.rows.length * o.columns.length);
+  });
   it('same year: the cells outside the noise band are these ten', () => {
     const outside = cells().filter((c) => !c.lags[0].noise && c.lags[0].rho !== null).map((c) => `${c.page}|${c.pair.name}`).sort();
     expect(outside).toEqual([
       'kpi-price-index|cpi', 'kpi-rent-index|construction-price', 'kpi-initial-yield|cpi', 'kpi-initial-yield|gdp-real',
       'kpi-initial-yield|oecd-confidence', 'kpi-office-vacancy|unemployment-rate', 'kpi-office-vacancy|gdp-real',
       'kpi-transaction-volume|gdp-real', 'kpi-transaction-volume|oecd-confidence', 'construction|oecd-confidence'].sort());
-    expect(cells().filter((c) => c.lags[0].rho !== null)).toHaveLength(47);
+    expect(cells().filter((c) => c.lags[0].rho !== null)).toHaveLength(48); // 47 plus office vacancy x CPI (ticket 15)
   });
   it('the band follows the n of the selected lag', () => {
     const c = cells().find((x) => x.page === 'kpi-initial-yield' && x.pair.name === 'euribor-3m')!;
