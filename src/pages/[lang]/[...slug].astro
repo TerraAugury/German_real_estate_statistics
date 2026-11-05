@@ -138,8 +138,9 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
         const sel = document.querySelector<HTMLSelectElement>('#lag')!;
         const table = document.querySelector<HTMLTableElement>('table.matrix')!;
         const apply = () => { table.dataset.lag = sel.value; };
-        sel.value = String(lagFromHash(location.hash));
-        apply();
+        const fromHash = () => { sel.value = String(lagFromHash(location.hash)); apply(); };
+        fromHash();
+        addEventListener('hashchange', fromHash);
         // The view is shareable: #lag-1 / #lag-2, no hash for same year.
         sel.addEventListener('change', () => { apply(); history.replaceState(null, '', sel.value === '0' ? location.pathname + location.search : '#lag-' + sel.value); });
       </script>
