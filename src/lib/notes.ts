@@ -1,6 +1,7 @@
 // Notes (spec section 9): every chart gets its Notes here, so the fixed order lives in one place.
 import { day, period, t } from './i18n';
 import { KPIS, landName } from './kpis';
+import { isNominalKpi } from './links';
 import { SCOPES } from './manifest';
 import type { Lang } from './routes';
 import type { Series } from './series';
@@ -54,7 +55,7 @@ function short(s: Series, lang: Lang): string[] {
  * - Compact chart: stale, fetch failed.
  * - Insight: the Insight's short history, then each series' stale, fetch failed and revised, named by series, then each
  *   scope Note once.
- * - Link panel: the KPI's short history (it carries the one-cycle caveat over), small sample, the KPI's stale, fetch
+ * - Link panel: the KPI's short history (it carries the one-cycle caveat over), small sample, the nominal-KPI note, the KPI's stale, fetch
  *   failed and revised, then the indicator's; each series Note names its series.
  * Plain text: callers escape it for HTML.
  */
@@ -78,5 +79,9 @@ export function notesFor(s: Series, lang: Lang, ctx: NoteContext, now = new Date
   }
   const of = (x: Series, ns: string[]) => ns.map((n) => note(`${x.title[lang]}: ${n}`));
   const small = s.freq === 'A' && ctx.pairs !== undefined && ctx.pairs < SMALL ? [note(t(lang, 'link.small_sample', { n: String(ctx.pairs) }))] : [];
-  return [...of(s, short(s, lang)), ...small, ...of(s, freshness(s, lang, now)), ...of(ctx.indicator, freshness(ctx.indicator, lang, now))];
+  // A nominal KPI against inflation-driven or real indicators (ticket 13).
+  const nominal = !isNominalKpi(s.key) ? []
+    : /^(cpi|construction-price)/.test(ctx.indicator.key) ? [note(t(lang, 'note.nominal.inflation'))]
+      : ctx.indicator.key === 'gdp-real' ? [note(t(lang, 'note.nominal.gdp'))] : [];
+  return [...of(s, short(s, lang)), ...small, ...nominal, ...of(s, freshness(s, lang, now)), ...of(ctx.indicator, freshness(ctx.indicator, lang, now))];
 }

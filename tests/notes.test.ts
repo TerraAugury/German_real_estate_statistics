@@ -68,8 +68,8 @@ describe('KPI page charts', () => {
 });
 
 describe('Link panels', () => {
-  const annual = { ...base, freq: 'A', obs: [{ period: '2015', value: 1 }, { period: '2025', value: 2 }], lastPeriod: '2025' } as Series;
-  const ind = { ...base, title: { en: 'Euribor', de: 'Euribor' } } as Series;
+  const annual = { ...base, key: 'kpi-x', freq: 'A', obs: [{ period: '2015', value: 1 }, { period: '2025', value: 2 }], lastPeriod: '2025' } as Series;
+  const ind = { ...base, key: 'ind-x', title: { en: 'Euribor', de: 'Euribor' } } as Series;
   it('KPI short history, small sample, KPI series Notes, indicator series Notes; series Notes name their series', () => {
     const k = { ...annual, shortWindow: true, stale: true, scope: ['index'] } as Series;
     const i = { ...ind, fetchedFrom: 'DBnomics', fetchFailed: '2026-10-30T01:00:00Z' } as Series;
@@ -86,7 +86,7 @@ describe('Link panels', () => {
     expect(small(annual, 19)).toBe(true);
     expect(small(annual, 20)).toBe(false);
     expect(small(annual)).toBe(false);
-    expect(small(base, 12)).toBe(false);
+    expect(small({ ...base, key: 'kpi-y' } as Series, 12)).toBe(false);
   });
 });
 

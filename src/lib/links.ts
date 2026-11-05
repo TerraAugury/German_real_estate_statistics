@@ -19,6 +19,9 @@ const seriesOf = (name: Indicator, segment: Segment, kpi: string) =>
     : name === 'oecd-confidence' ? (segment === 'retail' ? 'oecd-confidence-retail' : 'oecd-confidence-construction')
       : name;
 
+/** KPIs in nominal euros (rent and transaction volume): their links to inflation-driven series partly reflect shared inflation (ticket 13). */
+export const isNominalKpi = (kpiKey: string) => kpiKey.startsWith('rent-index-') || kpiKey.startsWith('transaction-volume-');
+
 /** Pairs that are computable but say nothing: dropped from every KPI page and the Links overview. */
 const NO_INFORMATION = new Set(['office-vacancy-7|cpi']);
 

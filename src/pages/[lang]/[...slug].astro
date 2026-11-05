@@ -12,6 +12,7 @@ import { sourcesTable } from '../../lib/sources';
 import { compactChart, latestBlock, renderHero, renderInsight, renderInsightIndex, renderToneLegend, sourceBlock } from '../../lib/panel';
 import { KPIS, SEGMENTS, SEGMENT_PAGES, cell, naText, viewHref, type GeoGroup, type Segment } from '../../lib/kpis';
 import { availability, firstSeries, homeIndex, kpiPage, linksOverview } from '../../lib/pages';
+import { isNominalKpi } from '../../lib/links';
 import { insightsPage, leadInsight } from '../../lib/insights';
 
 export function getStaticPaths() {
@@ -113,7 +114,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
         <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{overview!.columns.map((n) => <th scope="col">{t(lang, `indicator.${n}`)}</th>)}</tr></thead>
         <tbody>{overview!.rows.map(({ kpi: k, view: v, cells }) => (
           <tr>
-            <th scope="row"><a href={href(k.page, lang)}>{t(lang, k.title)}</a>{v && <><br /><small>{firstSeries(v).title[lang]}</small></>}</th>
+            <th scope="row"><a href={href(k.page, lang)}>{t(lang, k.title)}</a>{v && <><br /><small>{firstSeries(v).title[lang]}</small></>}{v && isNominalKpi(firstSeries(v).key) && <><br /><small class="nominal">{t(lang, 'links.nominal.tag')}</small></>}</th>
             {!v ? <td class="na licence" colspan={overview!.columns.length}>{t(lang, 'kpi.not_available.licence')}</td> : overview!.columns.map((n) => {
               const c = cells.get(n);
               if (!c) return <td />;
@@ -130,6 +131,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
       </table></div>
       <p class="note">{t(lang, 'links.preset.note')}</p>
       <p class="note">{t(lang, 'links.chance.note')}</p>
+      <p class="note">{t(lang, 'links.nominal.note')}</p>
       <script>
         import { lagFromHash } from '../../lib/select';
         const sel = document.querySelector<HTMLSelectElement>('#lag')!;

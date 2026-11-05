@@ -45,6 +45,18 @@ it('the Link panel says what the band is; a quarterly Link shows n and the adjus
   expect(text(renderPanel(q, ind, r, 'de'))).toContain('angepasstes n = 11');
 });
 
+// Ticket 13 (option A): nominal KPIs get a Note against the indicators that share inflation or are real.
+it('the Link panel of a nominal KPI notes shared inflation (CPI, construction prices) or nominal against real (GDP); nothing else', () => {
+  const rent = loadSeries('rent-index-de-office-a');
+  const text = (k: typeof rent, i: typeof ind) => new JSDOM(renderPanel(k, i, shown(14), 'en')).window.document.body.textContent!;
+  expect(text(rent, loadSeries('cpi'))).toContain('partly reflects shared inflation');
+  expect(text(rent, loadSeries('construction-price-office'))).toContain('partly reflects shared inflation');
+  expect(text(rent, loadSeries('gdp-real'))).toContain('compares nominal with real');
+  expect(text(rent, ind)).not.toContain('inflation');
+  expect(text(kpi, loadSeries('cpi'))).not.toContain('shared inflation');
+  expect(new JSDOM(renderPanel(rent, loadSeries('gdp-real'), shown(14), 'de')).window.document.body.textContent!).toContain('Nominal gegen real');
+});
+
 // The overlay: the KPI against the left axis, the indicator against the right axis, on one x axis spanning both histories.
 describe('Link panel chart', () => {
   const periods = (a: number, b: number) => Array.from({ length: b - a + 1 }, (_, i) => String(a + i));
