@@ -447,9 +447,9 @@ indicator.euribor-3m:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 indicator.loan-rate-nfc:
-  en_hash: 54bca07c40466ac3
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 63b7d8a3c8cb5594
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 indicator.cpi:
   en_hash: f1d1d21f5a3e2898
   reviewed_by: Project owner
@@ -763,9 +763,9 @@ manifest:rent-index-de-office-a.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-de-office-a.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 0fb88c6f59b61fa6
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:rent-index-de-office-a.attribution:
   en_hash: aa065f54af1e34b1
   reviewed_by: terra augury
@@ -775,9 +775,9 @@ manifest:rent-index-de-office-q.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-de-office-q.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 0fb88c6f59b61fa6
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:rent-index-de-office-q.attribution:
   en_hash: aa065f54af1e34b1
   reviewed_by: terra augury
@@ -787,9 +787,9 @@ manifest:rent-index-de-retail-a.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-de-retail-a.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 0fb88c6f59b61fa6
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:rent-index-de-retail-a.attribution:
   en_hash: aa065f54af1e34b1
   reviewed_by: terra augury
@@ -799,9 +799,9 @@ manifest:rent-index-de-retail-q.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-de-retail-q.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 0fb88c6f59b61fa6
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:rent-index-de-retail-q.attribution:
   en_hash: aa065f54af1e34b1
   reviewed_by: terra augury
@@ -811,9 +811,9 @@ manifest:rent-index-combined-127.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-combined-127.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 0fb88c6f59b61fa6
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:rent-index-combined-127.attribution:
   en_hash: 1e7036f92b8645a9
   reviewed_by: terra augury
@@ -823,9 +823,9 @@ manifest:rent-index-combined-120.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-combined-120.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 0fb88c6f59b61fa6
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:rent-index-combined-120.attribution:
   en_hash: 1e7036f92b8645a9
   reviewed_by: terra augury
@@ -835,9 +835,9 @@ manifest:rent-index-combined-7.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:rent-index-combined-7.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 0fb88c6f59b61fa6
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:rent-index-combined-7.attribution:
   en_hash: 1e7036f92b8645a9
   reviewed_by: terra augury
@@ -919,9 +919,9 @@ manifest:transaction-volume-de.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:transaction-volume-de.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 0fb88c6f59b61fa6
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:transaction-volume-de.attribution:
   en_hash: aa065f54af1e34b1
   reviewed_by: terra augury
@@ -931,9 +931,9 @@ manifest:transaction-volume-127.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:transaction-volume-127.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 0fb88c6f59b61fa6
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:transaction-volume-127.attribution:
   en_hash: aa065f54af1e34b1
   reviewed_by: terra augury
@@ -943,9 +943,9 @@ manifest:transaction-volume-7.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:transaction-volume-7.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 0fb88c6f59b61fa6
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:transaction-volume-7.attribution:
   en_hash: aa065f54af1e34b1
   reviewed_by: terra augury
@@ -1023,9 +1023,9 @@ manifest:euribor-3m.attribution:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:loan-rate-nfc.title:
-  en_hash: fa6802b02ec11ddb
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: e8b09b3bfe50e1e9
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:loan-rate-nfc.unit:
   en_hash: e7f8da24a4237aad
   reviewed_by: Project owner
@@ -1039,9 +1039,9 @@ manifest:cpi.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:cpi.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 831f9293e0a8fdc4
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:cpi.attribution:
   en_hash: 7f1ba88184b2589a
   reviewed_by: Project owner
@@ -1051,9 +1051,9 @@ manifest:gdp-real.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:gdp-real.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 831f9293e0a8fdc4
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:gdp-real.attribution:
   en_hash: 3f7252e067acb41f
   reviewed_by: Project owner
@@ -1075,9 +1075,9 @@ manifest:construction-price-office.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:construction-price-office.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: bcfdc481871857c7
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:construction-price-office.attribution:
   en_hash: 7f1ba88184b2589a
   reviewed_by: Project owner
@@ -1087,9 +1087,9 @@ manifest:construction-price-commercial.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:construction-price-commercial.unit:
-  en_hash: 1bc04b5291c26a46
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: bcfdc481871857c7
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:construction-price-commercial.attribution:
   en_hash: 7f1ba88184b2589a
   reviewed_by: Project owner
@@ -1359,9 +1359,9 @@ insight.context.legend:
   reviewed_by: terra augury
   reviewed_on: 2026-11-03
 manifest:office-employment.title:
-  en_hash: ca2632ef7e6a7be0
-  reviewed_by: terra augury
-  reviewed_on: 2026-11-03
+  en_hash: 02a1ad140d0c7009
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 manifest:office-employment.unit:
   en_hash: 307bdfc873b838ca
   reviewed_by: terra augury
@@ -1411,13 +1411,13 @@ insight:d.measure:
   reviewed_by: terra augury
   reviewed_on: 2026-11-03
 insight:i.title:
-  en_hash: a65d5b3b9d6d940d
-  reviewed_by: terra augury
-  reviewed_on: 2026-11-03
+  en_hash: 1b539df98ca48f2c
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 insight:i.measure:
-  en_hash: 296ca22a47bb78ab
-  reviewed_by: terra augury
-  reviewed_on: 2026-11-03
+  en_hash: d17cbad3e9c8c094
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
 insight:c.title:
   en_hash: 19997e53d9fd54a5
   reviewed_by: terra augury
@@ -1576,5 +1576,41 @@ note.nominal.gdp:
   reviewed_on: 2026-11-05
 links.cell.noise:
   en_hash: 69ec55635c7db4cc
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+insight.multiples.legend_dual:
+  en_hash: 7aa1c588b352b8f2
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+insight.note.near_zero_rates:
+  en_hash: c246e1e2e07f7a17
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+insight.note.price_yield_coverage:
+  en_hash: b993ea3cd8eeb4c9
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+insight.multiples.base_note:
+  en_hash: 2e8c53b8fef92703
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+insight.axis.growth:
+  en_hash: d38f7e4f6f74f36f
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+insight.multiples.label_growth:
+  en_hash: 6d98f33fb214f489
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+insight.multiples.legend_growth:
+  en_hash: bc10d15547957c11
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+insight.multiples.legend_growth_real:
+  en_hash: e79983b1ce2513ca
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-05
+insight.multiples.real_growth:
+  en_hash: 52eb85c63a6c1a55
   reviewed_by: Olivier
   reviewed_on: 2026-11-05
