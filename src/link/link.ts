@@ -2,6 +2,8 @@
 
 /** Minimum paired observations per lag. The one constant tests and build invariants use. */
 export const MIN = { Q: 40, A: 10 } as const;
+/** Lag, in periods, of an indicator taken `years` years earlier: +1 / +2 for annual KPIs, +4 / +8 quarters otherwise. */
+export const lagFor = (kpiFreq: 'D' | 'M' | 'Q' | 'A', years: 0 | 1 | 2) => years * (kpiFreq === 'A' ? 1 : 4);
 const MAX_LAG = { Q: 8, A: 3 } as const;
 const MIN_LAGS = 3; // lags (lag 0 included) that must pass for a Link to show
 

@@ -194,3 +194,10 @@ insight.unit.growth: percent
 insight.template.office-employment: "Office vacancy changed by {latest} points in {to} while office employment grew {emp}%; the {from}-{to} average vacancy change is {mean} points."
 insight.unit.change: percentage points
 insight.context.legend: "Blue line: {measure}, in percentage points. Ochre line: year-on-year growth of {title}, in percent. Both are drawn on one axis."
+link.preset.mark: "pre-set lag"
+links.lag.label: "Indicator timing"
+links.lag.0: "Same year"
+links.lag.1: "Indicator 1 year earlier (N-1)"
+links.lag.2: "Indicator 2 years earlier (N-2)"
+links.cell.preset: "pre-set lag: N-1"
+links.preset.note: "Appraisal-based yields and prices react to interest rates with a delay. For these boxes, one year earlier (N-1) is set in advance on economic grounds, not chosen from the results."

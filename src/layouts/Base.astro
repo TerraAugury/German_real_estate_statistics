@@ -157,13 +157,17 @@ const inKpis = KPIS.some((k) => k.page === page);
       td.na, .na { color: var(--muted); background: repeating-linear-gradient(135deg, var(--na) 0 6px, var(--page) 6px 12px); border-color: transparent; }
       td.licence { background: var(--plate); }
       /* Links overview: a shown Link is shaded by its rank correlation (src/lib/heat.ts); ink on every shade is 4.5:1 or better. */
-      td.heat { padding: 0; }
-      td.heat.zero { background: var(--plate); }
-      td.heat.neg { background: color-mix(in srgb, var(--heat-neg) var(--share), var(--plate)); }
-      td.heat.pos { background: color-mix(in srgb, var(--heat-pos) var(--share), var(--plate)); }
-      td.heat a { display: block; padding: .65rem .75rem; color: var(--ink); }
-      td.heat .rho { display: block; font: 600 17px/1.25 var(--cond); font-variant-numeric: tabular-nums; white-space: nowrap; }
-      td.heat .n { display: block; font-size: 13px; white-space: nowrap; }
+      /* Each cell holds one link per lag (ticket 10); the table's data-lag shows the selected one. Without script: same year. */
+      td.lagcell { padding: 0; }
+      td.lagcell a { display: none; padding: .65rem .75rem; color: var(--ink); }
+      table.matrix[data-lag="0"] a[data-lag="0"], table.matrix[data-lag="1"] a[data-lag="1"], table.matrix[data-lag="2"] a[data-lag="2"] { display: block; }
+      td.lagcell a.zero { background: var(--plate); }
+      td.lagcell a.neg { background: color-mix(in srgb, var(--heat-neg) var(--share), var(--plate)); }
+      td.lagcell a.pos { background: color-mix(in srgb, var(--heat-pos) var(--share), var(--plate)); }
+      td.lagcell a.na { color: var(--muted); background: repeating-linear-gradient(135deg, var(--na) 0 6px, var(--page) 6px 12px); }
+      td.lagcell .rho { display: block; font: 600 17px/1.25 var(--cond); font-variant-numeric: tabular-nums; white-space: nowrap; }
+      td.lagcell .n { display: block; font-size: 13px; white-space: nowrap; }
+      td.lagcell .preset { display: block; font-size: 12px; font-weight: 500; white-space: nowrap; border-top: 1px dashed currentColor; margin-top: .25rem; padding-top: .15rem; }
       table.matrix td { min-width: 5.5rem; }
       table.matrix tbody th { min-width: 8rem; max-width: 11rem; }
       table.matrix th:first-child { position: sticky; left: 0; z-index: 1; background: var(--page); }

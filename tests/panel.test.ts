@@ -25,6 +25,14 @@ it('lineChart renders one wide and one narrow SVG with the same label', () => {
   expect(narrow[0].getAttribute('aria-label')).toBe(kpi.title.en);
 });
 
+// Ticket 10: the +1 bar of an appraisal-based pair carries a "pre-set lag" label, apart from the "strongest" one.
+it('the pre-set lag label appears on a Link panel only for a pair in scope', () => {
+  const labels = (preset: boolean) => new JSDOM(renderPanel(kpi, ind, shown(14), 'en', undefined, undefined, preset)).window.document.body.textContent!;
+  expect(labels(true)).toContain('pre-set lag');
+  expect(labels(false)).not.toContain('pre-set lag');
+  expect(new JSDOM(renderPanel(kpi, ind, shown(14), 'de', undefined, undefined, true)).window.document.body.textContent!).toContain('vorab gewählter Versatz');
+});
+
 // The overlay: the KPI against the left axis, the indicator against the right axis, on one x axis spanning both histories.
 describe('Link panel chart', () => {
   const periods = (a: number, b: number) => Array.from({ length: b - a + 1 }, (_, i) => String(a + i));

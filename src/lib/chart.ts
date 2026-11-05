@@ -136,7 +136,7 @@ export function multiplesChart(l: { kpi: Points; reference: Points }, labels: { 
 const signed = (lag: number) => (lag > 0 ? `+${lag}` : String(lag));
 
 /** Lag profile bars; blank lags stay on the axis, the strongest bar is ochre and labelled. */
-export function lagChart(lags: { lag: number; rho: number | null }[], strongest: number, labels: { lag: string; rho: string; mark: string; title: string }, lang: Lang): string {
+export function lagChart(lags: { lag: number; rho: number | null }[], strongest: number, labels: { lag: string; rho: string; mark: string; preset?: { lag: number; label: string }; title: string }, lang: Lang): string {
   const bars = lags.filter((l) => l.rho !== null);
   const top = bars.filter((l) => l.lag === strongest);
   // The label grows away from the nearer edge, so an edge lag's label stays inside the plot.
@@ -149,6 +149,11 @@ export function lagChart(lags: { lag: number; rho: number | null }[], strongest:
     marks: [
       Plot.barY(bars, { x: 'lag', y: 'rho', fill: (d) => (d.lag === strongest ? STRONG : BAR), inset: narrow ? 3 : 8, title: (d) => `${signed(d.lag)}: ${fmt(lang, d.rho, { maximumFractionDigits: 2 })}` }),
       Plot.text(top, { x: 'lag', y: 'rho', text: (d) => `${fmt(lang, d.rho, { maximumFractionDigits: 2 })} ${labels.mark}`, dy: (top[0]?.rho ?? 0) < 0 ? 14 : -10, textAnchor: anchor, dx: anchor === 'start' ? -6 : anchor === 'end' ? 6 : 0, fill: INK, fontWeight: 600 }),
+      // The pre-set lag (ticket 10): a dashed outline and a label at the base of the bar, apart from the "strongest" label at its tip.
+      ...(labels.preset ? [
+        Plot.barY(bars.filter((l) => l.lag === labels.preset!.lag), { x: 'lag', y: 'rho', fill: 'none', stroke: INK, strokeDasharray: '4 3', strokeWidth: 1.5, inset: narrow ? 3 : 8 }),
+        Plot.text(bars.filter((l) => l.lag === labels.preset!.lag), { x: 'lag', y: 0, text: () => labels.preset!.label, dy: (bars.find((l) => l.lag === labels.preset!.lag)?.rho ?? 0) < 0 ? -8 : 14, fill: INK, fontSize: 12 }),
+      ] : []),
       Plot.ruleY([0], { stroke: MUTED }),
     ],
   }), labels.title);

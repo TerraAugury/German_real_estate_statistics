@@ -23,6 +23,13 @@ const seriesOf = (name: Indicator, segment: Segment, kpi: string) =>
 const NO_INFORMATION = new Set(['office-vacancy-7|cpi']);
 
 /**
+ * Appraisal-based KPIs (initial yield, price index, any segment or area) react to interest rates with a delay, so one year
+ * earlier (N-1) is set in advance for these indicators (ticket 10). Chosen on economic grounds, not from the results.
+ */
+const PRESET_INDICATORS = new Set<Indicator>(['bund-yield-10y', 'euribor-3m', 'loan-rate-nfc']);
+const presetKpi = (kpi: string) => kpi.startsWith('initial-yield-') || kpi.startsWith('price-index-');
+
+/**
  * One view's Link pairs: its first series against each indicator, minus pairs the provisional gate drops. `id` is the
  * panel's HTML id, which KPI pages and the Links overview anchors share.
  */
@@ -30,7 +37,7 @@ export function viewLinks(v: View, live: ManifestEntry[] = loadManifest()) {
   const { key, land } = v.series[0];
   return publicLinks(INDICATORS.map((name) => {
     const indicator = seriesOf(name, v.segment, key);
-    return { name, kpi: key, land, indicator, id: `link-${key}-${land ?? 'de'}-${indicator}` };
+    return { name, kpi: key, land, indicator, preset: presetKpi(key) && PRESET_INDICATORS.has(name), id: `link-${key}-${land ?? 'de'}-${indicator}` };
   }).filter((p) => !NO_INFORMATION.has(`${p.kpi}|${p.indicator}`)), live);
 }
 export type Pair = ReturnType<typeof viewLinks>[number];
