@@ -38,6 +38,8 @@ Jede Verknüpfung hat drei Teile:
 
 **Nominal und real.** Mieten und Transaktionsvolumen sind in nominalen Euro, ebenso der Verbraucherpreisindex und die Baupreise; ihre Verknüpfungen mit diesen beiden Indikatoren spiegeln daher teilweise gemeinsame Inflation wider. Das reale BIP ist inflationsbereinigt; eine Verknüpfung zwischen einer nominalen Kennzahl und dem realen BIP stellt also Nominal gegen real. Die Zeilen Mieten und Transaktionsvolumen auf der Seite Verknüpfungen sowie ihre Verknüpfungsgrafiken zu diesen drei Indikatoren tragen einen entsprechenden Hinweis. Wir bereinigen die Zahlen in einer Verknüpfung nicht um die Inflation.
 
+**Zeilen und Gebiete.** Die Zeilen der Seite Verknüpfungen decken unterschiedliche Segmente und Gebiete ab, und jede Zeile beginnt mit einem Hinweis auf ihr eigenes: Gewerbe gesamt oder Büro, Deutschland oder die 7 Großstädte, bei der Anfangsrendite Büro und Einzelhandel zusammen. Jeder Indikator ist bundesweit, daher vergleicht das Lesen einer Spalte von oben nach unten Ungleiches.
+
 **Geografie.** Jeder Indikator ist bundesweit. Bei einer Städtegruppe oder einem Land vergleicht die Verknüpfung den bundesweiten Indikator mit der Kennzahl dieser Geografie.
 
 ## Die acht Indikatoren
