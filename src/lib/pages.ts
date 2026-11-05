@@ -3,7 +3,7 @@
 import { INDICATORS, linkResult, viewLinks, type Indicator, type Pair } from './links';
 import { getSeries, type Series } from './series';
 import { GEO_GROUPS, KPIS, SEGMENTS, cell, geoGroup, headline, liveViews, type Cell, type Freq, type GeoGroup, type Kpi, type Segment, type View } from './kpis';
-import type { LinkResult } from '../link/link';
+import { lagFor, type LinkResult } from '../link/link';
 import { insightsFor } from './insights';
 import type { InsightEntry } from './manifest';
 import { heat, type Heat } from './heat';
@@ -43,11 +43,21 @@ export function kpiPage(kpi: Kpi): KpiPage {
   };
 }
 
+/**
+ * One matrix cell. `lags[y]` is the value with the indicator taken y years earlier (0 = same year, the headline), read
+ * from the same lag list the Link panel draws; a lag under the minimum overlap has no rho and no heat.
+ */
+export interface OverviewCell {
+  pair: Pair; result: LinkResult; heat?: Heat;
+  lags: CellLag[];
+}
+export interface CellLag { rho: number | null; n: number; heat?: Heat }
+
 export interface LinksOverview {
   /** Indicators that some row has a public pair for, in indicator order. */
   columns: Indicator[];
   /** Each KPI at its headline view (none = licence not confirmed), one cell per indicator it has a pair for. */
-  rows: { kpi: Kpi; view?: View; cells: Map<Indicator, { pair: Pair; result: LinkResult; heat?: Heat }> }[];
+  rows: { kpi: Kpi; view?: View; cells: Map<Indicator, OverviewCell> }[];
 }
 
 export function linksOverview(): LinksOverview {
@@ -56,7 +66,12 @@ export function linksOverview(): LinksOverview {
     const pairs = view ? viewLinks(view) : [];
     return { kpi, view, cells: new Map(pairs.map((pair) => {
       const result = linkResult(getSeries(pair.kpi, pair.land), getSeries(pair.indicator));
-      return [pair.name, { pair, result, heat: result.shown ? heat(result.headline.rho!) : undefined }];
+      const at = (years: 0 | 1 | 2): CellLag => {
+        if (!result.shown) return { rho: null, n: result.n0 };
+        const { rho, n } = result.lags.find((l) => l.lag === lagFor(getSeries(pair.kpi, pair.land).freq, years))!;
+        return { rho, n, heat: rho === null ? undefined : heat(rho) };
+      };
+      return [pair.name, { pair, result, heat: result.shown ? heat(result.headline.rho!) : undefined, lags: [at(0), at(1), at(2)] }];
     })) };
   });
   return { columns: INDICATORS.filter((n) => rows.some((r) => r.cells.has(n))), rows };

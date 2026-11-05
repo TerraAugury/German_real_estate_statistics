@@ -194,3 +194,10 @@ insight.unit.growth: Prozent
 insight.template.office-employment: "Der Büroleerstand hat sich {to} um {latest} Punkte verändert, während die Bürobeschäftigung um {emp} % gewachsen ist; die durchschnittliche Veränderung des Leerstands {from}-{to} beträgt {mean} Punkte."
 insight.unit.change: Prozentpunkte
 insight.context.legend: "Blaue Linie: {measure}, in Prozentpunkten. Ockerfarbene Linie: Wachstum von {title} gegenüber dem Vorjahr, in Prozent. Beide sind auf einer Achse dargestellt."
+link.preset.mark: "vorab gewählter Versatz"
+links.lag.label: "Zeitversatz des Indikators"
+links.lag.0: "Gleiches Jahr"
+links.lag.1: "Indikator 1 Jahr früher (N-1)"
+links.lag.2: "Indikator 2 Jahre früher (N-2)"
+links.cell.preset: "vorab gewählter Versatz: N-1"
+links.preset.note: "Auf Bewertungen beruhende Renditen und Preise reagieren mit Verzögerung auf Zinsen. Für diese Felder ist ein Jahr früher (N-1) aus ökonomischen Gründen im Voraus festgelegt und nicht anhand der Ergebnisse gewählt."

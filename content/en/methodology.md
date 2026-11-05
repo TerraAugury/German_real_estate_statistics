@@ -23,6 +23,10 @@ Each Link has three parts:
 
 **Minimum overlap.** A comparison on too few periods can mislead. Each shift needs at least 40 periods for quarterly KPIs or 10 for annual ones. Below that, the shift is left blank. We show a Link only if the no-shift comparison and at least three shifts in all reach that minimum. Otherwise the panel says "Link not shown" and gives the number of pairs it had with no shift. For annual Links with fewer than 20 pairs, we add a note that the pattern may be coincidence.
 
+**The lag selector on the Links page.** Above the table of all Links, one selector sets the timing for the whole table at once: "Same year", "Indicator 1 year earlier (N-1)" or "Indicator 2 years earlier (N-2)". These are the +1 and +2 shifts of the lag profile on each KPI page, so every box shows the same number as that bar and the same count of pairs. (For a quarterly KPI they would be +4 and +8 quarters.) A box under the minimum overlap at the chosen timing shows "Not shown". The choice is kept in the page address (#lag-1, #lag-2) so a view can be shared; with no address part, the table shows the same year.
+
+**A pre-set timing for appraisal-based KPIs.** Initial yield and the commercial property price index rest largely on appraisals, which follow interest rates with a delay. For these two KPIs against the 10-year Bund yield, Euribor 3 months and the loan rate, one year earlier (N-1) is therefore set in advance on economic grounds, not chosen from the results. These boxes are marked "pre-set lag" whichever timing is selected, and on the Link panels the +1 bar carries the same label, apart from the "strongest" mark. Switching between timings and keeping the one that looks strongest overstates the link, for the same reason as the "strongest" marker.
+
 **Geography.** Every indicator is national. On a City class or Land view, the Link compares the national indicator with that geography's KPI.
 
 ## The eight indicators

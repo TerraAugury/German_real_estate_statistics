@@ -6,6 +6,6 @@ import { t } from '../lib/i18n';
 import type { KpiPage } from '../lib/pages';
 import type { Lang } from '../lib/routes';
 const { panel: p, order, lang } = Astro.props as { panel: KpiPage['panels'][number]; order: number; lang: Lang };
-const html = linkPanel(getSeries(p.pair.kpi, p.pair.land), getSeries(p.pair.indicator), lang, t(lang, `geo.${p.geo}`), p.id);
+const html = linkPanel(getSeries(p.pair.kpi, p.pair.land), getSeries(p.pair.indicator), lang, t(lang, `geo.${p.geo}`), p.id, p.pair.preset);
 ---
 <div data-panel={p.id} data-order={order}><Fragment set:html={html} /></div>

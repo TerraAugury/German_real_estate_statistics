@@ -11,3 +11,6 @@ export function pickView<V extends Want>(views: V[], want: Partial<Want>, change
   const score = (x: V) => (Object.keys(WEIGHT) as (keyof Want)[]).reduce((n, k) => n + (x[k] === want[k] ? WEIGHT[k] : 0), 0);
   return pool.reduce((best, x) => (score(x) > score(best) ? x : best));
 }
+
+/** The Links matrix lag in years earlier (0 = same year), from a URL hash such as `#lag-1`; anything else is same year. */
+export const lagFromHash = (hash: string): 0 | 1 | 2 => (hash === '#lag-1' ? 1 : hash === '#lag-2' ? 2 : 0);

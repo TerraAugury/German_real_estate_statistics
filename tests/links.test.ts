@@ -1,6 +1,8 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { readdirSync, readFileSync } from 'node:fs';
 import { INDICATORS, linkResult, viewLinks } from '../src/lib/links';
+import { lagFromHash } from '../src/lib/select';
+import { linksOverview } from '../src/lib/pages';
 import { KPIS } from '../src/lib/kpis';
 import { loadManifest } from '../src/lib/manifest';
 import { getSeries } from '../src/lib/series';
@@ -56,6 +58,44 @@ describe('annual minimum of 10 pairs on real data (spec section 6)', () => {
       expect(r.lags.filter((l) => l.rho === null)).toEqual([{ lag: -3, n: 9, rho: null }]);
       expect(r.headline.n).toBeGreaterThanOrEqual(MIN.A);
     }
+  });
+});
+
+// Ticket 10: the matrix lag selector reuses the +1 / +2 lags of the Link panel; nothing is computed anew.
+describe('matrix lag selector (ticket 10)', () => {
+  beforeAll(() => { process.env.INCLUDE_PROVISIONAL = '1'; });
+  afterAll(() => { delete process.env.INCLUDE_PROVISIONAL; });
+  const cells = () => linksOverview().rows.flatMap((r) => [...r.cells.values()].map((c) => ({ page: r.kpi.page, ...c })));
+  it('every cell at N-1 / N-2 equals the +1 / +2 lag of its Link panel; same year equals the headline', () => {
+    for (const c of cells()) {
+      const r = linkResult(getSeries(c.pair.kpi, c.pair.land), getSeries(c.pair.indicator));
+      for (const years of [0, 1, 2] as const) {
+        const want = r.shown ? r.lags.find((l) => l.lag === years)! : { rho: null, n: r.n0 };
+        expect(c.lags[years], `${c.pair.id} N-${years}`).toMatchObject({ rho: want.rho, n: want.n });
+      }
+    }
+  });
+  it('initial yield (7 cities) x 10-year Bund: 0.40 at N-1, 0.43 at N-2', () => {
+    const c = cells().find((x) => x.page === 'kpi-initial-yield' && x.pair.name === 'bund-yield-10y')!;
+    expect(c.lags[0].rho).toBeCloseTo(0.107, 3);
+    expect(c.lags[1].rho).toBeCloseTo(0.397, 3);
+    expect(c.lags[2].rho).toBeCloseTo(0.431, 3);
+  });
+  it('the pre-set marker is on initial yield and price index against Bund, Euribor and loan rate, and nowhere else', () => {
+    const marked = cells().filter((c) => c.pair.preset).map((c) => `${c.page}|${c.pair.name}`).sort();
+    const rates = ['bund-yield-10y', 'euribor-3m', 'loan-rate-nfc'];
+    expect(marked).toEqual(['kpi-initial-yield', 'kpi-price-index'].flatMap((p) => rates.map((n) => `${p}|${n}`)).sort());
+  });
+  it('the same scope holds for the Link panels of every view', () => {
+    const scope = (page: string) => KPIS.find((k) => k.page === page)!.views.flatMap((v) => viewLinks(v, preview));
+    for (const l of scope('kpi-initial-yield')) expect(l.preset).toBe(['bund-yield-10y', 'euribor-3m', 'loan-rate-nfc'].includes(l.name));
+    for (const l of scope('kpi-price-index')) expect(l.preset).toBe(['bund-yield-10y', 'euribor-3m', 'loan-rate-nfc'].includes(l.name));
+    for (const l of scope('kpi-rent-index')) expect(l.preset).toBe(false);
+  });
+  it('a hash selects the lag; anything else is same year', () => {
+    expect(lagFromHash('#lag-1')).toBe(1);
+    expect(lagFromHash('#lag-2')).toBe(2);
+    for (const h of ['', '#', '#lag-0', '#lag-3', '#lag-', '#foo', '#lag-1x', '#link-x']) expect(lagFromHash(h), h).toBe(0);
   });
 });
 

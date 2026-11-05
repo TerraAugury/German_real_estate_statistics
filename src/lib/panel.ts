@@ -4,7 +4,7 @@ import { insightChart, multiplesChart, sharedDomain, overlayChart, lagChart, lin
 import { notesFor } from './notes';
 import { href, slug, type Lang } from './routes';
 import type { Series } from './series';
-import type { LinkResult } from '../link/link';
+import { lagFor, type LinkResult } from '../link/link';
 import { linkResult } from './links';
 import { compareLines, MIN_OBS, tone, type InsightResult } from '../insight/insight';
 import type { InsightEntry } from './manifest';
@@ -69,7 +69,7 @@ export const compactChart = (s: Series, lang: Lang) => latestBlock(s, lang) + li
   + noteHtml(notesFor(s, lang, { on: 'compact' })) + `<figcaption>${sourceBlock(s, lang)}</figcaption>`;
 
 /** Link panel HTML for one KPI x indicator pair. Pure given the result, so it tests without the Link module. */
-export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang, geography = t(lang, 'geo.germany'), id?: string): string {
+export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang, geography = t(lang, 'geo.germany'), id?: string, preset = false): string {
   const notes = notesFor(kpi, lang, { on: 'link', indicator: ind, pairs: r.shown ? r.headline.n : undefined });
   const head = `<p class="back"><a href="${href('links', lang)}">← ${t(lang, 'link.back')}</a></p>
 <h3>${t(lang, 'link.title', { kpi: esc(kpi.title[lang]), indicator: esc(ind.title[lang]) })}</h3>
@@ -83,7 +83,7 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
     const N = r.lags.filter((l) => l.rho !== null).length;
     body = overlayChart(pts('kpi'), pts('indicator'), { kpiUnit: kpi.unit[lang], indicatorUnit: ind.unit[lang], title: t(lang, 'link.overlay.chart', names) }, lang)
       + `<p class="note">${t(lang, 'link.overlay.legend', { kpi: esc(names.kpi), indicator: esc(names.indicator) })}</p>`
-      + lagChart(r.lags, r.strongest.lag, { lag: t(lang, 'link.lag.label'), rho: t(lang, 'link.rho.label'), mark: t(lang, 'link.strongest.mark'), title: t(lang, 'link.lags.label', { kpi: kpi.title[lang], indicator: ind.title[lang] }) }, lang)
+      + lagChart(r.lags, r.strongest.lag, { lag: t(lang, 'link.lag.label'), rho: t(lang, 'link.rho.label'), mark: t(lang, 'link.strongest.mark'), preset: preset ? { lag: lagFor(kpi.freq, 1), label: t(lang, 'link.preset.mark') } : undefined, title: t(lang, 'link.lags.label', { kpi: kpi.title[lang], indicator: ind.title[lang] }) }, lang)
       + `<p>${t(lang, 'link.headline', { rho: fmt(lang, r.headline.rho!, { maximumFractionDigits: 2 }), n: String(r.headline.n) })}</p>`
       + `<p>${t(lang, 'link.strongest', { n: String(N) })}</p>`
       + `<p>${t(lang, 'link.sentence', { period: t(lang, 'link.period', { from: period(lang, r.span[0]), to: period(lang, r.span[1]) }), n: String(r.headline.n) })}</p>`;
@@ -92,8 +92,8 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
 }
 
 /** Compute (once per build) and render; the Link takes the KPI's frequency (spec section 6). */
-export const linkPanel = (kpi: Series, ind: Series, lang: Lang, geography?: string, id?: string) =>
-  renderPanel(kpi, ind, linkResult(kpi, ind), lang, geography, id);
+export const linkPanel = (kpi: Series, ind: Series, lang: Lang, geography?: string, id?: string, preset?: boolean) =>
+  renderPanel(kpi, ind, linkResult(kpi, ind), lang, geography, id, preset);
 
 type Shown = Extract<InsightResult, { shown: true }>;
 
