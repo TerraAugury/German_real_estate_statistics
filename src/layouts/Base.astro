@@ -164,6 +164,7 @@ const inKpis = KPIS.some((k) => k.page === page);
       td.lagcell a.zero { background: var(--plate); }
       td.lagcell a.neg { background: color-mix(in srgb, var(--heat-neg) var(--share), var(--plate)); }
       td.lagcell a.pos { background: color-mix(in srgb, var(--heat-pos) var(--share), var(--plate)); }
+      td.lagcell a.noise { background: color-mix(in srgb, var(--muted) 14%, var(--plate)); }
       td.lagcell a.na { color: var(--muted); background: repeating-linear-gradient(135deg, var(--na) 0 6px, var(--page) 6px 12px); }
       td.lagcell .rho { display: block; font: 600 17px/1.25 var(--cond); font-variant-numeric: tabular-nums; white-space: nowrap; }
       td.lagcell .n { display: block; font-size: 13px; white-space: nowrap; }
