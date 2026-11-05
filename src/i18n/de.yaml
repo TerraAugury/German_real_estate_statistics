@@ -205,3 +205,7 @@ link.band.legend: "Graues Band: der Bereich der Rangkorrelation, den allein der 
 link.band.adjusted: "Quartalsveränderungen werden jeweils mit dem Vorjahr verglichen, benachbarte Quartale überlappen also; das Band verwendet ein angepasstes n = {eff} (n ÷ 4, abgerundet)."
 links.noise.legend: "Grau: innerhalb des Bereichs, den allein der Zufall bei dieser Zahl von Jahren häufig erzeugt."
 links.chance.note: "Bei so vielen Vergleichen sehen einige Felder allein durch Zufall stark aus. Ein einzelnes starkes Feld sollte man mit Vorsicht behandeln, besonders wenn n klein ist."
+note.nominal.inflation: "Diese Kennzahl und dieser Indikator sind beide nominal, daher spiegelt ihre Verknüpfung teilweise gemeinsame Inflation wider."
+note.nominal.gdp: "Diese Kennzahl ist in nominalen Euro, das reale BIP ist inflationsbereinigt; die Verknüpfung stellt daher Nominal gegen real."
+links.nominal.tag: "Nominale Euro*"
+links.nominal.note: "* Mieten und Transaktionsvolumen sind in nominalen Euro. Ihre Verknüpfungen mit dem Verbraucherpreisindex und den Baupreisen spiegeln teilweise gemeinsame Inflation wider, und ihre Verknüpfung mit dem realen BIP stellt Nominal gegen real."
