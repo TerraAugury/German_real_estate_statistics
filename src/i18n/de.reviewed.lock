@@ -1686,3 +1686,7 @@ links.cell.preset_2:
   en_hash: 490ba33c4f91f920
   reviewed_by: Olivier
   reviewed_on: 2026-11-06
+insight.context.legend_dual:
+  en_hash: 9f6912d78a00967a
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
