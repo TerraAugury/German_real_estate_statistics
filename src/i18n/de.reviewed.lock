@@ -1618,3 +1618,75 @@ links.cell.preset_other:
   en_hash: 66cd776ffe6592c1
   reviewed_by: Olivier
   reviewed_on: 2026-11-05
+insight.template.vacancy-completions:
+  en_hash: d957d9623113837a
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight.unit.deviation:
+  en_hash: fd86717aca41c558
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight.template.vacancy-rents:
+  en_hash: 39e192bd7739845b
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight.unit.gap:
+  en_hash: e300964443317948
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight.axis.real_growth:
+  en_hash: f6eb8d0ca0f87f88
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight.small.vacancy-rents.title:
+  en_hash: 32190aac00055270
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight.small.vacancy-rents.label:
+  en_hash: db831c307c52e5b0
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight.small.vacancy-rents.legend:
+  en_hash: 74d99283c8eacc97
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight.note.completions_scope:
+  en_hash: 56f77268f0793d20
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight.note.completions_coverage:
+  en_hash: d8a2c48419d11744
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight.note.completions_indirect:
+  en_hash: 7f8ab6c0b55210e7
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight.note.rents_scope:
+  en_hash: a932147c5c3990a6
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight.note.asking_rents:
+  en_hash: cdcb7b1b6005fdba
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight.note.tenant_shift:
+  en_hash: 91485af0b4bd69dc
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight:n.title:
+  en_hash: 8523fe4f714bac8e
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight:n.measure:
+  en_hash: 6c17c72aa89b9324
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight:o.title:
+  en_hash: dd6eafb9e20851cd
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
+insight:o.measure:
+  en_hash: f4d8407a25129ec3
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06
