@@ -141,7 +141,7 @@ function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, no
   });
   const notes = [...notesFor(series[0], lang, { on: 'insight', rest: series.slice(1), short: r.short ? { from: r.from, to: r.to, n: r.n } : undefined }, now),
     ...(e.notes ?? []).map((k) => `${t(lang, 'note.prefix')}: ${t(lang, k)}`),
-    ...(e.headline === 'gap' && vacancyRisingRealGrowth(r.lines) ? [`${t(lang, 'note.prefix')}: ${t(lang, 'insight.note.tenant_shift')}`] : [])];
+    ...(e.template === 'vacancy-rents' && vacancyRisingRealGrowth(r.lines) ? [`${t(lang, 'note.prefix')}: ${t(lang, 'insight.note.tenant_shift')}`] : [])];
   const chart = insightChart(top, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(top.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
   const reference = series[e.series.findIndex((x) => x.role === 'reference')];
   return {

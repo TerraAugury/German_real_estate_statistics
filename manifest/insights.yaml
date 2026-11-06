@@ -139,7 +139,6 @@
   measure: { en: "gap between office vacancy in the 127 towns and its average", de: "Abstand des Büroleerstands in den 127 Städten zu seinem Durchschnitt" }
   headline: gap
   better: lower
-  deflate: flow
   small: vacancy-rents
   notes: [insight.note.rents_scope, insight.note.asking_rents]
   template: vacancy-rents

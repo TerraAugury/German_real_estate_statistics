@@ -447,7 +447,17 @@ describe('Insights N (vacancy and completions) and O (vacancy and rent growth)',
       expect(renderInsightIndex(models, 'en')).toContain(`href="#${key}"`);
       expect(renderInsightIndex(models, 'de')).toContain(`href="#${key}"`);
     }
-    // N has 18 shared years, so the short-history note shows.
+    const [nn, oo] = ['n', 'o'].map((k) => models.find((i) => i.entry.key === k)!);
+    const html = (m: typeof nn, l: 'en' | 'de') => renderInsight(m.entry, m.result, m.series, l);
+    expect(html(oo, 'en')).toContain('One possible explanation, not a proven cause');
+    expect(html(oo, 'de')).toContain('Eine mögliche Erklärung, keine belegte Ursache');
+    expect(html(nn, 'en')).not.toContain('One possible explanation');
+    if (!nn.result.shown || !oo.result.shown || !nn.result.chart) throw new Error('not shown');
+    expect(nn.result.chart.points).toHaveLength(nn.result.chart.context.length);
+    expect(nn.result.mean).toBe(0);
+    expect(tone(nn.result.verdict, 'lower')).toBe(nn.result.verdict === 'lower' ? 'better' : nn.result.verdict === 'higher' ? 'worse' : 'neutral');
+    expect(tone(oo.result.verdict, 'lower')).toBe(oo.result.verdict === 'in_line' ? 'neutral' : oo.result.verdict === 'lower' ? 'better' : 'worse');
+    // N has shared years under 20, so the short-history note shows.
     const n = models.find((i) => i.entry.key === 'n')!;
     expect(renderInsight(n.entry, n.result, n.series, 'en')).toContain('Short history');
   });
