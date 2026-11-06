@@ -121,3 +121,28 @@
   series:
     - { key: office-vacancy-127, role: kpi }
     - { key: office-employment, role: reference }
+
+- key: n
+  title: { en: "Office vacancy and new office completions", de: "Büroleerstand und neue Büro-Fertigstellungen" }
+  measure: { en: "change in office vacancy in the 127 towns", de: "Veränderung des Büroleerstands in den 127 Städten" }
+  headline: deviation
+  better: lower
+  base: 2015
+  notes: [insight.note.completions_scope, insight.note.completions_coverage, insight.note.completions_indirect]
+  template: vacancy-completions
+  series:
+    - { key: office-vacancy-127, role: kpi }
+    - { key: construction-completions-office, role: reference }
+
+- key: o
+  title: { en: "Office vacancy and office rent growth", de: "Büroleerstand und Büromietwachstum" }
+  measure: { en: "gap between office vacancy in the 127 towns and its average", de: "Abstand des Büroleerstands in den 127 Städten zu seinem Durchschnitt" }
+  headline: gap
+  better: lower
+  small: vacancy-rents
+  notes: [insight.note.rents_scope, insight.note.asking_rents]
+  template: vacancy-rents
+  series:
+    - { key: office-vacancy-127, role: kpi }
+    - { key: rent-index-de-office-a, role: reference }
+    - { key: cpi, role: deflator }
