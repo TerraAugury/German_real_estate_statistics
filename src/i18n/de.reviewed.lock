@@ -1690,3 +1690,7 @@ insight:o.measure:
   en_hash: f4d8407a25129ec3
   reviewed_by: Olivier
   reviewed_on: 2026-11-06
+links.cell.preset_2:
+  en_hash: 490ba33c4f91f920
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-06

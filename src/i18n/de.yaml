@@ -218,6 +218,7 @@ links.row.kpi-transaction-volume: "Gewerbe gesamt · Deutschland"
 links.row.construction: "Büro · Deutschland"
 links.rows.note: "Die Zeilen decken unterschiedliche Segmente und Gebiete ab; jeder Indikator ist bundesweit."
 links.cell.preset_other: "vorab gewählter Versatz ist N-1"
+links.cell.preset_2: "Auf N-2 gesetzt"
 insight.template.vacancy-completions: "Die Büro-Fertigstellungen weichen {to} um {latest} % von ihrem Durchschnitt {from}-{to} ab und liegen damit {verdict} Durchschnitt."
 insight.unit.deviation: Prozent
 insight.template.vacancy-rents: "Der Büroleerstand weicht {to} um {latest} Punkte von seinem Durchschnitt {from}-{to} ab, {verdict} Durchschnitt."
