@@ -68,7 +68,7 @@ function niceTicks(lo: number, hi: number): number[] {
  * unit take its line's colour (ochre text is the darker `strong-text`, which keeps 4.5:1). The scales are independent, so the
  * picture shows co-movement only.
  */
-export function overlayChart(kpi: Points, indicator: Points, labels: { kpiUnit: string; indicatorUnit: string; title: string }, lang: Lang): string {
+export function overlayChart(kpi: Points, indicator: Points, labels: { kpiUnit: string; indicatorUnit: string; title: string; kpiRight?: boolean }, lang: Lang): string {
   const scaled = (pts: Points, unit: string, anchor: 'left' | 'right', lineColour: string, axisColour: string) => {
     const values = pts.map((p) => p.value);
     const ticks = niceTicks(Math.min(...values), Math.max(...values));
@@ -84,7 +84,7 @@ export function overlayChart(kpi: Points, indicator: Points, labels: { kpiUnit: 
     height: 240, marginRight: narrow ? 36 : 50, marginTop: 28,
     x: { tickFormat: years, label: null, ticks: narrow ? 4 : undefined },
     y: { axis: null, domain: [0, 1] },
-    marks: [...scaled(kpi, labels.kpiUnit, 'left', DATA, DATA), ...scaled(indicator, labels.indicatorUnit, 'right', STRONG, STRONG_TEXT)],
+    marks: [...scaled(kpi, labels.kpiUnit, labels.kpiRight ? 'right' : 'left', DATA, DATA), ...scaled(indicator, labels.indicatorUnit, labels.kpiRight ? 'left' : 'right', STRONG, STRONG_TEXT)],
   }), labels.title);
 }
 

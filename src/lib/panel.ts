@@ -6,7 +6,7 @@ import { href, slug, type Lang } from './routes';
 import type { Series } from './series';
 import { effectiveN, lagFor, noiseBand, targetOf, type LinkResult } from '../link/link';
 import { linkResult } from './links';
-import { compareLines, MIN_OBS, tone, vacancyRisingRealGrowth, type InsightResult } from '../insight/insight';
+import { compareLines, MIN_OBS, tone, type InsightResult } from '../insight/insight';
 import type { InsightEntry } from './manifest';
 
 export const esc = (x: string) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -140,14 +140,15 @@ function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, no
     measure: esc(e.measure[lang]), latest: one(r.latest.value), verdict: t(lang, `insight.verdict.${r.verdict}`), from: r.from, to: r.to, mean: one(r.mean), emp: top.context ? one(top.context.at(-1)!.value) : '',
   });
   const notes = [...notesFor(series[0], lang, { on: 'insight', rest: series.slice(1), short: r.short ? { from: r.from, to: r.to, n: r.n } : undefined }, now),
-    ...(e.notes ?? []).map((k) => `${t(lang, 'note.prefix')}: ${t(lang, k)}`),
-    ...(e.template === 'vacancy-rents' && vacancyRisingRealGrowth(r.lines) ? [`${t(lang, 'note.prefix')}: ${t(lang, 'insight.note.tenant_shift')}`] : [])];
-  const chart = insightChart(top, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(top.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
+    ...(e.notes ?? []).map((k) => `${t(lang, 'note.prefix')}: ${t(lang, k)}`)];
+  const title = t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] });
+  // The KPI's yearly change in points and the reference's growth in percent differ in size, so each gets its own axis, the KPI's on the right.
+  const chart = r.chart ? overlayChart(r.chart.points, r.chart.context, { kpiUnit: t(lang, 'insight.unit.change'), indicatorUnit: t(lang, 'insight.axis.growth'), kpiRight: true, title }, lang) : insightChart(top, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(top.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
   const reference = series[e.series.findIndex((x) => x.role === 'reference')];
   return {
     reading, notes, chart, reference, plate: toneOf(e, r, lang).plate,
     headlineHtml: `<p class="headline">${headlineSpans(e, r, lang)}</p>`,
-    legend: top.context ? `<p class="note">${t(lang, 'insight.context.legend', { measure: esc(e.measure[lang]), title: esc(reference.title[lang]) })}</p>` : '',
+    legend: top.context ? `<p class="note">${t(lang, r.chart ? 'insight.context.legend_dual' : 'insight.context.legend', { measure: esc(e.measure[lang]), title: esc(reference.title[lang]) })}</p>` : '',
   };
 }
 
