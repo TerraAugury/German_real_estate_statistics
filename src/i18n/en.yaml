@@ -218,6 +218,7 @@ links.row.kpi-transaction-volume: "Commercial overall · Germany"
 links.row.construction: "Office · Germany"
 links.rows.note: "Rows cover different segments and areas; every indicator is national."
 links.cell.preset_other: "pre-set lag is N-1"
+links.cell.preset_2: "Set to N-2"
 insight.template.vacancy-completions: "Office completions in {to} differed by {latest}% from their {from}-{to} average, so they are {verdict} the average."
 insight.unit.deviation: percent
 insight.template.vacancy-rents: "Office vacancy in {to} differed by {latest} points from its {from}-{to} average, {verdict} the average."
