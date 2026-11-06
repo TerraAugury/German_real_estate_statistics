@@ -4,11 +4,11 @@ import { checkInsights, loadAllManifest, loadManifest, type InsightEntry } from 
 import { loadStrings } from '../src/lib/i18n';
 import { multiplesChart, sharedDomain } from '../src/lib/chart';
 import { insightsPage, loadInsights, visibleInsights } from '../src/lib/insights';
-import { renderInsight, renderToneLegend } from '../src/lib/panel';
+import { renderInsight, renderInsightIndex, renderToneLegend } from '../src/lib/panel';
 import { KPIS } from '../src/lib/kpis';
 import { kpiPage } from '../src/lib/pages';
 import { getSeries } from '../src/lib/series';
-import type { InsightResult } from '../src/insight/insight';
+import { tone, type InsightResult } from '../src/insight/insight';
 
 afterEach(() => { delete process.env.INCLUDE_PROVISIONAL; });
 
@@ -99,7 +99,7 @@ describe('"Insights using this KPI" on KPI pages', () => {
   // Which KPI page lists which Insight (insights spec section 6); Insights not declared yet are skipped.
   const PAGES: Record<string, string[]> = {
     a: ['kpi-initial-yield'], f: ['kpi-initial-yield'], g: ['kpi-price-index', 'kpi-rent-index'], b: ['kpi-rent-index'], d: ['kpi-rent-index'], i: ['kpi-rent-index'],
-    c: ['construction'], j: ['construction'], e: ['kpi-office-vacancy'], m: ['kpi-office-vacancy'],
+    c: ['construction'], j: ['construction'], e: ['kpi-office-vacancy'], m: ['kpi-office-vacancy'], n: ['kpi-office-vacancy', 'construction'], o: ['kpi-office-vacancy', 'kpi-rent-index'],
   };
   const listed = (page: string) => kpiPage(KPIS.find((k) => k.page === page)!).insights.map((e) => e.key);
   it('production lists the same Insights as preview', () => {
@@ -398,5 +398,65 @@ describe('Insight notes (tickets 7 and 8)', () => {
       expect(en.includes(COVERAGE)).toBe(x.entry.key === 'g');
       expect(de.includes('Preise und Mieten sind vdp-Reihen')).toBe(x.entry.key === 'g');
     }
+  });
+});
+
+describe('Insights N (vacancy and completions) and O (vacancy and rent growth)', () => {
+  const page = () => { process.env.INCLUDE_PROVISIONAL = '1'; return insightsPage(); };
+  const raw = (key: string) => new Map(getSeries(key).obs.map((o) => [+o.period.slice(0, 4), o.value as number]));
+  const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length;
+
+  it('N: headline is the latest completions as % off their average over the shared years, by hand', () => {
+    const n = page().find((i) => i.entry.key === 'n')!;
+    const [vac, comp] = [raw('office-vacancy-127'), raw('construction-completions-office')];
+    const years = [...comp.keys()].filter((y) => vac.has(y)).sort();
+    const by = (comp.get(years.at(-1)!)! / mean(years.map((y) => comp.get(y)!)) - 1) * 100;
+    if (!n.result.shown) throw new Error('N not shown');
+    expect(n.result.latest.value).toBeCloseTo(by, 9);
+    expect([n.result.from, n.result.to]).toEqual([String(years[0]), String(years.at(-1))]);
+    expect(n.result.short).toBe(years.length < 20);
+    const dev = years.map((y) => (comp.get(y)! / mean(years.map((x) => comp.get(x)!)) - 1) * 100);
+    const sd = Math.sqrt(mean(dev.map((d) => d ** 2)));
+    expect(n.result.verdict).toBe(Math.abs(by) <= sd / 2 ? 'in_line' : by > 0 ? 'higher' : 'lower');
+  });
+
+  it('O: headline is the latest vacancy minus its average over the years real rent growth exists, by hand', () => {
+    const o = page().find((i) => i.entry.key === 'o')!;
+    const vac = raw('office-vacancy-127');
+    const real = changes(new Map([...levels(getSeries('rent-index-de-office-a'), 'A')].map(([y, v]) => [y, v / levels(getSeries('cpi'), 'A').get(y)! * 100])), 'A', 'pct');
+    const years = [...real.keys()].filter((y) => vac.has(y)).sort();
+    const gap = vac.get(years.at(-1)!)! - mean(years.map((y) => vac.get(y)!));
+    if (!o.result.shown) throw new Error('O not shown');
+    expect(o.result.latest.value).toBeCloseTo(gap, 9);
+    expect(o.result.from).toBe(String(years[0]));
+    expect(o.result.lines.reference.at(-1)!.value).toBeCloseTo(real.get(years.at(-1)!)!, 9);
+  });
+
+  it('both lean on lower being better, and show their notes, source lines and index link in EN and DE', () => {
+    const models = page();
+    expect(tone('higher', 'lower')).toBe('worse');
+    expect(tone('lower', 'lower')).toBe('better');
+    for (const [key, notes] of [['n', ['Completions cover all of Germany, while vacancy covers 127 towns.', 'public and owner-occupied', 'let before they are finished']], ['o', ['Rents cover all of Germany, while vacancy covers 127 towns.', 'rent-free months']]] as const) {
+      const m = models.find((i) => i.entry.key === key)!;
+      expect(m.entry.better).toBe('lower');
+      const en = renderInsight(m.entry, m.result, m.series, 'en'), de = renderInsight(m.entry, m.result, m.series, 'de');
+      for (const x of notes) expect(en).toContain(x);
+      expect(en.match(/class="cite"/g)).toHaveLength(m.series.length);
+      expect(de.match(/class="cite"/g)).toHaveLength(m.series.length);
+      expect(de.match(/class="note"/g)!.length).toBe(en.match(/class="note"/g)!.length);
+      expect(renderInsightIndex(models, 'en')).toContain(`href="#${key}"`);
+      expect(renderInsightIndex(models, 'de')).toContain(`href="#${key}"`);
+    }
+    // N has 18 shared years, so the short-history note shows.
+    const n = models.find((i) => i.entry.key === 'n')!;
+    expect(renderInsight(n.entry, n.result, n.series, 'en')).toContain('Short history');
+  });
+
+  it('the tenant-shift note needs vacancy rising two years running with real rent growth positive in both', async () => {
+    const { vacancyRisingRealGrowth: f } = await import('../src/insight/insight');
+    const mk = (v: number[], r: number[]) => ({ kpi: v.map((value, i) => ({ period: String(i), value })), reference: r.map((value, i) => ({ period: String(i), value })) });
+    expect(f(mk([5, 5.5, 6], [1, 2, 3]))).toBe(true);
+    expect(f(mk([5, 5.5, 6], [1, -2, 3]))).toBe(false);
+    expect(f(mk([5, 4.5, 6], [1, 2, 3]))).toBe(false);
   });
 });

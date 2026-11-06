@@ -68,7 +68,7 @@ export function loadAllManifest(lock?: Lock): ManifestEntry[] {
 export const reviewStrings = () => ({ ...loadStrings('en'), ...manifestStrings(loadAllManifest(), 'en'), ...insightStrings(loadAllInsights(), 'en') });
 
 // Insights (spec insights section 7): hand-written in manifest/insights.yaml, one entry per curated chart, in page order.
-export const HEADLINES = ['spread', 'ratio', 'growth', 'change'] as const;
+export const HEADLINES = ['spread', 'ratio', 'growth', 'change', 'deviation', 'gap'] as const;
 export const DEFLATE = ['flow', 'stock'] as const;
 export const ROLES = ['kpi', 'reference', 'deflator'] as const;
 export const BETTER = ['higher', 'lower', 'none'] as const;
@@ -94,6 +94,8 @@ export interface InsightEntry {
   shift?: number;
   /** Caveats shown as Notes under the Insight's chart: interface string keys (`insight.note.<name>`), in order. */
   notes?: string[];
+  /** Own heading, chart label and legend for the small chart (`insight.small.<small>.title|label|legend`), where the default names would mislabel its lines. */
+  small?: string;
   /** Reading template: `insight.template.<template>` in the interface strings. */
   template: string;
   /** The first KPI series against the first reference series is the headline; the order is the order shown. */
@@ -134,6 +136,7 @@ export function checkInsights(entries: InsightEntry[], known: { series: Set<stri
     if (e.base !== undefined && !Number.isInteger(e.base)) errs.push(`${e.key}: base must be a year`);
     if (e.deflate !== undefined && !DEFLATE.includes(e.deflate)) errs.push(`${e.key}: deflate must be one of ${DEFLATE}`);
     if (e.shift !== undefined && !(`insight.shift.${e.shift}` in en)) errs.push(`${e.key}: no i18n key insight.shift.${e.shift}`);
+    for (const f of e.small ? ['title', 'label', 'legend'] : []) if (!(`insight.small.${e.small}.${f}` in en)) errs.push(`${e.key}: no i18n key insight.small.${e.small}.${f}`);
     for (const k of e.notes ?? []) if (!(k in en)) errs.push(`${e.key}: no i18n key ${k}`);
     if (!(`insight.template.${e.template}` in en)) errs.push(`${e.key}: no i18n key insight.template.${e.template}`);
     for (const s of e.series) {

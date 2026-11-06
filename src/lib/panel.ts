@@ -6,7 +6,7 @@ import { href, slug, type Lang } from './routes';
 import type { Series } from './series';
 import { effectiveN, lagFor, noiseBand, targetOf, type LinkResult } from '../link/link';
 import { linkResult } from './links';
-import { compareLines, MIN_OBS, tone, type InsightResult } from '../insight/insight';
+import { compareLines, MIN_OBS, tone, vacancyRisingRealGrowth, type InsightResult } from '../insight/insight';
 import type { InsightEntry } from './manifest';
 
 export const esc = (x: string) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -133,18 +133,21 @@ export function renderInsightIndex(models: { entry: InsightEntry; result: Insigh
 /** What leads an Insight, shared by its section and the Home hero: headline number with verdict tag, the reading, the chart, its Notes. */
 function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, now: Date) {
   const one = headlineNumber(e, lang);
-  const unitKey = `insight.unit.${e.headline}`;
+  // The top chart is the headline's own points, unless the headline is a level against its average and the chart shows the KPI's yearly change instead.
+  const top = r.chart ?? r;
+  const unitKey = `insight.unit.${r.chart ? 'change' : e.headline}`;
   const reading = t(lang, `insight.template.${e.template}`, {
-    measure: esc(e.measure[lang]), latest: one(r.latest.value), verdict: t(lang, `insight.verdict.${r.verdict}`), from: r.from, to: r.to, mean: one(r.mean), emp: r.context ? one(r.context.at(-1)!.value) : '',
+    measure: esc(e.measure[lang]), latest: one(r.latest.value), verdict: t(lang, `insight.verdict.${r.verdict}`), from: r.from, to: r.to, mean: one(r.mean), emp: top.context ? one(top.context.at(-1)!.value) : '',
   });
   const notes = [...notesFor(series[0], lang, { on: 'insight', rest: series.slice(1), short: r.short ? { from: r.from, to: r.to, n: r.n } : undefined }, now),
-    ...(e.notes ?? []).map((k) => `${t(lang, 'note.prefix')}: ${t(lang, k)}`)];
-  const chart = insightChart(r, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(r.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
+    ...(e.notes ?? []).map((k) => `${t(lang, 'note.prefix')}: ${t(lang, k)}`),
+    ...(e.headline === 'gap' && vacancyRisingRealGrowth(r.lines) ? [`${t(lang, 'note.prefix')}: ${t(lang, 'insight.note.tenant_shift')}`] : [])];
+  const chart = insightChart(top, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(top.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
   const reference = series[e.series.findIndex((x) => x.role === 'reference')];
   return {
     reading, notes, chart, reference, plate: toneOf(e, r, lang).plate,
     headlineHtml: `<p class="headline">${headlineSpans(e, r, lang)}</p>`,
-    legend: r.context ? `<p class="note">${t(lang, 'insight.context.legend', { measure: esc(e.measure[lang]), title: esc(reference.title[lang]) })}</p>` : '',
+    legend: top.context ? `<p class="note">${t(lang, 'insight.context.legend', { measure: esc(e.measure[lang]), title: esc(reference.title[lang]) })}</p>` : '',
   };
 }
 
@@ -167,17 +170,18 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
   const years = r.points.map((p) => p.period);
   const all = kpis.map((k, i) => (i === 0 ? r.lines : compareLines(k, reference, years, e)));
   // A chart that mixes a rate (own unit) with an index needs two axes, as on the Links; the rest share one domain.
-  const dual = all.map((l) => !!l.rebased && l.rebased.kpi !== l.rebased.reference);
+  const dual = all.map((l) => l.secondAxis || (!!l.rebased && l.rebased.kpi !== l.rebased.reference));
   const domain = sharedDomain(all.filter((_, i) => !dual[i]));
   const multiples = kpis.map((kpi, i) => {
     const growth = !!all[i].growth;
     const rebased = all[i].base ? t(lang, 'insight.axis.rebased', { year: all[i].base! }) : '';
-    const title = t(lang, growth ? 'insight.multiples.label_growth' : 'insight.multiples.label', { kpi: kpi.title[lang], reference: refTitle });
-    const [kpiUnit, refUnit] = dual[i] ? [all[i].rebased!.kpi ? rebased : kpi.unit[lang], all[i].rebased!.reference ? rebased : reference.unit[lang]] : [growth ? t(lang, 'insight.axis.growth') : all[i].base ? rebased : kpi.unit[lang], ''];
+    const own = (f: string) => (e.small && i === 0 ? `insight.small.${e.small}.${f}` : undefined);
+    const title = t(lang, own('label') ?? (growth ? 'insight.multiples.label_growth' : 'insight.multiples.label'), { kpi: kpi.title[lang], reference: refTitle });
+    const [kpiUnit, refUnit] = all[i].secondAxis ? [kpi.unit[lang], t(lang, 'insight.axis.real_growth')] : dual[i] ? [all[i].rebased!.kpi ? rebased : kpi.unit[lang], all[i].rebased!.reference ? rebased : reference.unit[lang]] : [growth ? t(lang, 'insight.axis.growth') : all[i].base ? rebased : kpi.unit[lang], ''];
     const chart = dual[i] ? overlayChart(all[i].kpi, all[i].reference, { kpiUnit, indicatorUnit: refUnit, title }, lang) : multiplesChart(all[i], { unit: kpiUnit, title }, domain, lang);
-    return `<div class="multiples"><h3>${t(lang, 'insight.multiples.title', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</h3>`
+    return `<div class="multiples"><h3>${t(lang, own('title') ?? 'insight.multiples.title', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</h3>`
       + chart
-      + `<p class="note">${t(lang, dual[i] ? 'insight.multiples.legend_dual' : growth ? (e.series.some((x) => x.role === 'deflator') ? 'insight.multiples.legend_growth_real' : 'insight.multiples.legend_growth') : 'insight.multiples.legend', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p>`
+      + `<p class="note">${t(lang, own('legend') ?? (dual[i] ? 'insight.multiples.legend_dual' : growth ? (e.series.some((x) => x.role === 'deflator') ? 'insight.multiples.legend_growth_real' : 'insight.multiples.legend_growth') : 'insight.multiples.legend'), { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p>`
       + (!dual[i] && !growth && all[i].base ? `<p class="note">${t(lang, 'insight.multiples.base_note', { year: all[i].base! })}</p>` : '')
       + (growth && e.headline === 'growth' ? `<p class="note">${t(lang, 'insight.multiples.real_growth')}</p>` : '') + '</div>';
   }).join('');
