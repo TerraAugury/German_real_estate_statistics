@@ -128,7 +128,7 @@
   headline: deviation
   better: lower
   base: 2015
-  notes: [insight.note.completions_scope, insight.note.completions_coverage, insight.note.completions_indirect]
+  notes: [insight.note.completions_scope, insight.note.completions_coverage]
   template: vacancy-completions
   series:
     - { key: office-vacancy-127, role: kpi }

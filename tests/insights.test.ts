@@ -436,7 +436,7 @@ describe('Insights N (vacancy and completions) and O (vacancy and rent growth)',
     const models = page();
     expect(tone('higher', 'lower')).toBe('worse');
     expect(tone('lower', 'lower')).toBe('better');
-    for (const [key, notes] of [['n', ['Completions cover all of Germany, while vacancy covers 127 towns.', 'public and owner-occupied', 'let before they are finished']], ['o', ['Rents cover all of Germany, while vacancy covers 127 towns.', 'rent-free months']]] as const) {
+    for (const [key, notes] of [['n', ['Completions cover all of Germany, while vacancy covers 127 towns.', 'public and owner-occupied']], ['o', ['Rents cover all of Germany, while vacancy covers 127 towns.', 'rent-free months']]] as const) {
       const m = models.find((i) => i.entry.key === key)!;
       expect(m.entry.better).toBe('lower');
       const en = renderInsight(m.entry, m.result, m.series, 'en'), de = renderInsight(m.entry, m.result, m.series, 'de');
@@ -449,9 +449,8 @@ describe('Insights N (vacancy and completions) and O (vacancy and rent growth)',
     }
     const [nn, oo] = ['n', 'o'].map((k) => models.find((i) => i.entry.key === k)!);
     const html = (m: typeof nn, l: 'en' | 'de') => renderInsight(m.entry, m.result, m.series, l);
-    expect(html(oo, 'en')).toContain('One possible explanation, not a proven cause');
-    expect(html(oo, 'de')).toContain('Eine mögliche Erklärung, keine belegte Ursache');
-    expect(html(nn, 'en')).not.toContain('One possible explanation');
+    expect(html(nn, 'en')).toContain('Blue line, right axis: change in office vacancy');
+    expect(html(oo, 'en')).not.toContain('tenants may be moving');
     if (!nn.result.shown || !oo.result.shown || !nn.result.chart) throw new Error('not shown');
     expect(nn.result.chart.points).toHaveLength(nn.result.chart.context.length);
     expect(nn.result.mean).toBe(0);
@@ -460,13 +459,5 @@ describe('Insights N (vacancy and completions) and O (vacancy and rent growth)',
     // N has shared years under 20, so the short-history note shows.
     const n = models.find((i) => i.entry.key === 'n')!;
     expect(renderInsight(n.entry, n.result, n.series, 'en')).toContain('Short history');
-  });
-
-  it('the tenant-shift note needs vacancy rising two years running with real rent growth positive in both', async () => {
-    const { vacancyRisingRealGrowth: f } = await import('../src/insight/insight');
-    const mk = (v: number[], r: number[]) => ({ kpi: v.map((value, i) => ({ period: String(i), value })), reference: r.map((value, i) => ({ period: String(i), value })) });
-    expect(f(mk([5, 5.5, 6], [1, 2, 3]))).toBe(true);
-    expect(f(mk([5, 5.5, 6], [1, -2, 3]))).toBe(false);
-    expect(f(mk([5, 4.5, 6], [1, 2, 3]))).toBe(false);
   });
 });

@@ -1658,20 +1658,12 @@ insight.note.completions_coverage:
   en_hash: d8a2c48419d11744
   reviewed_by: Olivier
   reviewed_on: 2026-11-06
-insight.note.completions_indirect:
-  en_hash: 7f8ab6c0b55210e7
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
 insight.note.rents_scope:
   en_hash: a932147c5c3990a6
   reviewed_by: Olivier
   reviewed_on: 2026-11-06
 insight.note.asking_rents:
   en_hash: cdcb7b1b6005fdba
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
-insight.note.tenant_shift:
-  en_hash: 91485af0b4bd69dc
   reviewed_by: Olivier
   reviewed_on: 2026-11-06
 insight:n.title:

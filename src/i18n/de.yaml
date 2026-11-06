@@ -229,7 +229,6 @@ insight.small.vacancy-rents.label: "{kpi} und reales Mietwachstum im Zeitverlauf
 insight.small.vacancy-rents.legend: "Blaue Linie, linke Achse: {kpi}, in %. Ockerfarbene Linie, rechte Achse: Veränderung des Mietindex gegenüber dem Vorjahr, preisbereinigt, in Prozent. Die Achsen haben unterschiedliche Einheiten, daher werden die Linien nicht nach ihrer Höhe verglichen."
 insight.note.completions_scope: "Die Fertigstellungen gelten für ganz Deutschland, der Leerstand für 127 Städte."
 insight.note.completions_coverage: "Die Fertigstellungen umfassen öffentliche und eigengenutzte Gebäude und schließen Sanierungen und Umnutzungen aus."
-insight.note.completions_indirect: "Viele neue Büros sind schon vor der Fertigstellung vermietet, daher kann neues Angebot den Leerstand indirekt erhöhen, nämlich in älteren Gebäuden, die Mieter verlassen."
 insight.note.rents_scope: "Die Mieten gelten für ganz Deutschland, der Leerstand für 127 Städte."
 insight.note.asking_rents: "Der Mietindex misst Angebotsmieten bei Neuvermietungen. Anreize wie mietfreie Monate erfasst er nicht, daher können die tatsächlich gezahlten Mieten schwächer sein als gezeigt."
-insight.note.tenant_shift: "Der Leerstand ist in den letzten Jahren gestiegen, während die realen Mieten weiter wachsen. Eine mögliche Erklärung, keine belegte Ursache: Mieter ziehen womöglich in die besten, neuesten Gebäude, was den Mietindex hebt, selbst wenn ältere Flächen leer werden."
+insight.context.legend_dual: "Blaue Linie, rechte Achse: {measure}, in Prozentpunkten. Ockerfarbene Linie, linke Achse: Wachstum von {title} gegenüber dem Vorjahr, in Prozent. Die Achsen haben unterschiedliche Einheiten, daher werden die Linien nicht nach ihrer Höhe verglichen."

@@ -147,7 +147,3 @@ export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opt
   return { shown: true, points, from: points[0].period, to: latest.period, n: points.length, short: points.length < SHORT_OBS, mean, sd, latest, verdict: verdict(latest.value, mean, sd), lines: ln,
     ...(growth && { context: years.map((y) => ({ period: String(y), value: growth!.get(y)! })) }), ...(chart && { chart }) };
 }
-
-/** A rising vacancy rate over the latest two years while the real growth line is still positive in both: the one case that earns the tenant-shift note. `l` is a `gap` Insight's lines. */
-export const vacancyRisingRealGrowth = (l: { kpi: Points; reference: Points }) =>
-  l.kpi.length >= 3 && [1, 2].every((i) => { const [v, w] = [l.kpi.at(-i)!.value, l.kpi.at(-i - 1)!.value]; return v > w && l.reference.at(-i)!.value > 0; });
