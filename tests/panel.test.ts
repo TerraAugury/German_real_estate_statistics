@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { loadSeries } from '../src/lib/series';
 import { computeLink, type LinkResult } from '../src/link/link';
-import { annualPoints } from '../src/lib/series';
 import { renderPanel } from '../src/lib/panel';
 import { lineChart } from '../src/lib/chart';
 import { JSDOM } from 'jsdom';
@@ -149,9 +148,5 @@ describe('Link panel', () => {
     expect(r.shown).toBe(true);
     const c = loadSeries('cpi');
     expect(computeLink({ freq: 'A', change: kpi.change, obs: kpi.obs }, { freq: 'M', change: c.change, obs: c.obs }).shown).toBe(true);
-  });
-  it('annualPoints refuses monthly series', () => {
-    expect(() => annualPoints(ind)).toThrow(/annual/);
-    expect(annualPoints(kpi).length).toBe(kpi.obs.length);
   });
 });

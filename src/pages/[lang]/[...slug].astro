@@ -122,9 +122,10 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
               const to = `${viewHref(k, v, lang)}#${c.pair.id}`;
               // One link per lag; the selector shows one. A shown Link is shaded by its rho, with the coefficient first and n
               // beneath; one not shown (or under the minimum overlap at that lag) is hatched like any gap.
+              const preset = (y: number) => c.pair.preset && <span class="preset">{t(lang, y === 1 ? 'links.cell.preset' : y === 2 ? 'links.cell.preset_2' : 'links.cell.preset_other')}</span>;
               return <td class="lagcell">{c.lags.map((l, y) => l.heat && l.rho !== null
-                ? <a data-lag={y} href={to} class={`${l.heat.side}${l.noise ? ' noise' : ''}`} style={`--share: ${l.heat.share}%`}><span class="rho">{fmt(lang, l.rho, { maximumFractionDigits: 2 })}</span><span class="n">{t(lang, 'links.cell.n', { n: String(l.n) })}</span>{l.noise && <span class="vh">{t(lang, 'links.cell.noise')}</span>}{c.pair.preset && <span class="preset">{t(lang, y === 1 ? 'links.cell.preset' : y === 2 ? 'links.cell.preset_2' : 'links.cell.preset_other')}</span>}</a>
-                : <a data-lag={y} href={to} class="na">{t(lang, 'links.cell.not_shown', { n: String(l.n) })}{c.pair.preset && <span class="preset">{t(lang, y === 1 ? 'links.cell.preset' : y === 2 ? 'links.cell.preset_2' : 'links.cell.preset_other')}</span>}</a>)}</td>;
+                ? <a data-lag={y} href={to} class={`${l.heat.side}${l.noise ? ' noise' : ''}`} style={`--share: ${l.heat.share}%`}><span class="rho">{fmt(lang, l.rho, { maximumFractionDigits: 2 })}</span><span class="n">{t(lang, 'links.cell.n', { n: String(l.n) })}</span>{l.noise && <span class="vh">{t(lang, 'links.cell.noise')}</span>}{preset(y)}</a>
+                : <a data-lag={y} href={to} class="na">{t(lang, 'links.cell.not_shown', { n: String(l.n) })}{preset(y)}</a>)}</td>;
             })}
           </tr>
         ))}</tbody>

@@ -14,6 +14,7 @@ export type InsightSeries = Pick<LinkSeries, 'freq' | 'obs'> & { unit?: { en: st
 /** A rate or percentage (unit "%", "% p.a.", "% balance"): never rebased to an index, always shown in its own unit. */
 export const isRate = (s: InsightSeries) => s.unit?.en.startsWith('%') ?? false;
 export type Points = { period: string; value: number }[];
+const yearPts = (ys: number[], f: (y: number) => number): Points => ys.map((y) => ({ period: String(y), value: f(y) }));
 export type InsightResult =
   | { shown: false; n: number; reason: 'too_few' }
   | { shown: true; points: Points; from: string; to: string; n: number; short: boolean;
@@ -43,9 +44,9 @@ export const tone = (v: Verdict, better: Better): Tone => (v === 'in_line' || be
  * never rebased and stays in its own unit; two rates are not rebased at all.
  */
 function lines(a: Map<number, number>, b: Map<number, number>, years: number[], base?: number, rate = { kpi: false, reference: false }): Extract<InsightResult, { shown: true }>['lines'] {
-  if (base === undefined || (rate.kpi && rate.reference)) return { kpi: years.map((y) => ({ period: String(y), value: a.get(y)! })), reference: years.map((y) => ({ period: String(y), value: b.get(y)! })) };
+  if (base === undefined || (rate.kpi && rate.reference)) return { kpi: yearPts(years, (y) => a.get(y)!), reference: yearPts(years, (y) => b.get(y)!) };
   const year = years.includes(base) ? base : years[0];
-  const scale = (m: Map<number, number>, isRated: boolean) => years.map((y) => ({ period: String(y), value: isRated ? m.get(y)! : (m.get(y)! / m.get(year)!) * 100 }));
+  const scale = (m: Map<number, number>, isRated: boolean) => yearPts(years, (y) => isRated ? m.get(y)! : (m.get(y)! / m.get(year)!) * 100);
   return { kpi: scale(a, rate.kpi), reference: scale(b, rate.reference), base: String(year), rebased: { kpi: !rate.kpi, reference: !rate.reference } };
 }
 
@@ -124,9 +125,9 @@ export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opt
   const years = [...values.keys()].filter((y) => more.every((m) => m.has(y))).sort((x, y) => x - y);
   if (years.length < MIN_OBS) return { shown: false, n: years.length, reason: 'too_few' };
   const ln = realGrowth
-    ? { kpi: years.map((y) => ({ period: String(y), value: la.get(y)! })), reference: years.map((y) => ({ period: String(y), value: realGrowth.get(y)! })), secondAxis: true }
+    ? { kpi: yearPts(years, (y) => la.get(y)!), reference: yearPts(years, (y) => realGrowth.get(y)!), secondAxis: true }
     : growthLines
-    ? { kpi: years.map((y) => ({ period: String(y), value: growthLines[0].get(y)! })), reference: years.map((y) => ({ period: String(y), value: growthLines[1].get(y)! })), growth: true }
+    ? { kpi: yearPts(years, (y) => growthLines[0].get(y)!), reference: yearPts(years, (y) => growthLines[1].get(y)!), growth: true }
     : lines(la, lb, years, opts.base, { kpi: isRate(kpi), reference: isRate(reference) });
   const points = years.map((y, i) => ({ period: String(y), value: opts.indexed ? ln.kpi[i].value / ln.reference[i].value : values.get(y)! }));
   const latest = points.at(-1)!;
@@ -141,9 +142,9 @@ export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opt
   if (head === 'deviation') {
     const [dv, cg] = [changes(la, 'A', 'diff'), changes(lb, 'A', 'pct')];
     const cy = years.filter((y) => dv.has(y) && cg.has(y));
-    const pts = cy.map((y) => ({ period: String(y), value: dv.get(y)! }));
-    if (pts.length >= MIN_OBS) chart = { points: pts, context: cy.map((y) => ({ period: String(y), value: cg.get(y)! })), from: pts[0].period, to: pts.at(-1)!.period, ...stats(pts) };
+    const pts = yearPts(cy, (y) => dv.get(y)!);
+    if (pts.length >= MIN_OBS) chart = { points: pts, context: yearPts(cy, (y) => cg.get(y)!), from: pts[0].period, to: pts.at(-1)!.period, ...stats(pts) };
   }
   return { shown: true, points, from: points[0].period, to: latest.period, n: points.length, short: points.length < SHORT_OBS, mean, sd, latest, verdict: verdict(latest.value, mean, sd), lines: ln,
-    ...(growth && { context: years.map((y) => ({ period: String(y), value: growth!.get(y)! })) }), ...(chart && { chart }) };
+    ...(growth && { context: yearPts(years, (y) => growth!.get(y)!) }), ...(chart && { chart }) };
 }

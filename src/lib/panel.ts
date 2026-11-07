@@ -130,6 +130,32 @@ export function renderInsightIndex(models: { entry: InsightEntry; result: Insigh
   return `<ul class="insight-grid">${items.join('')}</ul>`;
 }
 
+/**
+ * How one small chart of an Insight is drawn and worded, decided from its lines so the renderer only reads the plan. A chart that
+ * mixes a rate (own unit) with an index needs two axes, as on the Links; the rest share one domain. The first KPI series may
+ * bring its own wording (`e.small`).
+ */
+function multiplePlan(e: InsightEntry, l: Shown['lines'], first: boolean) {
+  const growth = !!l.growth;
+  const dual = !!l.secondAxis || (!!l.rebased && l.rebased.kpi !== l.rebased.reference);
+  const own = (f: string) => (e.small && first ? `insight.small.${e.small}.${f}` : undefined);
+  const growthLegend = e.series.some((x) => x.role === 'deflator') ? 'insight.multiples.legend_growth_real' : 'insight.multiples.legend_growth';
+  return {
+    growth, dual,
+    label: own('label') ?? (growth ? 'insight.multiples.label_growth' : 'insight.multiples.label'),
+    heading: own('title') ?? 'insight.multiples.title',
+    legend: own('legend') ?? (dual ? 'insight.multiples.legend_dual' : growth ? growthLegend : 'insight.multiples.legend'),
+  };
+}
+
+/** The unit text of a small chart's left and right axes. */
+function multipleUnits(l: Shown['lines'], plan: { growth: boolean; dual: boolean }, kpi: Series, reference: Series, lang: Lang): [string, string] {
+  const rebased = l.base ? t(lang, 'insight.axis.rebased', { year: l.base }) : '';
+  if (l.secondAxis) return [kpi.unit[lang], t(lang, 'insight.axis.real_growth')];
+  if (plan.dual) return [l.rebased!.kpi ? rebased : kpi.unit[lang], l.rebased!.reference ? rebased : reference.unit[lang]];
+  return [plan.growth ? t(lang, 'insight.axis.growth') : l.base ? rebased : kpi.unit[lang], ''];
+}
+
 /** What leads an Insight, shared by its section and the Home hero: headline number with verdict tag, the reading, the chart, its Notes. */
 function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, now: Date) {
   const one = headlineNumber(e, lang);
@@ -143,7 +169,7 @@ function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, no
     ...(e.notes ?? []).map((k) => `${t(lang, 'note.prefix')}: ${t(lang, k)}`)];
   const title = t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] });
   // The KPI's yearly change in points and the reference's growth in percent differ in size, so each gets its own axis, the KPI's on the right.
-  const chart = r.chart ? overlayChart(r.chart.points, r.chart.context, { kpiUnit: t(lang, 'insight.unit.change'), indicatorUnit: t(lang, 'insight.axis.growth'), kpiRight: true, title }, lang) : insightChart(top, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(top.mean) }), title: t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] }) }, lang);
+  const chart = r.chart ? overlayChart(r.chart.points, r.chart.context, { kpiUnit: t(lang, 'insight.unit.change'), indicatorUnit: t(lang, 'insight.axis.growth'), kpiRight: true, title }, lang) : insightChart(top, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(top.mean) }), title }, lang);
   const reference = series[e.series.findIndex((x) => x.role === 'reference')];
   return {
     reading, notes, chart, reference, plate: toneOf(e, r, lang).plate,
@@ -170,21 +196,18 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
   // The headline's lines are the first KPI series'; every other KPI series gets its own small chart over the same years.
   const years = r.points.map((p) => p.period);
   const all = kpis.map((k, i) => (i === 0 ? r.lines : compareLines(k, reference, years, e)));
-  // A chart that mixes a rate (own unit) with an index needs two axes, as on the Links; the rest share one domain.
-  const dual = all.map((l) => l.secondAxis || (!!l.rebased && l.rebased.kpi !== l.rebased.reference));
-  const domain = sharedDomain(all.filter((_, i) => !dual[i]));
+  const plans = all.map((l, i) => multiplePlan(e, l, i === 0));
+  const domain = sharedDomain(all.filter((_, i) => !plans[i].dual));
   const multiples = kpis.map((kpi, i) => {
-    const growth = !!all[i].growth;
-    const rebased = all[i].base ? t(lang, 'insight.axis.rebased', { year: all[i].base! }) : '';
-    const own = (f: string) => (e.small && i === 0 ? `insight.small.${e.small}.${f}` : undefined);
-    const title = t(lang, own('label') ?? (growth ? 'insight.multiples.label_growth' : 'insight.multiples.label'), { kpi: kpi.title[lang], reference: refTitle });
-    const [kpiUnit, refUnit] = all[i].secondAxis ? [kpi.unit[lang], t(lang, 'insight.axis.real_growth')] : dual[i] ? [all[i].rebased!.kpi ? rebased : kpi.unit[lang], all[i].rebased!.reference ? rebased : reference.unit[lang]] : [growth ? t(lang, 'insight.axis.growth') : all[i].base ? rebased : kpi.unit[lang], ''];
-    const chart = dual[i] ? overlayChart(all[i].kpi, all[i].reference, { kpiUnit, indicatorUnit: refUnit, title }, lang) : multiplesChart(all[i], { unit: kpiUnit, title }, domain, lang);
-    return `<div class="multiples"><h3>${t(lang, own('title') ?? 'insight.multiples.title', { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</h3>`
+    const [l, plan] = [all[i], plans[i]];
+    const title = t(lang, plan.label, { kpi: kpi.title[lang], reference: refTitle });
+    const [kpiUnit, refUnit] = multipleUnits(l, plan, kpi, reference, lang);
+    const chart = plan.dual ? overlayChart(l.kpi, l.reference, { kpiUnit, indicatorUnit: refUnit, title }, lang) : multiplesChart(l, { unit: kpiUnit, title }, domain, lang);
+    return `<div class="multiples"><h3>${t(lang, plan.heading, { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</h3>`
       + chart
-      + `<p class="note">${t(lang, own('legend') ?? (dual[i] ? 'insight.multiples.legend_dual' : growth ? (e.series.some((x) => x.role === 'deflator') ? 'insight.multiples.legend_growth_real' : 'insight.multiples.legend_growth') : 'insight.multiples.legend'), { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p>`
-      + (!dual[i] && !growth && all[i].base ? `<p class="note">${t(lang, 'insight.multiples.base_note', { year: all[i].base! })}</p>` : '')
-      + (growth && e.headline === 'growth' ? `<p class="note">${t(lang, 'insight.multiples.real_growth')}</p>` : '') + '</div>';
+      + `<p class="note">${t(lang, plan.legend, { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p>`
+      + (!plan.dual && !plan.growth && l.base ? `<p class="note">${t(lang, 'insight.multiples.base_note', { year: l.base })}</p>` : '')
+      + (plan.growth && e.headline === 'growth' ? `<p class="note">${t(lang, 'insight.multiples.real_growth')}</p>` : '') + '</div>';
   }).join('');
   return `<section class="insight${plate && ` ${plate}`}" id="${esc(e.key)}">${head}`
     + headlineHtml

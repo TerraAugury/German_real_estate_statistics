@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { sumLaender } from '../src/lib/series';
 import { period, t } from '../src/lib/i18n';
-import { KPIS, SEGMENTS, cell, headline, liveViews } from '../src/lib/kpis';
+import { KPIS, SEGMENTS, cell, headline, isLand, liveViews } from '../src/lib/kpis';
 import { pickView } from '../src/lib/select';
 import { loadAllManifest, loadManifest } from '../src/lib/manifest';
 
@@ -42,7 +42,7 @@ describe('KPI catalogue (spec section 4)', () => {
   });
   it('Länder only for Construction; no Logistics view outside Construction', () => {
     for (const k of KPIS.filter((k) => k.page !== 'construction')) for (const x of k.views) {
-      expect(x.geo.startsWith('de-'), `${k.page} ${x.geo}`).toBe(false);
+      expect(isLand(x.geo), `${k.page} ${x.geo}`).toBe(false);
       expect(x.segment).not.toBe('logistics');
     }
     expect(kpi('construction').views.filter((x) => x.segment === 'office')).toHaveLength(17);
