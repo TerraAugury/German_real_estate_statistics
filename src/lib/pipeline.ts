@@ -1,7 +1,7 @@
 // Pure pipeline logic (fetch, diff, staleness, validation). Network and clock are injected so tests can mock them.
 import { parse } from 'yaml';
 import { readFileSync } from 'node:fs';
-import type { ManifestEntry } from './manifest';
+import { partId, type ManifestEntry, type SourceKind } from './manifest';
 import { originalDataSource, refreshBundesbank } from './bundesbank';
 import { refreshDestatis } from './destatis';
 
@@ -49,7 +49,7 @@ function firstDoc(res: any, id: string): any {
   return d;
 }
 
-export const partIds = (m: ManifestEntry) => m.laender.map((land) => m.ids[0].replace('{land}', land));
+export const partIds = (m: ManifestEntry) => m.laender.map((land) => partId(m, land));
 const url = (m: ManifestEntry, id: string, obs: boolean) => `${API}/${m.dbnomics_provider}/${m.dataset}/${id}${obs ? '?observations=1' : ''}`;
 
 /** True if a value for a period before the latest one changed. */
@@ -95,11 +95,11 @@ export async function refreshDbnomics(m: ManifestEntry, old: Snapshot | undefine
 
 /** Refresh one series from the source its manifest entry names. */
 export async function refresh(m: ManifestEntry, old: Snapshot | undefined, deps: Deps): Promise<Snapshot | null> {
-  if (m.source === 'dbnomics') return refreshDbnomics(m, old, deps);
-  if (m.source === 'bundesbank') return refreshBundesbank(m, old, deps);
-  if (m.source === 'destatis') return refreshDestatis(m, old, deps);
-  throw new BadResponse(`${m.key}: no fetcher for source ${m.source}`);
+  const fetcher = REFRESH[m.source];
+  if (!fetcher) throw new BadResponse(`${m.key}: no fetcher for source ${m.source}`);
+  return fetcher(m, old, deps);
 }
+const REFRESH: Record<SourceKind, typeof refreshDbnomics> = { dbnomics: refreshDbnomics, bundesbank: refreshBundesbank, destatis: refreshDestatis };
 
 /** Last snapshot with fetch_failed recorded. A series without a snapshot fails the build. */
 export function markFailed(key: string, old: Snapshot | undefined, now: Date, err: unknown): Snapshot {

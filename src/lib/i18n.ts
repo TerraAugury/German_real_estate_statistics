@@ -39,10 +39,18 @@ export function t(lang: Lang, key: string, vars: Record<string, string> = {}): s
 export const documentTitle = (lang: Lang, page: PageKey, title: string) => (page === 'home' ? title : `${title} – ${t(lang, 'site.title')}`);
 
 const locale = { en: 'en-GB', de: 'de-DE' } as const;
+// Building an Intl formatter is far dearer than using one, and a build formats thousands of numbers.
+const numberFormats = new Map<string, Intl.NumberFormat>(), dateFormats = new Map<string, Intl.DateTimeFormat>();
+const cached = <T>(m: Map<string, T>, lang: Lang, o: object, make: (locale: string) => T): T => {
+  const k = lang + JSON.stringify(o);
+  if (!m.has(k)) m.set(k, make(locale[lang]));
+  return m.get(k)!;
+};
+const dateFormat = (lang: Lang, o: Intl.DateTimeFormatOptions) => cached(dateFormats, lang, o, (l) => new Intl.DateTimeFormat(l, o));
 /** An ISO timestamp as a long UTC date: "3 November 2026". */
-export const day = (lang: Lang, iso: string) => new Intl.DateTimeFormat(locale[lang], { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(iso));
+export const day = (lang: Lang, iso: string) => dateFormat(lang, { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(iso));
 // Page-locale number formatting: EN "1,234.5", DE "1.234,5".
-export const fmt = (lang: Lang, n: number, o: Intl.NumberFormatOptions = {}) => new Intl.NumberFormat(locale[lang], o).format(n);
+export const fmt = (lang: Lang, n: number, o: Intl.NumberFormatOptions = {}) => cached(numberFormats, lang, o, (l) => new Intl.NumberFormat(l, o)).format(n);
 /** Number format for a series' own values: the decimals its source published when it has them, else at most two. */
 export const valueFormat = (s: { decimals?: number }): Intl.NumberFormatOptions =>
   s.decimals == null ? { maximumFractionDigits: 2 } : { minimumFractionDigits: s.decimals, maximumFractionDigits: s.decimals };
@@ -51,5 +59,5 @@ export function period(lang: Lang, p: string): string {
   const [y, rest] = p.split('-');
   if (!rest) return y;
   if (rest[0] === 'Q') return `${rest} ${y}`;
-  return new Intl.DateTimeFormat(locale[lang], { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(Date.UTC(+y, +rest - 1));
+  return dateFormat(lang, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(Date.UTC(+y, +rest - 1));
 }

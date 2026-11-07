@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { loadManifest, seriesId, seriesUrl, isDerived, SERVICE, type Localized, type ManifestEntry } from './manifest';
+import { loadManifest, partId, seriesId, seriesUrl, isDerived, SOURCE_INFO, type Localized, type ManifestEntry } from './manifest';
 import { validateSnapshot, isStale } from './pipeline';
 import { landName } from './kpis';
 import { langs } from './routes';
@@ -58,19 +58,19 @@ export function loadSeries(key: string, now = new Date(), land?: string): Series
   catch { throw new Error(`${key}: no snapshot`); }
   validateSnapshot(m, snap);
   const laender = land ? [land] : m.laender;
-  const sum = sumLaender(laender.map((l) => ({ land: l, ...snap.parts[m.ids[0].replace('{land}', l)] })), m.scale);
+  const sum = sumLaender(laender.map((l) => ({ land: l, ...snap.parts[partId(m, l)] })), m.scale);
   // complete_only: a sum of sections is meaningless in a year where one section has no value yet, so that year is left out.
   const gaps = new Set(m.complete_only ? sum.partial.map((p) => p.period) : []);
   const obs = sum.obs.filter((o) => !gaps.has(o.period)), partial = sum.partial.filter((p) => !gaps.has(p.period));
   const lastPeriod = obs.at(-1)!.period;
-  const meta = snap.parts[m.ids[0].replace('{land}', laender[0])]?.meta;
+  const meta = snap.parts[partId(m, laender[0])]?.meta;
   const title = land ? landTitle(m.title, land) : m.title;
   const derived = (isDerived(m) && !land) || m.scale !== 1 || m.resampling === 'mean';
+  const src = SOURCE_INFO[m.source];
   const s: Series = { key, title, unit: m.unit, publisher: m.publisher, licence: m.licence,
     seriesId: seriesId(m, land), seriesUrl: seriesUrl(m, land), obs, change: m.change, freq: FREQ[m.frequency as keyof typeof FREQ],
-    fetchedFrom: m.source === 'dbnomics' ? 'DBnomics' : m.publisher, service: SERVICE[m.source],
-    // only the Bundesbank gives a title of the series itself; a GENESIS cube's title lists every measure of the cube
-    original: meta ? { title: m.source === 'bundesbank' ? meta.title : undefined, unit: meta.unit_mult ? `${meta.unit} (×10^${meta.unit_mult})` : meta.unit, source: m.credit ? meta.comment ?? undefined : undefined } : undefined,
+    fetchedFrom: src.fetchedFrom(m), service: src.service,
+    original: meta ? { title: src.originalTitle ? meta.title : undefined, unit: meta.unit_mult ? `${meta.unit} (×10^${meta.unit_mult})` : meta.unit, source: m.credit ? meta.comment ?? undefined : undefined } : undefined,
     lastPeriod, derived, provisional: m.provisional, decimals: !derived && meta?.decimals != null ? meta.decimals : undefined, terms: meta?.terms, credit: m.credit,
     stale: isStale(lastPeriod, m.frequency, now), fetchFailed: snap.fetch_failed ?? null, unavailable: snap.unavailable ?? null,
     retrievedAt: snap.retrieved_at, revisedAt: snap.revised_at ?? null,
@@ -95,10 +95,4 @@ function landTitle(title: Localized, land: string): Localized {
     if (out[l] === title[l]) throw new Error(`series title has no Germany suffix to replace: ${title[l]}`);
   }
   return out;
-}
-
-/** Annual observations as year/value pairs. Explicit error for other frequencies, never a silent empty list. */
-export function annualPoints(s: Series): { year: number; value: number }[] {
-  if (s.freq !== 'A') throw new Error(`${s.key}: annualPoints needs an annual series, got ${s.freq}`);
-  return s.obs.map((o) => ({ year: +o.period, value: o.value }));
 }

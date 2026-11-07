@@ -8,7 +8,7 @@ import { renderInsight, renderInsightIndex, renderToneLegend } from '../src/lib/
 import { KPIS } from '../src/lib/kpis';
 import { kpiPage } from '../src/lib/pages';
 import { getSeries } from '../src/lib/series';
-import { tone, type InsightResult } from '../src/insight/insight';
+import { isRate, tone, type InsightResult } from '../src/insight/insight';
 
 afterEach(() => { delete process.env.INCLUDE_PROVISIONAL; });
 
@@ -323,7 +323,7 @@ describe('Rates are never rebased (ticket 4)', () => {
       if (!m.result.shown) continue;
       const [kpi, reference] = ['kpi', 'reference'].map((role) => m.series[m.entry.series.findIndex((s) => s.role === role)]);
       for (const [side, s] of [['kpi', kpi], ['reference', reference]] as const) {
-        if (!s.unit.en.startsWith('%')) continue;
+        if (!isRate(s)) continue;
         const raw = new Map(s.obs.map((o) => [o.period.slice(0, 4), o.value]));
         for (const p of m.result.lines[side]) if (s.freq === 'A') expect(p.value).toBe(raw.get(p.period));
       }

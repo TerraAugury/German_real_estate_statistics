@@ -34,6 +34,15 @@ function render(build: (narrow: boolean) => Plot.PlotOptions, label: string): st
 const x = (p: string) => (p.includes('Q') ? +p.slice(0, 4) + (+p[6] - 1) / 4 : +p); // "2020-Q3" -> 2020.5
 const years = (d: number) => (Number.isInteger(d) ? String(d) : '');
 
+// Axis options shared by the charts: the years along x, a gridded locale-formatted y with its unit.
+const xAxis = (narrow: boolean) => ({ tickFormat: years, label: null, ticks: narrow ? 4 : undefined });
+const yAxis = (lang: Lang, label: string, extra: Plot.ScaleOptions = {}): Plot.ScaleOptions => ({ grid: true, label, labelArrow: 'none', tickFormat: (d: number) => fmt(lang, d), ...extra });
+/** The dot on the latest point and its label, to the right of it. */
+const latest = (last: object[], text: (d: any) => string, narrow: boolean) => [
+  Plot.dot(last, { x: 'x', y: 'value', r: 4, fill: DATA }),
+  Plot.text(last, { x: 'x', y: 'value', text, dx: 8, textAnchor: 'start', fill: DATA, fontWeight: 600, fontSize: narrow ? 14 : 15 }),
+];
+
 /** Server-rendered SVG line chart of an annual or quarterly series, formatted with the page locale; compact charts pass a lower height. */
 export function lineChart(s: Series, lang: Lang, height = 320): string {
   if (s.freq === 'M') throw new Error(`${s.key}: lineChart plots annual or quarterly series, got monthly`);
@@ -41,14 +50,13 @@ export function lineChart(s: Series, lang: Lang, height = 320): string {
   const last = points.slice(-1);
   return render((narrow) => ({
     height: narrow ? Math.round(height * 0.8) : height, marginRight: 52, marginTop: 28,
-    x: { tickFormat: years, label: null, ticks: narrow ? 4 : undefined },
-    y: { grid: true, label: s.unit[lang], labelArrow: 'none', tickFormat: (d: number) => fmt(lang, d) },
+    x: xAxis(narrow),
+    y: yAxis(lang, s.unit[lang]),
     marks: [
       Plot.lineY(points, { x: 'x', y: 'value', stroke: DATA, strokeWidth: 2.25 }),
       // Invisible hover targets keep a tooltip on every point without drawing one.
       Plot.dot(points, { x: 'x', y: 'value', r: 6, fill: 'transparent', title: (d) => `${period(lang, d.period)}: ${fmt(lang, d.value, valueFormat(s))}` }),
-      Plot.dot(last, { x: 'x', y: 'value', r: 4, fill: DATA }),
-      Plot.text(last, { x: 'x', y: 'value', text: (d) => fmt(lang, d.value, valueFormat(s)), dx: 8, textAnchor: 'start', fill: DATA, fontWeight: 600, fontSize: narrow ? 14 : 15 }),
+      ...latest(last, (d) => fmt(lang, d.value, valueFormat(s)), narrow),
     ],
   }), s.title[lang]);
 }
@@ -82,7 +90,7 @@ export function overlayChart(kpi: Points, indicator: Points, labels: { kpiUnit: 
   };
   return render((narrow) => ({
     height: 240, marginRight: narrow ? 36 : 50, marginTop: 28,
-    x: { tickFormat: years, label: null, ticks: narrow ? 4 : undefined },
+    x: xAxis(narrow),
     y: { axis: null, domain: [0, 1] },
     marks: [...scaled(kpi, labels.kpiUnit, labels.kpiRight ? 'right' : 'left', DATA, DATA), ...scaled(indicator, labels.indicatorUnit, labels.kpiRight ? 'left' : 'right', STRONG, STRONG_TEXT)],
   }), labels.title);
@@ -95,8 +103,8 @@ export function insightChart(r: { points: Points; context?: Points; from: string
   const band = [{ x1: +r.from, x2: +r.to, y1: r.mean - r.sd / 2, y2: r.mean + r.sd / 2 }];
   return render((narrow) => ({
     height: narrow ? 256 : 320, marginRight: 52, marginTop: 28,
-    x: { tickFormat: years, label: null, ticks: narrow ? 4 : undefined },
-    y: { grid: true, label: labels.unit, labelArrow: 'none', tickFormat: (d: number) => fmt(lang, d) },
+    x: xAxis(narrow),
+    y: yAxis(lang, labels.unit),
     marks: [
       Plot.rectY(band, { x1: 'x1', x2: 'x2', y1: 'y1', y2: 'y2', fill: GRID }),
       Plot.ruleY([r.mean], { stroke: MUTED, strokeDasharray: '5 4' }),
@@ -104,8 +112,7 @@ export function insightChart(r: { points: Points; context?: Points; from: string
       ...(r.context ? [Plot.lineY(r.context.map((p) => ({ x: +p.period, value: p.value })), { x: 'x', y: 'value', stroke: STRONG, strokeWidth: 2 })] : []),
       Plot.lineY(data, { x: 'x', y: 'value', stroke: DATA, strokeWidth: 2.25 }),
       Plot.dot(data, { x: 'x', y: 'value', r: 6, fill: 'transparent', title: (d) => `${d.x}: ${fmt(lang, d.value, { maximumFractionDigits: 2 })}` }),
-      Plot.dot(last, { x: 'x', y: 'value', r: 4, fill: DATA }),
-      Plot.text(last, { x: 'x', y: 'value', text: (d) => fmt(lang, d.value, { minimumFractionDigits: 1, maximumFractionDigits: 1 }), dx: 8, textAnchor: 'start', fill: DATA, fontWeight: 600, fontSize: narrow ? 14 : 15 }),
+      ...latest(last, (d) => fmt(lang, d.value, { minimumFractionDigits: 1, maximumFractionDigits: 1 }), narrow),
     ],
   }), labels.title);
 }
@@ -122,8 +129,8 @@ export function multiplesChart(l: { kpi: Points; reference: Points }, labels: { 
   const rows = l.kpi.map((p, i) => ({ x: +p.period, kpi: p.value, reference: l.reference[i].value }));
   return render((narrow) => ({
     height: narrow ? 200 : 220, marginRight: 52, marginTop: 28,
-    x: { tickFormat: years, label: null, ticks: narrow ? 4 : undefined },
-    y: { grid: true, label: labels.unit, labelArrow: 'none', domain, tickFormat: (d: number) => fmt(lang, d) },
+    x: xAxis(narrow),
+    y: yAxis(lang, labels.unit, { domain }),
     marks: [
       Plot.differenceY(rows, { x: 'x', y1: 'kpi', y2: 'reference', positiveFill: BELOW, negativeFill: ABOVE, fillOpacity: 0.3, strokeWidth: 0 }),
       Plot.lineY(rows, { x: 'x', y: 'reference', stroke: STRONG, strokeWidth: 2 }),

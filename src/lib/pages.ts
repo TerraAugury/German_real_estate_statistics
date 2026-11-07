@@ -77,10 +77,11 @@ export function linksOverview(): LinksOverview {
     const view = rowView(kpi);
     const pairs = view ? viewLinks(view) : [];
     return { kpi, view, cells: new Map(pairs.map((pair) => {
-      const result = linkResult(getSeries(pair.kpi, pair.land), getSeries(pair.indicator));
+      const kpiSeries = getSeries(pair.kpi, pair.land);
+      const result = linkResult(kpiSeries, getSeries(pair.indicator));
       const at = (years: 0 | 1 | 2): CellLag => {
         if (!result.shown) return { rho: null, n: result.n0 };
-        const freq = getSeries(pair.kpi, pair.land).freq;
+        const freq = kpiSeries.freq;
         const { rho, n } = result.lags.find((l) => l.lag === lagFor(freq, years))!;
         if (rho === null) return { rho, n };
         const band = noiseBand(n, targetOf(freq));
