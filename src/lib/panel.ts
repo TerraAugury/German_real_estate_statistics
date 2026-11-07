@@ -173,6 +173,7 @@ function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, no
   const reference = series[e.series.findIndex((x) => x.role === 'reference')];
   return {
     reading, notes, chart, reference, plate: toneOf(e, r, lang).plate,
+    definition: e.definition ? `<p class="definition">${esc(e.definition[lang])}</p>` : '',
     headlineHtml: `<p class="headline">${headlineSpans(e, r, lang)}</p>`,
     legend: top.context ? `<p class="note">${t(lang, r.chart ? 'insight.context.legend_dual' : 'insight.context.legend', { measure: esc(e.measure[lang]), title: esc(reference.title[lang]) })}</p>` : '',
   };
@@ -181,8 +182,8 @@ function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, no
 /** The Home hero: the lead Insight's headline, reading, chart and citation, with a link to the full Insight. Empty when it is not shown. */
 export function renderHero(e: InsightEntry, r: InsightResult, series: Series[], lang: Lang, now = new Date()): string {
   if (!r.shown) return '';
-  const { headlineHtml, reading, chart, legend, notes, plate } = insightLead(e, r, series, lang, now);
-  return `<section class="hero${plate && ` ${plate}`}"><h2>${esc(e.title[lang])}</h2>${headlineHtml}<p>${reading}</p>`
+  const { headlineHtml, reading, definition, chart, legend, notes, plate } = insightLead(e, r, series, lang, now);
+  return `<section class="hero${plate && ` ${plate}`}"><h2>${esc(e.title[lang])}</h2>${headlineHtml}<p>${reading}</p>${definition}`
     + `<figure>${chart}${legend}${noteHtml(notes)}<figcaption>${sourceBlock(series, lang, true)}<br><a href="${href('insights', lang)}#${esc(e.key)}">${t(lang, 'home.hero.more')}</a></figcaption></figure></section>`;
 }
 
@@ -190,7 +191,7 @@ export function renderHero(e: InsightEntry, r: InsightResult, series: Series[], 
 export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[], lang: Lang, now = new Date()): string {
   const head = `<p class="back"><a href="${href('insights', lang)}#index">← ${t(lang, 'insight.back')}</a></p><h2>${esc(e.title[lang])}</h2>`;
   if (!r.shown) return `<section class="insight" id="${esc(e.key)}">${head}<p class="na">${t(lang, 'insight.not_shown', { n: String(r.n), min: String(MIN_OBS) })}</p></section>`;
-  const { headlineHtml, reading, chart, legend, notes, reference, plate } = insightLead(e, r, series, lang, now);
+  const { headlineHtml, reading, definition, chart, legend, notes, reference, plate } = insightLead(e, r, series, lang, now);
   const kpis = series.filter((_, i) => e.series[i].role === 'kpi');
   const refTitle = e.shift ? t(lang, 'insight.shifted', { title: reference.title[lang], shift: t(lang, `insight.shift.${e.shift}`) }) : reference.title[lang];
   // The headline's lines are the first KPI series'; every other KPI series gets its own small chart over the same years.
@@ -211,6 +212,6 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
   }).join('');
   return `<section class="insight${plate && ` ${plate}`}" id="${esc(e.key)}">${head}`
     + headlineHtml
-    + `<p>${reading}</p>`
+    + `<p>${reading}</p>${definition}`
     + `<figure>${chart}${legend}${multiples}${noteHtml(notes)}<figcaption>${sourceBlock(series, lang, true)}<br><a href="${href('methodology', lang)}#${slug('insights', lang)}">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
 }

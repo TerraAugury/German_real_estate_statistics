@@ -11,6 +11,7 @@
 - key: a
   title: { en: "Initial yield spread over the 10-year Bund, by City class", de: "Renditeabstand der Anfangsrendite zur 10-jährigen Bundesanleihe, nach Städtegruppe" }
   measure: { en: "spread of the 7-city initial yield over the 10-year Bund yield", de: "Abstand der Anfangsrendite in den 7 Großstädten zur Rendite zehnjähriger Bundesanleihen" }
+  definition: { en: "The extra return investors require for holding property income, which is risky and hard to sell, instead of a safe government bond. It is the risk premium on property.", de: "Der zusätzliche Ertrag, den Anleger für Immobilieneinnahmen verlangen, die riskant und schwer verkäuflich sind, statt einer sicheren Staatsanleihe. Er ist die Risikoprämie von Immobilien." }
   headline: spread
   better: higher
   template: spread
@@ -22,6 +23,7 @@
 - key: f
   title: { en: "Initial yield spread over the corporate loan rate", de: "Renditeabstand der Anfangsrendite zum Unternehmenskreditzins" }
   measure: { en: "spread of the 7-city initial yield over the corporate loan rate", de: "Abstand der Anfangsrendite in den 7 Großstädten zum Unternehmenskreditzins" }
+  definition: { en: "The margin between what a property earns and what it costs to borrow. It shows whether borrowing to buy adds to the return or reduces it.", de: "Die Spanne zwischen dem, was eine Immobilie einbringt, und dem, was die Kreditaufnahme kostet. Sie zeigt, ob ein Kauf auf Kredit die Rendite erhöht oder verringert." }
   headline: spread
   better: higher
   notes: [insight.note.near_zero_rates]
@@ -33,6 +35,7 @@
 - key: g
   title: { en: "Office prices vs rents", de: "Büropreise und Büromieten" }
   measure: { en: "ratio of the office price index to the rent index", de: "Verhältnis des Büropreisindex zum Mietindex" }
+  definition: { en: "How much investors pay for each unit of rent. It is a price-to-rent valuation measure and shows how prices compare with the income they buy.", de: "Wie viel Anleger für jede Einheit Miete zahlen. Das Verhältnis von Preis zu Miete ist ein Bewertungsmaß und zeigt, wie sich die Preise zu den Einnahmen verhalten, die man damit erwirbt." }
   headline: ratio
   better: none
   indexed: true
@@ -46,6 +49,7 @@
 - key: b
   title: { en: "Real office rents", de: "Reale Büromieten" }
   measure: { en: "real growth of office rents", de: "reales Wachstum der Büromieten" }
+  definition: { en: "The change in office rent after removing general inflation. It shows whether a landlord's income keeps its buying power.", de: "Die Veränderung der Büromiete nach Abzug der allgemeinen Inflation. Sie zeigt, ob das Einkommen eines Vermieters seine Kaufkraft behält." }
   headline: growth
   better: higher
   deflate: flow
@@ -57,6 +61,7 @@
 - key: d
   title: { en: "Office rents vs construction costs", de: "Büromieten und Baupreise" }
   measure: { en: "spread of office rent growth over construction price growth", de: "Abstand des Mietwachstums bei Büros zum Baupreisanstieg" }
+  definition: { en: "How office rents keep pace with the cost of building. It shows how attractive it is to build new offices.", de: "Wie die Büromieten mit den Baukosten Schritt halten. Das zeigt, wie attraktiv der Neubau von Büros ist." }
   headline: spread
   better: higher
   growth: true
@@ -68,6 +73,7 @@
 - key: i
   title: { en: "Real office rents vs real GDP", de: "Reale Büromieten und reale Wirtschaftsleistung" }
   measure: { en: "spread of real office rent growth over real GDP growth", de: "Abstand des realen Mietwachstums bei Büros zum Wachstum des realen BIP" }
+  definition: { en: "Whether office rents, after removing inflation, move with the whole economy or drift away from it. It links property income to economic output.", de: "Ob sich die Büromieten nach Abzug der Inflation mit der gesamten Wirtschaft bewegen oder sich davon lösen. Das verbindet Mieteinnahmen mit der Wirtschaftsleistung." }
   headline: spread
   better: higher
   growth: true
@@ -81,6 +87,7 @@
 - key: c
   title: { en: "Office completions vs permits two years earlier", de: "Büro-Fertigstellungen und Baugenehmigungen zwei Jahre zuvor" }
   measure: { en: "ratio of completions to permits two years earlier", de: "Anteil der Fertigstellungen an den Baugenehmigungen zwei Jahre zuvor" }
+  definition: { en: "The share of approved office projects that actually get built. It shows how much planned supply reaches the market.", de: "Der Anteil der genehmigten Büroprojekte, die tatsächlich gebaut werden. Er zeigt, wie viel des geplanten Angebots den Markt erreicht." }
   headline: ratio
   better: none
   base: 2015
@@ -93,6 +100,7 @@
 - key: j
   title: { en: "Construction costs vs inflation", de: "Baupreise und Inflation" }
   measure: { en: "spread of construction price growth over CPI inflation", de: "Abstand des Baupreisanstiegs zur Inflationsrate" }
+  definition: { en: "Building costs measured against general consumer prices, so that the building-specific part stands out. It points to the cost of replacing a building.", de: "Die Baukosten im Vergleich zu den allgemeinen Verbraucherpreisen, sodass der baubezogene Anteil sichtbar wird. Das verweist auf die Kosten für den Ersatz eines Gebäudes." }
   headline: spread
   better: lower
   growth: true
@@ -104,6 +112,7 @@
 - key: e
   title: { en: "Office vacancy: 7 major cities vs 127 towns", de: "Büroleerstand: A-Städte und 127 Städte" }
   measure: { en: "spread of office vacancy in the 7 major cities over the 127 towns", de: "Abstand der Büroleerstandsquote in den 7 Großstädten zu den 127 Städten" }
+  definition: { en: "How the balance of supply and demand for office space in the big cities compares with that in a wider group of towns. It shows where space is harder to let.", de: "Wie sich das Verhältnis von Angebot und Nachfrage bei Büroflächen in den großen Städten zu dem in einer größeren Gruppe von Städten verhält. Es zeigt, wo sich Flächen schwerer vermieten lassen." }
   headline: spread
   better: lower
   template: spread
@@ -114,6 +123,7 @@
 - key: m
   title: { en: "Office vacancy and office employment", de: "Büroleerstand und Bürobeschäftigung" }
   measure: { en: "change in office vacancy in the 127 towns", de: "Veränderung des Büroleerstands in den 127 Städten" }
+  definition: { en: "Whether empty office space moves together with the number of office workers. It links unused space to office jobs.", de: "Ob sich leer stehende Büroflächen gemeinsam mit der Zahl der Bürobeschäftigten bewegen. Das verbindet ungenutzte Fläche mit Bürobeschäftigung." }
   headline: change
   better: lower
   base: 2015

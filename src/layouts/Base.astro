@@ -119,6 +119,7 @@ const inKpis = KPIS.some((k) => k.page === page);
       section.tone-better, section.tone-worse { padding: 1.25rem 1.5rem; border-radius: 6px; }
       section.tone-better > h2:first-child, section.tone-worse > h2:first-child { margin-top: 0; }
       @media (max-width: 560px) { section.tone-better, section.tone-worse { padding: 1rem; } }
+      p.definition { font-size: 15px; margin-top: .25rem; }
       p.back { font-size: 14px; margin: 0 0 .5rem; }
       .link-panel > p { font-size: 15px; max-width: 46em; }
       .link-panel > svg { margin-top: 1.25rem; }
@@ -129,16 +130,17 @@ const inKpis = KPIS.some((k) => k.page === page);
       .hero figure { margin-top: 1rem; }
       /* Home: one row per KPI; name and what it measures, latest value and change, sparkline, then Notes and citation. */
       .index { list-style: none; margin: 2rem 0 0; padding: 0; background: var(--plate); border: 1px solid var(--rule); border-radius: 6px; }
-      .index .row { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr) auto; grid-template-areas: 'name value spark' 'what value spark' 'extra extra extra'; gap: .1rem 1.5rem; align-items: center; padding: 1rem 1.5rem; border-top: 1px solid var(--hair); }
+      .index .row { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr) auto; grid-template-areas: 'name value spark' 'what value spark' 'def value spark' 'extra extra extra'; gap: .1rem 1.5rem; align-items: center; padding: 1rem 1.5rem; border-top: 1px solid var(--hair); }
       .index .row:first-child { border-top: 0; }
       .index .name { grid-area: name; align-self: end; font-size: var(--step-1); font-weight: 600; }
       .index .what { grid-area: what; align-self: start; color: var(--muted); font-size: 14px; }
+      .index .definition { grid-area: def; align-self: start; margin: .35rem 0 .5rem; color: var(--muted); font-size: 14px; max-width: 40em; }
       .index .latest { grid-area: value; margin: 0; }
       .index .latest .num { font-size: var(--step-2); }
       .index svg { grid-area: spark; display: block; }
       .index .note, .index .src, .index .na { grid-area: auto; grid-column: 1 / -1; margin: .5rem 0 0; font-size: 13px; color: var(--muted); }
       .index .na { grid-column: 1 / -1; font-size: 15px; }
-      @media (max-width: 720px) { .index .row { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'name name' 'what what' 'value spark' 'extra extra'; padding: 1rem; } }
+      @media (max-width: 720px) { .index .row { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'name name' 'what what' 'def def' 'value spark' 'extra extra'; padding: 1rem; } }
 
       .selectors { display: flex; flex-wrap: wrap; gap: 1rem 1.25rem; margin: 1.25rem 0 1.75rem; }
       .selectors label { display: flex; flex-direction: column; gap: .4rem; font-size: 14px; font-weight: 500; color: var(--muted); }
