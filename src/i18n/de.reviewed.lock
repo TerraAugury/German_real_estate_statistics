@@ -1690,3 +1690,67 @@ insight.context.legend_dual:
   en_hash: 9f6912d78a00967a
   reviewed_by: Olivier
   reviewed_on: 2026-11-06
+kpi.price-index.definition:
+  en_hash: e3c9e2118d0ba8e9
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+kpi.rent-index.definition:
+  en_hash: 3c960b5b53bb12ce
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+kpi.initial-yield.definition:
+  en_hash: 5e0f5aade21391ef
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+kpi.office-vacancy.definition:
+  en_hash: c16f3f7a67bdffb1
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+kpi.transaction-volume.definition:
+  en_hash: 8684ca87a4360af8
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+kpi.construction.definition:
+  en_hash: 39df7c1dcdb7c94f
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+insight:a.definition:
+  en_hash: "57072e6060469398"
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+insight:f.definition:
+  en_hash: a8d60357bba0710c
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+insight:g.definition:
+  en_hash: d58c23198104e1c8
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+insight:b.definition:
+  en_hash: fb5daf078bdc009b
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+insight:d.definition:
+  en_hash: 30a253f8545b5f2b
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+insight:i.definition:
+  en_hash: 1d05942218560abd
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+insight:c.definition:
+  en_hash: "76e9139094516862"
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+insight:j.definition:
+  en_hash: f4a223bbc14e229b
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+insight:e.definition:
+  en_hash: ef10150e8ab69615
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07
+insight:m.definition:
+  en_hash: 99354f033e8a4f1c
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-07

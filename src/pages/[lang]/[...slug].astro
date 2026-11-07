@@ -54,6 +54,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
         {homeRows.map(({ kpi: k, view: v, series: x }) => (
           <li class="row">
             <a class="name" href={v ? viewHref(k, v, lang) : href(k.page, lang)}>{t(lang, k.title)}</a>
+            <p class="definition">{t(lang, k.definition)}</p>
             {x && v ? (
               <>
                 <Fragment set:html={latestBlock(x, lang)} />
@@ -176,6 +177,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
   ) : (
     <>
       <h1>{title}</h1>
+      <p class="definition">{t(lang, kpi!.definition)}</p>
       {views.length === 0 ? <p class="na">{t(lang, 'kpi.not_available.licence')}</p> : (
         <>
           {/* Without JavaScript the selectors cannot switch views: hide them and say so. */}

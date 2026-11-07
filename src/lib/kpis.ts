@@ -8,7 +8,8 @@ export type Segment = 'office' | 'retail' | 'logistics' | 'commercial-overall';
 export type Freq = 'annual' | 'quarterly';
 /** One selector state; `land` picks one Land of a Destatis series (absent = Germany, the sum of the Länder). */
 export interface View { segment: Segment; geo: string; freq: Freq; series: { key: string; land?: string }[] }
-export interface Kpi { page: PageKey; title: string; views: View[] }
+/** `title` and `definition` are interface string keys; the definition says what the KPI measures, in general terms. */
+export interface Kpi { page: PageKey; title: string; definition: string; views: View[] }
 
 /** Destatis Land code -> ISO 3166-2 key (`geo` value). */
 const LAENDER: Record<string, string> = {
@@ -64,12 +65,12 @@ const construction = Object.entries(CONSTRUCTION).flatMap(([seg, { destatis, bbk
 
 /** The six KPIs in catalogue order, with every view before the provisional gate. */
 export const KPIS: Kpi[] = [
-  { page: 'kpi-price-index', title: 'kpi.price-index.title', views: price },
-  { page: 'kpi-rent-index', title: 'kpi.rent-index.title', views: rent },
-  { page: 'kpi-initial-yield', title: 'kpi.initial-yield.title', views: yields },
-  { page: 'kpi-office-vacancy', title: 'kpi.office-vacancy.title', views: vacancy },
-  { page: 'kpi-transaction-volume', title: 'kpi.transaction-volume.title', views: transactions },
-  { page: 'construction', title: 'kpi.construction.title', views: construction },
+  { page: 'kpi-price-index', title: 'kpi.price-index.title', definition: 'kpi.price-index.definition', views: price },
+  { page: 'kpi-rent-index', title: 'kpi.rent-index.title', definition: 'kpi.rent-index.definition', views: rent },
+  { page: 'kpi-initial-yield', title: 'kpi.initial-yield.title', definition: 'kpi.initial-yield.definition', views: yields },
+  { page: 'kpi-office-vacancy', title: 'kpi.office-vacancy.title', definition: 'kpi.office-vacancy.definition', views: vacancy },
+  { page: 'kpi-transaction-volume', title: 'kpi.transaction-volume.title', definition: 'kpi.transaction-volume.definition', views: transactions },
+  { page: 'construction', title: 'kpi.construction.title', definition: 'kpi.construction.definition', views: construction },
 ];
 
 /** Views whose series survive the provisional gate; a view with none left is dropped. Empty = licence not confirmed. */

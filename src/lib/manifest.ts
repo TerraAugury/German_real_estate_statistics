@@ -73,12 +73,17 @@ export const DEFLATE = ['flow', 'stock'] as const;
 export const ROLES = ['kpi', 'reference', 'deflator'] as const;
 export const BETTER = ['higher', 'lower', 'none'] as const;
 const INSIGHT_TEXT = ['title', 'measure'] as const;
+// Text an Insight may carry or not: the plain-language definition of what its number represents.
+const INSIGHT_OPTIONAL = ['definition'] as const;
+const INSIGHT_FIELDS = [...INSIGHT_TEXT, ...INSIGHT_OPTIONAL] as const;
 
 export interface InsightEntry {
   /** Section id on the Insights page and the target of KPI-page links. */
   key: string; title: Localized;
   /** The headline measure named in the reading: "The latest {measure} is ...". */
   measure: Localized;
+  /** What the Insight's number represents, in general terms (no value, year or direction); shown under the reading. Optional. */
+  definition?: Localized;
   headline: (typeof HEADLINES)[number];
   /** Which way is better for an office investor: the Insight's tone follows its verdict through this, never the sign of the number. `none` where it depends on whose side you take. */
   better: (typeof BETTER)[number];
@@ -104,13 +109,13 @@ export interface InsightEntry {
 
 /** Insight text in one language as review strings, keyed `insight:<key>.<field>`. */
 export const insightStrings = (entries: InsightEntry[], lang: Lang): Record<string, string> =>
-  Object.fromEntries(entries.flatMap((e) => INSIGHT_TEXT.map((f) => [`insight:${e.key}.${f}`, e[f][lang]])));
+  Object.fromEntries(entries.flatMap((e) => INSIGHT_FIELDS.filter((f) => e[f]).map((f) => [`insight:${e.key}.${f}`, e[f]![lang]])));
 
 function buildInsights(lock: Lock): InsightEntry[] {
   const entries = parse(readFileSync('manifest/insights.yaml', 'utf8')) as InsightEntry[];
   for (const e of entries) e.growth ??= false;
   const unreviewed = new Set(unreviewedKeys(insightStrings(entries, 'en'), lock));
-  for (const e of entries) for (const f of INSIGHT_TEXT) e[f] = { ...e[f], de: draft(e[f].de, unreviewed.has(`insight:${e.key}.${f}`)) };
+  for (const e of entries) for (const f of INSIGHT_FIELDS) if (e[f]) e[f] = { ...e[f]!, de: draft(e[f]!.de, unreviewed.has(`insight:${e.key}.${f}`)) };
   return entries;
 }
 
@@ -131,6 +136,7 @@ export function checkInsights(entries: InsightEntry[], known: { series: Set<stri
     if (seen.has(e.key)) errs.push(`duplicate key ${e.key}`);
     seen.add(e.key);
     for (const l of langs) if (INSIGHT_TEXT.some((f) => !e[f]?.[l])) errs.push(`${e.key} needs en and de title and measure`);
+    if (e.definition) for (const l of langs) if (!e.definition[l]) errs.push(`${e.key} needs en and de definition`);
     if (!HEADLINES.includes(e.headline)) errs.push(`${e.key}: headline must be one of ${HEADLINES}`);
     if (!BETTER.includes(e.better)) errs.push(`${e.key}: better must be one of ${BETTER}`);
     if (e.base !== undefined && !Number.isInteger(e.base)) errs.push(`${e.key}: base must be a year`);
