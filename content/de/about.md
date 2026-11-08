@@ -1,7 +1,7 @@
 ---
-en_hash: 71f905c7abb96783
+en_hash: 6bdcf03ec9ddded5
 reviewed_by: Olivier
-reviewed_on: 2026-11-04
+reviewed_on: 2026-11-08
 ---
 Diese Seite zeigt öffentliche Statistiken zum deutschen Gewerbeimmobilienmarkt. Außerdem zeigt sie einige Wirtschaftsindikatoren, zum Beispiel Zinsen und Inflation. Sie sehen, wie sich die Werte im Zeitverlauf verändert haben und wie sie sich gemeinsam bewegt haben.
 
