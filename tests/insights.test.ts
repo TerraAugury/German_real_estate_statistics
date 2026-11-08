@@ -20,6 +20,10 @@ const known = { series: new Set(['kpi-a', 'ref-b']), kpis: new Set(['kpi-a']) };
 const en = loadStrings('en');
 
 describe('Insight declaration checks', () => {
+  it('the manifest declares exactly nine Insights; m, n and o (vacancy with employment, completions or rents) are removed for now', () => {
+    expect(loadInsights().map((e) => e.key)).toEqual(['a', 'f', 'g', 'b', 'd', 'i', 'c', 'j', 'e']);
+    expect(loadInsights().some((e) => ['m', 'n', 'o'].includes(e.key))).toBe(false);
+  });
   it('a sound entry passes', () => expect(() => checkInsights([entry()], known, en)).not.toThrow());
   it.each(['higher', 'lower', 'none'] as const)('accepts the better direction %s', (better) => expect(() => checkInsights([entry({ better })], known, en)).not.toThrow());
   it.each<[string, InsightEntry[], string]>([
@@ -290,14 +294,14 @@ describe('Insights G and B (cleared)', () => {
 });
 
 describe('Insight rendering', () => {
-  const j = entry({ key: 'j', title: { en: 'Construction costs vs inflation', de: 'Baupreise und Inflation' }, measure: { en: 'spread of construction price growth over CPI inflation', de: 'Abstand des Baupreisanstiegs zur Inflationsrate' } });
+  const j = entry({ key: 'j', title: { en: 'Real growth of construction prices', de: 'Reales Wachstum der Baupreise' }, measure: { en: 'spread of construction price growth over CPI inflation', de: 'Abstand des Baupreisanstiegs zur Inflationsrate' } });
   const series = [getSeries('construction-price-office'), getSeries('cpi')];
   const shown: InsightResult = { shown: true, points: [{ period: '2020', value: 1 }, { period: '2021', value: 1.5 }, { period: '2022', value: 2.46 }], from: '2020', to: '2022', n: 3, short: false, mean: 1.65, sd: 0.5, latest: { period: '2022', value: 2.46 }, verdict: 'higher',
     lines: { base: '2015', kpi: [{ period: '2020', value: 100 }, { period: '2021', value: 110 }, { period: '2022', value: 125 }], reference: [{ period: '2020', value: 100 }, { period: '2021', value: 104 }, { period: '2022', value: 108 }] } };
   it('EN: headline, verdict tag and the exact reading sentence, one decimal', () => {
     const h = renderInsight(j, shown, series, 'en');
     expect(h).toContain('id="j"');
-    expect(h).toContain('Construction costs vs inflation');
+    expect(h).toContain('Real growth of construction prices');
     expect(h).toContain('2.5');
     expect(h).toContain('higher than the average');
     expect(h).toContain('The latest spread of construction price growth over CPI inflation is 2.5 percentage points. This is higher than the 2020-2022 average of 1.7 percentage points.');
@@ -339,7 +343,7 @@ describe('Insight rendering', () => {
     expect(renderInsight(j, shown, series, 'en')).not.toContain('Short history');
   });
   describe('a ratio with a shifted reference', () => {
-    const c = entry({ key: 'c', headline: 'ratio', shift: 2, template: 'completions-permits', title: { en: 'Office completions vs permits two years earlier', de: 'Büro-Fertigstellungen und Baugenehmigungen zwei Jahre zuvor' } });
+    const c = entry({ key: 'c', headline: 'ratio', shift: 2, template: 'completions-permits', title: { en: 'Ratio of office completions to permits two years earlier', de: 'Verhältnis der Büro-Fertigstellungen zu den Baugenehmigungen zwei Jahre zuvor' } });
     const cs = [getSeries('construction-completions-office'), getSeries('construction-permits-office')];
     const ratio: InsightResult = { ...shown as Extract<InsightResult, { shown: true }>, mean: 0.8, latest: { period: '2022', value: 0.8346 }, verdict: 'lower' };
     it('EN: two decimals, "times", and the exact reading', () => {
