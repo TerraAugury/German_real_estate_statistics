@@ -222,7 +222,7 @@ describe('Insight A on real data (cleared)', () => {
     expect(h).toContain('7 major cities');
     expect(h).toContain('127 towns');
     expect(h).not.toMatch(/120 towns|combined-120/);
-    expect(h.match(/not an individual city/g)).toHaveLength(2); // a scope Note for each City class
+    expect(h.match(/not for one city/g)).toHaveLength(2); // a scope Note for each City class
   });
 });
 

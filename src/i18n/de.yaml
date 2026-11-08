@@ -24,9 +24,9 @@ note.fetch_failed: "Am {date} konnten wir die Daten von {source} nicht aktualisi
 note.unavailable: "{source} stellt diese Reihe nicht mehr bereit. Wir haben sie am {date} nicht gefunden. Wir zeigen die Daten, die wir am {snapshot} abgerufen haben."
 note.revised: "{source} hat frühere Werte geändert (revidiert). Wir haben das am {date} bemerkt. Die Grafik zeigt die zuletzt veröffentlichte Fassung."
 note.short_window: "Kurze Zeitreihe ({start} bis {end})."
-note.short_cycle: "Der Zeitraum umfasst im Wesentlichen einen Zinszyklus; das Muster muss in anderen Zeiträumen nicht gelten."
-note.scope.index: "Index (2013 = 100): zeigt die Entwicklung, nicht ein Preisniveau in Euro."
-note.scope.city_class: "Aggregat für {class}, keine einzelne Stadt."
+note.short_cycle: "Der Zeitraum umfasst etwa einen Zinszyklus. Das Muster muss in anderen Zeiträumen nicht gelten."
+note.scope.index: "Index (2013 = 100): Wir setzen 2013 auf 100. Er zeigt die Entwicklung, keinen Preis in Euro."
+note.scope.city_class: "Gesamtwert für {class}, nicht für eine einzelne Stadt."
 note.scope.combined: "Büro und Einzelhandel zusammen; keine getrennten Werte."
 link.title: "{kpi} und {indicator}"
 link.scope: "Nationaler Indikator gegen {geography}"
@@ -46,7 +46,7 @@ link.overlay.legend: "Blaue Linie, linke Achse: {kpi}. Ockerfarbene Linie, recht
 link.lags.label: "Zeitversatzprofil von {kpi} und {indicator}"
 nav.sources: Quellen und Lizenzen
 sources.title: Quellen und Lizenzen
-sources.intro: "Eine Zeile je Reihe, die auf dieser Seite gezeigt wird. Die Reihen werden direkt beim Herausgeber oder über DBnomics abgerufen, das sie bündelt; die Daten behalten die Lizenz des Herausgebers."
+sources.intro: "Eine Zeile je Reihe, die auf dieser Seite gezeigt wird. Wir rufen jede Reihe direkt beim Herausgeber ab oder über DBnomics, das Daten vieler Herausgeber sammelt. Die Daten behalten die Lizenz des Herausgebers."
 sources.col.series: Reihe
 sources.col.publisher: Herausgeber
 sources.col.id: Reihen-ID
@@ -92,21 +92,21 @@ geo.de-mv: Mecklenburg-Vorpommern
 geo.de-sn: Sachsen
 geo.de-st: Sachsen-Anhalt
 geo.de-th: Thüringen
-note.partial_total: "Deutschland-Summe aus den Ländern mit Daten; für {laender} liegt für {year} kein Wert vor."
+note.partial_total: "Die Summe für Deutschland zählt die Länder mit Daten zusammen. Für {laender} gibt es für {year} keinen Wert."
 kpi.noscript: "Zum Wechseln von Segment, Gebiet oder Häufigkeit wird JavaScript benötigt. Ohne JavaScript zeigt diese Seite die erste Ansicht."
 na.source: "Nicht verfügbar: keine offene Datenquelle für {reason}"
 na.kpi-price-index.logistics: einen Preisindex für Logistikimmobilien
 na.kpi-rent-index.logistics: Logistikmieten
-na.kpi-initial-yield.office: "Büro-Renditen allein; die Quelle weist Büro und Einzelhandel zusammen aus (siehe Gewerbe gesamt)"
-na.kpi-initial-yield.retail: "Einzelhandels-Renditen allein; die Quelle weist Büro und Einzelhandel zusammen aus (siehe Gewerbe gesamt)"
+na.kpi-initial-yield.office: "Büro-Renditen allein (die Quelle weist Büro und Einzelhandel zusammen aus, siehe Gewerbe gesamt)"
+na.kpi-initial-yield.retail: "Einzelhandels-Renditen allein (die Quelle weist Büro und Einzelhandel zusammen aus, siehe Gewerbe gesamt)"
 na.kpi-initial-yield.logistics: Logistik-Renditen
 na.kpi-office-vacancy.retail: Leerstand im Einzelhandel
 na.kpi-office-vacancy.logistics: Leerstand bei Logistikimmobilien
 na.kpi-office-vacancy.commercial-overall: Leerstand über alle Gewerbeimmobilien
-na.kpi-transaction-volume.office: "Transaktionsvolumen bei Büros; die Quelle erfasst alle Gewerbeimmobilien zusammen"
-na.kpi-transaction-volume.retail: "Transaktionsvolumen im Einzelhandel; die Quelle erfasst alle Gewerbeimmobilien zusammen"
-na.kpi-transaction-volume.logistics: "Transaktionsvolumen bei Logistikimmobilien; die Quelle erfasst alle Gewerbeimmobilien zusammen"
-na.construction.retail: "Einzelhandelsgebäude; Destatis führt dafür keine eigene Gebäudeart"
+na.kpi-transaction-volume.office: "Transaktionsvolumen bei Büros (die Quelle erfasst alle Gewerbeimmobilien zusammen)"
+na.kpi-transaction-volume.retail: "Transaktionsvolumen im Einzelhandel (die Quelle erfasst alle Gewerbeimmobilien zusammen)"
+na.kpi-transaction-volume.logistics: "Transaktionsvolumen bei Logistikimmobilien (die Quelle erfasst alle Gewerbeimmobilien zusammen)"
+na.construction.retail: "Einzelhandelsgebäude (das Statistische Bundesamt, Destatis, führt dafür keine eigene Gebäudeart)"
 nav.segments: Segmente
 nav.availability: Verfügbarkeit
 nav.breadcrumb: "Sie sind hier"
@@ -116,10 +116,10 @@ latest.change.pct: "{change} gegenüber {period}"
 latest.change.diff: "{change} Punkte gegenüber {period}"
 latest.unchanged: "Keine Änderung gegenüber {period}"
 home.segments: "Nach Segment (Immobilienart)"
-segment.intro: "Je Kennzahl eine Grafik für Deutschland, soweit eine Quelle sie liefert; jede Grafik öffnet die vollständige Kennzahlseite."
+segment.intro: "Je Kennzahl eine Grafik für Deutschland, soweit eine Quelle sie liefert. Jede Grafik öffnet die vollständige Kennzahlseite."
 segment.availability: Welche Kombinationen aus Kennzahl und Segment es gibt und warum die übrigen nicht verfügbar sind
 availability.title: Verfügbarkeit
-availability.intro: "Jede Kennzahl für jedes Segment. Eine Lücke wird mit ihrem Grund genannt; nichts ist für später vorgesehen."
+availability.intro: "Jede Kennzahl für jedes Segment (Immobilienart). Für jede Lücke nennen wir den Grund. Für später ist nichts geplant. Offene Datenquellen sind frei nutzbar und dürfen öffentlich gezeigt werden."
 availability.kpi: Kennzahl
 availability.available: "Verfügbar ({geo})"
 nav.links: Verknüpfungen
@@ -197,7 +197,7 @@ insight.template.completions-permits: "Die Fertigstellungen entsprachen dem {lat
 insight.unit.ratio: mal
 insight.shift.2: zwei Jahre zuvor
 insight.shifted: "{title}, {shift}"
-kpi.insights.heading: Einblicke zu dieser Kennzahl
+kpi.insights.heading: "Einblicke, die diese Kennzahl nutzen"
 insight.template.price-rent: "Der Preisindex liegt beim {latest}-Fachen des Mietindex, {verdict} {from}-{to}-Durchschnitt von {mean}."
 insight.template.real-rents: "Die realen Büromieten haben sich {to} um {latest} % verändert, {verdict} {from}-{to}-Durchschnitt von {mean} %."
 insight.unit.growth: Prozent
@@ -242,9 +242,9 @@ insight.note.completions_coverage: "Die Fertigstellungen umfassen öffentliche u
 insight.note.rents_scope: "Die Mieten gelten für ganz Deutschland, der Leerstand für 127 Städte."
 insight.note.asking_rents: "Der Mietindex misst Angebotsmieten bei Neuvermietungen. Anreize wie mietfreie Monate erfasst er nicht, daher können die tatsächlich gezahlten Mieten schwächer sein als gezeigt."
 insight.context.legend_dual: "Blaue Linie, rechte Achse: {measure}, in Prozentpunkten. Ockerfarbene Linie, linke Achse: Wachstum von {title} gegenüber dem Vorjahr, in Prozent. Die Achsen haben unterschiedliche Einheiten, daher werden die Linien nicht nach ihrer Höhe verglichen."
-kpi.price-index.definition: "Wie sich das allgemeine Preisniveau von Gewerbeimmobilien zu seinem Stand in einem Basisjahr verhält."
+kpi.price-index.definition: "Wie sich die Preise von Gewerbeimmobilien im Allgemeinen zu den Preisen in einem Basisjahr verhalten. Das Basisjahr ist auf 100 gesetzt."
 kpi.rent-index.definition: "Die Mieten, die in neuen Mietverträgen vereinbart werden. Sie zeigen die aktuelle Marktmiete, nicht die Mieten in älteren Verträgen."
 kpi.initial-yield.definition: "Die Miete des ersten Jahres im Verhältnis zum Kaufpreis. Sie ist die laufende Rendite, die ein Käufer vom ersten Tag an erhält."
 kpi.office-vacancy.definition: "Der Anteil der Büroflächen, die leer stehen. Das ist das ungenutzte Flächenangebot."
-kpi.transaction-volume.definition: "Der Eurowert der verkauften Immobilien, dargestellt als Index. Er zeigt, wie aktiv und liquide der Markt ist."
+kpi.transaction-volume.definition: "Der Eurowert der verkauften Immobilien, dargestellt als Index. Er zeigt, wie aktiv der Markt ist und wie leicht sich Immobilien kaufen und verkaufen lassen."
 kpi.construction.definition: "Die für den Bau genehmigte Fläche. Sie erfasst Bauvorhaben im Stadium der Genehmigung, vor der Fertigstellung."

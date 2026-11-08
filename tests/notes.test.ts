@@ -47,9 +47,9 @@ describe('KPI page charts', () => {
   it('scope, short history with the cycle sentence, then stale, in the fixed order and prefixed', () => {
     const s = { ...base, scope: ['index', 'city_class'], shortWindow: 'note.short_cycle', stale: true } as Series;
     expect(notesFor(s, 'en', { on: 'kpi', geography: 'Cities of supra-regional importance' }, at)).toEqual([
-      'Note: Index (2013 = 100): shows change over time, not a price level in euros.',
-      'Note: Aggregate for cities of supra-regional importance, not an individual city.',
-      'Note: Short history (Q1 2013 to Q1 2026). This window contains essentially one interest-rate cycle, so the pattern may not hold in other periods.',
+      'Note: Index (2013 = 100): we set 2013 to 100. It shows change over time, not a price in euros.',
+      'Note: Combined figure for cities of supra-regional importance, not for one city.',
+      'Note: Short history (Q1 2013 to Q1 2026). This period covers about one interest-rate cycle. The pattern may not hold in other periods.',
       'Note: Latest value: Q1 2026. Deutsche Bundesbank has not published newer data in the time we expect, so this series may be out of date.',
     ]);
   });
@@ -63,7 +63,7 @@ describe('KPI page charts', () => {
   });
   it('Partial total names the missing Länder per year', () => {
     const s = { ...base, partial: [{ period: '2019', laender: ['04', '11'] }] } as Series;
-    expect(notesFor(s, 'en', kpi, at)).toEqual(['Note: Germany total is the sum of the Länder with data; no value for Bremen, Berlin in 2019.']);
+    expect(notesFor(s, 'en', kpi, at)).toEqual(['Note: The Germany total adds up the Länder (federal states) that have data. There is no value for Bremen, Berlin in 2019.']);
   });
 });
 
@@ -98,7 +98,7 @@ describe('Insights', () => {
     expect(notesFor(a, 'en', ctx([b], { from: '2013', to: '2025', n: 13 }), at)).toEqual([
       'Note: Short history (13 years, 2013 to 2025): the average is based on little data.',
       'Note: CPI: Latest value: 2023. Deutsche Bundesbank has not published newer data in the time we expect, so this series may be out of date.',
-      'Note: Index (2013 = 100): shows change over time, not a price level in euros.',
+      'Note: Index (2013 = 100): we set 2013 to 100. It shows change over time, not a price in euros.',
     ]);
   });
   it('no short-history Note without short history, and nothing when every series is fresh', () => {
@@ -108,8 +108,8 @@ describe('Insights', () => {
     const c7 = { ...base, key: 'initial-yield-combined-7', scope: ['city_class', 'combined'] } as Series;
     const c127 = { ...base, key: 'initial-yield-combined-127', scope: ['city_class', 'combined'] } as Series;
     expect(notesFor(c7, 'en', ctx([c127]), at)).toEqual([
-      'Note: Aggregate for 7 major cities (A-Städte), not an individual city.',
-      'Note: Aggregate for 127 towns and cities, not an individual city.',
+      'Note: Combined figure for 7 major cities (A-Städte), not for one city.',
+      'Note: Combined figure for 127 towns and cities, not for one city.',
       'Note: Office and retail combined; no separate office or retail figure.',
     ]);
   });
