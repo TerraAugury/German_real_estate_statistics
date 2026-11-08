@@ -1690,3 +1690,7 @@ insight.note.index_scope:
   en_hash: b3b0226df0c1ae60
   reviewed_by: Olivier
   reviewed_on: 2026-11-08
+insight.tile.as_of:
+  en_hash: b7905bfe0a5941a1
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08
