@@ -168,7 +168,7 @@ function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, no
   return {
     reading, notes, chart, reference, plate: toneOf(e, r, lang).plate,
     definition: e.definition ? `<p class="definition">${esc(e.definition[lang])}</p>` : '',
-    headlineHtml: `<p class="headline">${headlineSpans(e, r, lang)}</p>`,
+    headlineHtml: `<p class="headline">${headlineSpans(e, r, lang)} <span class="when">${t(lang, 'insight.tile.as_of', { year: r.latest.period })}</span></p>`,
   };
 }
 
