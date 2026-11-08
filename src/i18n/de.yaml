@@ -94,7 +94,7 @@ geo.de-st: Sachsen-Anhalt
 geo.de-th: Thüringen
 note.partial_total: "Die Summe für Deutschland zählt die Länder mit Daten zusammen. Für {laender} gibt es für {year} keinen Wert."
 kpi.noscript: "Zum Wechseln von Segment, Gebiet oder Häufigkeit wird JavaScript benötigt. Ohne JavaScript zeigt diese Seite die erste Ansicht."
-na.source: "Nicht verfügbar: keine offene Quelle für {reason}"
+na.source: "Nicht verfügbar: keine verfügbare Quelle für {reason}"
 na.kpi-price-index.logistics: einen Preisindex für Logistikimmobilien
 na.kpi-rent-index.logistics: Logistikmieten
 na.kpi-initial-yield.office: "Büro-Renditen allein (die Quelle weist Büro und Einzelhandel zusammen aus, siehe Gewerbe gesamt)"
