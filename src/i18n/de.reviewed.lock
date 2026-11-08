@@ -319,9 +319,9 @@ kpi.noscript:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 na.source:
-  en_hash: 8d2c5e6db6d0ab77
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 185c412e74a8ce70
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08
 na.kpi-price-index.logistics:
   en_hash: b1c528bdbbf9f2b4
   reviewed_by: Project owner
