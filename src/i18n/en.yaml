@@ -205,7 +205,7 @@ insight.template.office-employment: "Office vacancy changed by {latest} percenta
 insight.unit.change: percentage points
 insight.context.legend: "Blue line: {measure}, in percentage points. Ochre line: growth of {title} from the year before, in percent. Both use one axis."
 link.preset.mark: "pre-set shift"
-links.lag.label: "Indicator timing"
+links.lag.label: "Indicator shift"
 links.lag.0: "Same year"
 links.lag.1: "Indicator 1 year earlier (N-1)"
 links.lag.2: "Indicator 2 years earlier (N-2)"
@@ -219,7 +219,7 @@ links.chance.note: "With this many comparisons, a few boxes will look strong by 
 note.nominal.inflation: "This KPI and this indicator are both nominal, meaning not adjusted for inflation. So their Link partly reflects shared inflation."
 note.nominal.gdp: "This KPI is in nominal euros (not adjusted for inflation). Real GDP is adjusted for inflation. So this Link compares nominal with real."
 links.nominal.tag: "Nominal euros*"
-links.nominal.note: "* Nominal euros are not adjusted for inflation. Rents and transaction volume are in nominal euros. Their Links to CPI and construction prices partly reflect shared inflation. Their Link to real GDP compares nominal with real."
+links.nominal.note: "* Nominal euros are not adjusted for inflation. Rents and transaction volume are in nominal euros. Their Links to the consumer price index and construction prices partly reflect shared inflation. Their Link to real GDP compares nominal with real."
 links.row.kpi-price-index: "Commercial overall · Germany"
 links.row.kpi-rent-index: "Office · Germany"
 links.row.kpi-initial-yield: "Office + retail · 7 cities"
