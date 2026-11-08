@@ -90,12 +90,26 @@ describe.skipIf(built.length === 0)('Links page', () => {
   });
 });
 
-describe('pre-set label on the Links matrix', () => {
-  // The Methodology says these boxes are marked "pre-set shift" at every shift: the label names the pre-set (N-1) whichever shift is selected, never the selected one.
-  it.each(langs)('%s: every label a pre-set box can carry names N-1 as the pre-set, and none speaks of the selected shift', (l) => {
+describe('pre-set on the Links matrix', () => {
+  // The pre-set is a menu choice: the matrix opens on it and shows the label only there; any other choice shows that shift for every box, unlabelled.
+  it.each(langs)('%s: one label, naming N-1; the menu offers the pre-set first', (l) => {
     const strings = loadStrings(l as 'en');
-    const keys = Object.keys(strings).filter((k) => k.startsWith('links.cell.preset'));
-    expect(keys.sort()).toEqual(['links.cell.preset', 'links.cell.preset_other']);
-    for (const k of keys) expect(strings[k]).toContain('N-1');
+    expect(Object.keys(strings).filter((k) => k.startsWith('links.cell.preset'))).toEqual(['links.cell.preset']);
+    expect(strings['links.cell.preset']).toContain('N-1');
+    expect(strings['links.lag.preset']).toBeTruthy();
+  });
+  it.each(built)('%s: opens on the pre-sets; a pre-set box shows N-1 and the others the same year', (l) => {
+    const doc = page(l as 'en');
+    expect(doc.querySelector('table.matrix')!.getAttribute('data-lag')).toBe('p');
+    const sel = doc.querySelector<HTMLSelectElement>('#lag')!;
+    expect([...sel.options].map((o) => o.value)).toEqual(['p', '0', '1', '2']);
+    expect(sel.querySelector('option[selected]')!.getAttribute('value')).toBe('p');
+    for (const td of doc.querySelectorAll('td.lagcell')) {
+      const pre = [...td.querySelectorAll('a[data-pre]')];
+      expect(pre).toHaveLength(1);
+      const label = td.querySelector('.preset');
+      expect(pre[0].getAttribute('data-lag')).toBe(label ? '1' : '0');
+      if (label) expect(label.parentElement).toBe(pre[0]);
+    }
   });
 });

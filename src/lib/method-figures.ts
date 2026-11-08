@@ -45,7 +45,7 @@ function matrix(lang: Lang): string {
   if (!rows.length) return '';
   const cell = (c: NonNullable<typeof rows[number]['c']>, y: 0 | 1 | 2) => {
     const l = c.lags[y];
-    const mark = c.pair.preset ? `<span class="preset">${t(lang, y === 1 ? 'links.cell.preset' : 'links.cell.preset_other')}</span>` : '';
+    const mark = c.pair.preset && y === 1 ? `<span class="preset">${t(lang, 'links.cell.preset')}</span>` : '';
     return l.heat && l.rho !== null
       ? `<td class="lagcell"><a class="${l.heat.side}${l.noise ? ' noise' : ''}" style="--share: ${l.heat.share}%"><span class="rho">${fmt(lang, l.rho, { maximumFractionDigits: 2 })}</span><span class="n">${t(lang, 'links.cell.n', { n: String(l.n) })}</span>${l.noise ? `<span class="vh">${t(lang, 'links.cell.noise')}</span>` : ''}${mark}</a></td>`
       : `<td class="lagcell"><a class="na">${t(lang, 'links.cell.not_shown', { n: String(l.n) })}${mark}</a></td>`;

@@ -12,5 +12,5 @@ export function pickView<V extends Want>(views: V[], want: Partial<Want>, change
   return pool.reduce((best, x) => (score(x) > score(best) ? x : best));
 }
 
-/** The Links matrix lag in years earlier, from a URL hash: `#lag-0` same year, `#lag-2` N-2; anything else, including no hash, is the pre-set N-1. */
-export const lagFromHash = (hash: string): 0 | 1 | 2 => (hash === '#lag-0' ? 0 : hash === '#lag-2' ? 2 : 1);
+/** The Links matrix choice, from a URL hash: `#lag-0` same year, `#lag-1` N-1, `#lag-2` N-2; anything else, including no hash, is the pre-sets ('p': N-1 for a pre-set box, same year for the rest). */
+export const lagFromHash = (hash: string): 'p' | 0 | 1 | 2 => (/^#lag-[012]$/.test(hash) ? (+hash[5] as 0 | 1 | 2) : 'p');

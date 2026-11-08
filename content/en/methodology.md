@@ -31,15 +31,16 @@ Each Link has three parts:
 
 **Choosing a shift on the Links page.** Above the table, you can pick one shift. It applies to every box in the table. You can choose:
 
+- "Pre-set": the choice the table opens on. Boxes with a pre-set shift (see below) show N-1; all other boxes show the same year.
 - "Same year": we compare the economic indicator and the Real estate KPI in the same year.
 - "Indicator 1 year earlier (N-1)": we compare the Real estate KPI with the economic indicator from one year before.
 - "Indicator 2 years earlier (N-2)": we compare the Real estate KPI with the economic indicator from two years before.
 
-Each box shows the same number as the matching bar on the Real estate KPI page. For a quarterly Real estate KPI, N-1 and N-2 mean 4 and 8 quarters earlier. If a box has too few periods at the chosen shift, it says "Not shown". The table opens on N-1. We explain why in the next paragraph. The page address changes with your choice, so you can copy it to share your view.
+Each box shows the same number as the matching bar on the Real estate KPI page. For a quarterly Real estate KPI, N-1 and N-2 mean 4 and 8 quarters earlier. If a box has too few periods at the chosen shift, it says "Not shown". The table opens on "Pre-set". We explain it in the next paragraph. The page address changes with your choice, so you can copy it to share your view.
 
 {{figure:link-matrix|Example: three rows of the Links table, one for each interest rate, at each of the three shifts. A grey box is inside the chance range. The pre-set shift is marked.}}
 
-**A pre-set shift for appraisal-based Real estate KPIs.** Initial yield and the commercial property price index rest mostly on appraisals (valuations by experts). Appraisals follow interest rates with a delay. We compare these two Real estate KPIs with the 10-year Bund yield (the interest rate on 10-year German government bonds), Euribor 3 months and the loan rate. For these pairs, we chose one year earlier (N-1) in advance. We chose it for economic reasons, not from the results. These boxes are marked "pre-set shift" at every shift. On the Link panels, the +1 bar has the same label, separate from the "strongest" mark. If you switch between shifts and keep the one that looks strongest, you overstate the link. This is the same problem as with the "strongest" mark.
+**A pre-set shift for appraisal-based Real estate KPIs.** Initial yield and the commercial property price index rest mostly on appraisals (valuations by experts). Appraisals follow interest rates with a delay. We compare these two Real estate KPIs with the 10-year Bund yield (the interest rate on 10-year German government bonds), Euribor 3 months and the loan rate. For these pairs, we chose one year earlier (N-1) in advance. We chose it for economic reasons, not from the results. On "Pre-set", these boxes are marked "pre-set shift: N-1". Pick another shift and every box shows that shift, without the mark. On the Link panels, the +1 bar has the same label, separate from the "strongest" mark. If you switch between shifts and keep the one that looks strongest, you overstate the link. This is the same problem as with the "strongest" mark.
 
 {{figure:link-preset|Example: the dashed outline marks the pre-set shift, N-1 (+1 in the bar chart). We chose it in advance.}}
 
