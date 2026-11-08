@@ -151,8 +151,12 @@ const inKpis = KPIS.some((k) => k.page === page);
       @media (max-width: 720px) { .index .row { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'name name' 'what what' 'def def' 'value spark' 'extra extra'; padding: 1rem; } }
 
       .selectors { display: flex; flex-wrap: wrap; gap: 1rem 1.25rem; margin: 1.25rem 0 1.75rem; }
-      .selectors label { display: flex; flex-direction: column; gap: .4rem; font-size: 14px; font-weight: 500; color: var(--muted); }
+      .selectors label, .selectors .lagfield { display: flex; flex-direction: column; gap: .4rem; font-size: 14px; font-weight: 500; color: var(--muted); }
       .selectors select { min-height: 44px; min-width: 11rem; max-width: 100%; padding: 0 .75rem; font: 16px var(--sans); color: var(--ink); background: var(--plate); border: 1px solid var(--field); border-radius: 4px; }
+      .lagtitle { position: relative; display: flex; align-items: center; gap: .5rem; }
+      .help { width: 22px; height: 22px; padding: 0; border-radius: 50%; border: 1px solid var(--muted); background: transparent; color: var(--muted); font: 600 13px/1 var(--sans); cursor: help; }
+      .tip { display: none; position: absolute; z-index: 5; top: calc(100% + .4rem); left: 0; width: min(24rem, 86vw); padding: .6rem .75rem; font-size: 14px; font-weight: 400; line-height: 1.4; color: var(--ink); background: var(--plate); border: 1px solid var(--muted); border-radius: 6px; }
+      .help:hover + .tip, .help:focus + .tip { display: block; }
       @media (max-width: 560px) { .selectors label { flex: 1 1 100%; min-width: 0; } .selectors select { width: 100%; min-width: 0; } }
 
       .scroll { overflow-x: auto; }

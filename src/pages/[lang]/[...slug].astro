@@ -114,7 +114,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
       <p class="scale"><span>{t(lang, 'links.scale.neg')}</span><span>{t(lang, 'links.scale.zero')}</span><span>{t(lang, 'links.scale.pos')}</span></p>
       <p class="note">{t(lang, 'links.legend')}</p>
       <p class="note">{t(lang, 'links.noise.legend')}</p>
-      <div class="selectors lag-selector"><label>{t(lang, 'links.lag.label')}<select id="lag"><option value="p" selected>{t(lang, 'links.lag.preset')}</option>{[0, 1, 2].map((y) => <option value={y}>{t(lang, `links.lag.${y}`)}</option>)}</select></label></div>
+      <div class="selectors lag-selector"><div class="lagfield"><span class="lagtitle"><label for="lag">{t(lang, 'links.lag.label')}</label><button type="button" class="help" aria-label={t(lang, 'links.lag.help_label')} aria-describedby="lag-help">?</button><span role="tooltip" id="lag-help" class="tip">{t(lang, 'links.lag.help')}</span></span><select id="lag"><option value="p" selected>{t(lang, 'links.lag.preset')}</option>{[0, 1, 2].map((y) => <option value={y}>{t(lang, `links.lag.${y}`)}</option>)}</select></div></div>
       <div class="scroll"><table class="matrix" data-lag="p">
         <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{overview!.columns.map((n) => <th scope="col">{t(lang, `indicator.${n}`)}</th>)}</tr></thead>
         <tbody>{overview!.rows.map(({ kpi: k, view: v, cells }) => (

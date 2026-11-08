@@ -232,3 +232,5 @@ kpi.initial-yield.definition: "Die Miete des ersten Jahres im Verhältnis zum Ka
 kpi.office-vacancy.definition: "Der Anteil der Büroflächen, die leer stehen. Das ist das ungenutzte Flächenangebot."
 kpi.transaction-volume.definition: "Der Eurowert der verkauften Immobilien, dargestellt als Index. Er zeigt, wie aktiv der Markt ist und wie leicht sich Immobilien kaufen und verkaufen lassen."
 kpi.construction.definition: "Die für den Bau genehmigte Fläche. Sie erfasst Bauvorhaben im Stadium der Genehmigung, vor der Fertigstellung."
+links.lag.help_label: "Was bewirkt diese Auswahl?"
+links.lag.help: "Eine Veränderung bei einem Wirtschaftsindikator zeigt sich bei Immobilien womöglich erst später. Hier wählen Sie, wie viele Jahre früher der Wirtschaftsindikator genommen wird: das gleiche Jahr, ein Jahr früher (N-1) oder zwei Jahre früher (N-2). „Vorab gewählt“ nimmt N-1 für die als vorab gewählt markierten Felder und für alle anderen das gleiche Jahr."

@@ -103,6 +103,9 @@ describe('pre-set on the Links matrix', () => {
     expect(doc.querySelector('table.matrix')!.getAttribute('data-lag')).toBe('p');
     const sel = doc.querySelector<HTMLSelectElement>('#lag')!;
     expect([...sel.options].map((o) => o.value)).toEqual(['p', '0', '1', '2']);
+    const help = doc.querySelector('.lag-selector button.help')!;
+    expect(doc.getElementById(help.getAttribute('aria-describedby')!)!.textContent).toBe(t(l as 'en', 'links.lag.help'));
+    expect(doc.querySelector('.lag-selector label')!.getAttribute('for')).toBe('lag');
     expect(sel.querySelector('option[selected]')!.getAttribute('value')).toBe('p');
     for (const td of doc.querySelectorAll('td.lagcell')) {
       const pre = [...td.querySelectorAll('a[data-pre]')];

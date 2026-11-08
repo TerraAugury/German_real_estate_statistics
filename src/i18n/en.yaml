@@ -232,3 +232,5 @@ kpi.initial-yield.definition: "First-year rent as a share of the purchase price.
 kpi.office-vacancy.definition: "The share of office space that is empty. It is unused supply."
 kpi.transaction-volume.definition: "The euro value of property sold, shown as an index. It shows how active the market is and how easy it is to buy and sell."
 kpi.construction.definition: "Floor space approved for construction. It records building plans at the approval stage, ahead of completion."
+links.lag.help_label: "What does this choice do?"
+links.lag.help: "A change in an economic indicator may show up in property only later. Here you choose how many years earlier the economic indicator is taken: the same year, one year earlier (N-1) or two years earlier (N-2). \"Pre-set\" uses N-1 for the boxes marked pre-set and the same year for all the others."
