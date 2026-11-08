@@ -23,7 +23,13 @@ Each Link has three parts:
 
 **Minimum overlap.** A comparison over too few periods can mislead. Each shift needs at least 40 periods for quarterly KPIs and 10 for yearly KPIs. Below that, we leave the shift blank. We show a Link only if the comparison with no shift reaches that minimum and at least three shifts in all do. Otherwise the panel says "Link not shown". It gives *n* with no shift, and it says whether there were too few periods or one series did not change. For yearly Links with fewer than 20 periods, we add a note that the pattern may be chance.
 
-**The shift selector on the Links page.** Above the table of all Links, one selector sets the shift for the whole table. Its choices are "Same year", "Indicator 1 year earlier (N-1)" and "Indicator 2 years earlier (N-2)". These are the +1 and +2 shifts in the bar chart on each KPI page. So each box shows the same number as that bar, with the same *n*. (For a quarterly KPI, they are +4 and +8 quarters.) A box with too few periods at the chosen shift says "Not shown". The page opens on N-1, the pre-set shift described next. The page address keeps your choice (#lag-0 for the same year, #lag-2 for N-2), so you can share a view. With no address part, the table shows N-1.
+**Choosing a shift on the Links page.** Above the table, you can pick one shift. It applies to every box in the table. You can choose:
+
+- "Same year": we compare the indicator and the KPI in the same year.
+- "Indicator 1 year earlier (N-1)": we compare the KPI with the indicator from one year before.
+- "Indicator 2 years earlier (N-2)": we compare the KPI with the indicator from two years before.
+
+Each box shows the same number as the matching bar on the KPI page. For a quarterly KPI, N-1 and N-2 mean 4 and 8 quarters earlier. If a box has too few periods at the chosen shift, it says "Not shown". The table opens on N-1. We explain why in the next paragraph. The page address changes with your choice, so you can copy it to share your view.
 
 **A pre-set shift for appraisal-based KPIs.** Initial yield and the commercial property price index rest mostly on appraisals (valuations by experts). Appraisals follow interest rates with a delay. We compare these two KPIs with the 10-year Bund yield (the interest rate on 10-year German government bonds), Euribor 3 months and the loan rate. For these pairs, we chose one year earlier (N-1) in advance. We chose it for economic reasons, not from the results. These boxes are marked "pre-set shift" at every shift. On the Link panels, the +1 bar has the same label, separate from the "strongest" mark. If you switch between shifts and keep the one that looks strongest, you overstate the link. This is the same problem as with the "strongest" mark.
 
