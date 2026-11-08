@@ -182,14 +182,24 @@ insight.axis.growth: "year-on-year change, %"
 insight.multiples.label_growth: "{kpi} and {reference}, year-on-year change"
 insight.multiples.legend_growth: "Blue line: year-on-year change of {kpi}. Ochre line: year-on-year change of {reference}. The shading is blue where the blue line is above the ochre line and red where it is below; the gap between the lines in the latest year is the headline number."
 insight.multiples.legend_growth_real: "Blue line: year-on-year change of {kpi}, adjusted for consumer prices. Ochre line: year-on-year change of {reference}. The shading is blue where the blue line is above the ochre line and red where it is below; the gap between the lines in the latest year is the headline number."
+insight.multiples.legend_growth_rate: "Blue line: year-on-year change of {kpi}. Ochre line: year-on-year change of {reference}. The shading is blue where the blue line is above the ochre line and red where it is below."
 insight.multiples.real_growth: "Real growth = (1 + rent growth) / (1 + inflation) − 1, so it differs slightly from the gap between the two lines."
+insight.template.real-construction: "Real construction prices changed by {latest}% in {to}, {verdict} the {from}-{to} average of {mean}%."
+insight.multiples.real_growth.real-construction: "Real growth = (1 + construction price growth) / (1 + inflation) − 1, so it differs slightly from the gap between the two lines."
+insight.index.title: Real construction cost index
+insight.index.reading: "Real construction prices changed by {total}% between {from} and {to}, or {annual}% a year."
+insight.index.unit: "percent since {from}"
+insight.index.label: "Real construction cost index, {year} = 100, over time"
+insight.index.legend: "Blue line: the construction price index divided by the consumer price index, both set to {year} = 100 and compounded year by year. The dashed line marks 100, the level in {year}."
+insight.index.base_note: "Index set to {year} = 100; the level depends on this choice."
+insight.note.index_scope: "Construction prices are for office buildings; CPI is for a household basket."
 insight.template.completions-permits: "Completions were {latest} times the permits issued two years earlier, {verdict} the {from}-{to} average of {mean}."
 insight.unit.ratio: times
 insight.shift.2: two years earlier
 insight.shifted: "{title}, {shift}"
 kpi.insights.heading: Insights using this KPI
 insight.template.price-rent: "The price index stands at {latest} times the rent index, {verdict} the {from}-{to} average of {mean}."
-insight.template.real-rents: "Real office rents grew {latest}% in {to}, {verdict} the {from}-{to} average of {mean}%."
+insight.template.real-rents: "Real office rents changed by {latest}% in {to}, {verdict} the {from}-{to} average of {mean}%."
 insight.unit.growth: percent
 insight.template.office-employment: "Office vacancy changed by {latest} points in {to} while office employment grew {emp}%; the {from}-{to} average vacancy change is {mean} points."
 insight.unit.change: percentage points

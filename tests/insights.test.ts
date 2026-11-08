@@ -79,10 +79,67 @@ describe('Provisional gate', () => {
 });
 
 describe('Insight J on real data', () => {
+  const j = () => insightsPage().find((i) => i.entry.key === 'j')!;
+  const shown = () => { const r = j().result; if (!r.shown) throw new Error('not shown'); return r; };
   it('is shown, covering at least the 10 years the module needs', () => {
-    const j = insightsPage().find((i) => i.entry.key === 'j')!;
-    expect(j.result.shown).toBe(true);
-    if (j.result.shown) expect(j.result.n).toBeGreaterThanOrEqual(10);
+    expect(j().result.shown).toBe(true);
+    expect(shown().n).toBeGreaterThanOrEqual(10);
+  });
+  it('real growth of construction prices, (1 + construction growth) / (1 + CPI growth) - 1, in percent', () => {
+    const at = (y: string) => shown().points.find((p) => p.period === y)!.value;
+    // reference values worked out by hand from rounded yearly rates, so within 0.1
+    for (const [y, v] of [['2007', 4.6], ['2021', 6.3], ['2022', 9.7], ['2025', 1.3]] as const) expect(Math.abs(at(y) - v)).toBeLessThan(0.1);
+    const { lines, latest } = shown();
+    const [c, p] = [lines.kpi.at(-1)!.value / 100, lines.reference.at(-1)!.value / 100];
+    expect(latest.value).toBeCloseTo(((1 + c) / (1 + p) - 1) * 100, 9);
+    expect(lines.growth).toBe(true); // the two year-on-year lines are kept
+  });
+  it('the real index: 1992 = 100, compounded year by year, with the total and yearly rate', () => {
+    const { index } = shown();
+    if (!index) throw new Error('no index');
+    expect([index.from, index.to, index.points[0].value]).toEqual(['1992', '2025', 100]);
+    const at = (y: string) => index.points.find((p) => p.period === y)!.value;
+    // reference values are within about 2 points: they come from rounded yearly rates
+    for (const [y, v] of [['2005', 91], ['2015', 101], ['2020', 111], ['2022', 130], ['2025', 136]] as const) expect(Math.abs(at(y) - v)).toBeLessThan(2);
+    expect(index.total).toBeCloseTo(at('2025') - 100, 9);
+    expect(index.annual).toBeCloseTo(0.9, 1);
+  });
+  it('the index is the headline-free level view: it leaves the verdict, average and plate of the yearly numbers alone', () => {
+    const r = shown();
+    expect(r).toMatchObject({ from: '1992', to: '2025', verdict: 'in_line' });
+    expect(tone(r.verdict, j().entry.better)).toBe('neutral');
+    for (const k of ['b', 'd', 'i']) { const x = insightsPage().find((i) => i.entry.key === k)!; if (x.result.shown) expect(x.result.index).toBeUndefined(); }
+  });
+  it('EN: the index on a plain plate above the yearly figures, both of its notes, then the real growth reading and footnote', () => {
+    const h = renderInsight(j().entry, j().result, j().series, 'en');
+    const [level, yearly] = h.split('</figure>');
+    expect(level).toContain('<h3>Real construction cost index</h3>');
+    expect(level).toMatch(/<span class="num">\+3\d\.\d<\/span> <span class="unit">percent since 1992<\/span>/);
+    expect(level).toMatch(/Real construction prices changed by \+3\d\.\d% between 1992 and 2025, or \+0\.9% a year\./);
+    expect(level).toContain('index, 1992 = 100');
+    expect(level).toContain('Index set to 1992 = 100; the level depends on this choice.');
+    expect(level).toContain('Construction prices are for office buildings; CPI is for a household basket.');
+    expect(level).not.toMatch(/average|tone-/);
+    expect(h.indexOf('Real construction cost index')).toBeLessThan(h.indexOf('Real construction prices changed by 1'));
+    expect(yearly).toMatch(/Real construction prices changed by 1\.3% in 2025, in line with the 1992-2025 average of 0\.9%\./);
+    expect(yearly).toContain('Real growth = (1 + construction price growth) / (1 + inflation) − 1, so it differs slightly from the gap between the two lines.');
+    expect(yearly).toContain('percent');
+    expect(h).not.toContain('class="insight tone-'); // plain plate
+  });
+  it('DE: the same blocks in German', () => {
+    const h = renderInsight(j().entry, j().result, j().series, 'de');
+    expect(h).toContain('Realer Baukostenindex');
+    expect(h).toContain('Prozent seit 1992');
+    expect(h).toContain('Index auf 1992 = 100 gesetzt; das Niveau hängt von dieser Wahl ab.');
+    expect(h).toContain('Die Baupreise gelten für Bürogebäude, der Verbraucherpreisindex für einen Haushaltswarenkorb.');
+    expect(h).toMatch(/Die realen Baupreise haben sich 2025 um 1,3 % verändert/);
+    expect(h).toContain('Reales Wachstum = (1 + Baupreiswachstum) / (1 + Inflation) − 1');
+  });
+  it('the index entry shows real growth in percent, not a spread in points', () => {
+    const grid = renderInsightIndex(insightsPage(), 'en');
+    const tile = grid.split('<li>').find((x) => x.includes('Construction costs vs inflation'))!;
+    expect(tile).toMatch(/<span class="num">1\.3<\/span> <span class="unit">percent<\/span> <span class="tag in_line">/);
+    expect(tile).not.toContain('percentage points');
   });
 });
 
@@ -221,14 +278,14 @@ describe('Insights G and B (cleared)', () => {
     expect(b.entry.series.map((s) => s.key)).toEqual(['rent-index-de-office-a', 'cpi']);
     spans(b.result, '2005', 21);
     const h = renderInsight(b.entry, b.result, b.series, 'en');
-    expect(h).toMatch(/Real office rents grew -?[\d.]+% in \d{4}, (higher than|lower than|in line with) the 2005-\d{4} average of -?[\d.]+%\./);
+    expect(h).toMatch(/Real office rents changed by -?[\d.]+% in \d{4}, (higher than|lower than|in line with) the 2005-\d{4} average of -?[\d.]+%\./);
     expect(h.match(/own calculation/g)).toHaveLength(2);
   });
   it('the DE sentences', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
     const [g, b] = ['g', 'b'].map((k) => insightsPage().find((i) => i.entry.key === k)!);
     expect(renderInsight(g.entry, g.result, g.series, 'de')).toMatch(/Der Preisindex liegt beim [\d,]+-Fachen des Mietindex, (höher als der|niedriger als der|im Einklang mit dem) 2013-\d{4}-Durchschnitt von [\d,]+\./);
-    expect(renderInsight(b.entry, b.result, b.series, 'de')).toMatch(/Die realen Büromieten sind \d{4} um -?[\d,]+ % gewachsen, (höher als der|niedriger als der|im Einklang mit dem) 2005-\d{4}-Durchschnitt von -?[\d,]+ %\./);
+    expect(renderInsight(b.entry, b.result, b.series, 'de')).toMatch(/Die realen Büromieten haben sich \d{4} um -?[\d,]+ % verändert, (höher als der|niedriger als der|im Einklang mit dem) 2005-\d{4}-Durchschnitt von -?[\d,]+ %\./);
   });
 });
 
@@ -340,7 +397,7 @@ describe('Rates are never rebased (ticket 4)', () => {
 });
 
 describe('Growth Insights draw year-on-year growth lines (ticket 5)', () => {
-  it.each([['d', 0], ['i', 0], ['j', 0]])('%s: the gap between the two lines in the latest year is the headline number', (key) => {
+  it.each([['d', 0], ['i', 0]])('%s: the gap between the two lines in the latest year is the headline number', (key) => {
     process.env.INCLUDE_PROVISIONAL = '1';
     const x = insightsPage().find((i) => i.entry.key === key)!;
     if (!x.result.shown) throw new Error('not shown');
@@ -360,6 +417,10 @@ describe('Growth Insights draw year-on-year growth lines (ticket 5)', () => {
     expect(renderInsight(b.entry, b.result, b.series, 'de')).toContain('Reales Wachstum = (1 + Mietwachstum) / (1 + Inflation) − 1');
     const d = insightsPage().find((i) => i.entry.key === 'd')!;
     expect(renderInsight(d.entry, d.result, d.series, 'en')).not.toContain('Real growth =');
+    // a real growth headline is not the gap between the lines, so only the spread Insights call the gap the headline number
+    const j = insightsPage().find((i) => i.entry.key === 'j')!;
+    for (const x of [b, j]) for (const lang of ['en', 'de'] as const) expect(renderInsight(x.entry, x.result, x.series, lang)).not.toMatch(/the gap between the lines in the latest year is the headline number|der Abstand der Linien im letzten Jahr ist die große Zahl/);
+    expect(renderInsight(d.entry, d.result, d.series, 'en')).toContain('the gap between the lines in the latest year is the headline number');
   });
   it('no small chart of B, D, I or J is rebased; the remaining rebased level charts are G and C (and M\'s employment line)', () => {
     for (const k of ['b', 'd', 'i', 'j']) { const x = insightsPage().find((i) => i.entry.key === k)!; if (x.result.shown) expect(x.result.lines.base).toBeUndefined(); }

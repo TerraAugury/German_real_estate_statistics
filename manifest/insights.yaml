@@ -3,7 +3,7 @@
 # `headline` names how the two series are compared; `growth: true` compares their year-on-year percent changes; a growth Insight (this or
 # a `growth` headline) draws those year-on-year changes as its lines; any other `base` rebases the lines behind the headline to that year = 100,
 # except series in % (never rebased); `indexed` takes a ratio of two indices after rebasing;
-# `deflate` (flow or stock) deflates a `growth` headline by the reference price level, or a `growth` spread by its `deflator` series; `shift` pairs the reference of year t - shift.
+# `deflate` (flow or stock) deflates a `growth` headline by the reference price level (with a `base`, it also draws that real level as an index from the base year = 100), or a `growth` spread by its `deflator` series; `shift` pairs the reference of year t - shift.
 # `better` is the direction that is better for an office investor (higher, lower, or none where it depends on whose side you take);
 # the verdict tag is coloured by it, never by the sign of the number. `notes` lists interface string keys shown as Notes under the chart.
 # The first `kpi` series against the first `reference` series is the headline.
@@ -99,12 +99,13 @@
 
 - key: j
   title: { en: "Construction costs vs inflation", de: "Baupreise und Inflation" }
-  measure: { en: "spread of construction price growth over CPI inflation", de: "Abstand des Baupreisanstiegs zur Inflationsrate" }
+  measure: { en: "real growth of construction prices", de: "reales Wachstum der Baupreise" }
   definition: { en: "Building costs measured against general consumer prices, so that the building-specific part stands out. It points to the cost of replacing a building.", de: "Die Baukosten im Vergleich zu den allgemeinen Verbraucherpreisen, sodass der baubezogene Anteil sichtbar wird. Das verweist auf die Kosten für den Ersatz eines Gebäudes." }
-  headline: spread
+  headline: growth
   better: lower
-  growth: true
-  template: spread
+  deflate: flow
+  base: 1992
+  template: real-construction
   series:
     - { key: construction-price-office, role: kpi }
     - { key: cpi, role: reference }

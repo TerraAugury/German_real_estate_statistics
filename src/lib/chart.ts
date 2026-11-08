@@ -117,6 +117,22 @@ export function insightChart(r: { points: Points; context?: Points; from: string
   }), labels.title);
 }
 
+/** A real index over time against a dashed line at 100, its base level: latest point labelled. */
+export function indexChart(points: Points, labels: { unit: string; title: string }, lang: Lang): string {
+  const data = points.map((p) => ({ x: +p.period, value: p.value }));
+  return render((narrow) => ({
+    height: narrow ? 256 : 320, marginRight: 52, marginTop: 28,
+    x: xAxis(narrow),
+    y: yAxis(lang, labels.unit),
+    marks: [
+      Plot.ruleY([100], { stroke: MUTED, strokeDasharray: '5 4' }),
+      Plot.lineY(data, { x: 'x', y: 'value', stroke: DATA, strokeWidth: 2.25 }),
+      Plot.dot(data, { x: 'x', y: 'value', r: 6, fill: 'transparent', title: (d) => `${d.x}: ${fmt(lang, d.value, { maximumFractionDigits: 1 })}` }),
+      ...latest(data.slice(-1), (d) => fmt(lang, d.value, { minimumFractionDigits: 1, maximumFractionDigits: 1 }), narrow),
+    ],
+  }), labels.title);
+}
+
 type Lines = { kpi: { value: number }[]; reference: { value: number }[] };
 /** One y-domain for every small chart of an Insight, so their differences compare by eye. */
 export function sharedDomain(ls: Lines[]): [number, number] {

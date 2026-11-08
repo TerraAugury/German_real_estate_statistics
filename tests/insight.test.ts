@@ -156,6 +156,22 @@ describe('Insight module: indexed ratio and real growth', () => {
     expect(r).toMatchObject({ from: '2001', n: 11 });
     for (const p of r.points) expect(p.value).toBeCloseTo((1.1 / 1.04 - 1) * 100, 9);
   });
+  it('a base year adds the real index compounded from it (= 100), with its total change and yearly rate; without a base there is none', () => {
+    const [kpi, cpi] = [geometric(2000, 12, 100, 0.1), geometric(2000, 12, 100, 0.04)];
+    const r = computeInsight(kpi, cpi, { headline: 'growth', deflate: 'flow', base: 2003 });
+    if (!r.shown || !r.index) throw new Error('no index');
+    const real = 1.1 / 1.04; // each year's real growth factor, compounded from 2003
+    expect(r.index).toMatchObject({ from: '2003', to: '2011' });
+    expect(r.index.points.map((p) => p.period)).toEqual(['2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011']);
+    r.index.points.forEach((p, i) => expect(p.value).toBeCloseTo(100 * real ** i, 9));
+    expect(r.index.total).toBeCloseTo((real ** 8 - 1) * 100, 9);
+    expect(r.index.annual).toBeCloseTo((real - 1) * 100, 9);
+    // the headline, mean and verdict do not depend on the index
+    const without = computeInsight(kpi, cpi, { headline: 'growth', deflate: 'flow' });
+    if (!without.shown) throw new Error('not shown');
+    expect(without.index).toBeUndefined();
+    expect({ ...r, index: undefined, lines: undefined }).toEqual({ ...without, index: undefined, lines: undefined });
+  });
   it('flow deflates by the annual-average price level, stock by the December one', () => {
     // CPI is 50 in January to November and 100 + 10 i in December of year i; the KPI stays at 100
     const kpi = annual(2000, Array(12).fill(100));

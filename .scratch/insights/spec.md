@@ -35,7 +35,7 @@ Ten Insights, in page order. All are annual. Out: L (GDP vs vacancy, duplicates 
 | 5 | D | `rent-index-de-office-a`; `construction-price-office` (annual mean) | 2004-2025 (22) | Spread, pp: rent growth minus construction price growth | Provisional |
 | 6 | I | `rent-index-de-office-a`; `gdp-real` | 2004-2025 (22) | Spread, pp: rent growth minus real GDP growth | Provisional |
 | 7 | C | `construction-completions-office`; `construction-permits-office` (Destatis) | 2010-2025 (16) | Ratio: completions in t / permits in t-2 | **Public** |
-| 8 | J | `construction-price-office`; `cpi` | 1991-2025 (35) | Spread, pp: construction price growth minus CPI inflation | **Public** |
+| 8 | J | `construction-price-office`; `cpi` | 1992-2025 (34) | Real construction price growth, % ((1 + construction growth) / (1 + CPI growth) − 1); above it a real index, 1992 = 100, with its total change and yearly rate | **Public** |
 | 9 | E | `office-vacancy-7`; `office-vacancy-127` | 1995-2025 (31) | Spread, pp: 7 cities minus 127 towns | Provisional |
 | 10 | M | `office-vacancy-127`; new office employment series (section 3) | about 1996-2024/25 | Year-on-year change in vacancy, pp; employment growth shown as context | Provisional vacancy |
 
@@ -78,8 +78,8 @@ All rules live in one pure, tested module `src/insight/insight.ts` beside `src/l
 - **Headline kinds**: spread (percentage points), ratio, difference (same unit), year-on-year growth (%). One decimal, ratios two, through `Intl` (EN "1.5", DE "1,5"). "Gap" in earlier tickets means spread.
 - **Verdict**: mean and population standard deviation over the whole shared period, latest value included. "In line" when the latest value is within half a standard deviation of the mean, otherwise "higher" or "lower". A zero standard deviation reads "in line".
 - **Reading templates (EN)**, filled at build time, reviewed once in EN and DE; verdict words "higher than" / "lower than" / "in line with":
-  - Spread (A, D, E, F, I, J): "The latest {name} is {latest} points, {verdict} the {from}-{to} average of {mean} points."
-  - Growth (B): "Real office rents grew {latest}% in {to}, {verdict} the {from}-{to} average of {mean}%."
+  - Spread (A, D, E, F, I): "The latest {name} is {latest} points, {verdict} the {from}-{to} average of {mean} points."
+  - Growth (B, J): "Real office rents changed by {latest}% in {to}, {verdict} the {from}-{to} average of {mean}%."
   - Ratio, C: "Completions were {latest} times the permits issued two years earlier, {verdict} the {from}-{to} average of {mean}."
   - Ratio, G: "The price index stands at {latest} times the rent index, {verdict} the {from}-{to} average of {mean}."
   - M: "Office vacancy changed by {latest} points in {to} while office employment grew {emp}%; the {from}-{to} average vacancy change is {mean} points."

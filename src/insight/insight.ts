@@ -19,6 +19,8 @@ export type InsightResult =
   | { shown: false; n: number; reason: 'too_few' }
   | { shown: true; points: Points; from: string; to: string; n: number; short: boolean;
       mean: number; sd: number; latest: Points[number]; verdict: Verdict;
+      /** growth with a `base` year: the real level compounded from the base year (= 100) to the last year, with its total change and yearly rate in percent. Not part of the verdict. */
+      index?: { points: Points; from: string; to: string; total: number; annual: number };
       /** change: the reference's year-on-year percent growth over the same years, shown beside the headline and never given a verdict. */
       context?: Points;
       /** deviation: what the top chart draws instead of the headline points (the KPI's yearly change, with the reference's growth as context), with its own average and spread. */
@@ -75,7 +77,7 @@ export type InsightOptions = {
   headline?: Headline;
   /** Compare year-on-year percent changes of both series instead of levels (spread). */
   growth?: boolean;
-  /** Rebase the lines behind the headline to this year = 100. */
+  /** Rebase the lines behind the headline to this year = 100. A deflated growth headline instead also gets the real index compounded from this year = 100 (`index`). */
   base?: number;
   /** Pair the reference of year t - shift with the KPI of year t. */
   shift?: number;
@@ -101,6 +103,7 @@ export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opt
   // Year-on-year changes of both series (the real KPI for a deflated spread): the lines drawn for a growth headline, and the terms of a growth spread.
   const growthLines = opts.growth || head === 'growth' ? [la, lb].map((l) => changes(l, 'A', 'pct')) : undefined;
   let growth: Map<number, number> | undefined;
+  let realLevels: Map<number, number> | undefined;
   const avg = (xs: number[]) => xs.reduce((sum, x) => sum + x, 0) / xs.length;
   const shared = [...la.keys()].filter((y) => lb.has(y));
   const realGrowth = head === 'gap' && opts.deflator ? changes(real(lb, levels(opts.deflator, 'A')), 'A', 'pct') : undefined;
@@ -113,7 +116,9 @@ export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opt
     for (const y of ys) values.set(y, la.get(y)! - m);
   } else if (head === 'growth') {
     const deflator = opts.deflate === 'stock' ? decemberLevels(reference) : lb;
-    for (const [y, v] of changes(opts.deflate ? real(la, deflator) : la, 'A', 'pct')) values.set(y, v);
+    const level = opts.deflate ? real(la, deflator) : la;
+    if (opts.deflate) realLevels = level;
+    for (const [y, v] of changes(level, 'A', 'pct')) values.set(y, v);
   } else if (head === 'change') {
     growth = changes(lb, 'A', 'pct');
     for (const [y, v] of changes(la, 'A', 'diff')) if (growth.has(y)) values.set(y, v);
@@ -145,6 +150,10 @@ export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opt
     const pts = yearPts(cy, (y) => dv.get(y)!);
     if (pts.length >= MIN_OBS) chart = { points: pts, context: yearPts(cy, (y) => cg.get(y)!), from: pts[0].period, to: pts.at(-1)!.period, ...stats(pts) };
   }
+  // The real index: the year-on-year real growth compounded from the base year equals the real level over its base-year level, so it is taken as that ratio.
+  const base = realLevels?.get(opts.base ?? NaN);
+  const ix = base ? [opts.base!, ...years.filter((y) => y > opts.base!)].map((y) => ({ period: String(y), value: (realLevels!.get(y)! / base) * 100 })) : undefined;
+  const index = ix && ix.length > 1 ? { points: ix, from: ix[0].period, to: ix.at(-1)!.period, total: ix.at(-1)!.value - 100, annual: ((ix.at(-1)!.value / 100) ** (1 / (+ix.at(-1)!.period - opts.base!)) - 1) * 100 } : undefined;
   return { shown: true, points, from: points[0].period, to: latest.period, n: points.length, short: points.length < SHORT_OBS, mean, sd, latest, verdict: verdict(latest.value, mean, sd), lines: ln,
-    ...(growth && { context: yearPts(years, (y) => growth!.get(y)!) }), ...(chart && { chart }) };
+    ...(growth && { context: yearPts(years, (y) => growth!.get(y)!) }), ...(chart && { chart }), ...(index && { index }) };
 }

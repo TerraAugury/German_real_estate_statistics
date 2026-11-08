@@ -1339,9 +1339,9 @@ insight.template.price-rent:
   reviewed_by: terra augury
   reviewed_on: 2026-11-03
 insight.template.real-rents:
-  en_hash: 8e3f757982dcbdba
-  reviewed_by: terra augury
-  reviewed_on: 2026-11-03
+  en_hash: ff40e1228db181e2
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08
 insight.unit.growth:
   en_hash: fd86717aca41c558
   reviewed_by: terra augury
@@ -1431,9 +1431,9 @@ insight:j.title:
   reviewed_by: terra augury
   reviewed_on: 2026-11-03
 insight:j.measure:
-  en_hash: b6e927a78e4348b9
-  reviewed_by: terra augury
-  reviewed_on: 2026-11-03
+  en_hash: 5af8e77de723ab9f
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08
 insight:e.title:
   en_hash: e5729e61fedeb2f5
   reviewed_by: terra augury
@@ -1754,3 +1754,43 @@ insight:m.definition:
   en_hash: 99354f033e8a4f1c
   reviewed_by: Olivier
   reviewed_on: 2026-11-07
+insight.multiples.legend_growth_rate:
+  en_hash: 93cc998133036431
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08
+insight.template.real-construction:
+  en_hash: 01476c2e517c4b96
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08
+insight.multiples.real_growth.real-construction:
+  en_hash: 7410452b942402c6
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08
+insight.index.title:
+  en_hash: 126b299bc94ca4c8
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08
+insight.index.reading:
+  en_hash: faa91033ce717305
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08
+insight.index.unit:
+  en_hash: 206fcc2fb045f0fe
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08
+insight.index.label:
+  en_hash: 0fc6cd033d888a2b
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08
+insight.index.legend:
+  en_hash: c67c0fbaa0d327ae
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08
+insight.index.base_note:
+  en_hash: db8cb413153b868a
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08
+insight.note.index_scope:
+  en_hash: 94c7b2246b9f3919
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-08

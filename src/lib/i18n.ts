@@ -22,6 +22,9 @@ validate(strings.en, strings.de);
 // German not reviewed against the current English shows [DRAFT]; production builds fail before this matters (scripts/check-review.ts).
 const unreviewed = new Set(unreviewedKeys(strings.en, readLock()));
 
+/** Whether an interface string exists, for text an Insight may bring its own version of. */
+export const hasKey = (key: string) => key in strings.en;
+
 export function t(lang: Lang, key: string, vars: Record<string, string> = {}): string {
   const s = strings[lang][key];
   if (s === undefined) throw new Error(`i18n: missing key ${key}`);
