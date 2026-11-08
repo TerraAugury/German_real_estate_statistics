@@ -1,7 +1,7 @@
-This site presents public statistics on the German commercial real estate market, together with selected economic indicators, so that readers can see how they have moved over time and alongside each other.
+This site shows public statistics on the German commercial real estate market. It also shows some economic indicators, such as interest rates and inflation. You can see how they changed over time and how they moved together.
 
-It is operated by Terra Augury Ltd, Limassol, Cyprus; see the [Legal notice](/en/legal-notice).
+Terra Augury Ltd, Limassol, Cyprus, runs this site. See the [Legal notice](/en/legal-notice).
 
-- How figures are calculated and how to read a Link: [Methodology](/en/methodology).
+- How we calculate the figures, and how to read a Link (how two series moved together): [Methodology](/en/methodology).
 - Where each series comes from and under which licence: [Sources and licences](/en/sources).
 - What is and is not shown: [Availability](/en/availability).

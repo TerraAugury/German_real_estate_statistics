@@ -115,7 +115,7 @@ home.spark.label: "Trend of {title}"
 latest.change.pct: "{change} compared with {period}"
 latest.change.diff: "{change} points compared with {period}"
 latest.unchanged: "No change compared with {period}"
-home.segments: Browse by Segment
+home.segments: "Browse by Segment (property type)"
 segment.intro: "One national chart per KPI where a source has it; each chart opens the full KPI page."
 segment.availability: Which KPI and Segment combinations exist, and why the others do not
 availability.title: Availability

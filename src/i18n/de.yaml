@@ -115,7 +115,7 @@ home.spark.label: "Verlauf von {title}"
 latest.change.pct: "{change} gegenüber {period}"
 latest.change.diff: "{change} Punkte gegenüber {period}"
 latest.unchanged: "Keine Änderung gegenüber {period}"
-home.segments: Nach Segment
+home.segments: "Nach Segment (Immobilienart)"
 segment.intro: "Je Kennzahl eine Grafik für Deutschland, soweit eine Quelle sie liefert; jede Grafik öffnet die vollständige Kennzahlseite."
 segment.availability: Welche Kombinationen aus Kennzahl und Segment es gibt und warum die übrigen nicht verfügbar sind
 availability.title: Verfügbarkeit
