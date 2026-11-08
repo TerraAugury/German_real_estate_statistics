@@ -14,6 +14,7 @@ import { KPIS, SEGMENTS, SEGMENT_PAGES, cell, naText, viewHref, type GeoGroup, t
 import { availability, firstSeries, homeIndex, kpiPage, linksOverview } from '../../lib/pages';
 import { isNominalKpi } from '../../lib/links';
 import { insightsPage, leadInsight } from '../../lib/insights';
+import { withFigures } from '../../lib/method-figures';
 
 export function getStaticPaths() {
   return langs.flatMap((lang) => built.map((page) => ({ params: { lang, slug: slug(page, lang) || undefined }, props: { page } })));
@@ -33,7 +34,10 @@ const homeRows = page === 'home' ? homeIndex() : [];
 const lead = page === 'home' ? leadInsight() : undefined;
 const prose = import.meta.glob<{ Content: any }>('../../../content/*/*.md', { eager: true });
 // Prose pages: content/<lang>/<page key>.md (the Impressum is legal-notice.md in both languages).
-const Prose = prose[`../../../content/${lang}/${page}.md`]?.Content;
+const proseModule = prose[`../../../content/${lang}/${page}.md`];
+const Prose = proseModule?.Content;
+// The Methodology marks its visual examples with {{figure:...}}; they are drawn here from the real data.
+const proseHtml = page === 'methodology' && proseModule ? withFigures(await (proseModule as any).compiledContent(), lang) : undefined;
 const proseDraft = lang === 'de' && unreviewedProse(readProse()).includes(page);
 // Germany-wide geographies have no optgroup on the selector; the Availability grid names them "Germany".
 const selectorGroup: Record<GeoGroup, string | null> = { germany: null, city_classes: 'select.city_classes', laender: 'select.laender' };
@@ -166,7 +170,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
     <>
       <h1>{title}</h1>
       {proseDraft && <p class="note">{DRAFT.trim()}</p>}
-      <Prose />
+      {proseHtml ? <Fragment set:html={proseHtml} /> : <Prose />}
     </>
   ) : page === 'sources' ? (
     <>
