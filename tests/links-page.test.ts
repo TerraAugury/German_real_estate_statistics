@@ -51,7 +51,7 @@ describe.skipIf(built.length === 0)('Links page', () => {
     const fix = l === 'en' ? 'rate fixed for over 5 years' : 'Zinsbindung über 5 Jahre';
     expect([...page(l as 'en').querySelectorAll('table.matrix thead th')].some((th) => th.textContent!.includes(fix))).toBe(true);
     const meth = readFileSync(`content/${l}/methodology.md`, 'utf8');
-    expect(meth).toContain(l === 'en' ? 'initial rate fixation of over 5 years' : 'Zinsbindung von über 5 Jahren');
+    expect(meth).toContain(l === 'en' ? 'rate fixed for over 5 years' : 'Zinsbindung von über 5 Jahren');
     const panel = readFileSync(`dist/${l}/${slug('kpi-initial-yield', l as 'en')}/index.html`, 'utf8');
     expect(panel).toContain(l === 'en' ? 'rate fixed for over 5 years' : 'Zinsbindung über 5 Jahre');
   });
