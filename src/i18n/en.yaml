@@ -94,7 +94,7 @@ geo.de-st: Saxony-Anhalt
 geo.de-th: Thuringia
 note.partial_total: "The Germany total adds up the Länder (federal states) that have data. There is no value for {laender} in {year}."
 kpi.noscript: "Switching Segment, geography or frequency needs JavaScript. Without it, this page shows its first view."
-na.source: "Not available: no Open source for {reason}"
+na.source: "Not available: no available source for {reason}"
 na.kpi-price-index.logistics: a logistics property price index
 na.kpi-rent-index.logistics: logistics rents
 na.kpi-initial-yield.office: "office yields on their own (the source reports office and retail combined, see Commercial overall)"
