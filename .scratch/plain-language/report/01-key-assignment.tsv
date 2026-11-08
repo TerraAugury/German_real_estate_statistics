@@ -1,0 +1,251 @@
+key	ticket	group	note
+site.title	2	chrome, buttons, tags, messages, shared notes	
+nav.home	2	chrome, buttons, tags, messages, shared notes	
+nav.menu	2	chrome, buttons, tags, messages, shared notes	
+nav.logistics	2	chrome, buttons, tags, messages, shared notes	
+lang.switch	2	chrome, buttons, tags, messages, shared notes	
+home.purpose	3	Home copy	
+kpi.construction.title	4	KPI, Segments, Availability, Sources pages and series notes	
+source.cite	2	chrome, buttons, tags, messages, shared notes	
+source.cite.credit	2	chrome, buttons, tags, messages, shared notes	
+source.details	2	chrome, buttons, tags, messages, shared notes	
+source.detail.dbnomics	2	chrome, buttons, tags, messages, shared notes	
+source.detail.direct	2	chrome, buttons, tags, messages, shared notes	
+source.chip.provisional	2	chrome, buttons, tags, messages, shared notes	
+source.original	2	chrome, buttons, tags, messages, shared notes	
+source.original.unit	2	chrome, buttons, tags, messages, shared notes	
+source.original.source	2	chrome, buttons, tags, messages, shared notes	
+source.own	2	chrome, buttons, tags, messages, shared notes	
+source.terms.original	2	chrome, buttons, tags, messages, shared notes	
+source.terms.derived	2	chrome, buttons, tags, messages, shared notes	
+footer.text	2	chrome, buttons, tags, messages, shared notes	
+note.prefix	2	chrome, buttons, tags, messages, shared notes	
+note.stale	2	chrome, buttons, tags, messages, shared notes	
+note.fetch_failed	2	chrome, buttons, tags, messages, shared notes	
+note.unavailable	2	chrome, buttons, tags, messages, shared notes	
+note.revised	2	chrome, buttons, tags, messages, shared notes	
+note.short_window	4	KPI, Segments, Availability, Sources pages and series notes	
+note.short_cycle	4	KPI, Segments, Availability, Sources pages and series notes	
+note.scope.index	4	KPI, Segments, Availability, Sources pages and series notes	
+note.scope.city_class	4	KPI, Segments, Availability, Sources pages and series notes	
+note.scope.combined	4	KPI, Segments, Availability, Sources pages and series notes	
+link.title	6	Links	
+link.scope	6	Links	
+geo.germany	2	selector and place labels	
+link.sentence	6	Links	
+link.period	6	Links	
+link.headline	6	Links	
+link.not_shown	6	Links	
+link.not_shown.constant	6	Links	
+link.strongest	6	Links	
+link.strongest.mark	6	Links	
+link.small_sample	6	Links	
+link.lag.label	6	Links	
+link.rho.label	6	Links	
+link.overlay.chart	6	Links	
+link.overlay.legend	6	Links	
+link.lags.label	6	Links	
+nav.sources	2	chrome, buttons, tags, messages, shared notes	
+sources.title	2	page name (nav and tab title)	
+sources.intro	4	KPI, Segments, Availability, Sources pages and series notes	
+sources.col.series	4	KPI, Segments, Availability, Sources pages and series notes	
+sources.col.publisher	4	KPI, Segments, Availability, Sources pages and series notes	
+sources.col.id	4	KPI, Segments, Availability, Sources pages and series notes	
+sources.col.licence	4	KPI, Segments, Availability, Sources pages and series notes	
+sources.col.attribution	4	KPI, Segments, Availability, Sources pages and series notes	
+nav.kpis	2	chrome, buttons, tags, messages, shared notes	
+kpi.price-index.title	4	KPI, Segments, Availability, Sources pages and series notes	
+kpi.rent-index.title	4	KPI, Segments, Availability, Sources pages and series notes	
+kpi.initial-yield.title	4	KPI, Segments, Availability, Sources pages and series notes	
+kpi.office-vacancy.title	4	KPI, Segments, Availability, Sources pages and series notes	
+kpi.transaction-volume.title	4	KPI, Segments, Availability, Sources pages and series notes	
+kpi.not_available.licence	2	chrome, buttons, tags, messages, shared notes	
+select.segment	2	chrome, buttons, tags, messages, shared notes	
+select.geo	2	chrome, buttons, tags, messages, shared notes	
+select.freq	2	chrome, buttons, tags, messages, shared notes	
+select.city_classes	2	chrome, buttons, tags, messages, shared notes	
+select.laender	2	chrome, buttons, tags, messages, shared notes	
+segment.office	2	selector and place labels	
+segment.retail	2	selector and place labels	
+segment.logistics	2	selector and place labels	
+segment.commercial-overall	2	selector and place labels	
+freq.annual	2	chrome, buttons, tags, messages, shared notes	
+freq.quarterly	2	chrome, buttons, tags, messages, shared notes	
+geo.supra-regional	2	selector and place labels	
+geo.excl-supra-regional	2	selector and place labels	
+geo.7-cities	2	selector and place labels	
+geo.120-towns	2	selector and place labels	
+geo.127-towns	2	selector and place labels	
+geo.127-districts	2	selector and place labels	
+geo.de-sh	2	selector and place labels	
+geo.de-hh	2	selector and place labels	
+geo.de-ni	2	selector and place labels	
+geo.de-hb	2	selector and place labels	
+geo.de-nw	2	selector and place labels	
+geo.de-he	2	selector and place labels	
+geo.de-rp	2	selector and place labels	
+geo.de-bw	2	selector and place labels	
+geo.de-by	2	selector and place labels	
+geo.de-sl	2	selector and place labels	
+geo.de-be	2	selector and place labels	
+geo.de-bb	2	selector and place labels	
+geo.de-mv	2	selector and place labels	
+geo.de-sn	2	selector and place labels	
+geo.de-st	2	selector and place labels	
+geo.de-th	2	selector and place labels	
+note.partial_total	4	KPI, Segments, Availability, Sources pages and series notes	
+kpi.noscript	2	chrome, buttons, tags, messages, shared notes	
+na.source	2	chrome, buttons, tags, messages, shared notes	
+na.kpi-price-index.logistics	4	KPI, Segments, Availability, Sources pages and series notes	
+na.kpi-rent-index.logistics	4	KPI, Segments, Availability, Sources pages and series notes	
+na.kpi-initial-yield.office	4	KPI, Segments, Availability, Sources pages and series notes	
+na.kpi-initial-yield.retail	4	KPI, Segments, Availability, Sources pages and series notes	
+na.kpi-initial-yield.logistics	4	KPI, Segments, Availability, Sources pages and series notes	
+na.kpi-office-vacancy.retail	4	KPI, Segments, Availability, Sources pages and series notes	
+na.kpi-office-vacancy.logistics	4	KPI, Segments, Availability, Sources pages and series notes	
+na.kpi-office-vacancy.commercial-overall	4	KPI, Segments, Availability, Sources pages and series notes	
+na.kpi-transaction-volume.office	4	KPI, Segments, Availability, Sources pages and series notes	
+na.kpi-transaction-volume.retail	4	KPI, Segments, Availability, Sources pages and series notes	
+na.kpi-transaction-volume.logistics	4	KPI, Segments, Availability, Sources pages and series notes	
+na.construction.retail	4	KPI, Segments, Availability, Sources pages and series notes	
+nav.segments	2	chrome, buttons, tags, messages, shared notes	
+nav.availability	2	chrome, buttons, tags, messages, shared notes	
+nav.breadcrumb	2	chrome, buttons, tags, messages, shared notes	
+home.hero.more	3	Home copy	
+home.spark.label	2	chrome, buttons, tags, messages, shared notes	
+latest.change.pct	2	chrome, buttons, tags, messages, shared notes	
+latest.change.diff	2	chrome, buttons, tags, messages, shared notes	
+latest.unchanged	2	chrome, buttons, tags, messages, shared notes	
+home.segments	3	Home copy	
+segment.intro	4	KPI, Segments, Availability, Sources pages and series notes	
+segment.availability	4	KPI, Segments, Availability, Sources pages and series notes	
+availability.title	2	page name (nav and tab title)	
+availability.intro	4	KPI, Segments, Availability, Sources pages and series notes	
+availability.kpi	4	KPI, Segments, Availability, Sources pages and series notes	
+availability.available	4	KPI, Segments, Availability, Sources pages and series notes	
+nav.links	2	chrome, buttons, tags, messages, shared notes	
+nav.methodology	2	chrome, buttons, tags, messages, shared notes	
+methodology.title	2	page name (nav and tab title)	
+about.title	2	page name (nav and tab title)	
+terms.title	2	page name (nav and tab title)	
+privacy.title	2	page name (nav and tab title)	
+legal-notice.title	2	page name (nav and tab title)	
+links.title	2	page name (nav and tab title)	
+links.intro	6	Links	
+insight.back	2	chrome, buttons, tags, messages, shared notes	
+link.back	2	chrome, buttons, tags, messages, shared notes	
+links.heading	6	Links	
+links.cell.n	6	Links	
+links.scale.neg	6	Links	
+links.scale.zero	6	Links	
+links.scale.pos	6	Links	
+links.legend	6	Links	
+links.cell.not_shown	6	Links	
+indicator.bund-yield-10y	6	Links	
+indicator.euribor-3m	6	Links	
+indicator.loan-rate-nfc	6	Links	
+indicator.cpi	6	Links	
+indicator.gdp-real	6	Links	
+indicator.unemployment-rate	6	Links	
+indicator.construction-price	6	Links	
+indicator.oecd-confidence	6	Links	
+nav.insights	2	chrome, buttons, tags, messages, shared notes	
+insights.title	2	page name (nav and tab title)	
+insights.intro	5	Insights	
+insights.jump	5	Insights	
+insights.tone.more	5	Insights	
+insights.tone.legend	5	Insights	
+insights.empty	5	Insights	
+insight.template.spread	5	Insights	
+insight.verdict.higher	2	chrome, buttons, tags, messages, shared notes	
+insight.verdict.lower	2	chrome, buttons, tags, messages, shared notes	
+insight.verdict.in_line	2	chrome, buttons, tags, messages, shared notes	
+insight.tag.higher	2	chrome, buttons, tags, messages, shared notes	
+insight.tag.lower	2	chrome, buttons, tags, messages, shared notes	
+insight.tag.in_line	2	chrome, buttons, tags, messages, shared notes	
+insight.tone.better	2	chrome, buttons, tags, messages, shared notes	
+insight.tone.worse	2	chrome, buttons, tags, messages, shared notes	
+insight.average	2	chrome, buttons, tags, messages, shared notes	
+insight.chart.label	2	chrome, buttons, tags, messages, shared notes	
+insight.unit.spread	5	Insights	
+insight.not_shown	2	chrome, buttons, tags, messages, shared notes	
+insight.short_history	2	chrome, buttons, tags, messages, shared notes	
+insight.method	2	chrome, buttons, tags, messages, shared notes	
+insight.axis.rebased	5	Insights	
+insight.multiples.title	5	Insights	
+insight.multiples.label	5	Insights	
+insight.multiples.legend	5	Insights	
+insight.multiples.legend_dual	5	Insights	
+insight.note.near_zero_rates	5	Insights	
+insight.note.price_yield_coverage	5	Insights	
+insight.multiples.base_note	5	Insights	
+insight.axis.growth	5	Insights	
+insight.multiples.label_growth	5	Insights	
+insight.multiples.legend_growth	5	Insights	
+insight.multiples.legend_growth_real	5	Insights	
+insight.multiples.legend_growth_rate	5	Insights	
+insight.multiples.real_growth	5	Insights	
+insight.template.real-construction	5	Insights	
+insight.multiples.real_growth.real-construction	5	Insights	
+insight.index.title	5	Insights	
+insight.index.reading	5	Insights	
+insight.index.unit	5	Insights	
+insight.index.label	5	Insights	
+insight.index.legend	5	Insights	
+insight.index.base_note	5	Insights	
+insight.note.index_scope	5	Insights	
+insight.template.completions-permits	5	Insights	
+insight.unit.ratio	5	Insights	
+insight.shift.2	5	Insights	
+insight.shifted	5	Insights	
+kpi.insights.heading	4	KPI, Segments, Availability, Sources pages and series notes	
+insight.template.price-rent	5	Insights	
+insight.template.real-rents	5	Insights	
+insight.unit.growth	5	Insights	
+insight.template.office-employment	5	Insights	
+insight.unit.change	5	Insights	
+insight.context.legend	5	Insights	
+link.preset.mark	6	Links	
+links.lag.label	6	Links	
+links.lag.0	6	Links	
+links.lag.1	6	Links	
+links.lag.2	6	Links	
+links.cell.preset	6	Links	
+links.preset.note	6	Links	
+link.band.legend	6	Links	
+link.band.adjusted	6	Links	
+links.cell.noise	6	Links	
+links.noise.legend	6	Links	
+links.chance.note	6	Links	
+note.nominal.inflation	6	Links	
+note.nominal.gdp	6	Links	
+links.nominal.tag	6	Links	
+links.nominal.note	6	Links	
+links.row.kpi-price-index	6	Links	
+links.row.kpi-rent-index	6	Links	
+links.row.kpi-initial-yield	6	Links	
+links.row.kpi-office-vacancy	6	Links	
+links.row.kpi-transaction-volume	6	Links	
+links.row.construction	6	Links	
+links.rows.note	6	Links	
+links.cell.preset_other	6	Links	
+links.cell.preset_2	6	Links	
+insight.template.vacancy-completions	5	Insights	
+insight.unit.deviation	5	Insights	
+insight.template.vacancy-rents	5	Insights	
+insight.unit.gap	5	Insights	
+insight.axis.real_growth	5	Insights	
+insight.small.vacancy-rents.title	5	Insights	
+insight.small.vacancy-rents.label	5	Insights	
+insight.small.vacancy-rents.legend	5	Insights	
+insight.note.completions_scope	5	Insights	
+insight.note.completions_coverage	5	Insights	
+insight.note.rents_scope	5	Insights	
+insight.note.asking_rents	5	Insights	
+insight.context.legend_dual	5	Insights	
+kpi.price-index.definition	4	KPI, Segments, Availability, Sources pages and series notes	
+kpi.rent-index.definition	4	KPI, Segments, Availability, Sources pages and series notes	
+kpi.initial-yield.definition	4	KPI, Segments, Availability, Sources pages and series notes	
+kpi.office-vacancy.definition	4	KPI, Segments, Availability, Sources pages and series notes	
+kpi.transaction-volume.definition	4	KPI, Segments, Availability, Sources pages and series notes	
+kpi.construction.definition	4	KPI, Segments, Availability, Sources pages and series notes	
