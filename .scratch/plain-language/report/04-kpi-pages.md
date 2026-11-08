@@ -50,7 +50,7 @@ Original = `21da6f0`. Numbers, keys and identifiers unchanged.
 |---|---|---|---|
 | bund-yield-10y.unit | % p.a. | % per year |  |
 | euribor-3m.unit | % p.a. | % per year |  |
-| loan-rate-nfc.title | New-business loan rate, non-financial corporations, over EUR 1m, fixation over 5 years | Interest rate on new loans to non-financial corporations, over EUR 1 million, fixed for over 5 years | "New-business" became "on new loans"; "fixation" became "fixed for over". Same loans, same bands (over EUR 1 million, over 5 years). |
+| loan-rate-nfc.title | New-business loan rate, non-financial corporations, over EUR 1m, fixation over 5 years | Interest rate on new loans to non-financial corporations, over EUR 1 million, fixed for over 5 years | "New-business" became "on new loans"; "fixation" became "initial rate fixed for". Same loans, same bands (over EUR 1 million, over 5 years). |
 | loan-rate-nfc.unit | % p.a. | % per year |  |
 | cpi.title | Consumer price index, Germany | Consumer price index (CPI), Germany |  |
 | gdp-real.title | Real GDP, Germany | Real GDP (gross domestic product, adjusted for inflation), Germany | Explains GDP and "real" in brackets. |
@@ -62,7 +62,7 @@ Original = `21da6f0`. Numbers, keys and identifiers unchanged.
 |---|---|---|---|
 | bund-yield-10y.unit | % p. a. | % pro Jahr |  |
 | euribor-3m.unit | % p. a. | % pro Jahr |  |
-| loan-rate-nfc.title | Kreditzins Neugeschäft, nichtfinanzielle Kapitalgesellschaften, über 1 Mio. EUR, Zinsbindung über 5 Jahre | Zins auf neue Kredite an nichtfinanzielle Kapitalgesellschaften, über 1 Mio. EUR, Zinsbindung über 5 Jahre | "New-business" became "on new loans"; "fixation" became "fixed for over". Same loans, same bands (over EUR 1 million, over 5 years). |
+| loan-rate-nfc.title | Kreditzins Neugeschäft, nichtfinanzielle Kapitalgesellschaften, über 1 Mio. EUR, Zinsbindung über 5 Jahre | Zins auf neue Kredite an nichtfinanzielle Kapitalgesellschaften, über 1 Mio. EUR, Zinsbindung über 5 Jahre | "New-business" became "on new loans"; "fixation" became "initial rate fixed for". Same loans, same bands (over EUR 1 million, over 5 years). |
 | loan-rate-nfc.unit | % p. a. | % pro Jahr |  |
 | gdp-real.title | Reales Bruttoinlandsprodukt, Deutschland | Reales Bruttoinlandsprodukt (BIP, inflationsbereinigt), Deutschland | Explains GDP and "real" in brackets. |
 | office-employment.title | Erwerbstätige: Information und Kommunikation, Finanzierung, Immobilien und Unternehmensdienstleistungen (Abschnitte J, K-N), Deutschland | Erwerbstätige: Information und Kommunikation, Finanzierung, Immobilien und Unternehmensdienstleistungen (Wirtschaftsabschnitte J und K bis N), Deutschland | "Persons in employment" became "People in work"; "K-N" became "K to N" and the German now says Wirtschaftsabschnitte. WZ 2008 is left for Methodology (ticket 7) so no new year appears on the pages. |

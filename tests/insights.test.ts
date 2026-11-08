@@ -117,11 +117,11 @@ describe('Insight J on real data', () => {
     expect(level).toMatch(/<span class="num">\+3\d\.\d<\/span> <span class="unit">percent since 1992<\/span>/);
     expect(level).toMatch(/Real construction prices changed by \+3\d\.\d% between 1992 and 2025, or \+0\.9% a year\./);
     expect(level).toContain('index, 1992 = 100');
-    expect(level).toContain('Index set to 1992 = 100; the level depends on this choice.');
-    expect(level).toContain('Construction prices are for office buildings; CPI is for a household basket.');
+    expect(level).toContain('We set the index to 1992 = 100. The level depends on this choice.');
+    expect(level).toContain('Construction prices are for office buildings. CPI (the consumer price index) is for a basket of goods that households buy.');
     expect(level).not.toMatch(/average|tone-/);
     expect(h.indexOf('Real construction cost index')).toBeLessThan(h.indexOf('Real construction prices changed by 1'));
-    expect(yearly).toMatch(/Real construction prices changed by 1\.3% in 2025, in line with the 1992-2025 average of 0\.9%\./);
+    expect(yearly).toMatch(/Real construction prices changed by 1\.3% in 2025\. This is in line with the 1992-2025 average of 0\.9%\./);
     expect(yearly).toContain('Real growth = (1 + construction price growth) / (1 + inflation) − 1, so it differs slightly from the gap between the two lines.');
     expect(yearly).toContain('percent');
     expect(h).not.toContain('class="insight tone-'); // plain plate
@@ -130,8 +130,8 @@ describe('Insight J on real data', () => {
     const h = renderInsight(j().entry, j().result, j().series, 'de');
     expect(h).toContain('Realer Baukostenindex');
     expect(h).toContain('Prozent seit 1992');
-    expect(h).toContain('Index auf 1992 = 100 gesetzt; das Niveau hängt von dieser Wahl ab.');
-    expect(h).toContain('Die Baupreise gelten für Bürogebäude, der Verbraucherpreisindex für einen Haushaltswarenkorb.');
+    expect(h).toContain('Wir setzen den Index auf 1992 = 100. Das Niveau hängt von dieser Wahl ab.');
+    expect(h).toContain('Die Baupreise gelten für Bürogebäude. Der Verbraucherpreisindex gilt für einen Warenkorb privater Haushalte.');
     expect(h).toMatch(/Die realen Baupreise haben sich 2025 um 1,3 % verändert/);
     expect(h).toContain('Reales Wachstum = (1 + Baupreiswachstum) / (1 + Inflation) − 1');
   });
@@ -241,7 +241,7 @@ describe('Spread Insights F, E, D and I (cleared)', () => {
     spans(x.result, from, n);
     const h = renderInsight(x.entry, x.result, x.series, 'en');
     expect(h).toContain(`id="${key}"`);
-    expect(h).toMatch(/The latest spread of [^.]+ is -?[\d.]+ points, (higher than|lower than|in line with) the/);
+    expect(h).toMatch(/The latest spread of [^.]+ is -?[\d.]+ percentage points\. This is (higher than|lower than|in line with) the/);
   });
 });
 
@@ -269,7 +269,7 @@ describe('Insights G and B (cleared)', () => {
     expect(g.entry.series.map((s) => s.key)).toEqual(['price-index-de-office-a', 'rent-index-de-office-a']);
     spans(g.result, '2013', 13);
     if (g.result.shown) expect(g.result.points.find((p) => p.period === '2015')!.value).toBeCloseTo(1, 9);
-    expect(renderInsight(g.entry, g.result, g.series, 'en')).toMatch(/The price index stands at [\d.]+ times the rent index, (higher than|lower than|in line with) the 2013-\d{4} average of [\d.]+\./);
+    expect(renderInsight(g.entry, g.result, g.series, 'en')).toMatch(/The price index stands at [\d.]+ times the rent index\. This is (higher than|lower than|in line with) the 2013-\d{4} average of [\d.]+\./);
   });
   it('B: real office rent growth, deflated as a flow by the annual-average CPI, 2005 to 2025', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
@@ -278,14 +278,14 @@ describe('Insights G and B (cleared)', () => {
     expect(b.entry.series.map((s) => s.key)).toEqual(['rent-index-de-office-a', 'cpi']);
     spans(b.result, '2005', 21);
     const h = renderInsight(b.entry, b.result, b.series, 'en');
-    expect(h).toMatch(/Real office rents changed by -?[\d.]+% in \d{4}, (higher than|lower than|in line with) the 2005-\d{4} average of -?[\d.]+%\./);
+    expect(h).toMatch(/Real office rents changed by -?[\d.]+% in \d{4}\. This is (higher than|lower than|in line with) the 2005-\d{4} average of -?[\d.]+%\./);
     expect(h.match(/own calculation/g)).toHaveLength(2);
   });
   it('the DE sentences', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
     const [g, b] = ['g', 'b'].map((k) => insightsPage().find((i) => i.entry.key === k)!);
-    expect(renderInsight(g.entry, g.result, g.series, 'de')).toMatch(/Der Preisindex liegt beim [\d,]+-Fachen des Mietindex, (höher als der|niedriger als der|im Einklang mit dem) 2013-\d{4}-Durchschnitt von [\d,]+\./);
-    expect(renderInsight(b.entry, b.result, b.series, 'de')).toMatch(/Die realen Büromieten haben sich \d{4} um -?[\d,]+ % verändert, (höher als der|niedriger als der|im Einklang mit dem) 2005-\d{4}-Durchschnitt von -?[\d,]+ %\./);
+    expect(renderInsight(g.entry, g.result, g.series, 'de')).toMatch(/Der Preisindex liegt beim [\d,]+-Fachen des Mietindex\. Das ist (höher als der|niedriger als der|im Einklang mit dem) 2013-\d{4}-Durchschnitt von [\d,]+\./);
+    expect(renderInsight(b.entry, b.result, b.series, 'de')).toMatch(/Die realen Büromieten haben sich \d{4} um -?[\d,]+ % verändert\. Das ist (höher als der|niedriger als der|im Einklang mit dem) 2005-\d{4}-Durchschnitt von -?[\d,]+ %\./);
   });
 });
 
@@ -298,9 +298,9 @@ describe('Insight M on real data (cleared)', () => {
     // J has no value before 2000 or for 2025 yet, so the shared period is 2001 to 2024.
     expect(m.result).toMatchObject({ shown: true, from: '2001', to: '2024', n: 24 });
     const h = renderInsight(m.entry, m.result, m.series, 'en');
-    expect(h).toMatch(/Office vacancy changed by -?[\d.]+ points in \d{4} while office employment grew -?[\d.]+%; the 2001-\d{4} average vacancy change is -?[\d.]+ points\./);
-    expect(h).toMatch(/Ochre line: year-on-year growth of /);
-    expect(renderInsight(m.entry, m.result, m.series, 'de')).toMatch(/Der Büroleerstand hat sich \d{4} um -?[\d,]+ Punkte verändert, während die Bürobeschäftigung um -?[\d,]+ % gewachsen ist/);
+    expect(h).toMatch(/Office vacancy changed by -?[\d.]+ percentage points in \d{4}, while office employment grew -?[\d.]+%\. The 2001-\d{4} average vacancy change is -?[\d.]+ percentage points\./);
+    expect(h).toMatch(/Ochre line: growth of .+ from the year before/);
+    expect(renderInsight(m.entry, m.result, m.series, 'de')).toMatch(/Der Büroleerstand hat sich \d{4} um -?[\d,]+ Prozentpunkte verändert, während die Bürobeschäftigung um -?[\d,]+ % gewachsen ist/);
   });
 });
 
@@ -315,12 +315,12 @@ describe('Insight rendering', () => {
     expect(h).toContain('Construction costs vs inflation');
     expect(h).toContain('2.5');
     expect(h).toContain('higher than the average');
-    expect(h).toContain('The latest spread of construction price growth over CPI inflation is 2.5 points, higher than the 2020-2022 average of 1.7 points.');
+    expect(h).toContain('The latest spread of construction price growth over CPI inflation is 2.5 percentage points. This is higher than the 2020-2022 average of 1.7 percentage points.');
     expect(h).toContain('<svg');
   });
   it('DE: decimal comma and the German reading sentence', () => {
     const h = renderInsight(j, shown, series, 'de');
-    expect(h).toContain('Der aktuelle Abstand des Baupreisanstiegs zur Inflationsrate beträgt 2,5 Punkte, höher als der 2020-2022-Durchschnitt von 1,7 Punkten.');
+    expect(h).toContain('Der aktuelle Abstand des Baupreisanstiegs zur Inflationsrate beträgt 2,5 Prozentpunkte. Das ist höher als der 2020-2022-Durchschnitt von 1,7 Prozentpunkten.');
   });
   it('a verdict of in line reads "in line with"', () => {
     expect(renderInsight(j, { ...shown, verdict: 'in_line' } as InsightResult, series, 'en')).toContain('in line with the 2020-2022 average');
@@ -360,15 +360,15 @@ describe('Insight rendering', () => {
     it('EN: two decimals, "times", and the exact reading', () => {
       const h = renderInsight(c, ratio, cs, 'en');
       expect(h).toContain('0.83');
-      expect(h).toContain('Completions were 0.83 times the permits issued two years earlier, lower than the 2020-2022 average of 0.80.');
+      expect(h).toContain('Completions were 0.83 times the permits issued two years earlier. This is lower than the 2020-2022 average of 0.80.');
     });
     it('DE: decimal comma and the German reading', () => {
-      expect(renderInsight(c, ratio, cs, 'de')).toContain('Die Fertigstellungen entsprachen dem 0,83-Fachen der zwei Jahre zuvor erteilten Baugenehmigungen, niedriger als der 2020-2022-Durchschnitt von 0,80.');
+      expect(renderInsight(c, ratio, cs, 'de')).toContain('Die Fertigstellungen entsprachen dem 0,83-Fachen der zwei Jahre zuvor erteilten Baugenehmigungen. Das ist niedriger als der 2020-2022-Durchschnitt von 0,80.');
     });
     it('the shifted series is named in the legend and the chart label', () => {
       const h = renderInsight(c, ratio, cs, 'en');
       expect(h).toContain(`Ochre line: ${cs[1].title.en}, two years earlier.`);
-      expect(h).toContain(`${cs[0].title.en} and ${cs[1].title.en}, two years earlier, rebased`);
+      expect(h).toContain(`${cs[0].title.en} and ${cs[1].title.en}, two years earlier, set to 100 in the base year`);
     });
   });
 });
@@ -405,7 +405,7 @@ describe('Growth Insights draw year-on-year growth lines (ticket 5)', () => {
     expect(lines.growth).toBe(true);
     expect(lines.base).toBeUndefined();
     expect(lines.kpi.at(-1)!.value - lines.reference.at(-1)!.value).toBeCloseTo(latest.value, 9);
-    expect(renderInsight(x.entry, x.result, x.series, 'en')).toContain('year-on-year change, %');
+    expect(renderInsight(x.entry, x.result, x.series, 'en')).toContain('change from the year before, %');
   });
   it('b: nominal rent growth against CPI inflation, within a few tenths of the real growth headline, with the note in both languages', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
@@ -419,8 +419,8 @@ describe('Growth Insights draw year-on-year growth lines (ticket 5)', () => {
     expect(renderInsight(d.entry, d.result, d.series, 'en')).not.toContain('Real growth =');
     // a real growth headline is not the gap between the lines, so only the spread Insights call the gap the headline number
     const j = insightsPage().find((i) => i.entry.key === 'j')!;
-    for (const x of [b, j]) for (const lang of ['en', 'de'] as const) expect(renderInsight(x.entry, x.result, x.series, lang)).not.toMatch(/the gap between the lines in the latest year is the headline number|der Abstand der Linien im letzten Jahr ist die große Zahl/);
-    expect(renderInsight(d.entry, d.result, d.series, 'en')).toContain('the gap between the lines in the latest year is the headline number');
+    for (const x of [b, j]) for (const lang of ['en', 'de'] as const) expect(renderInsight(x.entry, x.result, x.series, lang)).not.toMatch(/gap between the lines in the latest year is the big number|Abstand der Linien im letzten Jahr ist die große Zahl/);
+    expect(renderInsight(d.entry, d.result, d.series, 'en')).toContain('The gap between the lines in the latest year is the big number');
   });
   it('no small chart of B, D, I or J is rebased; the remaining rebased level charts are G and C (and M\'s employment line)', () => {
     for (const k of ['b', 'd', 'i', 'j']) { const x = insightsPage().find((i) => i.entry.key === k)!; if (x.result.shown) expect(x.result.lines.base).toBeUndefined(); }
@@ -436,9 +436,9 @@ describe('Base-year note on rebased level charts (ticket 6)', () => {
     for (const x of insightsPage()) {
       if (!x.result.shown) continue;
       const en = renderInsight(x.entry, x.result, x.series, 'en'), de = renderInsight(x.entry, x.result, x.series, 'de');
-      const has = en.includes('Both series set to 2015 = 100; the size of the gap depends on this choice.');
-      if (has) { withNote.push(x.entry.key); expect(de).toContain('Beide Reihen auf 2015 = 100 gesetzt; die Größe des Abstands hängt von dieser Wahl ab.'); }
-      else expect(de).not.toContain('Beide Reihen auf');
+      const has = en.includes('We set both series to 2015 = 100. The size of the gap depends on this choice.');
+      if (has) { withNote.push(x.entry.key); expect(de).toContain('Wir setzen beide Reihen auf 2015 = 100. Die Größe des Abstands hängt von dieser Wahl ab.'); }
+      else expect(de).not.toContain('Wir setzen beide Reihen auf');
       const rebasedLevels = !!x.result.lines.base && !x.result.lines.growth && x.result.lines.rebased?.kpi !== false && x.result.lines.rebased?.reference !== false;
       expect(has).toBe(rebasedLevels);
     }
@@ -448,7 +448,7 @@ describe('Base-year note on rebased level charts (ticket 6)', () => {
 
 describe('Insight notes (tickets 7 and 8)', () => {
   const NEAR_ZERO = 'Interest rates were near zero until 2022, so the average over this period may not reflect normal conditions.';
-  const COVERAGE = 'Prices and rents are vdp series covering offices across Germany. The initial yields elsewhere on this site are bulwiengesa series for office and retail core properties in the 7 major cities, so they are not directly comparable.';
+  const COVERAGE = 'Prices and rents are vdp series for offices across Germany. The initial yields elsewhere on this site are bulwiengesa series for office and retail core properties in the 7 major cities. So they are not directly comparable.';
   it('near-zero note on F and G only, coverage note on G only, in both languages', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
     for (const x of insightsPage()) {

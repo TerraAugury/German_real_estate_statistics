@@ -150,12 +150,12 @@ indicator.construction-price: Baupreisindex
 indicator.oecd-confidence: OECD-Geschäftsklima
 nav.insights: Einblicke
 insights.title: Einblicke
-insights.intro: "Ein Einblick stellt mehrere Reihen über einen genannten Zeitraum auf einer Achse dar, mit einer festen Lesehilfe in einem Satz. Er beschreibt, was die Linien zeigen; er belegt keine Ursache und ist keine Prognose."
+insights.intro: "Ein Einblick zeigt mehrere Reihen über einen genannten Zeitraum auf einer Achse. Dazu gibt es eine feste Lesehilfe in einem Satz. Sie beschreibt, was die Linien zeigen. Sie belegt keine Ursache und ist keine Prognose. Abstände zwischen zwei Prozentwerten stehen in Prozentpunkten: von 4 % auf 5 % ist 1 Prozentpunkt."
 insights.jump: Einblicke auf dieser Seite
 insights.tone.more: So werden besser und schlechter beurteilt
-insights.tone.legend: "Hellgrün heißt: für Anleger in Büroimmobilien besser; hellrosa: schlechter. Eine ungefärbte Fläche liegt im Einklang mit dem Durchschnitt, oder keine Seite ist besser. Screenreader erhalten zusätzlich die Wörter „besser“ und „schlechter“."
-insights.empty: "Noch sind keine Einblicke veröffentlicht; die Lizenzen für die zugrunde liegenden Daten werden geklärt."
-insight.template.spread: "Der aktuelle {measure} beträgt {latest} Punkte, {verdict} {from}-{to}-Durchschnitt von {mean} Punkten."
+insights.tone.legend: "Hellgrün heißt: besser für Anleger in Büroimmobilien. Hellrosa heißt: schlechter. Eine Fläche ohne Farbe heißt: im Einklang mit dem Durchschnitt, oder keine Seite ist besser. Screenreader lesen zusätzlich die Wörter „besser“ und „schlechter“ vor."
+insights.empty: "Noch sind keine Einblicke veröffentlicht. Wir klären noch die Lizenzen für die zugrunde liegenden Daten."
+insight.template.spread: "Der aktuelle {measure} beträgt {latest} Prozentpunkte. Das ist {verdict} {from}-{to}-Durchschnitt von {mean} Prozentpunkten."
 insight.verdict.higher: höher als der
 insight.verdict.lower: niedriger als der
 insight.verdict.in_line: im Einklang mit dem
@@ -172,36 +172,36 @@ insight.short_history: "Kurze Zeitreihe ({n} Jahre, {from} bis {to}): der Durchs
 insight.method: So wird gerechnet
 insight.axis.rebased: "Index, {year} = 100"
 insight.multiples.title: "{kpi} im Vergleich zu {reference}"
-insight.multiples.label: "{kpi} und {reference}, umbasiert"
+insight.multiples.label: "{kpi} und {reference}, im Basisjahr auf 100 gesetzt"
 insight.multiples.legend: "Blaue Linie: {kpi}. Ockerfarbene Linie: {reference}. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt."
 insight.multiples.legend_dual: "Blaue Linie, linke Achse: {kpi}. Ockerfarbene Linie, rechte Achse: {reference}. Die Achsen haben unterschiedliche Einheiten, daher werden die Linien nicht nach ihrer Höhe verglichen."
 insight.note.near_zero_rates: "Die Zinsen lagen bis 2022 nahe null, daher spiegelt der Durchschnitt über diesen Zeitraum womöglich nicht die normalen Verhältnisse wider."
-insight.note.price_yield_coverage: "Preise und Mieten sind vdp-Reihen für Büros in ganz Deutschland. Die Anfangsrenditen an anderer Stelle dieser Seite sind bulwiengesa-Reihen für Core-Immobilien (Büro und Einzelhandel zusammen) in den 7 Großstädten und daher nicht direkt vergleichbar."
-insight.multiples.base_note: "Beide Reihen auf {year} = 100 gesetzt; die Größe des Abstands hängt von dieser Wahl ab."
+insight.note.price_yield_coverage: "Preise und Mieten sind vdp-Reihen für Büros in ganz Deutschland. Die Anfangsrenditen an anderer Stelle dieser Seite sind bulwiengesa-Reihen für Core-Immobilien (Büro und Einzelhandel zusammen) in den 7 Großstädten. Sie sind daher nicht direkt vergleichbar."
+insight.multiples.base_note: "Wir setzen beide Reihen auf {year} = 100. Die Größe des Abstands hängt von dieser Wahl ab."
 insight.axis.growth: "Veränderung gegenüber dem Vorjahr, %"
 insight.multiples.label_growth: "{kpi} und {reference}, Veränderung gegenüber dem Vorjahr"
-insight.multiples.legend_growth: "Blaue Linie: Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt; der Abstand der Linien im letzten Jahr ist die große Zahl."
-insight.multiples.legend_growth_real: "Blaue Linie: preisbereinigte Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt; der Abstand der Linien im letzten Jahr ist die große Zahl."
+insight.multiples.legend_growth: "Blaue Linie: Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt. Der Abstand der Linien im letzten Jahr ist die große Zahl."
+insight.multiples.legend_growth_real: "Blaue Linie: preisbereinigte Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt. Der Abstand der Linien im letzten Jahr ist die große Zahl."
 insight.multiples.legend_growth_rate: "Blaue Linie: Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt."
 insight.multiples.real_growth: "Reales Wachstum = (1 + Mietwachstum) / (1 + Inflation) − 1, daher weicht es leicht vom Abstand der beiden Linien ab."
-insight.template.real-construction: "Die realen Baupreise haben sich {to} um {latest} % verändert, {verdict} {from}-{to}-Durchschnitt von {mean} %."
+insight.template.real-construction: "Die realen Baupreise haben sich {to} um {latest} % verändert. Das ist {verdict} {from}-{to}-Durchschnitt von {mean} %."
 insight.multiples.real_growth.real-construction: "Reales Wachstum = (1 + Baupreiswachstum) / (1 + Inflation) − 1, daher weicht es leicht vom Abstand der beiden Linien ab."
 insight.index.title: Realer Baukostenindex
 insight.index.reading: "Die realen Baupreise haben sich zwischen {from} und {to} um {total} % verändert, das sind {annual} % pro Jahr."
 insight.index.unit: "Prozent seit {from}"
 insight.index.label: "Realer Baukostenindex, {year} = 100, im Zeitverlauf"
-insight.index.legend: "Blaue Linie: der Baupreisindex geteilt durch den Verbraucherpreisindex, beide auf {year} = 100 gesetzt und Jahr für Jahr aufgezinst. Die gestrichelte Linie markiert 100, den Stand von {year}."
-insight.index.base_note: "Index auf {year} = 100 gesetzt; das Niveau hängt von dieser Wahl ab."
-insight.note.index_scope: "Die Baupreise gelten für Bürogebäude, der Verbraucherpreisindex für einen Haushaltswarenkorb."
-insight.template.completions-permits: "Die Fertigstellungen entsprachen dem {latest}-Fachen der zwei Jahre zuvor erteilten Baugenehmigungen, {verdict} {from}-{to}-Durchschnitt von {mean}."
+insight.index.legend: "Blaue Linie: der Baupreisindex geteilt durch den Verbraucherpreisindex. Beide sind auf {year} = 100 gesetzt und Jahr für Jahr aufgezinst (die Veränderung jedes Jahres baut auf dem Vorjahr auf). Die gestrichelte Linie markiert 100, den Stand von {year}."
+insight.index.base_note: "Wir setzen den Index auf {year} = 100. Das Niveau hängt von dieser Wahl ab."
+insight.note.index_scope: "Die Baupreise gelten für Bürogebäude. Der Verbraucherpreisindex gilt für einen Warenkorb privater Haushalte."
+insight.template.completions-permits: "Die Fertigstellungen entsprachen dem {latest}-Fachen der zwei Jahre zuvor erteilten Baugenehmigungen. Das ist {verdict} {from}-{to}-Durchschnitt von {mean}."
 insight.unit.ratio: mal
 insight.shift.2: zwei Jahre zuvor
 insight.shifted: "{title}, {shift}"
 kpi.insights.heading: "Einblicke, die diese Kennzahl nutzen"
-insight.template.price-rent: "Der Preisindex liegt beim {latest}-Fachen des Mietindex, {verdict} {from}-{to}-Durchschnitt von {mean}."
-insight.template.real-rents: "Die realen Büromieten haben sich {to} um {latest} % verändert, {verdict} {from}-{to}-Durchschnitt von {mean} %."
+insight.template.price-rent: "Der Preisindex liegt beim {latest}-Fachen des Mietindex. Das ist {verdict} {from}-{to}-Durchschnitt von {mean}."
+insight.template.real-rents: "Die realen Büromieten haben sich {to} um {latest} % verändert. Das ist {verdict} {from}-{to}-Durchschnitt von {mean} %."
 insight.unit.growth: Prozent
-insight.template.office-employment: "Der Büroleerstand hat sich {to} um {latest} Punkte verändert, während die Bürobeschäftigung um {emp} % gewachsen ist; die durchschnittliche Veränderung des Leerstands {from}-{to} beträgt {mean} Punkte."
+insight.template.office-employment: "Der Büroleerstand hat sich {to} um {latest} Prozentpunkte verändert, während die Bürobeschäftigung um {emp} % gewachsen ist. Die durchschnittliche Veränderung des Leerstands {from}-{to} beträgt {mean} Prozentpunkte."
 insight.unit.change: Prozentpunkte
 insight.context.legend: "Blaue Linie: {measure}, in Prozentpunkten. Ockerfarbene Linie: Wachstum von {title} gegenüber dem Vorjahr, in Prozent. Beide sind auf einer Achse dargestellt."
 link.preset.mark: "vorab gewählter Versatz"
@@ -229,9 +229,9 @@ links.row.construction: "Büro · Deutschland"
 links.rows.note: "Die Zeilen decken unterschiedliche Segmente und Gebiete ab; jeder Indikator ist bundesweit."
 links.cell.preset_other: "vorab gewählter Versatz ist N-1"
 links.cell.preset_2: "Auf N-2 gesetzt"
-insight.template.vacancy-completions: "Die Büro-Fertigstellungen weichen {to} um {latest} % von ihrem Durchschnitt {from}-{to} ab und liegen damit {verdict} Durchschnitt."
+insight.template.vacancy-completions: "Die Büro-Fertigstellungen weichen {to} um {latest} % von ihrem Durchschnitt {from}-{to} ab. Sie liegen damit {verdict} Durchschnitt."
 insight.unit.deviation: Prozent
-insight.template.vacancy-rents: "Der Büroleerstand weicht {to} um {latest} Punkte von seinem Durchschnitt {from}-{to} ab, {verdict} Durchschnitt."
+insight.template.vacancy-rents: "Der Büroleerstand weicht {to} um {latest} Prozentpunkte von seinem Durchschnitt {from}-{to} ab. Er liegt {verdict} Durchschnitt."
 insight.unit.gap: Prozentpunkte
 insight.axis.real_growth: "reale Veränderung gegenüber dem Vorjahr, %"
 insight.small.vacancy-rents.title: "{kpi} und reales Mietwachstum"
@@ -240,7 +240,7 @@ insight.small.vacancy-rents.legend: "Blaue Linie, linke Achse: {kpi}, in %. Ocke
 insight.note.completions_scope: "Die Fertigstellungen gelten für ganz Deutschland, der Leerstand für 127 Städte."
 insight.note.completions_coverage: "Die Fertigstellungen umfassen öffentliche und eigengenutzte Gebäude und schließen Sanierungen und Umnutzungen aus."
 insight.note.rents_scope: "Die Mieten gelten für ganz Deutschland, der Leerstand für 127 Städte."
-insight.note.asking_rents: "Der Mietindex misst Angebotsmieten bei Neuvermietungen. Anreize wie mietfreie Monate erfasst er nicht, daher können die tatsächlich gezahlten Mieten schwächer sein als gezeigt."
+insight.note.asking_rents: "Der Mietindex misst Angebotsmieten (die Mieten, die Vermieter verlangen) bei Neuvermietungen. Anreize wie mietfreie Monate enthält er nicht. Daher können die tatsächlich gezahlten Mieten niedriger sein als gezeigt."
 insight.context.legend_dual: "Blaue Linie, rechte Achse: {measure}, in Prozentpunkten. Ockerfarbene Linie, linke Achse: Wachstum von {title} gegenüber dem Vorjahr, in Prozent. Die Achsen haben unterschiedliche Einheiten, daher werden die Linien nicht nach ihrer Höhe verglichen."
 kpi.price-index.definition: "Wie sich die Preise von Gewerbeimmobilien im Allgemeinen zu den Preisen in einem Basisjahr verhalten. Das Basisjahr ist auf 100 gesetzt."
 kpi.rent-index.definition: "Die Mieten, die in neuen Mietverträgen vereinbart werden. Sie zeigen die aktuelle Marktmiete, nicht die Mieten in älteren Verträgen."

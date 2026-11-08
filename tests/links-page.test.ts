@@ -53,7 +53,7 @@ describe.skipIf(built.length === 0)('Links page', () => {
     const meth = readFileSync(`content/${l}/methodology.md`, 'utf8');
     expect(meth).toContain(l === 'en' ? 'initial rate fixation of over 5 years' : 'Zinsbindung von über 5 Jahren');
     const panel = readFileSync(`dist/${l}/${slug('kpi-initial-yield', l as 'en')}/index.html`, 'utf8');
-    expect(panel).toContain(l === 'en' ? 'fixation over 5 years' : 'Zinsbindung über 5 Jahre');
+    expect(panel).toContain(l === 'en' ? 'initial rate fixed for over 5 years' : 'Zinsbindung über 5 Jahre');
   });
   it.each(built)('%s: the legend names the matrix colours, not the Insights colours (ticket 17)', (l) => {
     const text = [...page(l as 'en').querySelectorAll('p.note')].map((p) => p.textContent).join(' ');

@@ -970,7 +970,7 @@
   attribution: *bbk_attribution
   provisional: false
   cleared: *permission
-  title: { en: "Interest rate on new loans to non-financial corporations, over EUR 1 million, fixed for over 5 years", de: "Zins auf neue Kredite an nichtfinanzielle Kapitalgesellschaften, über 1 Mio. EUR, Zinsbindung über 5 Jahre" }
+  title: { en: "Interest rate on new loans to non-financial corporations, over EUR 1 million, initial rate fixed for over 5 years", de: "Zins auf neue Kredite an nichtfinanzielle Kapitalgesellschaften, über 1 Mio. EUR, Zinsbindung über 5 Jahre" }
   unit: { en: "% per year", de: "% pro Jahr" }
   frequency: monthly
   change: diff
