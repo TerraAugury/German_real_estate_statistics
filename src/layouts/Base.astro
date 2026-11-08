@@ -76,6 +76,12 @@ const inKpis = KPIS.some((k) => k.page === page);
       figure { background: var(--plate); border: 1px solid var(--rule); border-radius: 6px; padding: 1.5rem 2rem 1.25rem; margin: 0 0 2rem; }
       figure h2, figure h3 { margin: 0 0 1rem; font-size: var(--step-1); }
       @media (max-width: 560px) { figure { padding: 1.25rem 1rem 1rem; } }
+      .method-fig { margin: 1rem 0 1.5rem; }
+      .method-fig figcaption { margin-top: .75rem; font-size: 15px; color: var(--muted); }
+      .method-fig .note { font-size: 14px; }
+      .method-fig .insight-grid { margin-bottom: 0; }
+      table.matrix.mini td.lagcell a { display: block; }
+      table.matrix.mini { width: 100%; }
       figure svg { display: block; max-width: 100%; height: auto; overflow: visible; }
       /* Wide (720) or narrow (320) chart by the width of its own box, so 13 px axis text never shows below 11 px.
          The narrow one stretches up to 28rem, which keeps its text under about 18 px. */

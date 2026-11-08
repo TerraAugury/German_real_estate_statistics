@@ -171,11 +171,11 @@ export function lagChart(lags: { lag: number; rho: number | null }[], strongest:
     marks: [
       // The noise band (ticket 11): a light strip around zero, ±2/√(n−1) with each lag's own n.
       Plot.barY(labels.bands ?? [], { x: 'lag', y1: (d) => -d.band, y2: (d) => d.band, fill: MUTED, fillOpacity: 0.18 }),
-      Plot.barY(bars, { x: 'lag', y: 'rho', fill: (d) => (d.lag === strongest ? STRONG : BAR), inset: narrow ? 3 : 8, title: (d) => `${signed(d.lag)}: ${fmt(lang, d.rho, { maximumFractionDigits: 2 })}` }),
+      Plot.barY(bars, { x: 'lag', y: 'rho', fill: (d) => (d.lag === strongest ? STRONG : BAR), insetLeft: narrow ? 3 : 8, insetRight: narrow ? 3 : 8, title: (d) => `${signed(d.lag)}: ${fmt(lang, d.rho, { maximumFractionDigits: 2 })}` }),
       Plot.text(top, { x: 'lag', y: 'rho', text: (d) => `${fmt(lang, d.rho, { maximumFractionDigits: 2 })} ${labels.mark}`, dy: (top[0]?.rho ?? 0) < 0 ? 14 : -10, textAnchor: anchor, dx: anchor === 'start' ? -6 : anchor === 'end' ? 6 : 0, fill: INK, fontWeight: 600 }),
       // The pre-set lag (ticket 10): a dashed outline and a label at the base of the bar, apart from the "strongest" label at its tip.
       ...(labels.preset ? [
-        Plot.barY(bars.filter((l) => l.lag === labels.preset!.lag), { x: 'lag', y: 'rho', fill: 'none', stroke: INK, strokeDasharray: '4 3', strokeWidth: 1.5, inset: narrow ? 3 : 8 }),
+        Plot.barY(bars.filter((l) => l.lag === labels.preset!.lag), { x: 'lag', y: 'rho', fill: 'none', stroke: INK, strokeDasharray: '4 3', strokeWidth: 1.5, insetLeft: narrow ? 3 : 8, insetRight: narrow ? 3 : 8 }),
         Plot.text(bars.filter((l) => l.lag === labels.preset!.lag), { x: 'lag', y: 0, text: () => labels.preset!.label, dy: (bars.find((l) => l.lag === labels.preset!.lag)?.rho ?? 0) < 0 ? -8 : 14, fill: INK, fontSize: 12 }),
       ] : []),
       Plot.ruleY([0], { stroke: MUTED }),

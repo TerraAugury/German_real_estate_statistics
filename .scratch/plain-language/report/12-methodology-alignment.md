@@ -24,3 +24,25 @@ Shorter sentences, everyday words ("compare" for "set against", "chance" for "co
 - The German front matter hash is stale, so `page:methodology` is unreviewed until a human records the review. `na.source` is also unreviewed.
 - The page says nothing about what KPIs, Segments, City classes or Länder are; they are explained on their own pages. Not added.
 - "Spread" is still the word in Insight titles; the prose says "gap".
+
+## Visual examples (follow-up)
+Twelve figures on the Methodology page (EN, DE), drawn at build time from the real data with the site's own chart code (`src/lib/method-figures.ts`), so they update with the data. A line `{{figure:<name>|<caption>}}` in the Markdown marks the place; the page swaps it for the figure. A figure that cannot be drawn (for example an Insight hidden in production) leaves nothing behind.
+
+| Point | Figure |
+|---|---|
+| Two series on one chart | initial yield (7 major cities) against the 10-year Bund yield |
+| Did one move first? (main number) | the shift bars, plain |
+| Strongest shift | the same bars with the orange "strongest" bar |
+| Choosing a shift, grey boxes, pre-set | three rows of the Links table at the three shifts |
+| Pre-set shift | the same bars with the dashed N-1 outline |
+| Grey boxes and the band | the same bars with the chance strips |
+| Big number, As of | four Insight tiles (gap, ratio, gap between two changes, one change) |
+| Real construction costs | the real construction cost index |
+| Verdict | Insight chart with average and the half-spread band |
+| Better and worse | three tiles (plain, green, pink) |
+| Growth charts | two yearly changes with the shading |
+| Base year | two indices set to 100 |
+
+Captions carry no numbers, so they stay true when data changes.
+
+**Chart fix made on the way.** The shift bars were trimmed at the top and bottom by `inset: 8` (the library applies it on all four sides), so small correlations nearly vanished and no bar started on the 0 line. Now only the left and right gaps remain (`insetLeft`, `insetRight`). Effect: `rect` `y` and `height` change in the Link bar charts on 171 pages. No value, label or other SVG attribute changed.
