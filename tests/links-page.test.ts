@@ -48,7 +48,7 @@ describe.skipIf(built.length === 0)('Links page', () => {
     expect(cells.filter((td) => !td.textContent!.trim())).toEqual([]);
   });
   it.each(built)('%s: the loan-rate column, its Link panels and the Methodology name the 5-year-fixation series (ticket 16)', (l) => {
-    const fix = l === 'en' ? 'fixation over 5 years' : 'Zinsbindung über 5 Jahre';
+    const fix = l === 'en' ? 'rate fixed for over 5 years' : 'Zinsbindung über 5 Jahre';
     expect([...page(l as 'en').querySelectorAll('table.matrix thead th')].some((th) => th.textContent!.includes(fix))).toBe(true);
     const meth = readFileSync(`content/${l}/methodology.md`, 'utf8');
     expect(meth).toContain(l === 'en' ? 'initial rate fixation of over 5 years' : 'Zinsbindung von über 5 Jahren');
@@ -57,7 +57,7 @@ describe.skipIf(built.length === 0)('Links page', () => {
   });
   it.each(built)('%s: the legend names the matrix colours, not the Insights colours (ticket 17)', (l) => {
     const text = [...page(l as 'en').querySelectorAll('p.note')].map((p) => p.textContent).join(' ');
-    expect(text).toMatch(l === 'en' ? /violet/ : /violett/);
+    expect(text).toMatch(l === 'en' ? /violet/i : /violett/i);
     expect(text).toMatch(l === 'en' ? /olive/ : /olivgrün/);
     expect(text).not.toMatch(/ochre|ocker|blue|blau/i);
   });

@@ -29,21 +29,21 @@ note.scope.index: "Index (2013 = 100): we set 2013 to 100. It shows change over 
 note.scope.city_class: "Combined figure for {class}, not for one city."
 note.scope.combined: "Office and retail combined; no separate office or retail figure."
 link.title: "{kpi} and {indicator}"
-link.scope: "National indicator against {geography}"
+link.scope: "National indicator compared with {geography}"
 geo.germany: Germany
-link.sentence: "This shows how two series moved together over {period} (n = {n}). It does not show that one causes the other, and it is not a forecast."
+link.sentence: "This shows how two series moved together over {period} (n = {n}, the number of periods compared). Rank correlation runs from -1 (opposite ways) to +1 (same way). It does not show that one causes the other, and it is not a forecast."
 link.period: "{from} to {to}"
-link.headline: "Rank correlation (Spearman) of changes at lag 0: {rho} (n = {n})"
-link.not_shown: "Link not shown: too few observations (n = {n})"
+link.headline: "Rank correlation (Spearman) of changes at shift 0: {rho} (n = {n})"
+link.not_shown: "Link not shown: too few periods to compare (n = {n})"
 link.not_shown.constant: "Link not shown: one series did not change over the period (n = {n})"
-link.strongest: "Strongest of {n} lags tested; chosen after looking at the data, so likely overstated."
+link.strongest: "Strongest of {n} shifts tested. We chose it after looking at the data, so it is likely overstated."
 link.strongest.mark: strongest
-link.small_sample: "Based on only {n} annual observations. With a sample this small the pattern may be coincidental."
-link.lag.label: "Lag in years (positive: indicator moved earlier, negative: later)"
-link.rho.label: Spearman rho
-link.overlay.chart: "Levels of {kpi} and {indicator}"
+link.small_sample: "Based on only {n} yearly values. With so little data, the pattern may be coincidental."
+link.lag.label: "Shift in years (positive: indicator moved earlier, negative: later)"
+link.rho.label: "Rank correlation"
+link.overlay.chart: "Values of {kpi} and {indicator}"
 link.overlay.legend: "Blue line, left axis: {kpi}. Ochre line, right axis: {indicator}."
-link.lags.label: "Lag profile of {kpi} and {indicator}"
+link.lags.label: "Rank correlation at each shift: {kpi} and {indicator}"
 nav.sources: Sources and licences
 sources.title: Sources and licences
 sources.intro: "One row per series shown on this site. We fetch each series directly from the publisher, or through DBnomics, which collects data from many publishers. The data keeps the publisher's licence."
@@ -130,7 +130,7 @@ terms.title: Terms and conditions
 privacy.title: Privacy policy
 legal-notice.title: Legal notice
 links.title: Links
-links.intro: "Each row is a KPI and each column an economic indicator. A box shows how closely their changes moved together, with the number of pairs (n) it is based on. Where a Link cannot be shown, the box says “Not shown”. Each KPI appears in its main view; click a box to open the full Link on the KPI page."
+links.intro: "Each row is a KPI (key figure) and each column an economic indicator (a figure from the wider economy). A box shows how closely their changes moved together. It also shows n, the number of periods compared. Where we cannot show a Link, the box says “Not shown”. Each KPI appears in its main view. Click a box to open the full Link on the KPI page."
 insight.back: Back to the Insights overview
 link.back: Back to the Links table
 links.heading: Links with economic indicators
@@ -138,11 +138,11 @@ links.cell.n: "n = {n}"
 links.scale.neg: "-1: opposite ways"
 links.scale.zero: "0: no pattern"
 links.scale.pos: "+1: same way"
-links.legend: "Colour: olive green means the two tended to rise and fall together; violet means one tended to rise when the other fell. The deeper the colour, the closer the match. This shows that they move together, not that one causes the other or predicts it."
+links.legend: "Colour: olive green means the two tended to rise and fall together. Violet means one tended to rise when the other fell. The deeper the colour, the closer the match. This shows that they move together. It does not show that one causes the other or predicts it."
 links.cell.not_shown: "Not shown (n = {n})"
 indicator.bund-yield-10y: 10-year Bund yield
 indicator.euribor-3m: Euribor 3 months
-indicator.loan-rate-nfc: Loan rate, non-financial corporations, fixation over 5 years
+indicator.loan-rate-nfc: "Loan rate, non-financial corporations, rate fixed for over 5 years"
 indicator.cpi: Consumer price index
 indicator.gdp-real: Real GDP
 indicator.unemployment-rate: Unemployment rate
@@ -204,30 +204,30 @@ insight.unit.growth: percent
 insight.template.office-employment: "Office vacancy changed by {latest} percentage points in {to}, while office employment grew {emp}%. The {from}-{to} average vacancy change is {mean} percentage points."
 insight.unit.change: percentage points
 insight.context.legend: "Blue line: {measure}, in percentage points. Ochre line: growth of {title} from the year before, in percent. Both use one axis."
-link.preset.mark: "pre-set lag"
+link.preset.mark: "pre-set shift"
 links.lag.label: "Indicator timing"
 links.lag.0: "Same year"
 links.lag.1: "Indicator 1 year earlier (N-1)"
 links.lag.2: "Indicator 2 years earlier (N-2)"
-links.cell.preset: "pre-set lag: N-1"
-links.preset.note: "Appraisal-based yields and prices react to interest rates with a delay. For these boxes, one year earlier (N-1) is set in advance on economic grounds, not chosen from the results."
-link.band.legend: "Grey band: the range of rank correlation that chance alone often produces at lag 0 for n = {n} (±{band}; each bar uses its own n). A rough guide, not a significance test."
-link.band.adjusted: "Quarterly changes are each compared with a year earlier, so neighbouring quarters overlap; the band uses an adjusted n = {eff} (n ÷ 4, rounded down)."
+links.cell.preset: "pre-set shift: N-1"
+links.preset.note: "Appraisal-based yields and prices react to interest rates with a delay. For these boxes, we set one year earlier (N-1) in advance, on economic grounds. We did not choose it from the results."
+link.band.legend: "Grey band: the range of rank correlation that chance alone often produces at shift 0 for n = {n} (±{band}; each bar uses its own n). It is a rough guide, not a significance test."
+link.band.adjusted: "Quarterly changes are each compared with a year earlier, so neighbouring quarters overlap. The band uses an adjusted n = {eff} (n ÷ 4, rounded down)."
 links.cell.noise: "within chance range"
 links.noise.legend: "Grey: within the range that chance alone often produces for this number of years."
 links.chance.note: "With this many comparisons, a few boxes will look strong by chance alone. Treat a single strong box with caution, especially when n is small."
-note.nominal.inflation: "This KPI and this indicator are both in nominal terms, so their link partly reflects shared inflation."
-note.nominal.gdp: "This KPI is in nominal euros and real GDP is adjusted for inflation, so this link compares nominal with real."
+note.nominal.inflation: "This KPI and this indicator are both nominal, meaning not adjusted for inflation. So their Link partly reflects shared inflation."
+note.nominal.gdp: "This KPI is in nominal euros (not adjusted for inflation). Real GDP is adjusted for inflation. So this Link compares nominal with real."
 links.nominal.tag: "Nominal euros*"
-links.nominal.note: "* Rents and transaction volume are in nominal euros. Their links to CPI and construction prices partly reflect shared inflation, and their link to real GDP compares nominal with real."
+links.nominal.note: "* Nominal euros are not adjusted for inflation. Rents and transaction volume are in nominal euros. Their Links to CPI and construction prices partly reflect shared inflation. Their Link to real GDP compares nominal with real."
 links.row.kpi-price-index: "Commercial overall · Germany"
 links.row.kpi-rent-index: "Office · Germany"
 links.row.kpi-initial-yield: "Office + retail · 7 cities"
 links.row.kpi-office-vacancy: "Office · 7 cities"
 links.row.kpi-transaction-volume: "Commercial overall · Germany"
 links.row.construction: "Office · Germany"
-links.rows.note: "Rows cover different segments and areas; every indicator is national."
-links.cell.preset_other: "pre-set lag is N-1"
+links.rows.note: "Rows cover different Segments and areas. Every indicator is for Germany as a whole."
+links.cell.preset_other: "pre-set shift is N-1"
 links.cell.preset_2: "Set to N-2"
 insight.template.vacancy-completions: "Office completions in {to} differed by {latest}% from their {from}-{to} average. They are {verdict} the average."
 insight.unit.deviation: percent

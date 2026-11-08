@@ -76,7 +76,7 @@ describe('Link panels', () => {
     const out = notesFor(k, 'en', { on: 'link', indicator: i, pairs: 12 }, at);
     expect(out).toEqual([
       'Note: Rents: Short history (2015 to 2025).',
-      expect.stringMatching(/^Note: Based on only 12 annual observations\./),
+      expect.stringMatching(/^Note: Based on only 12 yearly values\./),
       expect.stringMatching(/^Note: Rents: Latest value: 2025\./),
       expect.stringMatching(/^Note: Euribor: We could not update this from DBnomics/),
     ]); // no scope Note: it belongs to the KPI chart
