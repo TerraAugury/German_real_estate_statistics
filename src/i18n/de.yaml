@@ -39,7 +39,7 @@ link.not_shown.constant: "Verknüpfung nicht angezeigt: eine Reihe hat sich im Z
 link.strongest: "Stärkste von {n} getesteten Verschiebungen. Wir haben sie nach einem Blick auf die Daten ausgewählt, daher ist sie wahrscheinlich überschätzt."
 link.strongest.mark: stärkster
 link.small_sample: "Beruht auf nur {n} Jahreswerten. Bei so wenigen Daten kann das Muster zufällig sein."
-link.lag.label: "Verschiebung in Jahren (positiv: Indikator lief voraus, negativ: lief nach)"
+link.lag.label: "Verschiebung in Jahren (positiv: Indikator früher, negativ: später)"
 link.rho.label: "Rangkorrelation"
 link.overlay.chart: "Werte: {kpi} und {indicator}"
 link.overlay.legend: "Blaue Linie, linke Achse: {kpi}. Ockerfarbene Linie, rechte Achse: {indicator}."
