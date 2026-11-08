@@ -137,7 +137,7 @@ describe('Insight J on real data', () => {
   });
   it('the index entry shows real growth in percent, not a spread in points', () => {
     const grid = renderInsightIndex(insightsPage(), 'en');
-    const tile = grid.split('<li>').find((x) => x.includes('Construction costs vs inflation'))!;
+    const tile = grid.split('<li>').find((x) => x.includes('Real growth of construction prices'))!;
     expect(tile).toMatch(/<span class="num">1\.3<\/span> <span class="unit">percent<\/span> <span class="tag in_line">/);
     expect(tile).not.toContain('percentage points');
   });
@@ -156,7 +156,7 @@ describe('"Insights using this KPI" on KPI pages', () => {
   // Which KPI page lists which Insight (insights spec section 6); Insights not declared yet are skipped.
   const PAGES: Record<string, string[]> = {
     a: ['kpi-initial-yield'], f: ['kpi-initial-yield'], g: ['kpi-price-index', 'kpi-rent-index'], b: ['kpi-rent-index'], d: ['kpi-rent-index'], i: ['kpi-rent-index'],
-    c: ['construction'], j: ['construction'], e: ['kpi-office-vacancy'], m: ['kpi-office-vacancy'], n: ['kpi-office-vacancy', 'construction'], o: ['kpi-office-vacancy', 'kpi-rent-index'],
+    c: ['construction'], j: ['construction'], e: ['kpi-office-vacancy'],
   };
   const listed = (page: string) => kpiPage(KPIS.find((k) => k.page === page)!).insights.map((e) => e.key);
   it('production lists the same Insights as preview', () => {
@@ -289,21 +289,6 @@ describe('Insights G and B (cleared)', () => {
   });
 });
 
-describe('Insight M on real data (cleared)', () => {
-  it('office vacancy change in the 127 towns, with office employment growth as context, from 2001', () => {
-    process.env.INCLUDE_PROVISIONAL = '1';
-    const m = insightsPage().find((i) => i.entry.key === 'm')!;
-    expect(m.entry).toMatchObject({ headline: 'change', base: 2015 });
-    expect(m.entry.series).toEqual([{ key: 'office-vacancy-127', role: 'kpi' }, { key: 'office-employment', role: 'reference' }]);
-    // J has no value before 2000 or for 2025 yet, so the shared period is 2001 to 2024.
-    expect(m.result).toMatchObject({ shown: true, from: '2001', to: '2024', n: 24 });
-    const h = renderInsight(m.entry, m.result, m.series, 'en');
-    expect(h).toMatch(/Office vacancy changed by -?[\d.]+ percentage points in \d{4}, while office employment grew -?[\d.]+%\. The 2001-\d{4} average vacancy change is -?[\d.]+ percentage points\./);
-    expect(h).toMatch(/Ochre line: growth of .+ from the year before/);
-    expect(renderInsight(m.entry, m.result, m.series, 'de')).toMatch(/Der Büroleerstand hat sich \d{4} um -?[\d,]+ Prozentpunkte verändert, während die Bürobeschäftigung um -?[\d,]+ % gewachsen ist/);
-  });
-});
-
 describe('Insight rendering', () => {
   const j = entry({ key: 'j', title: { en: 'Construction costs vs inflation', de: 'Baupreise und Inflation' }, measure: { en: 'spread of construction price growth over CPI inflation', de: 'Abstand des Baupreisanstiegs zur Inflationsrate' } });
   const series = [getSeries('construction-price-office'), getSeries('cpi')];
@@ -374,7 +359,7 @@ describe('Insight rendering', () => {
 });
 
 describe('Rates are never rebased (ticket 4)', () => {
-  it('no Insight line of a % series is rebased; M draws vacancy in %, employment as an index, on two axes', () => {
+  it('no Insight line of a % series is rebased', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
     for (const m of insightsPage()) {
       if (!m.result.shown) continue;
@@ -385,14 +370,6 @@ describe('Rates are never rebased (ticket 4)', () => {
         for (const p of m.result.lines[side]) if (s.freq === 'A') expect(p.value).toBe(raw.get(p.period));
       }
     }
-    const m = insightsPage().find((i) => i.entry.key === 'm')!;
-    if (!m.result.shown) throw new Error('M not shown');
-    expect(m.result.lines.rebased).toEqual({ kpi: false, reference: true });
-    expect(m.result.lines.reference.find((p) => p.period === '2015')!.value).toBeCloseTo(100, 9);
-    expect(m.result.lines.kpi.find((p) => p.period === '2015')!.value).not.toBeCloseTo(100, 0);
-    const h = renderInsight(m.entry, m.result, m.series, 'en');
-    expect(h).toContain('Blue line, left axis');
-    expect(h).toContain('index, 2015 = 100');
   });
 });
 
@@ -422,9 +399,8 @@ describe('Growth Insights draw year-on-year growth lines (ticket 5)', () => {
     for (const x of [b, j]) for (const lang of ['en', 'de'] as const) expect(renderInsight(x.entry, x.result, x.series, lang)).not.toMatch(/gap between the lines in the latest year is the big number|Abstand der Linien im letzten Jahr ist die große Zahl/);
     expect(renderInsight(d.entry, d.result, d.series, 'en')).toContain('The gap between the lines in the latest year is the big number');
   });
-  it('no small chart of B, D, I or J is rebased; the remaining rebased level charts are G and C (and M\'s employment line)', () => {
+  it('no small chart of B, D, I or J is rebased; the remaining rebased level charts are G and C', () => {
     for (const k of ['b', 'd', 'i', 'j']) { const x = insightsPage().find((i) => i.entry.key === k)!; if (x.result.shown) expect(x.result.lines.base).toBeUndefined(); }
-    const m = insightsPage().find((i) => i.entry.key === 'm')!; if (m.result.shown) expect(m.result.lines.rebased).toEqual({ kpi: false, reference: true });
     for (const k of ['g', 'c']) { const x = insightsPage().find((i) => i.entry.key === k)!; if (x.result.shown) expect(x.result.lines.base).toBe('2015'); }
   });
 });
@@ -459,66 +435,5 @@ describe('Insight notes (tickets 7 and 8)', () => {
       expect(en.includes(COVERAGE)).toBe(x.entry.key === 'g');
       expect(de.includes('Preise und Mieten sind vdp-Reihen')).toBe(x.entry.key === 'g');
     }
-  });
-});
-
-describe('Insights N (vacancy and completions) and O (vacancy and rent growth)', () => {
-  const page = () => { process.env.INCLUDE_PROVISIONAL = '1'; return insightsPage(); };
-  const raw = (key: string) => new Map(getSeries(key).obs.map((o) => [+o.period.slice(0, 4), o.value as number]));
-  const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length;
-
-  it('N: headline is the latest completions as % off their average over the shared years, by hand', () => {
-    const n = page().find((i) => i.entry.key === 'n')!;
-    const [vac, comp] = [raw('office-vacancy-127'), raw('construction-completions-office')];
-    const years = [...comp.keys()].filter((y) => vac.has(y)).sort();
-    const by = (comp.get(years.at(-1)!)! / mean(years.map((y) => comp.get(y)!)) - 1) * 100;
-    if (!n.result.shown) throw new Error('N not shown');
-    expect(n.result.latest.value).toBeCloseTo(by, 9);
-    expect([n.result.from, n.result.to]).toEqual([String(years[0]), String(years.at(-1))]);
-    expect(n.result.short).toBe(years.length < 20);
-    const dev = years.map((y) => (comp.get(y)! / mean(years.map((x) => comp.get(x)!)) - 1) * 100);
-    const sd = Math.sqrt(mean(dev.map((d) => d ** 2)));
-    expect(n.result.verdict).toBe(Math.abs(by) <= sd / 2 ? 'in_line' : by > 0 ? 'higher' : 'lower');
-  });
-
-  it('O: headline is the latest vacancy minus its average over the years real rent growth exists, by hand', () => {
-    const o = page().find((i) => i.entry.key === 'o')!;
-    const vac = raw('office-vacancy-127');
-    const real = changes(new Map([...levels(getSeries('rent-index-de-office-a'), 'A')].map(([y, v]) => [y, v / levels(getSeries('cpi'), 'A').get(y)! * 100])), 'A', 'pct');
-    const years = [...real.keys()].filter((y) => vac.has(y)).sort();
-    const gap = vac.get(years.at(-1)!)! - mean(years.map((y) => vac.get(y)!));
-    if (!o.result.shown) throw new Error('O not shown');
-    expect(o.result.latest.value).toBeCloseTo(gap, 9);
-    expect(o.result.from).toBe(String(years[0]));
-    expect(o.result.lines.reference.at(-1)!.value).toBeCloseTo(real.get(years.at(-1)!)!, 9);
-  });
-
-  it('both lean on lower being better, and show their notes, source lines and index link in EN and DE', () => {
-    const models = page();
-    expect(tone('higher', 'lower')).toBe('worse');
-    expect(tone('lower', 'lower')).toBe('better');
-    for (const [key, notes] of [['n', ['Completions cover all of Germany, while vacancy covers 127 towns.', 'public and owner-occupied']], ['o', ['Rents cover all of Germany, while vacancy covers 127 towns.', 'rent-free months']]] as const) {
-      const m = models.find((i) => i.entry.key === key)!;
-      expect(m.entry.better).toBe('lower');
-      const en = renderInsight(m.entry, m.result, m.series, 'en'), de = renderInsight(m.entry, m.result, m.series, 'de');
-      for (const x of notes) expect(en).toContain(x);
-      expect(en.match(/class="cite"/g)).toHaveLength(m.series.length);
-      expect(de.match(/class="cite"/g)).toHaveLength(m.series.length);
-      expect(de.match(/class="note"/g)!.length).toBe(en.match(/class="note"/g)!.length);
-      expect(renderInsightIndex(models, 'en')).toContain(`href="#${key}"`);
-      expect(renderInsightIndex(models, 'de')).toContain(`href="#${key}"`);
-    }
-    const [nn, oo] = ['n', 'o'].map((k) => models.find((i) => i.entry.key === k)!);
-    const html = (m: typeof nn, l: 'en' | 'de') => renderInsight(m.entry, m.result, m.series, l);
-    expect(html(nn, 'en')).toContain('Blue line, right axis: change in office vacancy');
-    expect(html(oo, 'en')).not.toContain('tenants may be moving');
-    if (!nn.result.shown || !oo.result.shown || !nn.result.chart) throw new Error('not shown');
-    expect(nn.result.chart.points).toHaveLength(nn.result.chart.context.length);
-    expect(nn.result.mean).toBe(0);
-    expect(tone(nn.result.verdict, 'lower')).toBe(nn.result.verdict === 'lower' ? 'better' : nn.result.verdict === 'higher' ? 'worse' : 'neutral');
-    expect(tone(oo.result.verdict, 'lower')).toBe(oo.result.verdict === 'in_line' ? 'neutral' : oo.result.verdict === 'lower' ? 'better' : 'worse');
-    // N has shared years under 20, so the short-history note shows.
-    const n = models.find((i) => i.entry.key === 'n')!;
-    expect(renderInsight(n.entry, n.result, n.series, 'en')).toContain('Short history');
   });
 });

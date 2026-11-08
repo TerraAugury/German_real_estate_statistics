@@ -13,7 +13,7 @@ describe('lead Insight', () => {
     expect(leadInsight([model('c'), model('a'), model('j')])!.entry.key).toBe('a');
   });
   it('is the first shown Insight when the yield spread is not public', () => {
-    expect(leadInsight([model('c', false), model('j'), model('m')])!.entry.key).toBe('j');
+    expect(leadInsight([model('c', false), model('j'), model('e')])!.entry.key).toBe('j');
   });
   it('a yield spread that is not shown does not lead', () => {
     expect(leadInsight([model('a', false), model('c')])!.entry.key).toBe('c');
@@ -39,7 +39,7 @@ describe('hero', () => {
   };
   it('shows the headline number with its verdict tag, the reading, one chart and the citation', () => {
     const doc = hero();
-    expect(doc.querySelector('section.hero h2')!.textContent).toBe('Initial yield spread over the 10-year Bund, by City class');
+    expect(doc.querySelector('section.hero h2')!.textContent).toBe('Spread of initial yield over the 10-year Bund yield, by City class');
     expect(doc.querySelector('.headline .num')!.textContent).toMatch(/^-?\d+\.\d$/);
     expect(doc.querySelector('.headline .tag')!.textContent).toMatch(/average$/);
     expect(doc.querySelector('section.hero > p:not(.headline)')!.textContent).toMatch(/^The latest spread of the 7-city initial yield over the 10-year Bund yield is /);
