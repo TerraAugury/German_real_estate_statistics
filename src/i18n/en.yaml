@@ -58,7 +58,7 @@ kpi.rent-index.title: Rent index (new lettings)
 kpi.initial-yield.title: Initial yield
 kpi.office-vacancy.title: Office vacancy rate
 kpi.transaction-volume.title: Transaction volume index
-kpi.not_available.licence: "Not available: the licence to show this data publicly is not confirmed yet."
+kpi.not_available.licence: "Not available: the licence to show this data publicly is not confirmed."
 select.segment: Segment
 select.geo: Geography
 select.freq: Frequency
@@ -94,7 +94,7 @@ geo.de-st: Saxony-Anhalt
 geo.de-th: Thuringia
 note.partial_total: "The Germany total adds up the Länder (federal states) that have data. There is no value for {laender} in {year}."
 kpi.noscript: "Switching Segment, geography or frequency needs JavaScript. Without it, this page shows its first view."
-na.source: "Not available: no open data source for {reason}"
+na.source: "Not available: no Open source for {reason}"
 na.kpi-price-index.logistics: a logistics property price index
 na.kpi-rent-index.logistics: logistics rents
 na.kpi-initial-yield.office: "office yields on their own (the source reports office and retail combined, see Commercial overall)"
@@ -119,7 +119,7 @@ home.segments: "Browse by Segment (property type)"
 segment.intro: "We show one chart for Germany per KPI (key figure) where a source has it. Each chart opens the full KPI page."
 segment.availability: Which KPI and Segment combinations exist, and why the others do not
 availability.title: Availability
-availability.intro: "Every KPI (key figure) for every Segment (property type). We give the reason for each gap. Nothing is planned for later. Open data sources are free to use and may be shown publicly."
+availability.intro: "Every KPI (key figure) for every Segment (property type). We give the reason for each gap. Nothing is planned for later. An Open source is a data source that is free to use and may be shown publicly."
 availability.kpi: KPI
 availability.available: "Available ({geo})"
 nav.links: Links

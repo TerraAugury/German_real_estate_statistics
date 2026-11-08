@@ -12,8 +12,7 @@ Original = `594539e`. Numbers, keys and identifiers unchanged.
 | note.fetch_failed | Could not refresh from {source} on {date}; showing data retrieved on {snapshot}. | We could not update this from {source} on {date}. We show the data we retrieved on {snapshot}. |  |
 | note.unavailable | {source} no longer provides this series (not found on {date}); showing data retrieved on {snapshot}. | {source} no longer provides this series. We did not find it on {date}. We show the data we retrieved on {snapshot}. |  |
 | note.revised | {source} revised earlier values; detected {date}. This chart shows the latest published version. | {source} changed (revised) earlier values. We noticed this on {date}. The chart shows the latest published version. | Keeps the glossary term "revised" in brackets after the plain word "changed". |
-| kpi.not_available.licence | Not available: licence for public redisplay not confirmed | Not available: the licence to show this data publicly is not confirmed yet. | "public redisplay" became "show this data publicly". |
-| na.source | Not available: no Open source for {reason} | Not available: no open data source for {reason} | "Open source" became "open data source"; ticket 4 explains the term once on Availability. |
+| kpi.not_available.licence | Not available: licence for public redisplay not confirmed | Not available: the licence to show this data publicly is not confirmed. | "public redisplay" became "show this data publicly". |
 | nav.breadcrumb | Breadcrumb | You are here | Screen-reader label only; says what the breadcrumb is for. |
 | latest.change.pct | {change} on {period} | {change} compared with {period} | "on" became "compared with": the change is against that earlier period. |
 | latest.change.diff | {change} points on {period} | {change} points compared with {period} | As above. |
@@ -31,13 +30,13 @@ Original = `594539e`. Numbers, keys and identifiers unchanged.
 | note.fetch_failed | Aktualisierung ({source}) am {date} fehlgeschlagen; dargestellt sind die am {snapshot} abgerufenen Daten. | Am {date} konnten wir die Daten von {source} nicht aktualisieren. Wir zeigen die Daten, die wir am {snapshot} abgerufen haben. |  |
 | note.unavailable | {source} stellt diese Reihe nicht mehr bereit (am {date} nicht gefunden); dargestellt sind die am {snapshot} abgerufenen Daten. | {source} stellt diese Reihe nicht mehr bereit. Wir haben sie am {date} nicht gefunden. Wir zeigen die Daten, die wir am {snapshot} abgerufen haben. |  |
 | note.revised | {source} hat frühere Werte revidiert (festgestellt am {date}). Dargestellt ist die zuletzt veröffentlichte Fassung. | {source} hat frühere Werte geändert (revidiert). Wir haben das am {date} bemerkt. Die Grafik zeigt die zuletzt veröffentlichte Fassung. | Keeps the glossary term "revised" in brackets after the plain word "changed". |
-| kpi.not_available.licence | Nicht verfügbar: Lizenz für die öffentliche Wiedergabe nicht bestätigt | Nicht verfügbar: Die Lizenz, diese Daten öffentlich zu zeigen, ist noch nicht bestätigt. | "public redisplay" became "show this data publicly". |
-| na.source | Nicht verfügbar: keine offene Quelle für {reason} | Nicht verfügbar: keine offene Datenquelle für {reason} | "Open source" became "open data source"; ticket 4 explains the term once on Availability. |
+| kpi.not_available.licence | Nicht verfügbar: Lizenz für die öffentliche Wiedergabe nicht bestätigt | Nicht verfügbar: Die Lizenz, diese Daten öffentlich zu zeigen, ist nicht bestätigt. | "public redisplay" became "show this data publicly". |
 | nav.breadcrumb | Brotkrümelnavigation | Sie sind hier | Screen-reader label only; says what the breadcrumb is for. |
 | insight.not_shown | Einblick nicht angezeigt: zu wenige Beobachtungen (n = {n}); mindestens {min} sind nötig. | Einblick nicht angezeigt: zu wenige Jahre mit Daten (n = {n}). Wir brauchen mindestens {min}. | "observations" became "years of data": Insight values are yearly (Methodology: needs at least 10 years). Same in German. |
 
 ## Coverage: strings left alone
 
+- `na.source`: kept (EN and DE), the glossary term "Open source" / "offene Quelle" stays; ticket 4 explains it on Availability
 - `site.title`: already plain, kept (EN and DE)
 - `nav.home`: already plain, kept (EN and DE)
 - `nav.menu`: already plain, kept (EN and DE)

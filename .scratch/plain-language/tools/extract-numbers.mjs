@@ -10,6 +10,7 @@ import { JSDOM } from 'jsdom';
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
+// numbers with thousands separators: comma, dot, space, no-break space (U+00A0) or narrow no-break space (U+202F)
 const NUM = /-?\d+(?:[.,   ]\d+)*(?:[.,]\d+)?/g;
 const TEXT_ATTRS = new Set(['aria-label', 'title', 'alt']);
 const SKIP_SVG_ATTRS = new Set(['class', 'style', 'aria-label']);
@@ -74,6 +75,6 @@ if (mode === 'extract') {
   console.log(bad ? `${bad} difference(s) in ${keys.length} page(s)` : `OK: numbers identical on ${keys.length} page(s)`);
   process.exit(bad ? 1 : 0);
 } else {
-  console.error('usage: extract <dist> <out.json> | compare <base.json> <new.json> [path-prefix ...]');
+  console.error('usage: extract <dist> <out.json> | compare <base.json> <new.json> [--delta] [path-prefix ...]');
   process.exit(2);
 }

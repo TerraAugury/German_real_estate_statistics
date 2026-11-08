@@ -58,7 +58,7 @@ kpi.rent-index.title: Mietindex (Neuvermietung)
 kpi.initial-yield.title: Anfangsrendite
 kpi.office-vacancy.title: Büroleerstandsquote
 kpi.transaction-volume.title: Transaktionsvolumenindex
-kpi.not_available.licence: "Nicht verfügbar: Die Lizenz, diese Daten öffentlich zu zeigen, ist noch nicht bestätigt."
+kpi.not_available.licence: "Nicht verfügbar: Die Lizenz, diese Daten öffentlich zu zeigen, ist nicht bestätigt."
 select.segment: Segment
 select.geo: Gebiet
 select.freq: Häufigkeit
@@ -94,7 +94,7 @@ geo.de-st: Sachsen-Anhalt
 geo.de-th: Thüringen
 note.partial_total: "Die Summe für Deutschland zählt die Länder mit Daten zusammen. Für {laender} gibt es für {year} keinen Wert."
 kpi.noscript: "Zum Wechseln von Segment, Gebiet oder Häufigkeit wird JavaScript benötigt. Ohne JavaScript zeigt diese Seite die erste Ansicht."
-na.source: "Nicht verfügbar: keine offene Datenquelle für {reason}"
+na.source: "Nicht verfügbar: keine offene Quelle für {reason}"
 na.kpi-price-index.logistics: einen Preisindex für Logistikimmobilien
 na.kpi-rent-index.logistics: Logistikmieten
 na.kpi-initial-yield.office: "Büro-Renditen allein (die Quelle weist Büro und Einzelhandel zusammen aus, siehe Gewerbe gesamt)"
@@ -119,7 +119,7 @@ home.segments: "Nach Segment (Immobilienart)"
 segment.intro: "Je Kennzahl eine Grafik für Deutschland, soweit eine Quelle sie liefert. Jede Grafik öffnet die vollständige Kennzahlseite."
 segment.availability: Welche Kombinationen aus Kennzahl und Segment es gibt und warum die übrigen nicht verfügbar sind
 availability.title: Verfügbarkeit
-availability.intro: "Jede Kennzahl für jedes Segment (Immobilienart). Für jede Lücke nennen wir den Grund. Für später ist nichts geplant. Offene Datenquellen sind frei nutzbar und dürfen öffentlich gezeigt werden."
+availability.intro: "Jede Kennzahl für jedes Segment (Immobilienart). Für jede Lücke nennen wir den Grund. Für später ist nichts geplant. Eine offene Quelle ist frei nutzbar und darf öffentlich gezeigt werden."
 availability.kpi: Kennzahl
 availability.available: "Verfügbar ({geo})"
 nav.links: Verknüpfungen
