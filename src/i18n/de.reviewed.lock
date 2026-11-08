@@ -1346,30 +1346,6 @@ insight.unit.growth:
   en_hash: fd86717aca41c558
   reviewed_by: terra augury
   reviewed_on: 2026-11-03
-insight.template.office-employment:
-  en_hash: cb6aa23b298bf397
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
-insight.unit.change:
-  en_hash: e300964443317948
-  reviewed_by: terra augury
-  reviewed_on: 2026-11-03
-insight.context.legend:
-  en_hash: 06a168893b577d56
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
-manifest:office-employment.title:
-  en_hash: 685af0d55b6f860d
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
-manifest:office-employment.unit:
-  en_hash: 307bdfc873b838ca
-  reviewed_by: terra augury
-  reviewed_on: 2026-11-03
-manifest:office-employment.attribution:
-  en_hash: 7f1ba88184b2589a
-  reviewed_by: terra augury
-  reviewed_on: 2026-11-03
 insight:a.title:
   en_hash: dc5eb76f145d0e85
   reviewed_by: Olivier
@@ -1440,14 +1416,6 @@ insight:e.title:
   reviewed_on: 2026-11-08
 insight:e.measure:
   en_hash: 0a9b80756ebba7ba
-  reviewed_by: terra augury
-  reviewed_on: 2026-11-03
-insight:m.title:
-  en_hash: d5c854e8855bcdf0
-  reviewed_by: terra augury
-  reviewed_on: 2026-11-03
-insight:m.measure:
-  en_hash: 6c17c72aa89b9324
   reviewed_by: terra augury
   reviewed_on: 2026-11-03
 insight.back:
@@ -1618,78 +1586,10 @@ links.cell.preset_other:
   en_hash: 080eceb9a4852cae
   reviewed_by: Olivier
   reviewed_on: 2026-11-08
-insight.template.vacancy-completions:
-  en_hash: ec6d91d88d3e32fd
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
-insight.unit.deviation:
-  en_hash: fd86717aca41c558
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
-insight.template.vacancy-rents:
-  en_hash: 64d8f7ff74c1aaa4
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
-insight.unit.gap:
-  en_hash: e300964443317948
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
-insight.axis.real_growth:
-  en_hash: cafe237112a6a717
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
-insight.small.vacancy-rents.title:
-  en_hash: 32190aac00055270
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
-insight.small.vacancy-rents.label:
-  en_hash: db831c307c52e5b0
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
-insight.small.vacancy-rents.legend:
-  en_hash: a01871ea0bd1ad76
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
-insight.note.completions_scope:
-  en_hash: 56f77268f0793d20
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
-insight.note.completions_coverage:
-  en_hash: d8a2c48419d11744
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
-insight.note.rents_scope:
-  en_hash: a932147c5c3990a6
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
-insight.note.asking_rents:
-  en_hash: a2791a76e5d466a1
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
-insight:n.title:
-  en_hash: 8523fe4f714bac8e
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
-insight:n.measure:
-  en_hash: 6c17c72aa89b9324
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
-insight:o.title:
-  en_hash: dd6eafb9e20851cd
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
-insight:o.measure:
-  en_hash: f4d8407a25129ec3
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
 links.cell.preset_2:
   en_hash: 490ba33c4f91f920
   reviewed_by: Olivier
   reviewed_on: 2026-11-06
-insight.context.legend_dual:
-  en_hash: 2343e0bf29f4c534
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
 kpi.price-index.definition:
   en_hash: 91cd6e3b16e44ad1
   reviewed_by: Olivier
@@ -1750,10 +1650,6 @@ insight:e.definition:
   en_hash: d2b2f3772b467f3e
   reviewed_by: Olivier
   reviewed_on: 2026-11-08
-insight:m.definition:
-  en_hash: 99354f033e8a4f1c
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-07
 insight.multiples.legend_growth_rate:
   en_hash: aada9b43f9e6673b
   reviewed_by: Olivier

@@ -1106,24 +1106,3 @@
   seasonal_adjustment: nsa
   resampling: mean
   short_window: false
-
-# Persons in employment in the office-using sections J (information and communication) and K-N (finance, real estate, professional and administrative services), summed through the `{land}` placeholder (the "Länder" are the sections here); J has no value before 2000, so the total starts in 2000: national, annual, for Insight M.
-- key: office-employment
-  dbnomics_provider: DESTATIS
-  source: destatis
-  dataset: 13311BJ002
-  ids: ["DG.WZ08-{land}.ERW063"]
-  laender: ["J", "K-N"]
-  complete_only: true
-  publisher: *destatis_publisher
-  licence: *destatis_licence
-  attribution: *destatis_attribution
-  provisional: false
-  title: { en: "People in work: information and communication, finance, real estate and business services (sections J and K to N), Germany", de: "Erwerbstätige: Information und Kommunikation, Finanzierung, Immobilien und Unternehmensdienstleistungen (Wirtschaftsabschnitte J und K bis N), Deutschland" }
-  unit: { en: "thousand persons", de: "Tsd. Personen" }
-  frequency: annual
-  change: pct
-  expected_start: 1991
-  seasonal_adjustment: nsa
-  resampling: none
-  short_window: false

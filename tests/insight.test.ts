@@ -186,27 +186,6 @@ describe('Insight module: indexed ratio and real growth', () => {
   });
 });
 
-describe('Insight module: change of one series with another as context', () => {
-  const geometric = (from: number, n: number, start: number, rate: number) => annual(from, Array.from({ length: n }, (_, i) => start * (1 + rate) ** i));
-  const rise = (from: number, n: number) => annual(from, Array.from({ length: n }, (_, i) => 5 + 2 * i));
-  it('the headline is the year-on-year change of the KPI in points, and the reference growth comes along as context', () => {
-    const r = computeInsight(rise(2000, 13), geometric(2000, 13, 100, 0.02), { headline: 'change' });
-    if (!r.shown) throw new Error('not shown');
-    expect(r).toMatchObject({ from: '2001', to: '2012', n: 12, mean: 2, sd: 0, verdict: 'in_line' });
-    expect(r.context!.map((p) => p.period)).toEqual(r.points.map((p) => p.period));
-    for (const p of r.context!) expect(p.value).toBeCloseTo(2, 9);
-  });
-  it('only years with both a vacancy change and a reference growth count, so a reference ending a year early ends the Insight', () => {
-    const r = computeInsight(rise(2000, 14), geometric(2000, 13, 100, 0.02), { headline: 'change' });
-    expect(r).toMatchObject({ shown: true, to: '2012', n: 12 });
-  });
-  it('the other headlines carry no context', () => {
-    const r = computeInsight(rise(2000, 12), rise(2000, 12), {});
-    expect(r).toMatchObject({ shown: true });
-    if (r.shown) expect(r.context).toBeUndefined();
-  });
-});
-
 describe('Insight module: every compared series counts toward the shared period', () => {
   const ramp = (from: number, n: number) => annual(from, Array.from({ length: n }, (_, i) => 5 + i));
   it('a further KPI series that starts later shortens the shared period and the headline', () => {

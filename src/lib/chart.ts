@@ -76,7 +76,7 @@ function niceTicks(lo: number, hi: number): number[] {
  * unit take its line's colour (ochre text is the darker `strong-text`, which keeps 4.5:1). The scales are independent, so the
  * picture shows co-movement only.
  */
-export function overlayChart(kpi: Points, indicator: Points, labels: { kpiUnit: string; indicatorUnit: string; title: string; kpiRight?: boolean }, lang: Lang): string {
+export function overlayChart(kpi: Points, indicator: Points, labels: { kpiUnit: string; indicatorUnit: string; title: string }, lang: Lang): string {
   const scaled = (pts: Points, unit: string, anchor: 'left' | 'right', lineColour: string, axisColour: string) => {
     const values = pts.map((p) => p.value);
     const ticks = niceTicks(Math.min(...values), Math.max(...values));
@@ -92,12 +92,12 @@ export function overlayChart(kpi: Points, indicator: Points, labels: { kpiUnit: 
     height: 240, marginRight: narrow ? 36 : 50, marginTop: 28,
     x: xAxis(narrow),
     y: { axis: null, domain: [0, 1] },
-    marks: [...scaled(kpi, labels.kpiUnit, labels.kpiRight ? 'right' : 'left', DATA, DATA), ...scaled(indicator, labels.indicatorUnit, labels.kpiRight ? 'left' : 'right', STRONG, STRONG_TEXT)],
+    marks: [...scaled(kpi, labels.kpiUnit, 'left', DATA, DATA), ...scaled(indicator, labels.indicatorUnit, 'right', STRONG, STRONG_TEXT)],
   }), labels.title);
 }
 
 /** Headline measure over time: latest point labelled, dashed average line, grey band of average plus or minus half a standard deviation. */
-export function insightChart(r: { points: Points; context?: Points; from: string; to: string; mean: number; sd: number }, labels: { unit: string; average: string; title: string }, lang: Lang): string {
+export function insightChart(r: { points: Points; from: string; to: string; mean: number; sd: number }, labels: { unit: string; average: string; title: string }, lang: Lang): string {
   const data = r.points.map((p) => ({ x: +p.period, value: p.value }));
   const last = data.slice(-1);
   const band = [{ x1: +r.from, x2: +r.to, y1: r.mean - r.sd / 2, y2: r.mean + r.sd / 2 }];
@@ -109,7 +109,6 @@ export function insightChart(r: { points: Points; context?: Points; from: string
       Plot.rectY(band, { x1: 'x1', x2: 'x2', y1: 'y1', y2: 'y2', fill: GRID }),
       Plot.ruleY([r.mean], { stroke: MUTED, strokeDasharray: '5 4' }),
       Plot.text([{ x: +r.from, y: r.mean }], { x: 'x', y: 'y', text: () => labels.average, dy: -7, textAnchor: 'start', fill: MUTED }),
-      ...(r.context ? [Plot.lineY(r.context.map((p) => ({ x: +p.period, value: p.value })), { x: 'x', y: 'value', stroke: STRONG, strokeWidth: 2 })] : []),
       Plot.lineY(data, { x: 'x', y: 'value', stroke: DATA, strokeWidth: 2.25 }),
       Plot.dot(data, { x: 'x', y: 'value', r: 6, fill: 'transparent', title: (d) => `${d.x}: ${fmt(lang, d.value, { maximumFractionDigits: 2 })}` }),
       ...latest(last, (d) => fmt(lang, d.value, { minimumFractionDigits: 1, maximumFractionDigits: 1 }), narrow),

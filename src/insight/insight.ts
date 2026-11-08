@@ -6,7 +6,7 @@ export const MIN_OBS = 10;
 /** Under this many, the average rests on too little history and the page says so. */
 export const SHORT_OBS = 20;
 
-export type Headline = 'spread' | 'ratio' | 'growth' | 'change' | 'deviation' | 'gap';
+export type Headline = 'spread' | 'ratio' | 'growth';
 export type Verdict = 'higher' | 'lower' | 'in_line';
 export type Better = 'higher' | 'lower' | 'none';
 export type Tone = 'better' | 'worse' | 'neutral';
@@ -21,12 +21,8 @@ export type InsightResult =
       mean: number; sd: number; latest: Points[number]; verdict: Verdict;
       /** growth with a `base` year: the real level compounded from the base year (= 100) to the last year, with its total change and yearly rate in percent. Not part of the verdict. */
       index?: { points: Points; from: string; to: string; total: number; annual: number };
-      /** change: the reference's year-on-year percent growth over the same years, shown beside the headline and never given a verdict. */
-      context?: Points;
-      /** deviation: what the top chart draws instead of the headline points (the KPI's yearly change, with the reference's growth as context), with its own average and spread. */
-      chart?: { points: Points; context: Points; from: string; to: string; mean: number; sd: number };
       /** The two series over the headline period, rebased when a base year was asked for (`base` is the year actually used). */
-      lines: { kpi: Points; reference: Points; base?: string; /** year-on-year percent changes, not levels: the lines of an Insight whose headline is a growth rate or a gap between two. */ growth?: boolean; /** gap: the reference line is a year-on-year growth rate drawn on its own right-hand axis. */ secondAxis?: boolean; /** Which line is an index: a rate stays in its own unit, so a chart with one of each needs two axes. */ rebased?: { kpi: boolean; reference: boolean } } };
+      lines: { kpi: Points; reference: Points; base?: string; /** year-on-year percent changes, not levels: the lines of an Insight whose headline is a growth rate or a gap between two. */ growth?: boolean; /** Which line is an index: a rate stays in its own unit, so a chart with one of each needs two axes. */ rebased?: { kpi: boolean; reference: boolean } } };
 
 /** In line when the latest value is within half a standard deviation of the mean (boundary included); a zero deviation reads in line. */
 export function verdict(latest: number, mean: number, sd: number): Verdict {
@@ -70,10 +66,7 @@ function decemberLevels(s: InsightSeries): Map<number, number> {
 }
 
 export type InsightOptions = {
-  /** spread (default): KPI minus reference in points; ratio: KPI over reference; growth: year-on-year percent change of the KPI alone;
-   * change: year-on-year change of the KPI in points, with the reference's growth as context over the years both have.
-   * deviation: the reference's latest level as a percent above or below its own average over the shared years.
-   * gap: the KPI's level minus its own average over the years the reference's real growth exists (the deflator deflates the reference). */
+  /** spread (default): KPI minus reference in points; ratio: KPI over reference; growth: year-on-year percent change of the KPI alone. */
   headline?: Headline;
   /** Compare year-on-year percent changes of both series instead of levels (spread). */
   growth?: boolean;
@@ -98,30 +91,17 @@ export type InsightOptions = {
 export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opts: InsightOptions = {}): InsightResult {
   const [nominal, lb] = [levels(kpi, 'A'), shifted(levels(reference, 'A'), opts.shift)];
   const head = opts.headline ?? 'spread';
-  const la = opts.deflator && head !== 'gap' ? real(nominal, opts.deflate === 'stock' ? decemberLevels(opts.deflator) : levels(opts.deflator, 'A')) : nominal;
+  const la = opts.deflator ? real(nominal, opts.deflate === 'stock' ? decemberLevels(opts.deflator) : levels(opts.deflator, 'A')) : nominal;
   const values = new Map<number, number>();
   // Year-on-year changes of both series (the real KPI for a deflated spread): the lines drawn for a growth headline, and the terms of a growth spread.
   const growthLines = opts.growth || head === 'growth' ? [la, lb].map((l) => changes(l, 'A', 'pct')) : undefined;
-  let growth: Map<number, number> | undefined;
   let realLevels: Map<number, number> | undefined;
   const avg = (xs: number[]) => xs.reduce((sum, x) => sum + x, 0) / xs.length;
-  const shared = [...la.keys()].filter((y) => lb.has(y));
-  const realGrowth = head === 'gap' && opts.deflator ? changes(real(lb, levels(opts.deflator, 'A')), 'A', 'pct') : undefined;
-  if (head === 'deviation') {
-    const m = avg(shared.map((y) => lb.get(y)!));
-    for (const y of shared) values.set(y, (lb.get(y)! / m - 1) * 100);
-  } else if (realGrowth) {
-    const ys = shared.filter((y) => realGrowth.has(y));
-    const m = avg(ys.map((y) => la.get(y)!));
-    for (const y of ys) values.set(y, la.get(y)! - m);
-  } else if (head === 'growth') {
+  if (head === 'growth') {
     const deflator = opts.deflate === 'stock' ? decemberLevels(reference) : lb;
     const level = opts.deflate ? real(la, deflator) : la;
     if (opts.deflate) realLevels = level;
     for (const [y, v] of changes(level, 'A', 'pct')) values.set(y, v);
-  } else if (head === 'change') {
-    growth = changes(lb, 'A', 'pct');
-    for (const [y, v] of changes(la, 'A', 'diff')) if (growth.has(y)) values.set(y, v);
   } else {
     const [a, b] = growthLines ?? [la, lb];
     for (const [y, v] of a) if (b.has(y) && !(head === 'ratio' && b.get(y) === 0)) values.set(y, head === 'ratio' ? v / b.get(y)! : v - b.get(y)!);
@@ -129,31 +109,17 @@ export function computeInsight(kpi: InsightSeries, reference: InsightSeries, opt
   const more = (opts.also ?? []).map((x) => (opts.growth || head === 'growth' ? changes(levels(x, 'A'), 'A', 'pct') : levels(x, 'A')));
   const years = [...values.keys()].filter((y) => more.every((m) => m.has(y))).sort((x, y) => x - y);
   if (years.length < MIN_OBS) return { shown: false, n: years.length, reason: 'too_few' };
-  const ln = realGrowth
-    ? { kpi: yearPts(years, (y) => la.get(y)!), reference: yearPts(years, (y) => realGrowth.get(y)!), secondAxis: true }
-    : growthLines
+  const ln = growthLines
     ? { kpi: yearPts(years, (y) => growthLines[0].get(y)!), reference: yearPts(years, (y) => growthLines[1].get(y)!), growth: true }
     : lines(la, lb, years, opts.base, { kpi: isRate(kpi), reference: isRate(reference) });
   const points = years.map((y, i) => ({ period: String(y), value: opts.indexed ? ln.kpi[i].value / ln.reference[i].value : values.get(y)! }));
   const latest = points.at(-1)!;
-  const stats = (ps: Points) => {
-    const m = avg(ps.map((p) => p.value));
-    // Deviations from the own average have mean 0 up to rounding; show it as 0.
-    return { mean: Math.abs(m) < 1e-9 ? 0 : m, sd: Math.sqrt(avg(ps.map((p) => (p.value - m) ** 2))) }; // population SD, whole period
-  };
-  const { mean, sd } = stats(points);
-  // deviation: the top chart shows the KPI's yearly change against the reference's yearly growth, over the years both changes exist.
-  let chart: Extract<InsightResult, { shown: true }>['chart'];
-  if (head === 'deviation') {
-    const [dv, cg] = [changes(la, 'A', 'diff'), changes(lb, 'A', 'pct')];
-    const cy = years.filter((y) => dv.has(y) && cg.has(y));
-    const pts = yearPts(cy, (y) => dv.get(y)!);
-    if (pts.length >= MIN_OBS) chart = { points: pts, context: yearPts(cy, (y) => cg.get(y)!), from: pts[0].period, to: pts.at(-1)!.period, ...stats(pts) };
-  }
+  const m = avg(points.map((p) => p.value));
+  const sd = Math.sqrt(avg(points.map((p) => (p.value - m) ** 2))); // population SD, whole period
+  const mean = Math.abs(m) < 1e-9 ? 0 : m; // deviations from an own average sum to 0 up to rounding; show it as 0
   // The real index: the year-on-year real growth compounded from the base year equals the real level over its base-year level, so it is taken as that ratio.
   const base = realLevels?.get(opts.base ?? NaN);
   const ix = base ? [opts.base!, ...years.filter((y) => y > opts.base!)].map((y) => ({ period: String(y), value: (realLevels!.get(y)! / base) * 100 })) : undefined;
   const index = ix && ix.length > 1 ? { points: ix, from: ix[0].period, to: ix.at(-1)!.period, total: ix.at(-1)!.value - 100, annual: ((ix.at(-1)!.value / 100) ** (1 / (+ix.at(-1)!.period - opts.base!)) - 1) * 100 } : undefined;
-  return { shown: true, points, from: points[0].period, to: latest.period, n: points.length, short: points.length < SHORT_OBS, mean, sd, latest, verdict: verdict(latest.value, mean, sd), lines: ln,
-    ...(growth && { context: yearPts(years, (y) => growth!.get(y)!) }), ...(chart && { chart }), ...(index && { index }) };
+  return { shown: true, points, from: points[0].period, to: latest.period, n: points.length, short: points.length < SHORT_OBS, mean, sd, latest, verdict: verdict(latest.value, mean, sd), lines: ln, ...(index && { index }) };
 }
