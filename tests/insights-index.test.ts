@@ -39,6 +39,11 @@ describe('Insights index', () => {
       });
     }
   });
+  it('the Insight section and the Home hero say the same year as its tile', () => {
+    const m = insightsPage().find((x) => x.result.shown)!;
+    const year = (m.result as { latest: { period: string } }).latest.period;
+    expect(parse(renderInsight(m.entry, m.result, m.series, 'en')).querySelector('.headline .when')!.textContent).toBe(`As of ${year}`);
+  });
   it('the number is the one the Insight section shows', () => {
     const m = insightsPage()[0];
     const section = parse(renderInsight(m.entry, m.result, m.series, 'en'));
