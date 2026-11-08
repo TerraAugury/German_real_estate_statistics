@@ -132,27 +132,24 @@ export function renderInsightIndex(models: { entry: InsightEntry; result: Insigh
 
 /**
  * How one small chart of an Insight is drawn and worded, decided from its lines so the renderer only reads the plan. A chart that
- * mixes a rate (own unit) with an index needs two axes, as on the Links; the rest share one domain. The first KPI series may
- * bring its own wording (`e.small`).
+ * mixes a rate (own unit) with an index needs two axes, as on the Links; the rest share one domain.
  */
-function multiplePlan(e: InsightEntry, l: Shown['lines'], first: boolean) {
+function multiplePlan(e: InsightEntry, l: Shown['lines']) {
   const growth = !!l.growth;
-  const dual = !!l.secondAxis || (!!l.rebased && l.rebased.kpi !== l.rebased.reference);
-  const own = (f: string) => (e.small && first ? `insight.small.${e.small}.${f}` : undefined);
+  const dual = (!!l.rebased && l.rebased.kpi !== l.rebased.reference);
   // A growth headline is a real growth rate, not the gap between the lines, so its legend does not call the gap the headline number.
   const growthLegend = e.series.some((x) => x.role === 'deflator') ? 'insight.multiples.legend_growth_real' : e.headline === 'growth' ? 'insight.multiples.legend_growth_rate' : 'insight.multiples.legend_growth';
   return {
     growth, dual,
-    label: own('label') ?? (growth ? 'insight.multiples.label_growth' : 'insight.multiples.label'),
-    heading: own('title') ?? 'insight.multiples.title',
-    legend: own('legend') ?? (dual ? 'insight.multiples.legend_dual' : growth ? growthLegend : 'insight.multiples.legend'),
+    label: growth ? 'insight.multiples.label_growth' : 'insight.multiples.label',
+    heading: 'insight.multiples.title',
+    legend: dual ? 'insight.multiples.legend_dual' : growth ? growthLegend : 'insight.multiples.legend',
   };
 }
 
 /** The unit text of a small chart's left and right axes. */
 function multipleUnits(l: Shown['lines'], plan: { growth: boolean; dual: boolean }, kpi: Series, reference: Series, lang: Lang): [string, string] {
   const rebased = l.base ? t(lang, 'insight.axis.rebased', { year: l.base }) : '';
-  if (l.secondAxis) return [kpi.unit[lang], t(lang, 'insight.axis.real_growth')];
   if (plan.dual) return [l.rebased!.kpi ? rebased : kpi.unit[lang], l.rebased!.reference ? rebased : reference.unit[lang]];
   return [plan.growth ? t(lang, 'insight.axis.growth') : l.base ? rebased : kpi.unit[lang], ''];
 }
@@ -160,32 +157,27 @@ function multipleUnits(l: Shown['lines'], plan: { growth: boolean; dual: boolean
 /** What leads an Insight, shared by its section and the Home hero: headline number with verdict tag, the reading, the chart, its Notes. */
 function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, now: Date) {
   const one = headlineNumber(e, lang);
-  // The top chart is the headline's own points, unless the headline is a level against its average and the chart shows the KPI's yearly change instead.
-  const top = r.chart ?? r;
-  const unitKey = `insight.unit.${r.chart ? 'change' : e.headline}`;
   const reading = t(lang, `insight.template.${e.template}`, {
-    measure: esc(e.measure[lang]), latest: one(r.latest.value), verdict: t(lang, `insight.verdict.${r.verdict}`), from: r.from, to: r.to, mean: one(r.mean), emp: top.context ? one(top.context.at(-1)!.value) : '',
+    measure: esc(e.measure[lang]), latest: one(r.latest.value), verdict: t(lang, `insight.verdict.${r.verdict}`), from: r.from, to: r.to, mean: one(r.mean),
   });
   const notes = [...notesFor(series[0], lang, { on: 'insight', rest: series.slice(1), short: r.short ? { from: r.from, to: r.to, n: r.n } : undefined }, now),
     ...(e.notes ?? []).map((k) => `${t(lang, 'note.prefix')}: ${t(lang, k)}`)];
   const title = t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] });
-  // The KPI's yearly change in points and the reference's growth in percent differ in size, so each gets its own axis, the KPI's on the right.
-  const chart = r.chart ? overlayChart(r.chart.points, r.chart.context, { kpiUnit: t(lang, 'insight.unit.change'), indicatorUnit: t(lang, 'insight.axis.growth'), kpiRight: true, title }, lang) : insightChart(top, { unit: t(lang, unitKey), average: t(lang, 'insight.average', { value: one(top.mean) }), title }, lang);
+  const chart = insightChart(r, { unit: t(lang, `insight.unit.${e.headline}`), average: t(lang, 'insight.average', { value: one(r.mean) }), title }, lang);
   const reference = series[e.series.findIndex((x) => x.role === 'reference')];
   return {
     reading, notes, chart, reference, plate: toneOf(e, r, lang).plate,
     definition: e.definition ? `<p class="definition">${esc(e.definition[lang])}</p>` : '',
     headlineHtml: `<p class="headline">${headlineSpans(e, r, lang)}</p>`,
-    legend: top.context ? `<p class="note">${t(lang, r.chart ? 'insight.context.legend_dual' : 'insight.context.legend', { measure: esc(e.measure[lang]), title: esc(reference.title[lang]) })}</p>` : '',
   };
 }
 
 /** The Home hero: the lead Insight's headline, reading, chart and citation, with a link to the full Insight. Empty when it is not shown. */
 export function renderHero(e: InsightEntry, r: InsightResult, series: Series[], lang: Lang, now = new Date()): string {
   if (!r.shown) return '';
-  const { headlineHtml, reading, definition, chart, legend, notes, plate } = insightLead(e, r, series, lang, now);
+  const { headlineHtml, reading, definition, chart, notes, plate } = insightLead(e, r, series, lang, now);
   return `<section class="hero${plate && ` ${plate}`}"><h2>${esc(e.title[lang])}</h2>${headlineHtml}<p>${reading}</p>${definition}`
-    + `<figure>${chart}${legend}${noteHtml(notes)}<figcaption>${sourceBlock(series, lang, true)}<br><a href="${href('insights', lang)}#${esc(e.key)}">${t(lang, 'home.hero.more')}</a></figcaption></figure></section>`;
+    + `<figure>${chart}${noteHtml(notes)}<figcaption>${sourceBlock(series, lang, true)}<br><a href="${href('insights', lang)}#${esc(e.key)}">${t(lang, 'home.hero.more')}</a></figcaption></figure></section>`;
 }
 
 /** The real index of an Insight with a `base`: heading, number, reading, chart and its Notes on the plain plate of a figure of its own, whatever tone the Insight's verdict gives the rest. It carries no verdict. */
@@ -204,14 +196,14 @@ function renderIndex(index: NonNullable<Shown['index']>, lang: Lang): string {
 export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[], lang: Lang, now = new Date()): string {
   const head = `<p class="back"><a href="${href('insights', lang)}#index">← ${t(lang, 'insight.back')}</a></p><h2>${esc(e.title[lang])}</h2>`;
   if (!r.shown) return `<section class="insight" id="${esc(e.key)}">${head}<p class="na">${t(lang, 'insight.not_shown', { n: String(r.n), min: String(MIN_OBS) })}</p></section>`;
-  const { headlineHtml, reading, definition, chart, legend, notes, reference, plate } = insightLead(e, r, series, lang, now);
+  const { headlineHtml, reading, definition, chart, notes, reference, plate } = insightLead(e, r, series, lang, now);
   const kpis = series.filter((_, i) => e.series[i].role === 'kpi');
   const refTitle = e.shift ? t(lang, 'insight.shifted', { title: reference.title[lang], shift: t(lang, `insight.shift.${e.shift}`) }) : reference.title[lang];
   // The headline's lines are the first KPI series'; every other KPI series gets its own small chart over the same years.
   const years = r.points.map((p) => p.period);
   const realGrowth = `insight.multiples.real_growth.${e.template}`;
   const all = kpis.map((k, i) => (i === 0 ? r.lines : compareLines(k, reference, years, e)));
-  const plans = all.map((l, i) => multiplePlan(e, l, i === 0));
+  const plans = all.map((l) => multiplePlan(e, l));
   const domain = sharedDomain(all.filter((_, i) => !plans[i].dual));
   const multiples = kpis.map((kpi, i) => {
     const [l, plan] = [all[i], plans[i]];
@@ -228,5 +220,5 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
     + (r.index ? renderIndex(r.index, lang) : '')
     + headlineHtml
     + `<p>${reading}</p>${definition}`
-    + `<figure>${chart}${legend}${multiples}${noteHtml(notes)}<figcaption>${sourceBlock(series, lang, true)}<br><a href="${href('methodology', lang)}#${slug('insights', lang)}">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
+    + `<figure>${chart}${multiples}${noteHtml(notes)}<figcaption>${sourceBlock(series, lang, true)}<br><a href="${href('methodology', lang)}#${slug('insights', lang)}">${t(lang, 'insight.method')}</a></figcaption></figure></section>`;
 }

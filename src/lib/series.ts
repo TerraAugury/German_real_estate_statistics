@@ -59,9 +59,7 @@ export function loadSeries(key: string, now = new Date(), land?: string): Series
   validateSnapshot(m, snap);
   const laender = land ? [land] : m.laender;
   const sum = sumLaender(laender.map((l) => ({ land: l, ...snap.parts[partId(m, l)] })), m.scale);
-  // complete_only: a sum of sections is meaningless in a year where one section has no value yet, so that year is left out.
-  const gaps = new Set(m.complete_only ? sum.partial.map((p) => p.period) : []);
-  const obs = sum.obs.filter((o) => !gaps.has(o.period)), partial = sum.partial.filter((p) => !gaps.has(p.period));
+  const { obs, partial } = sum;
   const lastPeriod = obs.at(-1)!.period;
   const meta = snap.parts[partId(m, laender[0])]?.meta;
   const title = land ? landTitle(m.title, land) : m.title;
