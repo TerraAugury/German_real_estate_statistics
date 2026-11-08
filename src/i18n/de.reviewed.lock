@@ -1583,9 +1583,9 @@ insight.multiples.legend_dual:
   reviewed_by: Olivier
   reviewed_on: 2026-11-05
 insight.note.near_zero_rates:
-  en_hash: c246e1e2e07f7a17
+  en_hash: 95f83503cf8aed98
   reviewed_by: Olivier
-  reviewed_on: 2026-11-05
+  reviewed_on: 2026-11-08
 insight.note.price_yield_coverage:
   en_hash: b993ea3cd8eeb4c9
   reviewed_by: Olivier

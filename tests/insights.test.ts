@@ -447,7 +447,7 @@ describe('Base-year note on rebased level charts (ticket 6)', () => {
 });
 
 describe('Insight notes (tickets 7 and 8)', () => {
-  const NEAR_ZERO = 'The period is dominated by near-zero interest rates (to 2022); its average may not reflect normal conditions.';
+  const NEAR_ZERO = 'Interest rates were near zero until 2022, so the average over this period may not reflect normal conditions.';
   const COVERAGE = 'Prices and rents are vdp series covering offices across Germany. The initial yields elsewhere on this site are bulwiengesa series for office and retail core properties in the 7 major cities, so they are not directly comparable.';
   it('near-zero note on F and G only, coverage note on G only, in both languages', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
@@ -455,7 +455,7 @@ describe('Insight notes (tickets 7 and 8)', () => {
       if (!x.result.shown) continue;
       const [en, de] = (['en', 'de'] as const).map((l) => renderInsight(x.entry, x.result, x.series, l));
       expect(en.includes(NEAR_ZERO)).toBe(['f', 'g'].includes(x.entry.key));
-      expect(de.includes('Der Zeitraum ist von Nullzinsen geprägt')).toBe(['f', 'g'].includes(x.entry.key));
+      expect(de.includes('Die Zinsen lagen bis 2022 nahe null')).toBe(['f', 'g'].includes(x.entry.key));
       expect(en.includes(COVERAGE)).toBe(x.entry.key === 'g');
       expect(de.includes('Preise und Mieten sind vdp-Reihen')).toBe(x.entry.key === 'g');
     }
