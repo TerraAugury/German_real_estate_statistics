@@ -38,7 +38,7 @@ describe('Insights index', () => {
     const m = { ...insightsPage()[0], result: { shown: false, n: 8, reason: 'too_few' } } as InsightModel;
     const li = parse(renderInsightIndex([m], 'en')).querySelector('li')!;
     expect(li.querySelector('.num')).toBeNull();
-    expect(li.querySelector('.na')!.textContent).toBe('Insight not shown: too few observations (n = 8); at least 10 are needed.');
+    expect(li.querySelector('.na')!.textContent).toBe('Insight not shown: too few years of data (n = 8). We need at least 10.');
   });
 });
 

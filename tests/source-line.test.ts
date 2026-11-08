@@ -53,22 +53,22 @@ describe('source block', () => {
   describe('terms of use', () => {
     const terms = { name: 'ESCB Terms of Use for the Reuse of Statistics', url: 'https://t/escb' };
     const lineageOf = (s: Series, lang: 'en' | 'de' = 'en') => parse(sourceBlock(s, lang)).querySelector('details')!;
-    it('an original series states the terms and that its statistics and metadata are used unmodified', () => {
+    it('an original series states the terms and that its statistics and metadata are used unchanged', () => {
       const d = lineageOf({ ...direct, terms } as Series);
-      expect(flat(d)).toMatch(/Original statistics and metadata used unmodified, under the ESCB Terms of Use for the Reuse of Statistics ?\.$/);
+      expect(flat(d)).toMatch(/We use the original statistics and metadata unchanged, under the ESCB Terms of Use for the Reuse of Statistics ?\.$/);
       expect(d.querySelector('a[href="https://t/escb"]')!.textContent).toBe(terms.name);
     });
-    it('a derived series says it is derived from Bundesbank data and does not claim to be unmodified', () => {
+    it('a derived series says it is calculated from Bundesbank data and does not claim to be unchanged', () => {
       const text = flat(lineageOf({ ...direct, terms, derived: true } as Series));
-      expect(text).toMatch(/Derived from Deutsche Bundesbank data by us, under the ESCB Terms of Use for the Reuse of Statistics ?\.$/);
-      expect(text).not.toMatch(/unmodified/);
+      expect(text).toMatch(/We calculated this from Deutsche Bundesbank data, under the ESCB Terms of Use for the Reuse of Statistics ?\.$/);
+      expect(text).not.toMatch(/unchanged/);
     });
     it('DE has the same two statements', () => {
-      expect(flat(lineageOf({ ...direct, terms } as Series, 'de'))).toMatch(/Originalstatistik und Metadaten unverändert verwendet, gemäß ESCB Terms of Use for the Reuse of Statistics ?\.$/);
-      expect(flat(lineageOf({ ...direct, terms, derived: true } as Series, 'de'))).toMatch(/Aus Daten der Deutschen Bundesbank abgeleitet \(eigene Berechnung\), gemäß ESCB Terms/);
+      expect(flat(lineageOf({ ...direct, terms } as Series, 'de'))).toMatch(/Wir verwenden die Originalstatistik und die Metadaten unverändert, gemäß ESCB Terms of Use for the Reuse of Statistics ?\.$/);
+      expect(flat(lineageOf({ ...direct, terms, derived: true } as Series, 'de'))).toMatch(/Wir haben dies aus Daten der Deutschen Bundesbank berechnet, gemäß ESCB Terms/);
     });
     it('a series without terms (Destatis, DBnomics, OECD) shows no terms line', () => {
-      expect(flat(lineageOf(direct))).not.toMatch(/unmodified|Derived from/);
+      expect(flat(lineageOf(direct))).not.toMatch(/unchanged|We calculated this/);
     });
   });
   it('a DBnomics series keeps the DBnomics wording and has no original line', () => {

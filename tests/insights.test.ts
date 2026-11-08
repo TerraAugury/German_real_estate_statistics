@@ -327,7 +327,7 @@ describe('Insight rendering', () => {
   });
   it('too few observations: the section stays, with the reason and no chart', () => {
     const h = renderInsight(j, { shown: false, n: 7, reason: 'too_few' }, series, 'en');
-    expect(h).toContain('Insight not shown: too few observations (n = 7); at least 10 are needed.');
+    expect(h).toContain('Insight not shown: too few years of data (n = 7). We need at least 10.');
     expect(h).not.toContain('<svg');
   });
   it('a source line per series, each tagged own calculation, and a link to Methodology', () => {
@@ -346,9 +346,9 @@ describe('Insight rendering', () => {
   });
   it('Notes come first: a short history is named, then the series\' own Notes', () => {
     const h = renderInsight(j, { ...shown, short: true }, [{ ...series[0], stale: true }, series[1]], 'en');
-    expect(h).toContain('Note: Short history (3 years, 2020 to 2022): the average rests on little data.');
+    expect(h).toContain('Note: Short history (3 years, 2020 to 2022): the average is based on little data.');
     expect(h.indexOf('Short history')).toBeLessThan(h.indexOf('<figcaption>'));
-    expect(h).toContain(`Note: ${series[0].title.en}: Latest observation`);
+    expect(h).toContain(`Note: ${series[0].title.en}: Latest value`);
   });
   it('no short-history Note when the history is long enough', () => {
     expect(renderInsight(j, shown, series, 'en')).not.toContain('Short history');

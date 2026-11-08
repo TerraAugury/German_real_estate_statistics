@@ -15,14 +15,14 @@ source.original: "Original series as published: {title}; unit: {unit}"
 source.original.unit: "Original unit as published: {unit}"
 source.original.source: "Original source as named by the publisher: {source}"
 source.own: own calculation
-source.terms.original: "Original statistics and metadata used unmodified, under the {terms}."
-source.terms.derived: "Derived from Deutsche Bundesbank data by us, under the {terms}."
+source.terms.original: "We use the original statistics and metadata unchanged, under the {terms}."
+source.terms.derived: "We calculated this from Deutsche Bundesbank data, under the {terms}."
 footer.text: Operated by Terra Augury Ltd.
 note.prefix: Note
-note.stale: "Latest observation: {period}. {source} has not published newer data within the expected interval, so this series may be out of date."
-note.fetch_failed: "Could not refresh from {source} on {date}; showing data retrieved on {snapshot}."
-note.unavailable: "{source} no longer provides this series (not found on {date}); showing data retrieved on {snapshot}."
-note.revised: "{source} revised earlier values; detected {date}. This chart shows the latest published version."
+note.stale: "Latest value: {period}. {source} has not published newer data in the time we expect, so this series may be out of date."
+note.fetch_failed: "We could not update this from {source} on {date}. We show the data we retrieved on {snapshot}."
+note.unavailable: "{source} no longer provides this series. We did not find it on {date}. We show the data we retrieved on {snapshot}."
+note.revised: "{source} changed (revised) earlier values. We noticed this on {date}. The chart shows the latest published version."
 note.short_window: "Short history ({start} to {end})."
 note.short_cycle: "This window contains essentially one interest-rate cycle, so the pattern may not hold in other periods."
 note.scope.index: "Index (2013 = 100): shows change over time, not a price level in euros."
@@ -58,7 +58,7 @@ kpi.rent-index.title: Rent index (new lettings)
 kpi.initial-yield.title: Initial yield
 kpi.office-vacancy.title: Office vacancy rate
 kpi.transaction-volume.title: Transaction volume index
-kpi.not_available.licence: "Not available: licence for public redisplay not confirmed"
+kpi.not_available.licence: "Not available: the licence to show this data publicly is not confirmed yet."
 select.segment: Segment
 select.geo: Geography
 select.freq: Frequency
@@ -94,7 +94,7 @@ geo.de-st: Saxony-Anhalt
 geo.de-th: Thuringia
 note.partial_total: "Germany total is the sum of the Länder with data; no value for {laender} in {year}."
 kpi.noscript: "Switching Segment, geography or frequency needs JavaScript. Without it, this page shows its first view."
-na.source: "Not available: no Open source for {reason}"
+na.source: "Not available: no open data source for {reason}"
 na.kpi-price-index.logistics: a logistics property price index
 na.kpi-rent-index.logistics: logistics rents
 na.kpi-initial-yield.office: "office yields on their own; the source reports office and retail combined (see Commercial overall)"
@@ -109,12 +109,12 @@ na.kpi-transaction-volume.logistics: "logistics transaction volumes; the source 
 na.construction.retail: "retail buildings; Destatis has no separate building type for them"
 nav.segments: Segments
 nav.availability: Availability
-nav.breadcrumb: Breadcrumb
+nav.breadcrumb: "You are here"
 home.hero.more: Open this Insight
 home.spark.label: "Trend of {title}"
-latest.change.pct: "{change} on {period}"
-latest.change.diff: "{change} points on {period}"
-latest.unchanged: "No change on {period}"
+latest.change.pct: "{change} compared with {period}"
+latest.change.diff: "{change} points compared with {period}"
+latest.unchanged: "No change compared with {period}"
 home.segments: Browse by Segment
 segment.intro: "One national chart per KPI where a source has it; each chart opens the full KPI page."
 segment.availability: Which KPI and Segment combinations exist, and why the others do not
@@ -167,8 +167,8 @@ insight.tone.worse: worse
 insight.average: "average {value}"
 insight.chart.label: "{title}: {measure} over time"
 insight.unit.spread: percentage points
-insight.not_shown: "Insight not shown: too few observations (n = {n}); at least {min} are needed."
-insight.short_history: "Short history ({n} years, {from} to {to}): the average rests on little data."
+insight.not_shown: "Insight not shown: too few years of data (n = {n}). We need at least {min}."
+insight.short_history: "Short history ({n} years, {from} to {to}): the average is based on little data."
 insight.method: How this is calculated
 insight.axis.rebased: "index, {year} = 100"
 insight.multiples.title: "{kpi} against {reference}"

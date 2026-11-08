@@ -138,8 +138,8 @@ describe('Link panel', () => {
     // no hand-injected flags: a 2035 'now' makes the committed snapshot stale when loadSeries reads it
     const stale = loadSeries('construction-permits-office', new Date('2035-01-01'));
     expect(stale.stale).toBe(true);
-    expect(renderPanel(stale, ind, shown(14), 'en')).toContain(`Note: ${kpi.title.en}: Latest observation: `);
-    expect(renderPanel(kpi, ind, shown(14), 'en')).not.toContain('Latest observation');
+    expect(renderPanel(stale, ind, shown(14), 'en')).toContain(`Note: ${kpi.title.en}: Latest value: `);
+    expect(renderPanel(kpi, ind, shown(14), 'en')).not.toContain('Latest value');
   });
   it('real data: office permits vs Euribor and CPI give a shown Link', () => {
     const r = computeLink(

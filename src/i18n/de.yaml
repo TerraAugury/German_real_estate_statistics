@@ -15,14 +15,14 @@ source.original: "Originalreihe wie veröffentlicht: {title}; Einheit: {unit}"
 source.original.unit: "Originaleinheit wie veröffentlicht: {unit}"
 source.original.source: "Ursprungsquelle laut Herausgeber: {source}"
 source.own: eigene Berechnung
-source.terms.original: "Originalstatistik und Metadaten unverändert verwendet, gemäß {terms}."
-source.terms.derived: "Aus Daten der Deutschen Bundesbank abgeleitet (eigene Berechnung), gemäß {terms}."
+source.terms.original: "Wir verwenden die Originalstatistik und die Metadaten unverändert, gemäß {terms}."
+source.terms.derived: "Wir haben dies aus Daten der Deutschen Bundesbank berechnet, gemäß {terms}."
 footer.text: Betrieben von Terra Augury Ltd.
 note.prefix: Hinweis
-note.stale: "Letzte Beobachtung: {period}. {source} hat innerhalb des erwarteten Zeitraums keine neueren Daten veröffentlicht; die Reihe ist möglicherweise nicht aktuell."
-note.fetch_failed: "Aktualisierung ({source}) am {date} fehlgeschlagen; dargestellt sind die am {snapshot} abgerufenen Daten."
-note.unavailable: "{source} stellt diese Reihe nicht mehr bereit (am {date} nicht gefunden); dargestellt sind die am {snapshot} abgerufenen Daten."
-note.revised: "{source} hat frühere Werte revidiert (festgestellt am {date}). Dargestellt ist die zuletzt veröffentlichte Fassung."
+note.stale: "Letzter Wert: {period}. {source} hat in der erwarteten Zeit keine neueren Daten veröffentlicht. Die Reihe ist möglicherweise nicht aktuell."
+note.fetch_failed: "Am {date} konnten wir die Daten von {source} nicht aktualisieren. Wir zeigen die Daten, die wir am {snapshot} abgerufen haben."
+note.unavailable: "{source} stellt diese Reihe nicht mehr bereit. Wir haben sie am {date} nicht gefunden. Wir zeigen die Daten, die wir am {snapshot} abgerufen haben."
+note.revised: "{source} hat frühere Werte geändert (revidiert). Wir haben das am {date} bemerkt. Die Grafik zeigt die zuletzt veröffentlichte Fassung."
 note.short_window: "Kurze Zeitreihe ({start} bis {end})."
 note.short_cycle: "Der Zeitraum umfasst im Wesentlichen einen Zinszyklus; das Muster muss in anderen Zeiträumen nicht gelten."
 note.scope.index: "Index (2013 = 100): zeigt die Entwicklung, nicht ein Preisniveau in Euro."
@@ -58,7 +58,7 @@ kpi.rent-index.title: Mietindex (Neuvermietung)
 kpi.initial-yield.title: Anfangsrendite
 kpi.office-vacancy.title: Büroleerstandsquote
 kpi.transaction-volume.title: Transaktionsvolumenindex
-kpi.not_available.licence: "Nicht verfügbar: Lizenz für die öffentliche Wiedergabe nicht bestätigt"
+kpi.not_available.licence: "Nicht verfügbar: Die Lizenz, diese Daten öffentlich zu zeigen, ist noch nicht bestätigt."
 select.segment: Segment
 select.geo: Gebiet
 select.freq: Häufigkeit
@@ -94,7 +94,7 @@ geo.de-st: Sachsen-Anhalt
 geo.de-th: Thüringen
 note.partial_total: "Deutschland-Summe aus den Ländern mit Daten; für {laender} liegt für {year} kein Wert vor."
 kpi.noscript: "Zum Wechseln von Segment, Gebiet oder Häufigkeit wird JavaScript benötigt. Ohne JavaScript zeigt diese Seite die erste Ansicht."
-na.source: "Nicht verfügbar: keine offene Quelle für {reason}"
+na.source: "Nicht verfügbar: keine offene Datenquelle für {reason}"
 na.kpi-price-index.logistics: einen Preisindex für Logistikimmobilien
 na.kpi-rent-index.logistics: Logistikmieten
 na.kpi-initial-yield.office: "Büro-Renditen allein; die Quelle weist Büro und Einzelhandel zusammen aus (siehe Gewerbe gesamt)"
@@ -109,7 +109,7 @@ na.kpi-transaction-volume.logistics: "Transaktionsvolumen bei Logistikimmobilien
 na.construction.retail: "Einzelhandelsgebäude; Destatis führt dafür keine eigene Gebäudeart"
 nav.segments: Segmente
 nav.availability: Verfügbarkeit
-nav.breadcrumb: Brotkrümelnavigation
+nav.breadcrumb: "Sie sind hier"
 home.hero.more: Diesen Einblick öffnen
 home.spark.label: "Verlauf von {title}"
 latest.change.pct: "{change} gegenüber {period}"
@@ -167,7 +167,7 @@ insight.tone.worse: schlechter
 insight.average: "Durchschnitt {value}"
 insight.chart.label: "{title}: {measure} im Zeitverlauf"
 insight.unit.spread: Prozentpunkte
-insight.not_shown: "Einblick nicht angezeigt: zu wenige Beobachtungen (n = {n}); mindestens {min} sind nötig."
+insight.not_shown: "Einblick nicht angezeigt: zu wenige Jahre mit Daten (n = {n}). Wir brauchen mindestens {min}."
 insight.short_history: "Kurze Zeitreihe ({n} Jahre, {from} bis {to}): der Durchschnitt beruht auf wenigen Daten."
 insight.method: So wird gerechnet
 insight.axis.rebased: "Index, {year} = 100"
