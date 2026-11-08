@@ -1586,10 +1586,6 @@ links.cell.preset_other:
   en_hash: 080eceb9a4852cae
   reviewed_by: Olivier
   reviewed_on: 2026-11-08
-links.cell.preset_2:
-  en_hash: 490ba33c4f91f920
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-06
 kpi.price-index.definition:
   en_hash: 91cd6e3b16e44ad1
   reviewed_by: Olivier

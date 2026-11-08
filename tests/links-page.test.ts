@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { existsSync, readFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
 import { href, langs, slug } from '../src/lib/routes';
-import { t } from '../src/lib/i18n';
+import { loadStrings, t } from '../src/lib/i18n';
 import { KPIS } from '../src/lib/kpis';
 import { viewLinks } from '../src/lib/links';
 import { loadManifest } from '../src/lib/manifest';
@@ -87,5 +87,15 @@ describe.skipIf(built.length === 0)('Links page', () => {
   });
   it('the line reads as specified in English', () => {
     expect(t('en', 'links.chance.note')).toBe('With this many comparisons, a few boxes will look strong by chance alone. Treat a single strong box with caution, especially when n is small.');
+  });
+});
+
+describe('pre-set label on the Links matrix', () => {
+  // The Methodology says these boxes are marked "pre-set shift" at every shift: the label names the pre-set (N-1) whichever shift is selected, never the selected one.
+  it.each(langs)('%s: every label a pre-set box can carry names N-1 as the pre-set, and none speaks of the selected shift', (l) => {
+    const strings = loadStrings(l as 'en');
+    const keys = Object.keys(strings).filter((k) => k.startsWith('links.cell.preset'));
+    expect(keys.sort()).toEqual(['links.cell.preset', 'links.cell.preset_other']);
+    for (const k of keys) expect(strings[k]).toContain('N-1');
   });
 });
