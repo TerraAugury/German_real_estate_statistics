@@ -39,18 +39,18 @@ describe('latestBlock', () => {
   it('EN: value, unit, period and a signed change with its direction in words and glyph', () => {
     const doc = new JSDOM(latestBlock(s([['2024', 160], ['2025', 168.3]]), 'en')).window.document;
     expect(doc.querySelector('.num')!.textContent).toBe('168.3');
-    expect(text(doc.body.innerHTML)).toBe('168.3 index, 2013=100 2025 ▲ +5.2% on 2024');
+    expect(text(doc.body.innerHTML)).toBe('168.3 index, 2013=100 2025 ▲ +5.2% compared with 2024');
     expect(doc.querySelector('.delta')!.getAttribute('class')).toContain('up');
   });
   it('a percent unit shows the value as a percentage and the change in points', () => {
     const html = latestBlock(s([['2024', 8.4], ['2025', 7.9]], { change: 'diff', unit: { en: '%', de: '%' } }), 'en');
-    expect(text(html)).toBe('7.9% 2025 ▼ -0.5 points on 2024');
+    expect(text(html)).toBe('7.9% 2025 ▼ -0.5 points compared with 2024');
   });
   it('DE uses German number format and wording', () => {
     expect(text(latestBlock(s([['2024', 160], ['2025', 168.3]]), 'de'))).toMatch(/^168,3 Index, 2013=100 2025 ▲ \+5,2\s%\sgegenüber 2024$/);
   });
   it('a flat change says so; one observation shows no change', () => {
-    expect(text(latestBlock(s([['2024', 160], ['2025', 160.01]]), 'en'))).toContain('▬ No change on 2024');
+    expect(text(latestBlock(s([['2024', 160], ['2025', 160.01]]), 'en'))).toContain('▬ No change compared with 2024');
     expect(latestBlock(s([['2025', 5]]), 'en')).not.toContain('delta');
   });
 });

@@ -25,17 +25,17 @@ it('lineChart renders one wide and one narrow SVG with the same label', () => {
 });
 
 // Ticket 10: the +1 bar of an appraisal-based pair carries a "pre-set lag" label, apart from the "strongest" one.
-it('the pre-set lag label appears on a Link panel only for a pair in scope', () => {
+it('the pre-set shift label appears on a Link panel only for a pair in scope', () => {
   const labels = (preset: boolean) => new JSDOM(renderPanel(kpi, ind, shown(14), 'en', undefined, undefined, preset)).window.document.body.textContent!;
-  expect(labels(true)).toContain('pre-set lag');
-  expect(labels(false)).not.toContain('pre-set lag');
-  expect(new JSDOM(renderPanel(kpi, ind, shown(14), 'de', undefined, undefined, true)).window.document.body.textContent!).toContain('vorab gewählter Versatz');
+  expect(labels(true)).toContain('pre-set shift');
+  expect(labels(false)).not.toContain('pre-set shift');
+  expect(new JSDOM(renderPanel(kpi, ind, shown(14), 'de', undefined, undefined, true)).window.document.body.textContent!).toContain('vorab gewählte Verschiebung');
 });
 
 // Ticket 11: the noise band on the bars, and n with the adjusted n for quarterly Links.
 it('the Link panel says what the band is; a quarterly Link shows n and the adjusted n', () => {
   const annual = renderPanel(kpi, ind, shown(14), 'en');
-  expect(annual).toContain('chance alone often produces at lag 0 for n = 14');
+  expect(annual).toContain('chance alone often produces at shift 0 for n = 14');
   const q = loadSeries('price-index-de-total-q');
   const text = (h: string) => new JSDOM(h).window.document.body.textContent!;
   const r = { ...shown(44), lags: [lag(-1, 0.1), { lag: 0, n: 44, rho: 0.5 }, { lag: 1, n: 43, rho: 0.2 }] } as LinkResult;
@@ -68,8 +68,8 @@ describe('Link panel chart', () => {
 
   it('draws one chart (a wide and a narrow SVG), not one per series', () => {
     const d = dom(renderPanel(kpi, ind, early(), 'en'));
-    expect(d.querySelectorAll('figure.link-panel svg.wide[aria-label^="Levels of"]').length).toBe(1);
-    expect(d.querySelectorAll('figure.link-panel svg.narrow[aria-label^="Levels of"]').length).toBe(1);
+    expect(d.querySelectorAll('figure.link-panel svg.wide[aria-label^="Values of"]').length).toBe(1);
+    expect(d.querySelectorAll('figure.link-panel svg.narrow[aria-label^="Values of"]').length).toBe(1);
     expect(d.querySelector('.pair')).toBeNull();
   });
   it('puts the KPI unit on the left axis and the indicator unit on the right, each axis in its line’s colour', () => {
@@ -92,11 +92,11 @@ describe('Link panel chart', () => {
   });
   it('names both series in the accessible label and the legend, in both languages', () => {
     const en = renderPanel(kpi, ind, early(), 'en');
-    expect(dom(en).querySelector('svg.wide')!.getAttribute('aria-label')).toBe(`Levels of ${kpi.title.en} and ${ind.title.en}`);
+    expect(dom(en).querySelector('svg.wide')!.getAttribute('aria-label')).toBe(`Values of ${kpi.title.en} and ${ind.title.en}`);
     expect(en).toContain(`Blue line, left axis: ${kpi.title.en}. Ochre line, right axis: ${ind.title.en}.`);
     const de = renderPanel(kpi, ind, early(), 'de');
     // German is a draft until reviewed, so the label may carry the [DRAFT] marker.
-    expect(dom(de).querySelector('svg.wide')!.getAttribute('aria-label')).toContain(`Niveau: ${kpi.title.de} und ${ind.title.de}`);
+    expect(dom(de).querySelector('svg.wide')!.getAttribute('aria-label')).toContain(`Werte: ${kpi.title.de} und ${ind.title.de}`);
     expect(de).toContain(`Blaue Linie, linke Achse: ${kpi.title.de}. Ockerfarbene Linie, rechte Achse: ${ind.title.de}.`);
   });
   it('a series that starts later has no line before it starts', () => {
@@ -109,18 +109,18 @@ describe('Link panel chart', () => {
 describe('Link panel', () => {
   it('EN: exact co-movement sentence with period and n, both series named, note + strongest-of-N', () => {
     const h = renderPanel(kpi, ind, shown(14), 'en');
-    expect(h).toContain('This shows how two series moved together over 2009 to 2025 (n = 14). It does not show that one causes the other, and it is not a forecast.');
+    expect(h).toContain('This shows how two series moved together over 2009 to 2025 (n = 14, the number of periods compared). Rank correlation runs from -1 (opposite ways) to +1 (same way). It does not show that one causes the other, and it is not a forecast.');
     expect(h).toContain(kpi.title.en);
     expect(h).toContain(ind.title.en);
-    expect(h).toContain('Strongest of 3 lags tested; chosen after looking at the data, so likely overstated.');
+    expect(h).toContain('Strongest of 3 shifts tested. We chose it after looking at the data, so it is likely overstated.');
     expect(h).toContain('<svg');
   });
   it('DE: exact sentence', () => {
     const h = renderPanel(kpi, ind, shown(14), 'de');
-    expect(h).toContain('Dargestellt ist, wie sich zwei Reihen im Zeitraum 2009 bis 2025 (n = 14) gemeinsam entwickelt haben. Das belegt keine Ursache-Wirkungs-Beziehung und ist keine Prognose.');
+    expect(h).toContain('Die Grafik zeigt, wie sich zwei Reihen im Zeitraum 2009 bis 2025 gemeinsam entwickelt haben (n = 14, Zahl der verglichenen Zeiträume). Die Rangkorrelation reicht von -1 (gegenläufig) bis +1 (gleichläufig). Das belegt keine Ursache-Wirkungs-Beziehung und ist keine Prognose.');
   });
   it('small sample Note only for annual n < 20 at lag 0', () => {
-    expect(renderPanel(kpi, ind, shown(14), 'en')).toContain('Based on only 14 annual observations.');
+    expect(renderPanel(kpi, ind, shown(14), 'en')).toContain('Based on only 14 yearly values.');
     expect(renderPanel(kpi, ind, shown(20), 'en')).not.toContain('Based on only');
   });
   it('Notes in the fixed order: the KPI’s short history, then small sample (spec section 9)', () => {
@@ -130,16 +130,16 @@ describe('Link panel', () => {
   });
   it('not-shown state is visible, with n, in both languages, and no charts', () => {
     const r: LinkResult = { shown: false, n0: 7, reason: 'too_few' };
-    expect(renderPanel(kpi, ind, r, 'en')).toContain('Link not shown: too few observations (n = 7)');
-    expect(renderPanel(kpi, ind, r, 'de')).toContain('nicht angezeigt: zu wenige Beobachtungen (n = 7)');
+    expect(renderPanel(kpi, ind, r, 'en')).toContain('Link not shown: too few periods to compare (n = 7)');
+    expect(renderPanel(kpi, ind, r, 'de')).toContain('nicht angezeigt: zu wenige Zeiträume zum Vergleich (n = 7)');
     expect(renderPanel(kpi, ind, r, 'en')).not.toContain('<svg');
   });
   it('inherits series Notes prefixed with the series title', () => {
     // no hand-injected flags: a 2035 'now' makes the committed snapshot stale when loadSeries reads it
     const stale = loadSeries('construction-permits-office', new Date('2035-01-01'));
     expect(stale.stale).toBe(true);
-    expect(renderPanel(stale, ind, shown(14), 'en')).toContain(`Note: ${kpi.title.en}: Latest observation: `);
-    expect(renderPanel(kpi, ind, shown(14), 'en')).not.toContain('Latest observation');
+    expect(renderPanel(stale, ind, shown(14), 'en')).toContain(`Note: ${kpi.title.en}: Latest value: `);
+    expect(renderPanel(kpi, ind, shown(14), 'en')).not.toContain('Latest value');
   });
   it('real data: office permits vs Euribor and CPI give a shown Link', () => {
     const r = computeLink(

@@ -934,7 +934,7 @@
   provisional: false
   cleared: *permission
   title: { en: "10-year Bund yield", de: "Rendite 10-jähriger Bundesanleihen" }
-  unit: { en: "% p.a.", de: "% p. a." }
+  unit: { en: "% per year", de: "% pro Jahr" }
   frequency: monthly
   change: diff
   expected_start: 1972
@@ -952,7 +952,7 @@
   attribution: &ecb_attribution { en: "Source: ECB", de: "Quelle: EZB" }
   provisional: false
   title: { en: "Euribor 3-month, monthly average", de: "Euribor 3 Monate, Monatsdurchschnitt" }
-  unit: { en: "% p.a.", de: "% p. a." }
+  unit: { en: "% per year", de: "% pro Jahr" }
   frequency: monthly
   change: diff
   expected_start: 1994
@@ -970,8 +970,8 @@
   attribution: *bbk_attribution
   provisional: false
   cleared: *permission
-  title: { en: "New-business loan rate, non-financial corporations, over EUR 1m, fixation over 5 years", de: "Kreditzins Neugeschäft, nichtfinanzielle Kapitalgesellschaften, über 1 Mio. EUR, Zinsbindung über 5 Jahre" }
-  unit: { en: "% p.a.", de: "% p. a." }
+  title: { en: "Interest rate on new loans to non-financial corporations, over EUR 1 million, rate fixed for over 5 years", de: "Zins auf neue Kredite an nichtfinanzielle Kapitalgesellschaften, über 1 Mio. EUR, Zinsbindung über 5 Jahre" }
+  unit: { en: "% per year", de: "% pro Jahr" }
   frequency: monthly
   change: diff
   expected_start: 2003
@@ -988,7 +988,7 @@
   licence: *destatis_licence
   attribution: *destatis_attribution
   provisional: false
-  title: { en: "Consumer price index, Germany", de: "Verbraucherpreisindex, Deutschland" }
+  title: { en: "Consumer price index (CPI), Germany", de: "Verbraucherpreisindex, Deutschland" }
   unit: { en: "index, 2020=100", de: "Index, 2020=100" }
   frequency: monthly
   change: pct
@@ -1007,7 +1007,7 @@
   attribution: *bbk_attribution
   provisional: false
   cleared: *permission
-  title: { en: "Real GDP, Germany", de: "Reales Bruttoinlandsprodukt, Deutschland" }
+  title: { en: "Real GDP (gross domestic product, adjusted for inflation), Germany", de: "Reales Bruttoinlandsprodukt (BIP, inflationsbereinigt), Deutschland" }
   unit: { en: "index, 2020=100", de: "Index, 2020=100" }
   frequency: quarterly
   change: pct
@@ -1119,7 +1119,7 @@
   licence: *destatis_licence
   attribution: *destatis_attribution
   provisional: false
-  title: { en: "Persons in employment: information and communication, finance, real estate and business services (sections J, K-N), Germany", de: "Erwerbstätige: Information und Kommunikation, Finanzierung, Immobilien und Unternehmensdienstleistungen (Abschnitte J, K-N), Deutschland" }
+  title: { en: "People in work: information and communication, finance, real estate and business services (sections J and K to N), Germany", de: "Erwerbstätige: Information und Kommunikation, Finanzierung, Immobilien und Unternehmensdienstleistungen (Wirtschaftsabschnitte J und K bis N), Deutschland" }
   unit: { en: "thousand persons", de: "Tsd. Personen" }
   frequency: annual
   change: pct

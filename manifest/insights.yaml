@@ -11,7 +11,7 @@
 - key: a
   title: { en: "Initial yield spread over the 10-year Bund, by City class", de: "Renditeabstand der Anfangsrendite zur 10-jährigen Bundesanleihe, nach Städtegruppe" }
   measure: { en: "spread of the 7-city initial yield over the 10-year Bund yield", de: "Abstand der Anfangsrendite in den 7 Großstädten zur Rendite zehnjähriger Bundesanleihen" }
-  definition: { en: "The extra return investors require for holding property income, which is risky and hard to sell, instead of a safe government bond. It is the risk premium on property.", de: "Der zusätzliche Ertrag, den Anleger für Immobilieneinnahmen verlangen, die riskant und schwer verkäuflich sind, statt einer sicheren Staatsanleihe. Er ist die Risikoprämie von Immobilien." }
+  definition: { en: "The extra return investors want for holding property income instead of a safe government bond. Property income is risky and hard to sell. This extra return is the risk premium on property.", de: "Der zusätzliche Ertrag, den Anleger verlangen, wenn sie Immobilieneinnahmen statt einer sicheren Staatsanleihe halten. Immobilieneinnahmen sind riskant und schwer verkäuflich. Dieser Zusatzertrag ist die Risikoprämie von Immobilien." }
   headline: spread
   better: higher
   template: spread
@@ -35,7 +35,7 @@
 - key: g
   title: { en: "Office prices vs rents", de: "Büropreise und Büromieten" }
   measure: { en: "ratio of the office price index to the rent index", de: "Verhältnis des Büropreisindex zum Mietindex" }
-  definition: { en: "How much investors pay for each unit of rent. It is a price-to-rent valuation measure and shows how prices compare with the income they buy.", de: "Wie viel Anleger für jede Einheit Miete zahlen. Das Verhältnis von Preis zu Miete ist ein Bewertungsmaß und zeigt, wie sich die Preise zu den Einnahmen verhalten, die man damit erwirbt." }
+  definition: { en: "How much investors pay for each unit of rent. This price-to-rent ratio shows how prices compare with the income they buy.", de: "Wie viel Anleger für jede Einheit Miete zahlen. Dieses Verhältnis von Preis zu Miete zeigt, wie sich die Preise zu den Einnahmen verhalten, die man damit erwirbt." }
   headline: ratio
   better: none
   indexed: true
@@ -113,7 +113,7 @@
 - key: e
   title: { en: "Office vacancy: 7 major cities vs 127 towns", de: "Büroleerstand: A-Städte und 127 Städte" }
   measure: { en: "spread of office vacancy in the 7 major cities over the 127 towns", de: "Abstand der Büroleerstandsquote in den 7 Großstädten zu den 127 Städten" }
-  definition: { en: "How the balance of supply and demand for office space in the big cities compares with that in a wider group of towns. It shows where space is harder to let.", de: "Wie sich das Verhältnis von Angebot und Nachfrage bei Büroflächen in den großen Städten zu dem in einer größeren Gruppe von Städten verhält. Es zeigt, wo sich Flächen schwerer vermieten lassen." }
+  definition: { en: "Compares supply and demand for office space in the big cities with a wider group of towns. It shows where space is harder to let.", de: "Vergleicht Angebot und Nachfrage bei Büroflächen in den großen Städten mit einer größeren Gruppe von Städten. Es zeigt, wo sich Flächen schwerer vermieten lassen." }
   headline: spread
   better: lower
   template: spread

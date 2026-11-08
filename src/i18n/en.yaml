@@ -15,38 +15,38 @@ source.original: "Original series as published: {title}; unit: {unit}"
 source.original.unit: "Original unit as published: {unit}"
 source.original.source: "Original source as named by the publisher: {source}"
 source.own: own calculation
-source.terms.original: "Original statistics and metadata used unmodified, under the {terms}."
-source.terms.derived: "Derived from Deutsche Bundesbank data by us, under the {terms}."
+source.terms.original: "We use the original statistics and metadata unchanged, under the {terms}."
+source.terms.derived: "We calculated this from Deutsche Bundesbank data, under the {terms}."
 footer.text: Operated by Terra Augury Ltd.
 note.prefix: Note
-note.stale: "Latest observation: {period}. {source} has not published newer data within the expected interval, so this series may be out of date."
-note.fetch_failed: "Could not refresh from {source} on {date}; showing data retrieved on {snapshot}."
-note.unavailable: "{source} no longer provides this series (not found on {date}); showing data retrieved on {snapshot}."
-note.revised: "{source} revised earlier values; detected {date}. This chart shows the latest published version."
+note.stale: "Latest value: {period}. {source} has not published newer data in the time we expect, so this series may be out of date."
+note.fetch_failed: "We could not update this from {source} on {date}. We show the data we retrieved on {snapshot}."
+note.unavailable: "{source} no longer provides this series. We did not find it on {date}. We show the data we retrieved on {snapshot}."
+note.revised: "{source} changed (revised) earlier values. We noticed this on {date}. The chart shows the latest published version."
 note.short_window: "Short history ({start} to {end})."
-note.short_cycle: "This window contains essentially one interest-rate cycle, so the pattern may not hold in other periods."
-note.scope.index: "Index (2013 = 100): shows change over time, not a price level in euros."
-note.scope.city_class: "Aggregate for {class}, not an individual city."
+note.short_cycle: "This period covers about one interest-rate cycle. The pattern may not hold in other periods."
+note.scope.index: "Index (2013 = 100): we set 2013 to 100. It shows change over time, not a price in euros."
+note.scope.city_class: "Combined figure for {class}, not for one city."
 note.scope.combined: "Office and retail combined; no separate office or retail figure."
 link.title: "{kpi} and {indicator}"
-link.scope: "National indicator against {geography}"
+link.scope: "National indicator compared with {geography}"
 geo.germany: Germany
-link.sentence: "This shows how two series moved together over {period} (n = {n}). It does not show that one causes the other, and it is not a forecast."
+link.sentence: "This shows how two series moved together over {period} (n = {n}, the number of periods compared). Rank correlation runs from -1 (opposite ways) to +1 (same way). It does not show that one causes the other, and it is not a forecast."
 link.period: "{from} to {to}"
-link.headline: "Rank correlation (Spearman) of changes at lag 0: {rho} (n = {n})"
-link.not_shown: "Link not shown: too few observations (n = {n})"
+link.headline: "Rank correlation (Spearman) of changes at shift 0: {rho} (n = {n})"
+link.not_shown: "Link not shown: too few periods to compare (n = {n})"
 link.not_shown.constant: "Link not shown: one series did not change over the period (n = {n})"
-link.strongest: "Strongest of {n} lags tested; chosen after looking at the data, so likely overstated."
+link.strongest: "Strongest of {n} shifts tested. We chose it after looking at the data, so it is likely overstated."
 link.strongest.mark: strongest
-link.small_sample: "Based on only {n} annual observations. With a sample this small the pattern may be coincidental."
-link.lag.label: "Lag in years (positive: indicator moved earlier, negative: later)"
-link.rho.label: Spearman rho
-link.overlay.chart: "Levels of {kpi} and {indicator}"
+link.small_sample: "Based on only {n} yearly values. With so little data, the pattern may be coincidental."
+link.lag.label: "Shift in years (positive: indicator moved earlier, negative: later)"
+link.rho.label: "Rank correlation"
+link.overlay.chart: "Values of {kpi} and {indicator}"
 link.overlay.legend: "Blue line, left axis: {kpi}. Ochre line, right axis: {indicator}."
-link.lags.label: "Lag profile of {kpi} and {indicator}"
+link.lags.label: "Rank correlation at each shift: {kpi} and {indicator}"
 nav.sources: Sources and licences
 sources.title: Sources and licences
-sources.intro: "One row per series shown on this site. Series are fetched directly from the publisher or through DBnomics, which aggregates them; the data keeps the publisher's licence."
+sources.intro: "One row per series shown on this site. We fetch each series directly from the publisher, or through DBnomics, which collects data from many publishers. The data keeps the publisher's licence."
 sources.col.series: Series
 sources.col.publisher: Publisher
 sources.col.id: Series id
@@ -58,7 +58,7 @@ kpi.rent-index.title: Rent index (new lettings)
 kpi.initial-yield.title: Initial yield
 kpi.office-vacancy.title: Office vacancy rate
 kpi.transaction-volume.title: Transaction volume index
-kpi.not_available.licence: "Not available: licence for public redisplay not confirmed"
+kpi.not_available.licence: "Not available: the licence to show this data publicly is not confirmed."
 select.segment: Segment
 select.geo: Geography
 select.freq: Frequency
@@ -92,34 +92,34 @@ geo.de-mv: Mecklenburg-Western Pomerania
 geo.de-sn: Saxony
 geo.de-st: Saxony-Anhalt
 geo.de-th: Thuringia
-note.partial_total: "Germany total is the sum of the Länder with data; no value for {laender} in {year}."
+note.partial_total: "The Germany total adds up the Länder (federal states) that have data. There is no value for {laender} in {year}."
 kpi.noscript: "Switching Segment, geography or frequency needs JavaScript. Without it, this page shows its first view."
 na.source: "Not available: no Open source for {reason}"
 na.kpi-price-index.logistics: a logistics property price index
 na.kpi-rent-index.logistics: logistics rents
-na.kpi-initial-yield.office: "office yields on their own; the source reports office and retail combined (see Commercial overall)"
-na.kpi-initial-yield.retail: "retail yields on their own; the source reports office and retail combined (see Commercial overall)"
+na.kpi-initial-yield.office: "office yields on their own (the source reports office and retail combined, see Commercial overall)"
+na.kpi-initial-yield.retail: "retail yields on their own (the source reports office and retail combined, see Commercial overall)"
 na.kpi-initial-yield.logistics: logistics yields
 na.kpi-office-vacancy.retail: retail vacancy
 na.kpi-office-vacancy.logistics: logistics vacancy
 na.kpi-office-vacancy.commercial-overall: vacancy across all commercial property
-na.kpi-transaction-volume.office: "office transaction volumes; the source covers all commercial property"
-na.kpi-transaction-volume.retail: "retail transaction volumes; the source covers all commercial property"
-na.kpi-transaction-volume.logistics: "logistics transaction volumes; the source covers all commercial property"
-na.construction.retail: "retail buildings; Destatis has no separate building type for them"
+na.kpi-transaction-volume.office: "office transaction volumes (the source covers all commercial property together)"
+na.kpi-transaction-volume.retail: "retail transaction volumes (the source covers all commercial property together)"
+na.kpi-transaction-volume.logistics: "logistics transaction volumes (the source covers all commercial property together)"
+na.construction.retail: "retail buildings (the Federal Statistical Office, Destatis, has no separate building type for them)"
 nav.segments: Segments
 nav.availability: Availability
-nav.breadcrumb: Breadcrumb
+nav.breadcrumb: "You are here"
 home.hero.more: Open this Insight
 home.spark.label: "Trend of {title}"
-latest.change.pct: "{change} on {period}"
-latest.change.diff: "{change} points on {period}"
-latest.unchanged: "No change on {period}"
-home.segments: Browse by Segment
-segment.intro: "One national chart per KPI where a source has it; each chart opens the full KPI page."
+latest.change.pct: "{change} compared with {period}"
+latest.change.diff: "{change} points compared with {period}"
+latest.unchanged: "No change compared with {period}"
+home.segments: "Browse by Segment (property type)"
+segment.intro: "We show one chart for Germany per KPI (key figure) where a source has it. Each chart opens the full KPI page."
 segment.availability: Which KPI and Segment combinations exist, and why the others do not
 availability.title: Availability
-availability.intro: "Every KPI for every Segment. A gap is stated with its reason; nothing is planned for later."
+availability.intro: "Every KPI (key figure) for every Segment (property type). We give the reason for each gap. Nothing is planned for later. An Open source is a data source that is free to use and may be shown publicly."
 availability.kpi: KPI
 availability.available: "Available ({geo})"
 nav.links: Links
@@ -130,7 +130,7 @@ terms.title: Terms and conditions
 privacy.title: Privacy policy
 legal-notice.title: Legal notice
 links.title: Links
-links.intro: "Each row is a KPI and each column an economic indicator. A box shows how closely their changes moved together, with the number of pairs (n) it is based on. Where a Link cannot be shown, the box says “Not shown”. Each KPI appears in its main view; click a box to open the full Link on the KPI page."
+links.intro: "Each row is a KPI (key figure) and each column an economic indicator (a figure from the wider economy). A box shows how closely their changes moved together. It also shows n, the number of periods compared. Where we cannot show a Link, the box says “Not shown”. Each KPI appears in its main view. Click a box to open the full Link on the KPI page."
 insight.back: Back to the Insights overview
 link.back: Back to the Links table
 links.heading: Links with economic indicators
@@ -138,11 +138,11 @@ links.cell.n: "n = {n}"
 links.scale.neg: "-1: opposite ways"
 links.scale.zero: "0: no pattern"
 links.scale.pos: "+1: same way"
-links.legend: "Colour: olive green means the two tended to rise and fall together; violet means one tended to rise when the other fell. The deeper the colour, the closer the match. This shows that they move together, not that one causes the other or predicts it."
+links.legend: "Colour: olive green means the two tended to rise and fall together. Violet means one tended to rise when the other fell. The deeper the colour, the closer the match. This shows that they move together. It does not show that one causes the other or predicts it."
 links.cell.not_shown: "Not shown (n = {n})"
 indicator.bund-yield-10y: 10-year Bund yield
 indicator.euribor-3m: Euribor 3 months
-indicator.loan-rate-nfc: Loan rate, non-financial corporations, fixation over 5 years
+indicator.loan-rate-nfc: "Loan rate, non-financial corporations, rate fixed for over 5 years"
 indicator.cpi: Consumer price index
 indicator.gdp-real: Real GDP
 indicator.unemployment-rate: Unemployment rate
@@ -150,12 +150,12 @@ indicator.construction-price: Construction price index
 indicator.oecd-confidence: OECD business confidence
 nav.insights: Insights
 insights.title: Insights
-insights.intro: "Each Insight puts several series on one axis over a stated period, with a fixed one-line reading. It describes what the lines show; it does not show a cause and is not a forecast."
+insights.intro: "Each Insight puts several series on one axis over a period we state. It comes with a fixed one-line reading. The reading describes what the lines show. It does not show a cause, and it is not a forecast. Gaps between two percentages are given in percentage points: from 4% to 5% is 1 percentage point."
 insights.jump: Insights on this page
 insights.tone.more: How better and worse are judged
-insights.tone.legend: "A light green plate reads better and a light pink plate worse, for an investor in office property. A plain plate is in line with the average, or neither side is better. Screen readers also get the words “better” and “worse”."
-insights.empty: "No Insights are published yet; the licences for their data are being confirmed."
-insight.template.spread: "The latest {measure} is {latest} points, {verdict} the {from}-{to} average of {mean} points."
+insights.tone.legend: "A light green background means better and a light pink background means worse, for an investor in office property. A plain background means in line with the average, or neither side is better. Screen readers also read out the words “better” and “worse”."
+insights.empty: "No Insights are published yet. We are still confirming the licences for their data."
+insight.template.spread: "The latest {measure} is {latest} percentage points. This is {verdict} the {from}-{to} average of {mean} percentage points."
 insight.verdict.higher: higher than
 insight.verdict.lower: lower than
 insight.verdict.in_line: in line with
@@ -167,84 +167,84 @@ insight.tone.worse: worse
 insight.average: "average {value}"
 insight.chart.label: "{title}: {measure} over time"
 insight.unit.spread: percentage points
-insight.not_shown: "Insight not shown: too few observations (n = {n}); at least {min} are needed."
-insight.short_history: "Short history ({n} years, {from} to {to}): the average rests on little data."
+insight.not_shown: "Insight not shown: too few years of data (n = {n}). We need at least {min}."
+insight.short_history: "Short history ({n} years, {from} to {to}): the average is based on little data."
 insight.method: How this is calculated
 insight.axis.rebased: "index, {year} = 100"
 insight.multiples.title: "{kpi} against {reference}"
-insight.multiples.label: "{kpi} and {reference}, rebased"
+insight.multiples.label: "{kpi} and {reference}, set to 100 in the base year"
 insight.multiples.legend: "Blue line: {kpi}. Ochre line: {reference}. The shading is blue where the blue line is above the ochre line and red where it is below."
 insight.multiples.legend_dual: "Blue line, left axis: {kpi}. Ochre line, right axis: {reference}. The axes have different units, so the lines are not compared by height."
 insight.note.near_zero_rates: "Interest rates were near zero until 2022, so the average over this period may not reflect normal conditions."
-insight.note.price_yield_coverage: "Prices and rents are vdp series covering offices across Germany. The initial yields elsewhere on this site are bulwiengesa series for office and retail core properties in the 7 major cities, so they are not directly comparable."
-insight.multiples.base_note: "Both series set to {year} = 100; the size of the gap depends on this choice."
-insight.axis.growth: "year-on-year change, %"
-insight.multiples.label_growth: "{kpi} and {reference}, year-on-year change"
-insight.multiples.legend_growth: "Blue line: year-on-year change of {kpi}. Ochre line: year-on-year change of {reference}. The shading is blue where the blue line is above the ochre line and red where it is below; the gap between the lines in the latest year is the headline number."
-insight.multiples.legend_growth_real: "Blue line: year-on-year change of {kpi}, adjusted for consumer prices. Ochre line: year-on-year change of {reference}. The shading is blue where the blue line is above the ochre line and red where it is below; the gap between the lines in the latest year is the headline number."
-insight.multiples.legend_growth_rate: "Blue line: year-on-year change of {kpi}. Ochre line: year-on-year change of {reference}. The shading is blue where the blue line is above the ochre line and red where it is below."
+insight.note.price_yield_coverage: "Prices and rents are vdp series for offices across Germany. The initial yields elsewhere on this site are bulwiengesa series for office and retail core properties in the 7 major cities. So they are not directly comparable."
+insight.multiples.base_note: "We set both series to {year} = 100. The size of the gap depends on this choice."
+insight.axis.growth: "change from the year before, %"
+insight.multiples.label_growth: "{kpi} and {reference}, change from the year before"
+insight.multiples.legend_growth: "Blue line: change of {kpi} from the year before. Ochre line: change of {reference} from the year before. The shading is blue where the blue line is above the ochre line and red where it is below. The gap between the lines in the latest year is the big number."
+insight.multiples.legend_growth_real: "Blue line: change of {kpi} from the year before, adjusted for consumer prices. Ochre line: change of {reference} from the year before. The shading is blue where the blue line is above the ochre line and red where it is below. The gap between the lines in the latest year is the big number."
+insight.multiples.legend_growth_rate: "Blue line: change of {kpi} from the year before. Ochre line: change of {reference} from the year before. The shading is blue where the blue line is above the ochre line and red where it is below."
 insight.multiples.real_growth: "Real growth = (1 + rent growth) / (1 + inflation) − 1, so it differs slightly from the gap between the two lines."
-insight.template.real-construction: "Real construction prices changed by {latest}% in {to}, {verdict} the {from}-{to} average of {mean}%."
+insight.template.real-construction: "Real construction prices changed by {latest}% in {to}. This is {verdict} the {from}-{to} average of {mean}%."
 insight.multiples.real_growth.real-construction: "Real growth = (1 + construction price growth) / (1 + inflation) − 1, so it differs slightly from the gap between the two lines."
 insight.index.title: Real construction cost index
 insight.index.reading: "Real construction prices changed by {total}% between {from} and {to}, or {annual}% a year."
 insight.index.unit: "percent since {from}"
 insight.index.label: "Real construction cost index, {year} = 100, over time"
-insight.index.legend: "Blue line: the construction price index divided by the consumer price index, both set to {year} = 100 and compounded year by year. The dashed line marks 100, the level in {year}."
-insight.index.base_note: "Index set to {year} = 100; the level depends on this choice."
-insight.note.index_scope: "Construction prices are for office buildings; CPI is for a household basket."
-insight.template.completions-permits: "Completions were {latest} times the permits issued two years earlier, {verdict} the {from}-{to} average of {mean}."
+insight.index.legend: "Blue line: the construction price index divided by the consumer price index. Both are set to {year} = 100 and compounded year by year (each year's change builds on the year before). The dashed line marks 100, the level in {year}."
+insight.index.base_note: "We set the index to {year} = 100. The level depends on this choice."
+insight.note.index_scope: "Construction prices are for office buildings. CPI (the consumer price index) is for a basket of goods that households buy."
+insight.template.completions-permits: "Completions were {latest} times the permits issued two years earlier. This is {verdict} the {from}-{to} average of {mean}."
 insight.unit.ratio: times
 insight.shift.2: two years earlier
 insight.shifted: "{title}, {shift}"
-kpi.insights.heading: Insights using this KPI
-insight.template.price-rent: "The price index stands at {latest} times the rent index, {verdict} the {from}-{to} average of {mean}."
-insight.template.real-rents: "Real office rents changed by {latest}% in {to}, {verdict} the {from}-{to} average of {mean}%."
+kpi.insights.heading: "Insights that use this KPI (key figure)"
+insight.template.price-rent: "The price index stands at {latest} times the rent index. This is {verdict} the {from}-{to} average of {mean}."
+insight.template.real-rents: "Real office rents changed by {latest}% in {to}. This is {verdict} the {from}-{to} average of {mean}%."
 insight.unit.growth: percent
-insight.template.office-employment: "Office vacancy changed by {latest} points in {to} while office employment grew {emp}%; the {from}-{to} average vacancy change is {mean} points."
+insight.template.office-employment: "Office vacancy changed by {latest} percentage points in {to}, while office employment grew {emp}%. The {from}-{to} average vacancy change is {mean} percentage points."
 insight.unit.change: percentage points
-insight.context.legend: "Blue line: {measure}, in percentage points. Ochre line: year-on-year growth of {title}, in percent. Both are drawn on one axis."
-link.preset.mark: "pre-set lag"
-links.lag.label: "Indicator timing"
+insight.context.legend: "Blue line: {measure}, in percentage points. Ochre line: growth of {title} from the year before, in percent. Both use one axis."
+link.preset.mark: "pre-set shift"
+links.lag.label: "Indicator shift"
 links.lag.0: "Same year"
 links.lag.1: "Indicator 1 year earlier (N-1)"
 links.lag.2: "Indicator 2 years earlier (N-2)"
-links.cell.preset: "pre-set lag: N-1"
-links.preset.note: "Appraisal-based yields and prices react to interest rates with a delay. For these boxes, one year earlier (N-1) is set in advance on economic grounds, not chosen from the results."
-link.band.legend: "Grey band: the range of rank correlation that chance alone often produces at lag 0 for n = {n} (±{band}; each bar uses its own n). A rough guide, not a significance test."
-link.band.adjusted: "Quarterly changes are each compared with a year earlier, so neighbouring quarters overlap; the band uses an adjusted n = {eff} (n ÷ 4, rounded down)."
+links.cell.preset: "pre-set shift: N-1"
+links.preset.note: "Appraisal-based yields and prices react to interest rates with a delay. For these boxes, we set one year earlier (N-1) in advance, on economic grounds. We did not choose it from the results."
+link.band.legend: "Grey band: the range of rank correlation that chance alone often produces at shift 0 for n = {n} (±{band}; each bar uses its own n). It is a rough guide, not a significance test."
+link.band.adjusted: "Quarterly changes are each compared with a year earlier, so neighbouring quarters overlap. The band uses an adjusted n = {eff} (n ÷ 4, rounded down)."
 links.cell.noise: "within chance range"
 links.noise.legend: "Grey: within the range that chance alone often produces for this number of years."
 links.chance.note: "With this many comparisons, a few boxes will look strong by chance alone. Treat a single strong box with caution, especially when n is small."
-note.nominal.inflation: "This KPI and this indicator are both in nominal terms, so their link partly reflects shared inflation."
-note.nominal.gdp: "This KPI is in nominal euros and real GDP is adjusted for inflation, so this link compares nominal with real."
+note.nominal.inflation: "This KPI and this indicator are both nominal, meaning not adjusted for inflation. So their Link partly reflects shared inflation."
+note.nominal.gdp: "This KPI is in nominal euros (not adjusted for inflation). Real GDP is adjusted for inflation. So this Link compares nominal with real."
 links.nominal.tag: "Nominal euros*"
-links.nominal.note: "* Rents and transaction volume are in nominal euros. Their links to CPI and construction prices partly reflect shared inflation, and their link to real GDP compares nominal with real."
+links.nominal.note: "* Nominal euros are not adjusted for inflation. Rents and transaction volume are in nominal euros. Their Links to the consumer price index and construction prices partly reflect shared inflation. Their Link to real GDP compares nominal with real."
 links.row.kpi-price-index: "Commercial overall · Germany"
 links.row.kpi-rent-index: "Office · Germany"
 links.row.kpi-initial-yield: "Office + retail · 7 cities"
 links.row.kpi-office-vacancy: "Office · 7 cities"
 links.row.kpi-transaction-volume: "Commercial overall · Germany"
 links.row.construction: "Office · Germany"
-links.rows.note: "Rows cover different segments and areas; every indicator is national."
-links.cell.preset_other: "pre-set lag is N-1"
+links.rows.note: "Rows cover different Segments and areas. Every indicator is for Germany as a whole."
+links.cell.preset_other: "pre-set shift is N-1"
 links.cell.preset_2: "Set to N-2"
-insight.template.vacancy-completions: "Office completions in {to} differed by {latest}% from their {from}-{to} average, so they are {verdict} the average."
+insight.template.vacancy-completions: "Office completions in {to} differed by {latest}% from their {from}-{to} average. They are {verdict} the average."
 insight.unit.deviation: percent
-insight.template.vacancy-rents: "Office vacancy in {to} differed by {latest} points from its {from}-{to} average, {verdict} the average."
+insight.template.vacancy-rents: "Office vacancy in {to} differed by {latest} percentage points from its {from}-{to} average. It is {verdict} the average."
 insight.unit.gap: percentage points
-insight.axis.real_growth: "real year-on-year change, %"
+insight.axis.real_growth: "real change from the year before, %"
 insight.small.vacancy-rents.title: "{kpi} and real rent growth"
 insight.small.vacancy-rents.label: "{kpi} and real rent growth, over time"
-insight.small.vacancy-rents.legend: "Blue line, left axis: {kpi}, in %. Ochre line, right axis: year-on-year change of the rent index, adjusted for consumer prices, in percent. The axes have different units, so the lines are not compared by height."
+insight.small.vacancy-rents.legend: "Blue line, left axis: {kpi}, in %. Ochre line, right axis: change of the rent index from the year before, adjusted for consumer prices, in percent. The axes have different units, so the lines are not compared by height."
 insight.note.completions_scope: "Completions cover all of Germany, while vacancy covers 127 towns."
 insight.note.completions_coverage: "Completions include public and owner-occupied buildings and exclude refurbishments and conversions."
 insight.note.rents_scope: "Rents cover all of Germany, while vacancy covers 127 towns."
-insight.note.asking_rents: "The rent index measures asking rents for new lettings. It does not capture incentives such as rent-free months, so the rents tenants actually pay may be weaker than shown."
-insight.context.legend_dual: "Blue line, right axis: {measure}, in percentage points. Ochre line, left axis: year-on-year growth of {title}, in percent. The axes have different units, so the lines are not compared by height."
-kpi.price-index.definition: "How the general price level of commercial property compares with its level in a base year."
+insight.note.asking_rents: "The rent index measures asking rents (the rents landlords ask for) on new lettings. It does not include incentives such as rent-free months. So the rents tenants actually pay may be lower than shown."
+insight.context.legend_dual: "Blue line, right axis: {measure}, in percentage points. Ochre line, left axis: growth of {title} from the year before, in percent. The axes have different units, so the lines are not compared by height."
+kpi.price-index.definition: "How commercial property prices in general compare with prices in a base year. The base year is set to 100."
 kpi.rent-index.definition: "The rents agreed on new leases. They show current market rent, not rents in older contracts."
 kpi.initial-yield.definition: "First-year rent as a share of the purchase price. It is the income return a buyer gets on day one."
 kpi.office-vacancy.definition: "The share of office space that is empty. It is unused supply."
-kpi.transaction-volume.definition: "The euro value of property sold, shown as an index. It shows how active and liquid the market is."
+kpi.transaction-volume.definition: "The euro value of property sold, shown as an index. It shows how active the market is and how easy it is to buy and sell."
 kpi.construction.definition: "Floor space approved for construction. It records building plans at the approval stage, ahead of completion."

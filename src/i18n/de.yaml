@@ -15,38 +15,38 @@ source.original: "Originalreihe wie veröffentlicht: {title}; Einheit: {unit}"
 source.original.unit: "Originaleinheit wie veröffentlicht: {unit}"
 source.original.source: "Ursprungsquelle laut Herausgeber: {source}"
 source.own: eigene Berechnung
-source.terms.original: "Originalstatistik und Metadaten unverändert verwendet, gemäß {terms}."
-source.terms.derived: "Aus Daten der Deutschen Bundesbank abgeleitet (eigene Berechnung), gemäß {terms}."
+source.terms.original: "Wir verwenden die Originalstatistik und die Metadaten unverändert, gemäß {terms}."
+source.terms.derived: "Wir haben dies aus Daten der Deutschen Bundesbank berechnet, gemäß {terms}."
 footer.text: Betrieben von Terra Augury Ltd.
 note.prefix: Hinweis
-note.stale: "Letzte Beobachtung: {period}. {source} hat innerhalb des erwarteten Zeitraums keine neueren Daten veröffentlicht; die Reihe ist möglicherweise nicht aktuell."
-note.fetch_failed: "Aktualisierung ({source}) am {date} fehlgeschlagen; dargestellt sind die am {snapshot} abgerufenen Daten."
-note.unavailable: "{source} stellt diese Reihe nicht mehr bereit (am {date} nicht gefunden); dargestellt sind die am {snapshot} abgerufenen Daten."
-note.revised: "{source} hat frühere Werte revidiert (festgestellt am {date}). Dargestellt ist die zuletzt veröffentlichte Fassung."
+note.stale: "Letzter Wert: {period}. {source} hat in der erwarteten Zeit keine neueren Daten veröffentlicht. Die Reihe ist möglicherweise nicht aktuell."
+note.fetch_failed: "Am {date} konnten wir die Daten von {source} nicht aktualisieren. Wir zeigen die Daten, die wir am {snapshot} abgerufen haben."
+note.unavailable: "{source} stellt diese Reihe nicht mehr bereit. Wir haben sie am {date} nicht gefunden. Wir zeigen die Daten, die wir am {snapshot} abgerufen haben."
+note.revised: "{source} hat frühere Werte geändert (revidiert). Wir haben das am {date} bemerkt. Die Grafik zeigt die zuletzt veröffentlichte Fassung."
 note.short_window: "Kurze Zeitreihe ({start} bis {end})."
-note.short_cycle: "Der Zeitraum umfasst im Wesentlichen einen Zinszyklus; das Muster muss in anderen Zeiträumen nicht gelten."
-note.scope.index: "Index (2013 = 100): zeigt die Entwicklung, nicht ein Preisniveau in Euro."
-note.scope.city_class: "Aggregat für {class}, keine einzelne Stadt."
+note.short_cycle: "Der Zeitraum umfasst etwa einen Zinszyklus. Das Muster muss in anderen Zeiträumen nicht gelten."
+note.scope.index: "Index (2013 = 100): Wir setzen 2013 auf 100. Er zeigt die Entwicklung, keinen Preis in Euro."
+note.scope.city_class: "Gesamtwert für {class}, nicht für eine einzelne Stadt."
 note.scope.combined: "Büro und Einzelhandel zusammen; keine getrennten Werte."
 link.title: "{kpi} und {indicator}"
-link.scope: "Nationaler Indikator gegen {geography}"
+link.scope: "Nationaler Indikator im Vergleich zu {geography}"
 geo.germany: Deutschland
-link.sentence: "Dargestellt ist, wie sich zwei Reihen im Zeitraum {period} (n = {n}) gemeinsam entwickelt haben. Das belegt keine Ursache-Wirkungs-Beziehung und ist keine Prognose."
+link.sentence: "Die Grafik zeigt, wie sich zwei Reihen im Zeitraum {period} gemeinsam entwickelt haben (n = {n}, Zahl der verglichenen Zeiträume). Die Rangkorrelation reicht von -1 (gegenläufig) bis +1 (gleichläufig). Das belegt keine Ursache-Wirkungs-Beziehung und ist keine Prognose."
 link.period: "{from} bis {to}"
-link.headline: "Rangkorrelation (Spearman) der Veränderungen bei Zeitversatz 0: {rho} (n = {n})"
-link.not_shown: "Verknüpfung nicht angezeigt: zu wenige Beobachtungen (n = {n})"
+link.headline: "Rangkorrelation (Spearman) der Veränderungen bei Verschiebung 0: {rho} (n = {n})"
+link.not_shown: "Verknüpfung nicht angezeigt: zu wenige Zeiträume zum Vergleich (n = {n})"
 link.not_shown.constant: "Verknüpfung nicht angezeigt: eine Reihe hat sich im Zeitraum nicht verändert (n = {n})"
-link.strongest: "Stärkster von {n} getesteten Zeitversätzen; nach Ansicht der Daten ausgewählt, daher wahrscheinlich überschätzt."
+link.strongest: "Stärkste von {n} getesteten Verschiebungen. Wir haben sie nach einem Blick auf die Daten ausgewählt, daher ist sie wahrscheinlich überschätzt."
 link.strongest.mark: stärkster
-link.small_sample: "Auf nur {n} Jahresbeobachtungen beruhend. Bei so kleiner Stichprobe kann das Muster zufällig sein."
-link.lag.label: "Zeitversatz in Jahren (positiv: Indikator lief voraus, negativ: lief nach)"
-link.rho.label: Spearman-Rho
-link.overlay.chart: "Niveau: {kpi} und {indicator}"
+link.small_sample: "Beruht auf nur {n} Jahreswerten. Bei so wenigen Daten kann das Muster zufällig sein."
+link.lag.label: "Verschiebung in Jahren (positiv: Indikator früher, negativ: später)"
+link.rho.label: "Rangkorrelation"
+link.overlay.chart: "Werte: {kpi} und {indicator}"
 link.overlay.legend: "Blaue Linie, linke Achse: {kpi}. Ockerfarbene Linie, rechte Achse: {indicator}."
-link.lags.label: "Zeitversatzprofil von {kpi} und {indicator}"
+link.lags.label: "Rangkorrelation bei jeder Verschiebung: {kpi} und {indicator}"
 nav.sources: Quellen und Lizenzen
 sources.title: Quellen und Lizenzen
-sources.intro: "Eine Zeile je Reihe, die auf dieser Seite gezeigt wird. Die Reihen werden direkt beim Herausgeber oder über DBnomics abgerufen, das sie bündelt; die Daten behalten die Lizenz des Herausgebers."
+sources.intro: "Eine Zeile je Reihe, die auf dieser Seite gezeigt wird. Wir rufen jede Reihe direkt beim Herausgeber ab oder über DBnomics, das Daten vieler Herausgeber sammelt. Die Daten behalten die Lizenz des Herausgebers."
 sources.col.series: Reihe
 sources.col.publisher: Herausgeber
 sources.col.id: Reihen-ID
@@ -58,7 +58,7 @@ kpi.rent-index.title: Mietindex (Neuvermietung)
 kpi.initial-yield.title: Anfangsrendite
 kpi.office-vacancy.title: Büroleerstandsquote
 kpi.transaction-volume.title: Transaktionsvolumenindex
-kpi.not_available.licence: "Nicht verfügbar: Lizenz für die öffentliche Wiedergabe nicht bestätigt"
+kpi.not_available.licence: "Nicht verfügbar: Die Lizenz, diese Daten öffentlich zu zeigen, ist nicht bestätigt."
 select.segment: Segment
 select.geo: Gebiet
 select.freq: Häufigkeit
@@ -92,34 +92,34 @@ geo.de-mv: Mecklenburg-Vorpommern
 geo.de-sn: Sachsen
 geo.de-st: Sachsen-Anhalt
 geo.de-th: Thüringen
-note.partial_total: "Deutschland-Summe aus den Ländern mit Daten; für {laender} liegt für {year} kein Wert vor."
+note.partial_total: "Die Summe für Deutschland zählt die Länder mit Daten zusammen. Für {laender} gibt es für {year} keinen Wert."
 kpi.noscript: "Zum Wechseln von Segment, Gebiet oder Häufigkeit wird JavaScript benötigt. Ohne JavaScript zeigt diese Seite die erste Ansicht."
 na.source: "Nicht verfügbar: keine offene Quelle für {reason}"
 na.kpi-price-index.logistics: einen Preisindex für Logistikimmobilien
 na.kpi-rent-index.logistics: Logistikmieten
-na.kpi-initial-yield.office: "Büro-Renditen allein; die Quelle weist Büro und Einzelhandel zusammen aus (siehe Gewerbe gesamt)"
-na.kpi-initial-yield.retail: "Einzelhandels-Renditen allein; die Quelle weist Büro und Einzelhandel zusammen aus (siehe Gewerbe gesamt)"
+na.kpi-initial-yield.office: "Büro-Renditen allein (die Quelle weist Büro und Einzelhandel zusammen aus, siehe Gewerbe gesamt)"
+na.kpi-initial-yield.retail: "Einzelhandels-Renditen allein (die Quelle weist Büro und Einzelhandel zusammen aus, siehe Gewerbe gesamt)"
 na.kpi-initial-yield.logistics: Logistik-Renditen
 na.kpi-office-vacancy.retail: Leerstand im Einzelhandel
 na.kpi-office-vacancy.logistics: Leerstand bei Logistikimmobilien
 na.kpi-office-vacancy.commercial-overall: Leerstand über alle Gewerbeimmobilien
-na.kpi-transaction-volume.office: "Transaktionsvolumen bei Büros; die Quelle erfasst alle Gewerbeimmobilien zusammen"
-na.kpi-transaction-volume.retail: "Transaktionsvolumen im Einzelhandel; die Quelle erfasst alle Gewerbeimmobilien zusammen"
-na.kpi-transaction-volume.logistics: "Transaktionsvolumen bei Logistikimmobilien; die Quelle erfasst alle Gewerbeimmobilien zusammen"
-na.construction.retail: "Einzelhandelsgebäude; Destatis führt dafür keine eigene Gebäudeart"
+na.kpi-transaction-volume.office: "Transaktionsvolumen bei Büros (die Quelle erfasst alle Gewerbeimmobilien zusammen)"
+na.kpi-transaction-volume.retail: "Transaktionsvolumen im Einzelhandel (die Quelle erfasst alle Gewerbeimmobilien zusammen)"
+na.kpi-transaction-volume.logistics: "Transaktionsvolumen bei Logistikimmobilien (die Quelle erfasst alle Gewerbeimmobilien zusammen)"
+na.construction.retail: "Einzelhandelsgebäude (das Statistische Bundesamt, Destatis, führt dafür keine eigene Gebäudeart)"
 nav.segments: Segmente
 nav.availability: Verfügbarkeit
-nav.breadcrumb: Brotkrümelnavigation
+nav.breadcrumb: "Sie sind hier"
 home.hero.more: Diesen Einblick öffnen
 home.spark.label: "Verlauf von {title}"
 latest.change.pct: "{change} gegenüber {period}"
 latest.change.diff: "{change} Punkte gegenüber {period}"
 latest.unchanged: "Keine Änderung gegenüber {period}"
-home.segments: Nach Segment
-segment.intro: "Je Kennzahl eine Grafik für Deutschland, soweit eine Quelle sie liefert; jede Grafik öffnet die vollständige Kennzahlseite."
+home.segments: "Nach Segment (Immobilienart)"
+segment.intro: "Je Kennzahl eine Grafik für Deutschland, soweit eine Quelle sie liefert. Jede Grafik öffnet die vollständige Kennzahlseite."
 segment.availability: Welche Kombinationen aus Kennzahl und Segment es gibt und warum die übrigen nicht verfügbar sind
 availability.title: Verfügbarkeit
-availability.intro: "Jede Kennzahl für jedes Segment. Eine Lücke wird mit ihrem Grund genannt; nichts ist für später vorgesehen."
+availability.intro: "Jede Kennzahl für jedes Segment (Immobilienart). Für jede Lücke nennen wir den Grund. Für später ist nichts geplant. Eine offene Quelle ist frei nutzbar und darf öffentlich gezeigt werden."
 availability.kpi: Kennzahl
 availability.available: "Verfügbar ({geo})"
 nav.links: Verknüpfungen
@@ -130,7 +130,7 @@ terms.title: Nutzungsbedingungen
 privacy.title: Datenschutzerklärung
 legal-notice.title: Impressum
 links.title: Verknüpfungen
-links.intro: "Jede Zeile ist eine Kennzahl, jede Spalte ein Wirtschaftsindikator. Ein Feld zeigt, wie eng sich ihre Veränderungen gemeinsam bewegt haben, dazu die Zahl der Paare (n), auf denen es beruht. Wo die Verknüpfung nicht angezeigt werden kann, steht im Feld „Nicht angezeigt“. Jede Kennzahl erscheint in ihrer Hauptansicht; ein Klick auf ein Feld öffnet die vollständige Verknüpfung auf der Kennzahlseite."
+links.intro: "Jede Zeile ist eine Kennzahl, jede Spalte ein Wirtschaftsindikator (eine Größe aus der Gesamtwirtschaft). Ein Feld zeigt, wie eng sich ihre Veränderungen gemeinsam bewegt haben. Dazu steht n, die Zahl der verglichenen Zeiträume. Wo wir die Verknüpfung nicht anzeigen können, steht im Feld „Nicht angezeigt“. Jede Kennzahl erscheint in ihrer Hauptansicht. Ein Klick auf ein Feld öffnet die vollständige Verknüpfung auf der Kennzahlseite."
 insight.back: Zurück zur Übersicht der Einblicke
 link.back: Zurück zur Verknüpfungstabelle
 links.heading: Verknüpfungen mit Wirtschaftsindikatoren
@@ -138,7 +138,7 @@ links.cell.n: "n = {n}"
 links.scale.neg: "-1: gegenläufig"
 links.scale.zero: "0: kein Muster"
 links.scale.pos: "+1: gleichläufig"
-links.legend: "Farbe: olivgrün bedeutet, dass beide eher gemeinsam stiegen und fielen; violett bedeutet, dass die eine eher stieg, wenn die andere fiel. Je dunkler die Farbe, desto enger der Zusammenhang. Das zeigt, dass sie sich gemeinsam bewegen, nicht, dass eine die andere verursacht oder vorhersagt."
+links.legend: "Farbe: olivgrün bedeutet, dass beide eher gemeinsam stiegen und fielen. Bei violett stieg die eine eher, wenn die andere fiel. Je dunkler die Farbe, desto enger der Zusammenhang. Das zeigt, dass sie sich gemeinsam bewegen. Es zeigt nicht, dass eine die andere verursacht oder vorhersagt."
 links.cell.not_shown: "Nicht angezeigt (n = {n})"
 indicator.bund-yield-10y: Rendite zehnjähriger Bundesanleihen
 indicator.euribor-3m: Euribor 3 Monate
@@ -150,12 +150,12 @@ indicator.construction-price: Baupreisindex
 indicator.oecd-confidence: OECD-Geschäftsklima
 nav.insights: Einblicke
 insights.title: Einblicke
-insights.intro: "Ein Einblick stellt mehrere Reihen über einen genannten Zeitraum auf einer Achse dar, mit einer festen Lesehilfe in einem Satz. Er beschreibt, was die Linien zeigen; er belegt keine Ursache und ist keine Prognose."
+insights.intro: "Ein Einblick zeigt mehrere Reihen über einen genannten Zeitraum auf einer Achse. Dazu gibt es eine feste Lesehilfe in einem Satz. Sie beschreibt, was die Linien zeigen. Sie belegt keine Ursache und ist keine Prognose. Abstände zwischen zwei Prozentwerten stehen in Prozentpunkten: von 4 % auf 5 % ist 1 Prozentpunkt."
 insights.jump: Einblicke auf dieser Seite
 insights.tone.more: So werden besser und schlechter beurteilt
-insights.tone.legend: "Hellgrün heißt: für Anleger in Büroimmobilien besser; hellrosa: schlechter. Eine ungefärbte Fläche liegt im Einklang mit dem Durchschnitt, oder keine Seite ist besser. Screenreader erhalten zusätzlich die Wörter „besser“ und „schlechter“."
-insights.empty: "Noch sind keine Einblicke veröffentlicht; die Lizenzen für die zugrunde liegenden Daten werden geklärt."
-insight.template.spread: "Der aktuelle {measure} beträgt {latest} Punkte, {verdict} {from}-{to}-Durchschnitt von {mean} Punkten."
+insights.tone.legend: "Hellgrün heißt: besser für Anleger in Büroimmobilien. Hellrosa heißt: schlechter. Eine Fläche ohne Farbe heißt: im Einklang mit dem Durchschnitt, oder keine Seite ist besser. Screenreader lesen zusätzlich die Wörter „besser“ und „schlechter“ vor."
+insights.empty: "Noch sind keine Einblicke veröffentlicht. Wir klären noch die Lizenzen für die zugrunde liegenden Daten."
+insight.template.spread: "Der aktuelle {measure} beträgt {latest} Prozentpunkte. Das ist {verdict} {from}-{to}-Durchschnitt von {mean} Prozentpunkten."
 insight.verdict.higher: höher als der
 insight.verdict.lower: niedriger als der
 insight.verdict.in_line: im Einklang mit dem
@@ -167,71 +167,71 @@ insight.tone.worse: schlechter
 insight.average: "Durchschnitt {value}"
 insight.chart.label: "{title}: {measure} im Zeitverlauf"
 insight.unit.spread: Prozentpunkte
-insight.not_shown: "Einblick nicht angezeigt: zu wenige Beobachtungen (n = {n}); mindestens {min} sind nötig."
+insight.not_shown: "Einblick nicht angezeigt: zu wenige Jahre mit Daten (n = {n}). Wir brauchen mindestens {min}."
 insight.short_history: "Kurze Zeitreihe ({n} Jahre, {from} bis {to}): der Durchschnitt beruht auf wenigen Daten."
 insight.method: So wird gerechnet
 insight.axis.rebased: "Index, {year} = 100"
 insight.multiples.title: "{kpi} im Vergleich zu {reference}"
-insight.multiples.label: "{kpi} und {reference}, umbasiert"
+insight.multiples.label: "{kpi} und {reference}, im Basisjahr auf 100 gesetzt"
 insight.multiples.legend: "Blaue Linie: {kpi}. Ockerfarbene Linie: {reference}. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt."
 insight.multiples.legend_dual: "Blaue Linie, linke Achse: {kpi}. Ockerfarbene Linie, rechte Achse: {reference}. Die Achsen haben unterschiedliche Einheiten, daher werden die Linien nicht nach ihrer Höhe verglichen."
 insight.note.near_zero_rates: "Die Zinsen lagen bis 2022 nahe null, daher spiegelt der Durchschnitt über diesen Zeitraum womöglich nicht die normalen Verhältnisse wider."
-insight.note.price_yield_coverage: "Preise und Mieten sind vdp-Reihen für Büros in ganz Deutschland. Die Anfangsrenditen an anderer Stelle dieser Seite sind bulwiengesa-Reihen für Core-Immobilien (Büro und Einzelhandel zusammen) in den 7 Großstädten und daher nicht direkt vergleichbar."
-insight.multiples.base_note: "Beide Reihen auf {year} = 100 gesetzt; die Größe des Abstands hängt von dieser Wahl ab."
+insight.note.price_yield_coverage: "Preise und Mieten sind vdp-Reihen für Büros in ganz Deutschland. Die Anfangsrenditen an anderer Stelle dieser Seite sind bulwiengesa-Reihen für Core-Immobilien (Büro und Einzelhandel zusammen) in den 7 Großstädten. Sie sind daher nicht direkt vergleichbar."
+insight.multiples.base_note: "Wir setzen beide Reihen auf {year} = 100. Die Größe des Abstands hängt von dieser Wahl ab."
 insight.axis.growth: "Veränderung gegenüber dem Vorjahr, %"
 insight.multiples.label_growth: "{kpi} und {reference}, Veränderung gegenüber dem Vorjahr"
-insight.multiples.legend_growth: "Blaue Linie: Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt; der Abstand der Linien im letzten Jahr ist die große Zahl."
-insight.multiples.legend_growth_real: "Blaue Linie: preisbereinigte Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt; der Abstand der Linien im letzten Jahr ist die große Zahl."
+insight.multiples.legend_growth: "Blaue Linie: Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt. Der Abstand der Linien im letzten Jahr ist die große Zahl."
+insight.multiples.legend_growth_real: "Blaue Linie: preisbereinigte Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt. Der Abstand der Linien im letzten Jahr ist die große Zahl."
 insight.multiples.legend_growth_rate: "Blaue Linie: Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt."
 insight.multiples.real_growth: "Reales Wachstum = (1 + Mietwachstum) / (1 + Inflation) − 1, daher weicht es leicht vom Abstand der beiden Linien ab."
-insight.template.real-construction: "Die realen Baupreise haben sich {to} um {latest} % verändert, {verdict} {from}-{to}-Durchschnitt von {mean} %."
+insight.template.real-construction: "Die realen Baupreise haben sich {to} um {latest} % verändert. Das ist {verdict} {from}-{to}-Durchschnitt von {mean} %."
 insight.multiples.real_growth.real-construction: "Reales Wachstum = (1 + Baupreiswachstum) / (1 + Inflation) − 1, daher weicht es leicht vom Abstand der beiden Linien ab."
 insight.index.title: Realer Baukostenindex
 insight.index.reading: "Die realen Baupreise haben sich zwischen {from} und {to} um {total} % verändert, das sind {annual} % pro Jahr."
 insight.index.unit: "Prozent seit {from}"
 insight.index.label: "Realer Baukostenindex, {year} = 100, im Zeitverlauf"
-insight.index.legend: "Blaue Linie: der Baupreisindex geteilt durch den Verbraucherpreisindex, beide auf {year} = 100 gesetzt und Jahr für Jahr aufgezinst. Die gestrichelte Linie markiert 100, den Stand von {year}."
-insight.index.base_note: "Index auf {year} = 100 gesetzt; das Niveau hängt von dieser Wahl ab."
-insight.note.index_scope: "Die Baupreise gelten für Bürogebäude, der Verbraucherpreisindex für einen Haushaltswarenkorb."
-insight.template.completions-permits: "Die Fertigstellungen entsprachen dem {latest}-Fachen der zwei Jahre zuvor erteilten Baugenehmigungen, {verdict} {from}-{to}-Durchschnitt von {mean}."
+insight.index.legend: "Blaue Linie: der Baupreisindex geteilt durch den Verbraucherpreisindex. Beide sind auf {year} = 100 gesetzt und Jahr für Jahr aufgezinst (die Veränderung jedes Jahres baut auf dem Vorjahr auf). Die gestrichelte Linie markiert 100, den Stand von {year}."
+insight.index.base_note: "Wir setzen den Index auf {year} = 100. Das Niveau hängt von dieser Wahl ab."
+insight.note.index_scope: "Die Baupreise gelten für Bürogebäude. Der Verbraucherpreisindex gilt für einen Warenkorb privater Haushalte."
+insight.template.completions-permits: "Die Fertigstellungen entsprachen dem {latest}-Fachen der zwei Jahre zuvor erteilten Baugenehmigungen. Das ist {verdict} {from}-{to}-Durchschnitt von {mean}."
 insight.unit.ratio: mal
 insight.shift.2: zwei Jahre zuvor
 insight.shifted: "{title}, {shift}"
-kpi.insights.heading: Einblicke zu dieser Kennzahl
-insight.template.price-rent: "Der Preisindex liegt beim {latest}-Fachen des Mietindex, {verdict} {from}-{to}-Durchschnitt von {mean}."
-insight.template.real-rents: "Die realen Büromieten haben sich {to} um {latest} % verändert, {verdict} {from}-{to}-Durchschnitt von {mean} %."
+kpi.insights.heading: "Einblicke, die diese Kennzahl nutzen"
+insight.template.price-rent: "Der Preisindex liegt beim {latest}-Fachen des Mietindex. Das ist {verdict} {from}-{to}-Durchschnitt von {mean}."
+insight.template.real-rents: "Die realen Büromieten haben sich {to} um {latest} % verändert. Das ist {verdict} {from}-{to}-Durchschnitt von {mean} %."
 insight.unit.growth: Prozent
-insight.template.office-employment: "Der Büroleerstand hat sich {to} um {latest} Punkte verändert, während die Bürobeschäftigung um {emp} % gewachsen ist; die durchschnittliche Veränderung des Leerstands {from}-{to} beträgt {mean} Punkte."
+insight.template.office-employment: "Der Büroleerstand hat sich {to} um {latest} Prozentpunkte verändert, während die Bürobeschäftigung um {emp} % gewachsen ist. Die durchschnittliche Veränderung des Leerstands {from}-{to} beträgt {mean} Prozentpunkte."
 insight.unit.change: Prozentpunkte
 insight.context.legend: "Blaue Linie: {measure}, in Prozentpunkten. Ockerfarbene Linie: Wachstum von {title} gegenüber dem Vorjahr, in Prozent. Beide sind auf einer Achse dargestellt."
-link.preset.mark: "vorab gewählter Versatz"
-links.lag.label: "Zeitversatz des Indikators"
+link.preset.mark: "vorab gewählte Verschiebung"
+links.lag.label: "Verschiebung des Indikators"
 links.lag.0: "Gleiches Jahr"
 links.lag.1: "Indikator 1 Jahr früher (N-1)"
 links.lag.2: "Indikator 2 Jahre früher (N-2)"
-links.cell.preset: "vorab gewählter Versatz: N-1"
-links.preset.note: "Auf Bewertungen beruhende Renditen und Preise reagieren mit Verzögerung auf Zinsen. Für diese Felder ist ein Jahr früher (N-1) aus ökonomischen Gründen im Voraus festgelegt und nicht anhand der Ergebnisse gewählt."
-link.band.legend: "Graues Band: der Bereich der Rangkorrelation, den allein der Zufall bei Versatz 0 und n = {n} häufig erzeugt (±{band}; jeder Balken verwendet sein eigenes n). Eine grobe Orientierung, kein Signifikanztest."
-link.band.adjusted: "Quartalsveränderungen werden jeweils mit dem Vorjahr verglichen, benachbarte Quartale überlappen also; das Band verwendet ein angepasstes n = {eff} (n ÷ 4, abgerundet)."
+links.cell.preset: "vorab gewählte Verschiebung: N-1"
+links.preset.note: "Renditen und Preise, die auf Bewertungen beruhen, reagieren mit Verzögerung auf Zinsen. Für diese Felder legen wir ein Jahr früher (N-1) im Voraus aus ökonomischen Gründen fest. Wir haben es nicht anhand der Ergebnisse gewählt."
+link.band.legend: "Graues Band: der Bereich der Rangkorrelation, den allein der Zufall bei Verschiebung 0 und n = {n} häufig erzeugt (±{band}; jeder Balken verwendet sein eigenes n). Es ist eine grobe Orientierung, kein Signifikanztest."
+link.band.adjusted: "Quartalsveränderungen werden jeweils mit dem Vorjahr verglichen, benachbarte Quartale überlappen also. Das Band verwendet ein angepasstes n = {eff} (n ÷ 4, abgerundet)."
 links.cell.noise: "im Zufallsbereich"
 links.noise.legend: "Grau: innerhalb des Bereichs, den allein der Zufall bei dieser Zahl von Jahren häufig erzeugt."
-links.chance.note: "Bei so vielen Vergleichen sehen einige Felder allein durch Zufall stark aus. Ein einzelnes starkes Feld sollte man mit Vorsicht behandeln, besonders wenn n klein ist."
-note.nominal.inflation: "Diese Kennzahl und dieser Indikator sind beide nominal, daher spiegelt ihre Verknüpfung teilweise gemeinsame Inflation wider."
-note.nominal.gdp: "Diese Kennzahl ist in nominalen Euro, das reale BIP ist inflationsbereinigt; die Verknüpfung stellt daher Nominal gegen real."
+links.chance.note: "Bei so vielen Vergleichen sehen einige Felder allein durch Zufall stark aus. Behandeln Sie ein einzelnes starkes Feld mit Vorsicht, besonders wenn n klein ist."
+note.nominal.inflation: "Diese Kennzahl und dieser Indikator sind beide nominal, also nicht um die Inflation bereinigt. Daher spiegelt ihre Verknüpfung teilweise gemeinsame Inflation wider."
+note.nominal.gdp: "Diese Kennzahl ist in nominalen Euro (nicht um die Inflation bereinigt). Das reale BIP ist inflationsbereinigt. Die Verknüpfung stellt daher Nominal gegen real."
 links.nominal.tag: "Nominale Euro*"
-links.nominal.note: "* Mieten und Transaktionsvolumen sind in nominalen Euro. Ihre Verknüpfungen mit dem Verbraucherpreisindex und den Baupreisen spiegeln teilweise gemeinsame Inflation wider, und ihre Verknüpfung mit dem realen BIP stellt Nominal gegen real."
+links.nominal.note: "* Nominale Euro sind nicht um die Inflation bereinigt. Mieten und Transaktionsvolumen sind in nominalen Euro. Ihre Verknüpfungen mit dem Verbraucherpreisindex und den Baupreisen spiegeln teilweise gemeinsame Inflation wider. Ihre Verknüpfung mit dem realen BIP stellt Nominal gegen real."
 links.row.kpi-price-index: "Gewerbe gesamt · Deutschland"
 links.row.kpi-rent-index: "Büro · Deutschland"
 links.row.kpi-initial-yield: "Büro + Einzelhandel · 7 Großstädte"
 links.row.kpi-office-vacancy: "Büro · 7 Großstädte"
 links.row.kpi-transaction-volume: "Gewerbe gesamt · Deutschland"
 links.row.construction: "Büro · Deutschland"
-links.rows.note: "Die Zeilen decken unterschiedliche Segmente und Gebiete ab; jeder Indikator ist bundesweit."
-links.cell.preset_other: "vorab gewählter Versatz ist N-1"
+links.rows.note: "Die Zeilen decken unterschiedliche Segmente und Gebiete ab. Jeder Indikator gilt für ganz Deutschland."
+links.cell.preset_other: "vorab gewählte Verschiebung ist N-1"
 links.cell.preset_2: "Auf N-2 gesetzt"
-insight.template.vacancy-completions: "Die Büro-Fertigstellungen weichen {to} um {latest} % von ihrem Durchschnitt {from}-{to} ab und liegen damit {verdict} Durchschnitt."
+insight.template.vacancy-completions: "Die Büro-Fertigstellungen weichen {to} um {latest} % von ihrem Durchschnitt {from}-{to} ab. Sie liegen damit {verdict} Durchschnitt."
 insight.unit.deviation: Prozent
-insight.template.vacancy-rents: "Der Büroleerstand weicht {to} um {latest} Punkte von seinem Durchschnitt {from}-{to} ab, {verdict} Durchschnitt."
+insight.template.vacancy-rents: "Der Büroleerstand weicht {to} um {latest} Prozentpunkte von seinem Durchschnitt {from}-{to} ab. Er liegt {verdict} Durchschnitt."
 insight.unit.gap: Prozentpunkte
 insight.axis.real_growth: "reale Veränderung gegenüber dem Vorjahr, %"
 insight.small.vacancy-rents.title: "{kpi} und reales Mietwachstum"
@@ -240,11 +240,11 @@ insight.small.vacancy-rents.legend: "Blaue Linie, linke Achse: {kpi}, in %. Ocke
 insight.note.completions_scope: "Die Fertigstellungen gelten für ganz Deutschland, der Leerstand für 127 Städte."
 insight.note.completions_coverage: "Die Fertigstellungen umfassen öffentliche und eigengenutzte Gebäude und schließen Sanierungen und Umnutzungen aus."
 insight.note.rents_scope: "Die Mieten gelten für ganz Deutschland, der Leerstand für 127 Städte."
-insight.note.asking_rents: "Der Mietindex misst Angebotsmieten bei Neuvermietungen. Anreize wie mietfreie Monate erfasst er nicht, daher können die tatsächlich gezahlten Mieten schwächer sein als gezeigt."
+insight.note.asking_rents: "Der Mietindex misst Angebotsmieten (die Mieten, die Vermieter verlangen) bei Neuvermietungen. Anreize wie mietfreie Monate enthält er nicht. Daher können die tatsächlich gezahlten Mieten niedriger sein als gezeigt."
 insight.context.legend_dual: "Blaue Linie, rechte Achse: {measure}, in Prozentpunkten. Ockerfarbene Linie, linke Achse: Wachstum von {title} gegenüber dem Vorjahr, in Prozent. Die Achsen haben unterschiedliche Einheiten, daher werden die Linien nicht nach ihrer Höhe verglichen."
-kpi.price-index.definition: "Wie sich das allgemeine Preisniveau von Gewerbeimmobilien zu seinem Stand in einem Basisjahr verhält."
+kpi.price-index.definition: "Wie sich die Preise von Gewerbeimmobilien im Allgemeinen zu den Preisen in einem Basisjahr verhalten. Das Basisjahr ist auf 100 gesetzt."
 kpi.rent-index.definition: "Die Mieten, die in neuen Mietverträgen vereinbart werden. Sie zeigen die aktuelle Marktmiete, nicht die Mieten in älteren Verträgen."
 kpi.initial-yield.definition: "Die Miete des ersten Jahres im Verhältnis zum Kaufpreis. Sie ist die laufende Rendite, die ein Käufer vom ersten Tag an erhält."
 kpi.office-vacancy.definition: "Der Anteil der Büroflächen, die leer stehen. Das ist das ungenutzte Flächenangebot."
-kpi.transaction-volume.definition: "Der Eurowert der verkauften Immobilien, dargestellt als Index. Er zeigt, wie aktiv und liquide der Markt ist."
+kpi.transaction-volume.definition: "Der Eurowert der verkauften Immobilien, dargestellt als Index. Er zeigt, wie aktiv der Markt ist und wie leicht sich Immobilien kaufen und verkaufen lassen."
 kpi.construction.definition: "Die für den Bau genehmigte Fläche. Sie erfasst Bauvorhaben im Stadium der Genehmigung, vor der Fertigstellung."

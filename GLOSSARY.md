@@ -8,105 +8,157 @@ German terms (_DE_) are the canonical translations for the site and for translat
 
 **Real estate KPI**:
 A series that measures the property market itself: rent, yield, vacancy, capital value, transaction volume or construction activity.
+_Plain_: Keep "KPI" on the KPI pages and explain it once per page: a key figure for the property market itself. On an Insight chart it is the "main line".
 _DE_: Immobilienkennzahl
 _Avoid_: Metric, property indicator
 
 **Economic indicator**:
 A macro or financial series from outside the property market: interest rates, inflation, GDP, unemployment, and credit.
+_Plain_: A figure from the wider economy, such as interest rates or inflation.
 _DE_: Wirtschaftsindikator
 _Avoid_: Macro variable, driver
 
 **Link**:
 A computed relationship between one real estate KPI and one economic indicator over a stated period, shown as an overlay with a rank correlation of changes and a lag profile. A link describes co-movement ("Gleichlauf"), never causation or forecast. It is shown only when enough paired observations exist; otherwise the site says why not.
+_Plain_: How two series moved together over time. The word "Link" stays; the text says "moved together", never "caused".
 _DE_: Verknüpfung (the relationship it describes is called "Gleichlauf")
 _Avoid_: Correlation (a link includes more than the coefficient), prediction, impact, driver, effect
 
 **Insight**:
 A curated chart that puts two or more series (Real estate KPIs, Economic indicators, or values computed from them such as a spread or an inflation-adjusted index) on one axis over a stated period, with a fixed one-line reading. Unlike a Link it carries no coefficient or lag. Its reading describes what the lines show, never a cause or forecast. For the Construction KPI page an Insight may use the construction price series, which is otherwise an Economic indicator, as its Real estate KPI.
+_Plain_: A chart that puts two or more series on one axis. The word "Insight" stays.
 _DE_: Einblick
 _Avoid_: Analysis (too broad), comparison, spread (one kind of Insight), chart (any chart)
 
 **Headline measure**:
 The one number an Insight leads with, calculated from its series: a spread, a ratio, or a year-on-year change. The Insight's verdict and reading describe this number only. The series it compares the Real estate KPI against is the **reference series**.
+_Plain_: The "big number". The line it is compared with is the "comparison line" (the reference series).
 _Avoid_: Headline (also the name of a KPI's lead view in code), result
 
 **Verdict**:
 The tag on an Insight's headline measure: "higher than", "lower than" or "in line with" the average of the whole shared period, judged against half a standard deviation. It says where the latest value sits against the past, never a cause or forecast.
+_Plain_: The tag that says whether the latest value is higher than, lower than or in line with the average.
 
 **Tone**:
 Whether an Insight's verdict reads better, worse or neutral for an investor in office property. It follows the verdict (where the latest value sits against the average) through a direction declared per Insight, never the sign of the number: a falling vacancy is better although it is negative. An Insight whose direction depends on whose side you take has no better side and stays neutral, as does a verdict "in line". An editorial reading from a stated perspective, never a cause or forecast.
+_Plain_: The green or pink shading: our own reading of better or worse for an investor in office property.
 _DE_: Bewertung (draft, not yet Reviewed; "Einordnung" already names the Verdict in the German Methodology)
 _Avoid_: Sentiment, rating, score, signal
 
 **Lead Insight**:
 The one Insight that Home opens with: the yield spread when it is public and shown, otherwise the first Insight that is shown. Home shows no lead when no Insight is shown.
+_Plain_: Not shown to visitors under this name. Home calls it "Open this Insight".
 _Avoid_: Featured insight, hero (the hero is how Home draws it)
 
 **Citation line**:
 The short source line under a chart: publisher, licence and the date of the latest data, with a Provisional marker where the licence is not confirmed. The full lineage (series id, service, retrieval date, original series and unit) sits behind "Series details".
+_Plain_: The source line under a chart.
 _DE_: Quellenangabe
 _Avoid_: Source line (that is the full lineage), footnote
 
 **Heat shade**:
 The tint of a cell in the Links overview: violet where a Link's changes moved in opposite directions, olive green where they moved together, deeper for a larger rank correlation. The coefficient stays printed in the cell; the shade describes co-movement only.
+_Plain_: The colour of a box in the Links table.
 _DE_: Farbabstufung
 _Avoid_: Heatmap (the overview is a table), strength of effect
 
 **Lag**:
 The shift, in whole periods, between an economic indicator and a real estate KPI when a link is computed. Positive lag means the indicator moved earlier than the KPI. It describes timing of co-movement, never lead time for prediction.
+_Plain_: The timing shift: how many years or quarters one series is moved against the other.
 _DE_: Verschiebung (in Perioden)
 _Avoid_: Lead time, delay
 
 **Segment**:
 A commercial property type tracked by the site: office, retail or logistics, plus a "commercial overall" view. Residential and hotel are not segments in this effort.
+_Plain_: Property type: office, retail, logistics.
 _DE_: Segment
 _Avoid_: Asset class, sector
 
 **City class**:
 A group of German cities that a source reports as one aggregate, such as the "7 major cities (A-Städte)", "120 towns", "127 towns" or "cities of supra-regional importance". The site shows city classes, never named cities, because no Open source supplies named-city series.
+_Plain_: A group of cities that a source reports as one figure.
 _DE_: Städtegruppe
 _Avoid_: City level (suggests named cities), city data
 
 **Not available**:
 A Real estate KPI and Segment combination for which no Open source exists. The site shows it as an explicit "not available" entry with the reason, rather than hiding it or promising it for later.
+_Plain_: No data source exists for this combination.
 _DE_: Nicht verfügbar
 _Avoid_: Missing, coming soon, deferred
 
 **Open source**:
 A data source that is free to call, documented, and licensed to allow public redisplay. A source that fails this test is excluded.
+_Plain_: A data source that is free to use and may be shown publicly.
 _DE_: Offene Quelle
 _Avoid_: Free source, public data
 
 **Provisional**:
 A series whose licence for public redisplay is not yet confirmed. It is kept out of the public site, together with every Link that uses it, until the licence is confirmed.
+_Plain_: The licence to show this data publicly is not confirmed yet.
 _DE_: Vorläufig
 _Avoid_: Draft, unverified, beta
 
 **Original source**:
 The third party a series' metadata names as the maker of the data (for example vdpResearch, bulwiengesa, the Federal Employment Agency), when the publisher serving it is a different body. A series with an Original source other than the Bundesbank or ESCB stays Provisional until its permission is confirmed. The Citation line and the Sources page credit vdpResearch and bulwiengesa by name (the manifest `credit`), with the publisher named after them.
+_Plain_: Who first made the data, when another body publishes it.
 _DE_: Ursprungsquelle
 _Avoid_: Provider (that is the operator of the site), Publisher (the body that serves the series, not the maker of the data)
 
 **Stale**:
 A series whose latest observation is older than the expected interval for its frequency. The site still shows it, with a note.
+_Plain_: The series may be out of date: no newer data was published in the expected time.
 _DE_: Nicht aktuell
 _Avoid_: Outdated, expired
 
 **Revised**:
 A series where the source changed values for earlier periods. The site shows only the latest version and keeps no revision history.
+_Plain_: The source changed earlier values after first publishing them.
 _DE_: Revidiert
 _Avoid_: Corrected, updated
 
 **Note** (DE "Hinweis"):
 A one-line statement inside a chart container about scope, short history, staleness, a failed refresh or a revision.
+_Plain_: A short line under a chart about scope, short history or data quality.
 _Avoid_: Warning, disclaimer (the disclaimer lives only in the Terms)
 
 **Reviewed** (German text):
 A German string or page that a named human has checked against its current English source. The production site contains only reviewed German; a machine translation is a draft until reviewed.
+_Plain_: Not shown to visitors under this name; German text without it shows [DRAFT] in preview builds.
 _DE_: Geprüft
 _Avoid_: Translated, approved
 
 **Provider**:
 The legal entity that operates the site and is responsible for it: Terra Augury Ltd, a company registered in Cyprus. Named in the Impressum and the Privacy policy.
+_Plain_: Terra Augury Ltd, the company that runs the site (legal pages are out of scope).
 _DE_: Diensteanbieter
 _Avoid_: Owner, publisher (the publisher is the source of the data)
+
+## Plain-language vocabulary
+
+Terms the site uses in prose and labels, with the plain wording and the German term. The plain wording is for visitors; the glossary terms above stay canonical. "main line" and "comparison line" name chart lines in an Insight only.
+
+| Term | Plain English | German |
+|---|---|---|
+| KPI (as a chart line in an Insight) | main line | Hauptlinie |
+| Reference series (as a chart line) | comparison line | Vergleichslinie |
+| Verdict wording | higher than / lower than / in line with the average | höher als / niedriger als / im Einklang mit dem Durchschnitt |
+| Percentage points | percentage points: the gap between two percentages (from 4% to 5% is 1 percentage point) | Prozentpunkte |
+| Index | index: a figure that sets one year to 100 so change is easy to see | Index |
+| Rebased | set to 100 in the base year | im Basisjahr auf 100 gesetzt (replaces "umbasiert") |
+| Real / nominal | real: after removing inflation; nominal: not adjusted for inflation | real (inflationsbereinigt) / nominal |
+| Standard deviation | usual spread; the technical term (standard deviation) in brackets once on Methodology pages | übliche Schwankung; Standardabweichung in Klammern |
+| Year-on-year change | change from the year before | Veränderung zum Vorjahr |
+| Spread | the gap between two figures | Abstand |
+| Ratio | one figure divided by another | Verhältnis |
+| Rank correlation (Spearman) | a number from −1 to +1 for how closely two series rise and fall together | Rangkorrelation (nach Spearman) |
+| n | n: the number of periods compared | n |
+| Consumer price index (CPI) | consumer price index (CPI): how prices households pay change; the usual measure of inflation | Verbraucherpreisindex |
+| GDP | gross domestic product (GDP): the value of everything produced in Germany | Bruttoinlandsprodukt (BIP) |
+| Initial yield | first-year rent as a share of the purchase price | Anfangsrendite |
+| Vacancy rate | the share of office space that is empty | Leerstandsquote |
+| Permits / completions | permits: approvals to build; completions: buildings finished | Baugenehmigungen / Baufertigstellungen |
+| NACE sections J and K to N | official economic groups: J = information and communication; K to N = finance, real estate and business services | Wirtschaftsabschnitte J und K bis N (WZ 2008) |
+| Bund yield | the interest rate on 10-year German government bonds | Rendite zehnjähriger Bundesanleihen |
+| Euribor | the interest rate banks charge each other for euro loans | Euribor |
+| PSPP | the ECB’s large government bond-buying programme (PSPP) | Anleihekaufprogramm der EZB für Staatsanleihen (PSPP) |
+| Not shown | not shown: too little data to show this Link or Insight | nicht angezeigt |
