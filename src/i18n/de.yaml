@@ -182,14 +182,24 @@ insight.axis.growth: "Veränderung gegenüber dem Vorjahr, %"
 insight.multiples.label_growth: "{kpi} und {reference}, Veränderung gegenüber dem Vorjahr"
 insight.multiples.legend_growth: "Blaue Linie: Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt; der Abstand der Linien im letzten Jahr ist die große Zahl."
 insight.multiples.legend_growth_real: "Blaue Linie: preisbereinigte Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt; der Abstand der Linien im letzten Jahr ist die große Zahl."
+insight.multiples.legend_growth_rate: "Blaue Linie: Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt."
 insight.multiples.real_growth: "Reales Wachstum = (1 + Mietwachstum) / (1 + Inflation) − 1, daher weicht es leicht vom Abstand der beiden Linien ab."
+insight.template.real-construction: "Die realen Baupreise haben sich {to} um {latest} % verändert, {verdict} {from}-{to}-Durchschnitt von {mean} %."
+insight.multiples.real_growth.real-construction: "Reales Wachstum = (1 + Baupreiswachstum) / (1 + Inflation) − 1, daher weicht es leicht vom Abstand der beiden Linien ab."
+insight.index.title: Realer Baukostenindex
+insight.index.reading: "Die realen Baupreise haben sich zwischen {from} und {to} um {total} % verändert, das sind {annual} % pro Jahr."
+insight.index.unit: "Prozent seit {from}"
+insight.index.label: "Realer Baukostenindex, {year} = 100, im Zeitverlauf"
+insight.index.legend: "Blaue Linie: der Baupreisindex geteilt durch den Verbraucherpreisindex, beide auf {year} = 100 gesetzt und Jahr für Jahr aufgezinst. Die gestrichelte Linie markiert 100, den Stand von {year}."
+insight.index.base_note: "Index auf {year} = 100 gesetzt; das Niveau hängt von dieser Wahl ab."
+insight.note.index_scope: "Die Baupreise gelten für Bürogebäude, der Verbraucherpreisindex für einen Haushaltswarenkorb."
 insight.template.completions-permits: "Die Fertigstellungen entsprachen dem {latest}-Fachen der zwei Jahre zuvor erteilten Baugenehmigungen, {verdict} {from}-{to}-Durchschnitt von {mean}."
 insight.unit.ratio: mal
 insight.shift.2: zwei Jahre zuvor
 insight.shifted: "{title}, {shift}"
 kpi.insights.heading: Einblicke zu dieser Kennzahl
 insight.template.price-rent: "Der Preisindex liegt beim {latest}-Fachen des Mietindex, {verdict} {from}-{to}-Durchschnitt von {mean}."
-insight.template.real-rents: "Die realen Büromieten sind {to} um {latest} % gewachsen, {verdict} {from}-{to}-Durchschnitt von {mean} %."
+insight.template.real-rents: "Die realen Büromieten haben sich {to} um {latest} % verändert, {verdict} {from}-{to}-Durchschnitt von {mean} %."
 insight.unit.growth: Prozent
 insight.template.office-employment: "Der Büroleerstand hat sich {to} um {latest} Punkte verändert, während die Bürobeschäftigung um {emp} % gewachsen ist; die durchschnittliche Veränderung des Leerstands {from}-{to} beträgt {mean} Punkte."
 insight.unit.change: Prozentpunkte
