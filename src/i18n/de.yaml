@@ -167,6 +167,7 @@ insight.tone.worse: schlechter
 insight.average: "Durchschnitt {value}"
 insight.chart.label: "{title}: {measure} im Zeitverlauf"
 insight.unit.spread: Prozentpunkte
+insight.tile.as_of: "Stand: {year}"
 insight.not_shown: "Einblick nicht angezeigt: zu wenige Jahre mit Daten (n = {n}). Wir brauchen mindestens {min}."
 insight.short_history: "Kurze Zeitreihe ({n} Jahre, {from} bis {to}): der Durchschnitt beruht auf wenigen Daten."
 insight.method: So wird gerechnet

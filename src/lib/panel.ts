@@ -123,7 +123,7 @@ export function renderInsightIndex(models: { entry: InsightEntry; result: Insigh
   const items = models.map(({ entry: e, result: r }) => {
     const plate = r.shown ? toneOf(e, r, lang).plate : '';
     const body = r.shown
-      ? `<span class="headline">${headlineSpans(e, r, lang)}</span>`
+      ? `<span class="headline">${headlineSpans(e, r, lang)}</span><span class="when">${t(lang, 'insight.tile.as_of', { year: r.latest.period })}</span>`
       : `<span class="na">${t(lang, 'insight.not_shown', { n: String(r.n), min: String(MIN_OBS) })}</span>`;
     return `<li><a href="#${esc(e.key)}"${plate ? ` class="${plate}"` : ''}><span class="title">${esc(e.title[lang])}</span>${body}</a></li>`;
   });

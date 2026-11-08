@@ -29,6 +29,16 @@ describe('Insights index', () => {
       expect(items[i].querySelector('.tag')!.textContent).toMatch(/^(higher than|lower than|in line with) the average$/);
     });
   });
+  it('a shown Insight says the year its number is true for, in both languages', () => {
+    const models = insightsPage();
+    for (const [lang, word] of [['en', 'As of'], ['de', 'Stand:']] as const) {
+      const items = [...parse(renderInsightIndex(models, lang)).querySelectorAll('li')];
+      models.forEach((m, i) => {
+        if (m.result.shown) expect(items[i].querySelector('.when')!.textContent, m.entry.key).toMatch(new RegExp(`^(\\[DRAFT\\] )?${word} ${m.result.latest.period}$`));
+        else expect(items[i].querySelector('.when')).toBeNull();
+      });
+    }
+  });
   it('the number is the one the Insight section shows', () => {
     const m = insightsPage()[0];
     const section = parse(renderInsight(m.entry, m.result, m.series, 'en'));
