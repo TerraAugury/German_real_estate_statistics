@@ -144,7 +144,7 @@ links.cell.n: "n = {n}"
 links.scale.neg: "-1: opposite ways"
 links.scale.zero: "0: no pattern"
 links.scale.pos: "+1: same way"
-links.legend: "Colour: olive green means the two tended to rise and fall together. Violet means one tended to rise when the other fell. The deeper the colour, the closer the match. This shows that they move together. It does not show that one causes the other or predicts it."
+links.legend: "Colour: olive green means the two tended to rise and fall together. Violet means one tended to rise when the other fell. The deeper the colour, the closer the match."
 links.cell.not_shown: "Not shown (n = {n})"
 indicator.bund-yield-10y: 10-year Bund yield
 indicator.euribor-3m: Euribor 3 months
