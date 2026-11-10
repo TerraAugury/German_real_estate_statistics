@@ -1,6 +1,6 @@
 ---
 import { t, documentTitle } from '../lib/i18n';
-import { href, otherLang, type Lang, type PageKey } from '../lib/routes';
+import { href, otherLang, minimalChrome, type Lang, type PageKey } from '../lib/routes';
 import { KPIS, SEGMENT_PAGES } from '../lib/kpis';
 import { rootCss, SCHEMES } from '../lib/palette';
 // Self-hosted through the build: no request to a third-party host (spec section 7).
@@ -13,6 +13,7 @@ import '@fontsource/ibm-plex-mono/400.css';
 const { lang, page, title, description } = Astro.props as { lang: Lang; page: PageKey; title: string; description?: string };
 const current = (p: PageKey) => (p === page ? 'page' : undefined);
 const inSegments = page.startsWith('segment-');
+const minimal = minimalChrome.includes(page);
 const inKpis = KPIS.some((k) => k.page === page);
 ---
 <!doctype html>
@@ -227,9 +228,9 @@ const inKpis = KPIS.some((k) => k.page === page);
       <div class="wrap masthead">
         <a class="name" href={href('home', lang)}>{t(lang, 'site.title')}</a>
         <a class="sw" href={href(page, otherLang(lang))} hreflang={otherLang(lang)} lang={otherLang(lang)}>{t(lang, 'lang.switch')}</a>
-        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">{t(lang, 'nav.menu')}</button>
+        {!minimal && <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">{t(lang, 'nav.menu')}</button>}
       </div>
-      <nav class="wrap main" id="site-nav" aria-label={t(lang, 'nav.menu')}>
+      {!minimal && <nav class="wrap main" id="site-nav" aria-label={t(lang, 'nav.menu')}>
         <a href={href('home', lang)} aria-current={current('home')}>{t(lang, 'nav.home')}</a>
         <details class={inSegments ? 'on' : undefined}><summary>{t(lang, 'nav.segments')}</summary><div>{SEGMENT_PAGES.map((g) => <a href={href(`segment-${g}`, lang)} aria-current={current(`segment-${g}`)}>{t(lang, `segment.${g}`)}</a>)}<a class="hint" href={href('availability', lang)}>{t(lang, 'nav.logistics')}</a></div></details>
         <details class={inKpis ? 'on' : undefined}><summary>{t(lang, 'nav.kpis')}</summary><div>{KPIS.map((k) => <a href={href(k.page, lang)} aria-current={current(k.page)}>{t(lang, k.title)}</a>)}</div></details>
@@ -237,13 +238,13 @@ const inKpis = KPIS.some((k) => k.page === page);
         <a href={href('insights', lang)} aria-current={current('insights')}>{t(lang, 'nav.insights')}</a>
         <a href={href('availability', lang)} aria-current={current('availability')}>{t(lang, 'nav.availability')}</a>
         <a href={href('methodology', lang)} aria-current={current('methodology')}>{t(lang, 'nav.methodology')}</a>
-      </nav>
+      </nav>}
     </header>
     <!-- The language switch keeps the selector parameters (segment, geo, freq) unchanged; KPI pages update it on change. -->
     <!-- One dropdown open at a time: a click or focus elsewhere closes it, Escape closes it and returns to its summary. On a phone the same goes for the Menu panel. -->
     <script is:inline>
       document.querySelector('a.sw').search = location.search;
-      {
+      if (document.querySelector('nav.main')) {
         const menus = [...document.querySelectorAll('nav.main details')];
         const nav = document.querySelector('nav.main'), btn = document.querySelector('.menu-btn');
         const setMenu = (on) => { nav.classList.toggle('open', on); btn.setAttribute('aria-expanded', String(on)); };

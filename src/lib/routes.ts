@@ -28,6 +28,8 @@ export type PageKey = keyof typeof routes;
 /** Pages that exist so far; each later ticket adds its pages here. A page missing from `routes` fails the build. */
 export const built = ['home', 'segment-office', 'segment-retail', 'segment-commercial-overall', 'kpi-price-index', 'kpi-rent-index', 'kpi-initial-yield', 'kpi-office-vacancy', 'kpi-transaction-volume',
   'construction', 'links', 'insights', 'availability', 'methodology', 'sources', 'about', 'terms', 'privacy', 'legal-notice'] as const satisfies readonly PageKey[];
+/** Short reference and legal documents, reached from the footer: they get the masthead and a breadcrumb, not the main menu. */
+export const minimalChrome: readonly PageKey[] = ['about', 'terms', 'privacy', 'legal-notice', 'sources'];
 export type BuiltPage = (typeof built)[number];
 
 export function slug(key: PageKey, lang: Lang): string {
