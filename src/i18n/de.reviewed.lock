@@ -427,9 +427,9 @@ links.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 links.intro:
-  en_hash: d10f92a0216b7689
+  en_hash: d66713826da315f0
   reviewed_by: Olivier
-  reviewed_on: 2026-11-08
+  reviewed_on: 2026-11-10
 links.heading:
   en_hash: 48497180d9a00b3e
   reviewed_by: Project owner
@@ -1686,3 +1686,27 @@ insight.tile.as_of:
   en_hash: b7905bfe0a5941a1
   reviewed_by: Olivier
   reviewed_on: 2026-11-08
+links.intro.rows:
+  en_hash: 3c1b8e61e7f35988
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+links.intro.columns:
+  en_hash: 4872d6f21d1e5644
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+links.intro.box:
+  en_hash: bf96585c9e18b215
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+links.intro.shift:
+  en_hash: ab652a090d7e4f1e
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+links.intro.n:
+  en_hash: b0738a7be9bab4e1
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+links.intro.outro:
+  en_hash: b117d2ef03ae0d05
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
