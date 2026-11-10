@@ -26,7 +26,6 @@
   definition: { en: "The margin between what a property earns and what it costs to borrow. It shows whether borrowing to buy adds to the return or reduces it.", de: "Die Spanne zwischen dem, was eine Immobilie einbringt, und dem, was die Kreditaufnahme kostet. Sie zeigt, ob ein Kauf auf Kredit die Rendite erhöht oder verringert." }
   headline: spread
   better: higher
-  notes: [insight.note.near_zero_rates]
   template: spread
   series:
     - { key: initial-yield-combined-7, role: kpi }
@@ -40,7 +39,7 @@
   better: none
   indexed: true
   base: 2015
-  notes: [insight.note.near_zero_rates, insight.note.price_yield_coverage]
+  notes: [insight.note.price_yield_coverage]
   template: price-rent
   series:
     - { key: price-index-de-office-a, role: kpi }
