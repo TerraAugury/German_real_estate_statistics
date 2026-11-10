@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import KpiView from '../../components/KpiView.astro';
 import KpiPanel from '../../components/KpiPanel.astro';
-import { built, langs, slug, href, type Lang, type BuiltPage } from '../../lib/routes';
+import { built, langs, slug, href, minimalChrome, type Lang, type BuiltPage } from '../../lib/routes';
 import { t, fmt } from '../../lib/i18n';
 import { sparkline } from '../../lib/chart';
 import { notesFor } from '../../lib/notes';
@@ -51,7 +51,7 @@ const description = page === 'home' ? t(lang, 'home.purpose') : kpi ? t(lang, kp
 // Segment pages show the first series of a view as a compact chart; Home lists each KPI as an index row.
 ---
 <Base lang={lang} page={page} title={title} description={description}>
-  {(kpi || segment) && <nav class="crumbs" aria-label={t(lang, 'nav.breadcrumb')}><a href={href('home', lang)}>{t(lang, 'nav.home')}</a> <span aria-hidden="true">›</span> {title}</nav>}
+  {(kpi || segment || minimalChrome.includes(page)) && <nav class="crumbs" aria-label={t(lang, 'nav.breadcrumb')}><a href={href('home', lang)}>{t(lang, 'nav.home')}</a> <span aria-hidden="true">›</span> {title}</nav>}
   {page === 'home' ? (
     <>
       <h1 class="vh">{t(lang, 'site.title')}</h1>
