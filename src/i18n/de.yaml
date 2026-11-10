@@ -133,10 +133,10 @@ links.title: Verknüpfungen
 links.intro: "Verknüpfungen zeigt, wie sich Immobilienkennzahlen gemeinsam mit der Gesamtwirtschaft bewegt haben."
 links.intro.rows: "Jede Zeile ist eine Immobilienkennzahl, etwa Mieten oder Preise."
 links.intro.columns: "Jede Spalte ist ein Wirtschaftsindikator für Deutschland insgesamt, etwa Zinsen oder Inflation."
-links.intro.box: "Jedes Feld zeigt Zahlen zwischen -1 und +1. Sie vergleichen die Immobilienkennzahl mit dem Wirtschaftsindikator im selben Jahr, ein Jahr früher und zwei Jahre früher. So lässt sich erkennen, ob sich zuerst die Wirtschaft oder der Immobilienmarkt bewegt und wer folgt."
-links.intro.scale: "Jede Zahl reicht von -1 bis +1. +1 bedeutet, dass sie sich gleich bewegt haben. 0 bedeutet kein Muster. -1 bedeutet, dass sie sich gegenläufig bewegt haben."
+links.intro.box: "Jedes Feld zeigt eine Zahl zwischen -1 und +1. +1 bedeutet, dass sich die Immobilienkennzahl und der Wirtschaftsindikator gleich bewegt haben. 0 bedeutet kein Muster. -1 bedeutet, dass sie sich gegenläufig bewegt haben."
+links.intro.shift: "Sie können das Jahr des Wirtschaftsindikators um ein oder zwei Jahre verschieben. So wird die Immobilienkennzahl mit dem Wirtschaftsindikator im selben Jahr, ein Jahr früher und zwei Jahre früher verglichen. Das hilft zu erkennen, ob sich zuerst die Wirtschaft oder der Immobilienmarkt bewegt und wer folgt."
 links.intro.n: "n ist die Zahl der verglichenen Jahre. Mehr Jahre machen das Ergebnis verlässlicher."
-links.intro.outro: "Gemeinsame Bewegung bedeutet nicht, dass das eine das andere verursacht. Ein Klick auf eine Zahl zeigt alle Einzelheiten auf der Kennzahlseite."
+links.intro.outro: "Gemeinsame Bewegung bedeutet nicht, dass das eine das andere verursacht. Sie können eine einzelne Verknüpfung öffnen, um mehr über die Berechnung zu erfahren."
 insight.back: Zurück zur Übersicht der Einblicke
 link.back: Zurück zur Verknüpfungstabelle
 links.heading: Verknüpfungen mit Wirtschaftsindikatoren
