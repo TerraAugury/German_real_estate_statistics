@@ -133,10 +133,10 @@ links.title: Links
 links.intro: "Links shows how real estate KPI moved together with the wider economy."
 links.intro.rows: "Each row is a real estate KPI, such as rents or prices."
 links.intro.columns: "Each column is an economic indicator for Germany as a whole, such as interest rates or inflation."
-links.intro.box: "Each box shows numbers which range from -1 to +1. They compare the real estate KPI with the economic indicator in the same year, one year earlier, and two years earlier. This helps show which of the economy or the real estate market moves first and which follows."
-links.intro.scale: "Each number runs from -1 to +1. +1 means they moved the same way. 0 means no pattern. -1 means they moved in opposite ways."
+links.intro.box: "Each box shows a number which ranges from -1 to +1. +1 means the real estate KPI and the economic indicator moved the same way. 0 means no pattern. -1 means they moved in opposite ways."
+links.intro.shift: "You can shift the year of the economic indicator by one or two years. This compares the real estate KPI with the economic indicator in the same year, one year earlier, and two years earlier. This helps show which of the economy or the real estate market moves first and which follows."
 links.intro.n: "n is the number of years compared. More years make the result more reliable."
-links.intro.outro: "Moving together does not mean one causes the other. Click a number to see the full detail on the KPI page."
+links.intro.outro: "Moving together does not mean one causes the other. You can drill into one link to see more details about the calculations."
 insight.back: Back to the Insights overview
 link.back: Back to the Links table
 links.heading: Links with economic indicators
