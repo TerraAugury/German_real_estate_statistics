@@ -110,6 +110,8 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
     <>
       <h1>{title}</h1>
       <p>{t(lang, 'links.intro')}</p>
+      <ul>{['rows', 'columns', 'box', 'scale', 'n'].map((k) => <li>{t(lang, `links.intro.${k}`)}</li>)}</ul>
+      <p>{t(lang, 'links.intro.outro')}</p>
       <div class="legend" aria-hidden="true"><i class="ramp"></i></div>
       <p class="scale"><span>{t(lang, 'links.scale.neg')}</span><span>{t(lang, 'links.scale.zero')}</span><span>{t(lang, 'links.scale.pos')}</span></p>
       <p class="note">{t(lang, 'links.legend')}</p>
