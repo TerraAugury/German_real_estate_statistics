@@ -4,7 +4,7 @@ import { getSeries } from '../lib/series';
 import { lineChart } from '../lib/chart';
 import { notesFor } from '../lib/notes';
 import { latestBlock, sourceBlock } from '../lib/panel';
-import { t } from '../lib/i18n';
+import { t, fmt, period, valueFormat } from '../lib/i18n';
 import type { View } from '../lib/kpis';
 import type { Lang } from '../lib/routes';
 const { view: v, links, lang } = Astro.props as { view: View; links: string[]; lang: Lang };
@@ -14,6 +14,16 @@ const { view: v, links, lang } = Astro.props as { view: View; links: string[]; l
     <figure>
       <h2>{x.title[lang]}</h2>
       <Fragment set:html={latestBlock(x, lang) + lineChart(x, lang)} />
+      {/* The chart's numbers as text: the SVG itself has no values a screen reader or keyboard can reach. */}
+      <details class="data">
+        <summary>{t(lang, 'chart.table')}</summary>
+        <div class="scroll" tabindex="0" role="region" aria-label={`${x.title[lang]}: ${t(lang, 'chart.table')}`}>
+          <table>
+            <thead><tr><th scope="col">{t(lang, 'chart.table.period')}</th><th scope="col">{t(lang, 'chart.table.value')} ({x.unit[lang]})</th></tr></thead>
+            <tbody>{x.obs.map((o) => <tr><th scope="row">{period(lang, o.period)}</th><td>{fmt(lang, o.value, valueFormat(x))}</td></tr>)}</tbody>
+          </table>
+        </div>
+      </details>
       {notesFor(x, lang, { on: 'kpi', geography: t(lang, `geo.${v.geo}`) }).map((n) => <p class="note">{n}</p>)}
       <figcaption set:html={sourceBlock(x, lang)} />
     </figure>
