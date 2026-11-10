@@ -7,6 +7,8 @@ export const targetOf = (kpiFreq: 'D' | 'M' | 'Q' | 'A'): 'Q' | 'A' => (kpiFreq 
 /** Observations that count for the noise band: quarterly changes are each taken against a year earlier, so neighbours overlap and n counts ÷ 4, rounded down. */
 export const effectiveN = (n: number, t: 'Q' | 'A') => (t === 'A' ? n : Math.floor(n / 4));
 /** Rough guide, not a significance test: the range of rank correlation chance alone often produces, ±2/√(n−1). */
+/** How strong a rank correlation reads in plain words: the cut-offs are |ρ| 0.1, 0.3, 0.5 and 0.7. */
+export const tierOf = (rho: number) => { const a = Math.abs(rho); return a < 0.1 ? 'none' : a < 0.3 ? 'very_weak' : a < 0.5 ? 'weak' : a < 0.7 ? 'moderate' : 'strong'; };
 export const noiseBand = (n: number, t: 'Q' | 'A') => (effectiveN(n, t) > 1 ? 2 / Math.sqrt(effectiveN(n, t) - 1) : Infinity);
 
 /** Lag, in periods, of an indicator taken `years` years earlier: +1 / +2 for annual KPIs, +4 / +8 quarters otherwise. */
