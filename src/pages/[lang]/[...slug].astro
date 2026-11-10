@@ -45,10 +45,13 @@ const coverGroup: Record<GeoGroup, string> = { germany: 'geo.germany', city_clas
 const segment = page.startsWith('segment-') ? (page.slice('segment-'.length) as Segment) : null;
 const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
   : t(lang, `${page === 'home' ? 'site' : page}.title`);
+// Meta description: the page's own intro or definition, already translated; prose pages have none.
+const description = page === 'home' ? t(lang, 'home.purpose') : kpi ? t(lang, kpi.definition) : segment ? t(lang, 'segment.intro')
+  : ['links', 'insights', 'availability', 'sources'].includes(page) ? t(lang, `${page}.intro`) : undefined;
 // Segment pages show the first series of a view as a compact chart; Home lists each KPI as an index row.
 ---
-<Base lang={lang} page={page} title={title}>
-  {(kpi || segment) && <nav class="crumbs" aria-label={t(lang, 'nav.breadcrumb')}><a href={href('home', lang)}>{t(lang, 'nav.home')}</a> › {title}</nav>}
+<Base lang={lang} page={page} title={title} description={description}>
+  {(kpi || segment) && <nav class="crumbs" aria-label={t(lang, 'nav.breadcrumb')}><a href={href('home', lang)}>{t(lang, 'nav.home')}</a> <span aria-hidden="true">›</span> {title}</nav>}
   {page === 'home' ? (
     <>
       <h1 class="vh">{t(lang, 'site.title')}</h1>
@@ -95,7 +98,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
     <>
       <h1>{title}</h1>
       <p>{t(lang, 'availability.intro')}</p>
-      <div class="scroll"><table>
+      <div class="scroll" tabindex="0" role="region" aria-label={title}><table>
         <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{SEGMENTS.map((g) => <th scope="col">{t(lang, `segment.${g}`)}</th>)}</tr></thead>
         <tbody>{availability().map(({ kpi: k, cells }) => (
           <tr><th scope="row"><a href={href(k.page, lang)}>{t(lang, k.title)}</a></th>{cells.map(({ cell: c, geos }) => {
@@ -119,7 +122,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
       <p class="note">{t(lang, 'links.legend')}</p>
       <p class="note">{t(lang, 'links.noise.legend')}</p>
       <div class="selectors lag-selector"><div class="lagfield"><span class="lagtitle"><label for="lag">{t(lang, 'links.lag.label')}</label><button type="button" class="help" aria-label={t(lang, 'links.lag.help_label')} aria-describedby="lag-help">?</button><span role="tooltip" id="lag-help" class="tip">{t(lang, 'links.lag.help')}</span></span><select id="lag"><option value="p" selected>{t(lang, 'links.lag.preset')}</option>{[0, 1, 2].map((y) => <option value={y}>{t(lang, `links.lag.${y}`)}</option>)}</select></div></div>
-      <div class="scroll"><table class="matrix" data-lag="p">
+      <div class="scroll" tabindex="0" role="region" aria-label={title}><table class="matrix" data-lag="p">
         <thead><tr><th scope="col">{t(lang, 'availability.kpi')}</th>{overview!.columns.map((n) => <th scope="col">{t(lang, `indicator.${n}`)}</th>)}</tr></thead>
         <tbody>{overview!.rows.map(({ kpi: k, view: v, cells }) => (
           <tr>
@@ -135,8 +138,8 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
               const pre = (y: number) => y === (c.pair.preset ? 1 : 0) ? { 'data-pre': '' } : {};
               const preset = (y: number) => c.pair.preset && y === 1 && <span class="preset">{t(lang, 'links.cell.preset')}</span>;
               return <td class="lagcell">{c.lags.map((l, y) => l.heat && l.rho !== null
-                ? <a data-lag={y} {...pre(y)} href={to} class={`${l.heat.side}${l.noise ? ' noise' : ''}`} style={`--share: ${l.heat.share}%`}><span class="rho">{fmt(lang, l.rho, { maximumFractionDigits: 2 })}</span><span class="n">{t(lang, 'links.cell.n', { n: String(l.n) })}</span>{l.noise && <span class="vh">{t(lang, 'links.cell.noise')}</span>}{preset(y)}</a>
-                : <a data-lag={y} {...pre(y)} href={to} class="na">{t(lang, 'links.cell.not_shown', { n: String(l.n) })}{preset(y)}</a>)}</td>;
+                ? <a data-lag={y} {...pre(y)} href={to} class={`${l.heat.side}${l.noise ? ' noise' : ''}`} style={`--share: ${l.heat.share}%`}><span class="sr">{`${t(lang, k.title)}, ${t(lang, `indicator.${n}`)}: `}</span><span class="rho">{fmt(lang, l.rho, { maximumFractionDigits: 2 })}</span><span class="n">{t(lang, 'links.cell.n', { n: String(l.n) })}</span>{l.noise && <span class="vh">{t(lang, 'links.cell.noise')}</span>}{preset(y)}</a>
+                : <a data-lag={y} {...pre(y)} href={to} class="na"><span class="sr">{`${t(lang, k.title)}, ${t(lang, `indicator.${n}`)}: `}</span>{t(lang, 'links.cell.not_shown', { n: String(l.n) })}{preset(y)}</a>)}</td>;
             })}
           </tr>
         ))}</tbody>
@@ -182,7 +185,7 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
     <>
       <h1>{title}</h1>
       <p>{t(lang, 'sources.intro')}</p>
-      <div class="scroll"><Fragment set:html={sourcesTable(loadManifest(), lang)} /></div>
+      <div class="scroll" tabindex="0" role="region" aria-label={title}><Fragment set:html={sourcesTable(loadManifest(), lang)} /></div>
     </>
   ) : (
     <>
@@ -201,6 +204,9 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
             })}</select></label>
             <label>{t(lang, 'select.freq')} <select name="freq">{model!.selectors.freq.map((x) => <option value={x}>{t(lang, `freq.${x}`)}</option>)}</select></label>
           </form>
+          {/* Announces the view the selectors landed on; the error shows when a view could not be fetched. */}
+          <p class="sr" role="status" id="kpi-status" data-template={t(lang, 'kpi.status', { segment: '{segment}', geo: '{geo}', freq: '{freq}' })}></p>
+          <p class="note" id="kpi-error" role="alert" hidden>{t(lang, 'kpi.load_failed')}</p>
           {/* Only the first view is in the page; each other waits as an empty marker the script fills from its fragment. */}
           {views.map(({ view: v, links, live }, i) => live
             ? <KpiView view={v} links={links} lang={lang} />
@@ -246,6 +252,8 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
                 panels.set(p.dataset.panel!, p);
               }
             };
+            const status = document.getElementById('kpi-status')!, errorBox = document.getElementById('kpi-error')!;
+            const optionText = (k: (typeof keys)[number]) => (form.elements.namedItem(k) as HTMLSelectElement).selectedOptions[0].text;
             let shown = views[0], latest = 0;
             // Show the closest view and its Link panels; the URL and the language switch then name exactly that view.
             const show = async (want: Partial<Want>, changed?: keyof Want) => {
@@ -258,9 +266,11 @@ const title = kpi ? t(lang, kpi.title) : segment ? t(lang, `segment.${segment}`)
               const ids = target.el.dataset.links!.split(' ');
               for (const [id, el] of panels) el.hidden = !ids.includes(id);
               shown = target;
+              errorBox.hidden = loaded;
               for (const k of keys) (form.elements.namedItem(k) as HTMLSelectElement).value = target[k];
               history.replaceState(null, '', '?' + new URLSearchParams({ segment: target.segment, geo: target.geo, freq: target.freq }) + location.hash);
               document.querySelector<HTMLAnchorElement>('a.sw')!.search = location.search;
+              status.textContent = status.dataset.template!.replace(/\{(segment|geo|freq)\}/g, (_, k) => optionText(k));
             };
             const q = new URLSearchParams(location.search);
             if (keys.some((k) => q.has(k))) await show(Object.fromEntries(keys.flatMap((k) => (q.has(k) ? [[k, q.get(k)!]] : []))));

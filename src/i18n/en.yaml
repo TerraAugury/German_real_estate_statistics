@@ -258,3 +258,9 @@ link.best.lead: "A warning about the “best” result."
 link.best: "We tested {n} different time shifts (for example, comparing one series with the other a year later). The chart marks the one with the strongest link. Because we picked it after seeing the data, it probably looks stronger than it really is."
 link.not.lead: "What this does not tell you."
 link.not: "Moving together does not mean one causes the other. This is not a forecast either."
+nav.skip: Skip to content
+kpi.status: "Showing {segment}, {geo}, {freq}."
+kpi.load_failed: "This view could not be loaded, so the previous one is still shown. Check your connection and choose it again."
+chart.table: Data table
+chart.table.period: Period
+chart.table.value: Value

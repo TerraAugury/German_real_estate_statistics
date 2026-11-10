@@ -258,3 +258,9 @@ link.best.lead: "Achtung beim „besten“ Ergebnis."
 link.best: "Wir haben {n} verschiedene Zeitverschiebungen getestet (zum Beispiel: eine Reihe mit der anderen ein Jahr später vergleichen). Die Grafik markiert die Verschiebung mit dem stärksten Zusammenhang. Weil wir sie erst nach einem Blick auf die Daten ausgewählt haben, sieht sie wahrscheinlich stärker aus, als sie ist."
 link.not.lead: "Was das nicht aussagt."
 link.not: "Gemeinsame Bewegung heißt nicht, dass das eine das andere verursacht. Es ist auch keine Prognose."
+nav.skip: Zum Inhalt springen
+kpi.status: "Angezeigt: {segment}, {geo}, {freq}."
+kpi.load_failed: "Diese Ansicht konnte nicht geladen werden, daher bleibt die vorherige sichtbar. Prüfen Sie Ihre Verbindung und wählen Sie sie erneut aus."
+chart.table: Datentabelle
+chart.table.period: Zeitraum
+chart.table.value: Wert
