@@ -227,7 +227,6 @@ export function renderInsight(e: InsightEntry, r: InsightResult, series: Series[
     return `<div class="multiples"><h3>${t(lang, plan.heading, { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</h3>`
       + chart
       + `<p class="note">${t(lang, plan.legend, { kpi: esc(kpi.title[lang]), reference: esc(refTitle) })}</p>`
-      + (!plan.dual && !plan.growth && l.base ? `<p class="note">${t(lang, 'insight.multiples.base_note', { year: l.base })}</p>` : '')
       + (plan.growth && e.headline === 'growth' ? `<p class="note">${t(lang, hasKey(realGrowth) ? realGrowth : 'insight.multiples.real_growth')}</p>` : '') + '</div>';
   }).join('');
   return `<section class="insight${plate && ` ${plate}`}" id="${esc(e.key)}">${head}`

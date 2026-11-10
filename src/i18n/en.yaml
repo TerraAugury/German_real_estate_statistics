@@ -152,7 +152,7 @@ indicator.construction-price: Construction price index
 indicator.oecd-confidence: OECD business confidence
 nav.insights: Insights
 insights.title: Insights
-insights.intro: "Each Insight puts several series on one axis over a period we state. It comes with a fixed one-line reading. The reading describes what the lines show. It does not show a cause, and it is not a forecast. Gaps between two percentages are given in percentage points: from 4% to 5% is 1 percentage point."
+insights.intro: "Each Insight is a chart that shows several data series on one axis, over a given time period. Below the chart, a short one-line reading explains what the lines show. It describes what happened. It does not explain why it happened, and it does not predict what comes next. When we compare two percentages, we give the gap in percentage points (pp)."
 insights.jump: Insights on this page
 insights.tone.more: How better and worse are judged
 insights.tone.legend: "A light green background means better and a light pink background means worse, for an investor in office property. A plain background means in line with the average, or neither side is better. Screen readers also read out the words “better” and “worse”."
@@ -178,9 +178,7 @@ insight.multiples.title: "{kpi} against {reference}"
 insight.multiples.label: "{kpi} and {reference}, set to 100 in the base year"
 insight.multiples.legend: "Blue line: {kpi}. Ochre line: {reference}. The shading is blue where the blue line is above the ochre line and red where it is below."
 insight.multiples.legend_dual: "Blue line, left axis: {kpi}. Ochre line, right axis: {reference}. The axes have different units, so the lines are not compared by height."
-insight.note.near_zero_rates: "Interest rates were near zero until 2022, so the average over this period may not reflect normal conditions."
 insight.note.price_yield_coverage: "Prices and rents are vdp series for offices across Germany. The initial yields elsewhere on this site are bulwiengesa series for office and retail core properties in the 7 major cities. So they are not directly comparable."
-insight.multiples.base_note: "We set both series to {year} = 100. The size of the gap depends on this choice."
 insight.axis.growth: "change from the year before, %"
 insight.multiples.label_growth: "{kpi} and {reference}, change from the year before"
 insight.multiples.legend_growth: "Blue line: change of {kpi} from the year before. Ochre line: change of {reference} from the year before. The shading is blue where the blue line is above the ochre line and red where it is below. The gap between the lines in the latest year is the big number."

@@ -1203,9 +1203,9 @@ insights.title:
   reviewed_by: terra augury
   reviewed_on: 2026-11-03
 insights.intro:
-  en_hash: 719129f8d10e0c59
+  en_hash: 95f0fb1a74a5df81
   reviewed_by: Olivier
-  reviewed_on: 2026-11-08
+  reviewed_on: 2026-11-10
 insights.jump:
   en_hash: 9dec562d3beb885e
   reviewed_by: terra augury
@@ -1526,16 +1526,8 @@ insight.multiples.legend_dual:
   en_hash: 7aa1c588b352b8f2
   reviewed_by: Olivier
   reviewed_on: 2026-11-05
-insight.note.near_zero_rates:
-  en_hash: 95f83503cf8aed98
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
 insight.note.price_yield_coverage:
   en_hash: 7db5d9630d9281df
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
-insight.multiples.base_note:
-  en_hash: 0a8d8f93ed58855f
   reviewed_by: Olivier
   reviewed_on: 2026-11-08
 insight.axis.growth:

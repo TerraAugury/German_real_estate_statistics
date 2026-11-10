@@ -4,17 +4,17 @@ A Link compares one real estate KPI (key figure) with one economic indicator (a 
 
 Each Link has three parts:
 
-- **Two series on one chart.** The chart draws the real estate KPI and the economic indicator over the same years. The real estate KPI uses the left axis and the economic indicator uses the right axis. Some economic indicators come out more often than the real estate KPI, for example monthly while the real estate KPI is quarterly. We average them to match the real estate KPI (see Frequency). So the economic indicator line is our own calculation, not the figure the source published.
+- **(i) Two series on one chart.** The chart draws the real estate KPI and the economic indicator over the same years. The real estate KPI uses the left axis and the economic indicator uses the right axis. Some economic indicators come out more often than the real estate KPI, for example monthly while the real estate KPI is quarterly. We average them to match the real estate KPI (see Frequency). So the economic indicator line is our own calculation, not the figure the source published.
 
   {{figure:link-overlay|Example from the site: initial yield in the 7 major cities (left axis) and the 10-year Bund yield (right axis), on the same years.}}
-- **How closely they move together.** We compare *changes*, not the values themselves. For each series, we take its change from a year earlier. For indices (series set to 100 in a base year) and money amounts, this is a percent change. For interest rates and confidence balances, it is a difference in percentage points. (A percentage point is the plain difference between two percentages.) Then we check whether the two tend to rise and fall together.
+- **(ii) How closely they move together.** We compare *changes*, not the values themselves. For each series, we take its change from a year earlier. For indices (series set to 100 in a base year) and money amounts, this is a percent change. For interest rates and confidence balances, it is a difference in percentage points. (A percentage point is the plain difference between two percentages.) Then we check whether the two tend to rise and fall together.
 
   The answer is one number from −1 to +1, called Spearman's rank correlation. Near +1, the two tend to move the same way. Near −1, they tend to move in opposite ways. Near 0, there is no clear pattern.
 
   We always show *n*, the number of periods compared, and the time span.
 
   We show no significance tests. A significance test usually appears as a *p-value* or as stars (\*). It tries to say how likely it is that a pattern this strong came from luck alone. We leave it out on purpose. A star can look like proof. With only a few years or quarters, and several shifts tried, a good-looking result is easy to get by chance. So we show the number itself, *n* and the time span. You can then judge how much weight it deserves.
-- **Did one move first?** Sometimes one series turns first and the other follows. To test this, we shift the economic indicator earlier or later in time and compare again each time. For quarterly real estate KPIs, we shift by whole quarters, up to 8 either way. For yearly real estate KPIs, we shift by whole years, up to 3 either way.
+- **(iii) Did one move first?** Sometimes one series turns first and the other follows. To test this, we shift the economic indicator earlier or later in time and compare again each time. For quarterly real estate KPIs, we shift by whole quarters, up to 8 either way. For yearly real estate KPIs, we shift by whole years, up to 3 either way.
   - A **positive shift** means the economic indicator moved earlier. We compare the economic indicator's change with the real estate KPI's change from a later period. Example: at +2 quarters, we compare the economic indicator's change with the real estate KPI's change two quarters later.
   - A **negative shift** is the reverse: the economic indicator moved later.
   - The main number is the one with **no shift**. It is written above the chart. Its bar is in the middle, under the 0 mark. The other bars show how the match changes with the shift.
