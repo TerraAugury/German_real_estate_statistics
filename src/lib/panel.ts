@@ -121,7 +121,7 @@ const headlineNumber = (e: InsightEntry, lang: Lang) => {
 /** How an Insight's tone shows: a class that tints its whole plate and a visually hidden word for screen readers; both empty where it reads in line or has no better side. */
 const toneOf = (e: InsightEntry, r: Shown, lang: Lang) => {
   const v = tone(r.verdict, e.better);
-  return v === 'neutral' ? { plate: '', word: '' } : { plate: `tone-${v}`, word: ` <span class="vh">(${t(lang, `insight.tone.${v}`)})</span>` };
+  return v === 'neutral' ? { plate: '', word: '' } : { plate: `tone-${v}`, word: ` <span class="vh tone-word">(${t(lang, `insight.tone.${v}`)})</span>` };
 };
 
 /** An Insight's headline number with its unit and verdict tag, then the hidden tone word: the same spans lead its section, tile its index entry and open Home. */

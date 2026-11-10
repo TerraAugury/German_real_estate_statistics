@@ -1782,3 +1782,27 @@ link.not:
   en_hash: 9e925d125e735c9b
   reviewed_by: Olivier
   reviewed_on: 2026-11-10
+nav.skip:
+  en_hash: ac576a66d4563e60
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+kpi.status:
+  en_hash: 10ea816dbaaeb06c
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+kpi.load_failed:
+  en_hash: 0a0231a127af78b9
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+chart.table:
+  en_hash: 22c75109af01beb1
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+chart.table.period:
+  en_hash: 6e795d4d3cc21c5c
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+chart.table.value:
+  en_hash: 8e37953d23daca5f
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
