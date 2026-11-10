@@ -29,7 +29,7 @@ note.scope.index: "Index (2013 = 100): we set 2013 to 100. It shows change over 
 note.scope.city_class: "Combined figure for {class}, not for one city."
 note.scope.combined: "Office and retail combined; no separate office or retail figure."
 link.title: "{kpi} and {indicator}"
-link.scope: "National indicator compared with {geography}"
+link.scope: "National economic indicator compared with {geography}"
 geo.germany: Germany
 link.sentence: "This shows how two series moved together over {period} (n = {n}, the number of periods compared). Rank correlation runs from -1 (opposite ways) to +1 (same way). It does not show that one causes the other, and it is not a forecast."
 link.period: "{from} to {to}"
@@ -39,7 +39,7 @@ link.not_shown.constant: "Link not shown: one series did not change over the per
 link.strongest: "Strongest of {n} shifts tested. We chose it after looking at the data, so it is likely overstated."
 link.strongest.mark: strongest
 link.small_sample: "Based on only {n} yearly values. With so little data, the pattern may be coincidental."
-link.lag.label: "Shift in years (positive: indicator moved earlier, negative: later)"
+link.lag.label: "Shift in years (positive: economic indicator moved earlier, negative: later)"
 link.rho.label: "Rank correlation"
 link.overlay.chart: "Values of {kpi} and {indicator}"
 link.overlay.legend: "Blue line, left axis: {kpi}. Ochre line, right axis: {indicator}."
@@ -52,7 +52,7 @@ sources.col.publisher: Publisher
 sources.col.id: Series id
 sources.col.licence: Licence
 sources.col.attribution: Attribution
-nav.kpis: KPIs
+nav.kpis: Real estate KPIs
 kpi.price-index.title: Commercial property price index
 kpi.rent-index.title: Rent index (new lettings)
 kpi.initial-yield.title: Initial yield
@@ -116,11 +116,11 @@ latest.change.pct: "{change} compared with {period}"
 latest.change.diff: "{change} points compared with {period}"
 latest.unchanged: "No change compared with {period}"
 home.segments: "Browse by Segment (property type)"
-segment.intro: "We show one chart for Germany per KPI (key figure) where a source has it. Each chart opens the full KPI page."
-segment.availability: Which KPI and Segment combinations exist, and why the others do not
+segment.intro: "We show one chart for Germany per real estate KPI (key figure) where a source has it. Each chart opens the full real estate KPI page."
+segment.availability: Which real estate KPI and Segment combinations exist, and why the others do not
 availability.title: Availability
-availability.intro: "Every KPI (key figure) for every Segment (property type). We give the reason for each gap. Nothing is planned for later. An Open source is a data source that is free to use and may be shown publicly."
-availability.kpi: KPI
+availability.intro: "Every real estate KPI (key figure) for every Segment (property type). We give the reason for each gap. Nothing is planned for later. An Open source is a data source that is free to use and may be shown publicly."
+availability.kpi: Real estate KPI
 availability.available: "Available ({geo})"
 nav.links: Links
 nav.methodology: Methodology
@@ -204,15 +204,15 @@ insight.template.completions-permits: "Completions were {latest} times the permi
 insight.unit.ratio: times
 insight.shift.2: two years earlier
 insight.shifted: "{title}, {shift}"
-kpi.insights.heading: "Insights that use this KPI (key figure)"
+kpi.insights.heading: "Insights that use this real estate KPI (key figure)"
 insight.template.price-rent: "The price index stands at {latest} times the rent index. This is {verdict} the {from}-{to} average of {mean}."
 insight.template.real-rents: "Real office rents changed by {latest}% in {to}. This is {verdict} the {from}-{to} average of {mean}%."
 insight.unit.growth: percent
 link.preset.mark: "pre-set shift"
-links.lag.label: "Indicator shift"
+links.lag.label: "Economic indicator shift"
 links.lag.0: "Same year"
-links.lag.1: "Indicator 1 year earlier (N-1)"
-links.lag.2: "Indicator 2 years earlier (N-2)"
+links.lag.1: "Economic indicator 1 year earlier (N-1)"
+links.lag.2: "Economic indicator 2 years earlier (N-2)"
 links.cell.preset: "pre-set shift: N-1"
 links.preset.note: "Appraisal-based yields and prices react to interest rates with a delay. For these boxes, we set one year earlier (N-1) in advance, on economic grounds. We did not choose it from the results."
 link.band.legend: "Grey band: the range of rank correlation that chance alone often produces at shift 0 for n = {n} (±{band}; each bar uses its own n). It is a rough guide, not a significance test."
@@ -220,8 +220,8 @@ link.band.adjusted: "Quarterly changes are each compared with a year earlier, so
 links.cell.noise: "within chance range"
 links.noise.legend: "Grey: within the range that chance alone often produces for this number of years."
 links.chance.note: "With this many comparisons, a few boxes will look strong by chance alone. Treat a single strong box with caution, especially when n is small."
-note.nominal.inflation: "This KPI and this indicator are both nominal, meaning not adjusted for inflation. So their Link partly reflects shared inflation."
-note.nominal.gdp: "This KPI is in nominal euros (not adjusted for inflation). Real GDP is adjusted for inflation. So this Link compares nominal with real."
+note.nominal.inflation: "This real estate KPI and this economic indicator are both nominal, meaning not adjusted for inflation. So their Link partly reflects shared inflation."
+note.nominal.gdp: "This real estate KPI is in nominal euros (not adjusted for inflation). Real GDP is adjusted for inflation. So this Link compares nominal with real."
 links.nominal.tag: "Nominal euros*"
 links.nominal.note: "* Nominal euros are not adjusted for inflation. Rents and transaction volume are in nominal euros. Their Links to the consumer price index and construction prices partly reflect shared inflation. Their Link to real GDP compares nominal with real."
 links.row.kpi-price-index: "Commercial overall · Germany"
@@ -230,7 +230,7 @@ links.row.kpi-initial-yield: "Office + retail · 7 cities"
 links.row.kpi-office-vacancy: "Office · 7 cities"
 links.row.kpi-transaction-volume: "Commercial overall · Germany"
 links.row.construction: "Office · Germany"
-links.rows.note: "Rows cover different Segments and areas. Every indicator is for Germany as a whole."
+links.rows.note: "Rows cover different Segments and areas. Every economic indicator is for Germany as a whole."
 links.cell.preset_other: "pre-set shift is N-1"
 links.cell.preset_2: "Set to N-2"
 kpi.price-index.definition: "How commercial property prices in general compare with prices in a base year. The base year is set to 100."

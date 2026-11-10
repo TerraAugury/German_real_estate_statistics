@@ -19,7 +19,7 @@ Wir stellen die Daten sorgfältig dar, übernehmen aber keine Gewähr für Volls
 
 ## 4. Quellen und abgeleitete Werte
 
-Die Herausgeber der Daten unterstützen diese Seite nicht und sind für sie nicht verantwortlich. Werte, die wir ableiten, etwa die gemittelten Indikatorlinien und die Verknüpfungen, sind unsere eigene Berechnung und keine von der Quelle veröffentlichten Zahlen.
+Die Herausgeber der Daten unterstützen diese Seite nicht und sind für sie nicht verantwortlich. Werte, die wir ableiten, etwa die gemittelten Linien der Wirtschaftsindikatoren und die Verknüpfungen, sind unsere eigene Berechnung und keine von der Quelle veröffentlichten Zahlen.
 
 ## 5. Haftung
 

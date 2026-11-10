@@ -8,13 +8,13 @@ German terms (_DE_) are the canonical translations for the site and for translat
 
 **Real estate KPI**:
 A series that measures the property market itself: rent, yield, vacancy, capital value, transaction volume or construction activity.
-_Plain_: Keep "KPI" on the KPI pages and explain it once per page: a key figure for the property market itself. On an Insight chart it is the "main line".
+_Plain_: Always write "real estate KPI" in site text, never "KPI" alone; explain it once per page: a key figure for the property market itself. On an Insight chart it is the "main line".
 _DE_: Immobilienkennzahl
 _Avoid_: Metric, property indicator
 
 **Economic indicator**:
 A macro or financial series from outside the property market: interest rates, inflation, GDP, unemployment, and credit.
-_Plain_: A figure from the wider economy, such as interest rates or inflation.
+_Plain_: Always write "economic indicator" in site text, never "indicator" alone. A figure from the wider economy, such as interest rates or inflation.
 _DE_: Wirtschaftsindikator
 _Avoid_: Macro variable, driver
 
