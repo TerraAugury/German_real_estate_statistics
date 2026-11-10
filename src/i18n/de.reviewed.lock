@@ -14,14 +14,6 @@ note.revised:
   en_hash: cbf2175a91c76ebe
   reviewed_by: Olivier
   reviewed_on: 2026-11-08
-link.sentence:
-  en_hash: d2882b4427dc7278
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
-link.period:
-  en_hash: ba318cc195ceff48
-  reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
-  reviewed_on: 2026-11-01
 note.short_window:
   en_hash: 545673158ee1f34e
   reviewed_by: "Project owner (seeded: wording fixed in tickets T06/T11)"
@@ -90,10 +82,6 @@ geo.germany:
   en_hash: 80db4ccdca106d37
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
-link.headline:
-  en_hash: 2f0bb36fc73427c0
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
 link.not_shown:
   en_hash: 824baaebe6e88a36
   reviewed_by: Olivier
@@ -102,10 +90,6 @@ link.not_shown.constant:
   en_hash: 2d374bc74f8e15ab
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
-link.strongest:
-  en_hash: 757339b66153c155
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
 link.strongest.mark:
   en_hash: a0a416e1b1bb3484
   reviewed_by: Project owner
@@ -1524,14 +1508,6 @@ links.rows.note:
   reviewed_on: 2026-11-08
 link.preset.mark:
   en_hash: 730aadc0f25b63b5
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
-link.band.legend:
-  en_hash: 26e54dd9c2d0cfb6
-  reviewed_by: Olivier
-  reviewed_on: 2026-11-08
-link.band.adjusted:
-  en_hash: 9b842a4accf2236d
   reviewed_by: Olivier
   reviewed_on: 2026-11-08
 note.nominal.inflation:

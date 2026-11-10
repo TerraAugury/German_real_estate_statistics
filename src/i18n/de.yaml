@@ -31,12 +31,8 @@ note.scope.combined: "Büro und Einzelhandel zusammen; keine getrennten Werte."
 link.title: "{kpi} und {indicator}"
 link.scope: "Nationaler Wirtschaftsindikator im Vergleich zu {geography}"
 geo.germany: Deutschland
-link.sentence: "Die Grafik zeigt, wie sich zwei Reihen im Zeitraum {period} gemeinsam entwickelt haben (n = {n}, Zahl der verglichenen Zeiträume). Die Rangkorrelation reicht von -1 (gegenläufig) bis +1 (gleichläufig). Das belegt keine Ursache-Wirkungs-Beziehung und ist keine Prognose."
-link.period: "{from} bis {to}"
-link.headline: "Rangkorrelation (Spearman) der Veränderungen bei Verschiebung 0: {rho} (n = {n})"
 link.not_shown: "Verknüpfung nicht angezeigt: zu wenige Zeiträume zum Vergleich (n = {n})"
 link.not_shown.constant: "Verknüpfung nicht angezeigt: eine Reihe hat sich im Zeitraum nicht verändert (n = {n})"
-link.strongest: "Stärkste von {n} getesteten Verschiebungen. Wir haben sie nach einem Blick auf die Daten ausgewählt, daher ist sie wahrscheinlich überschätzt."
 link.strongest.mark: stärkster
 link.small_sample: "Beruht auf nur {n} Jahreswerten. Bei so wenigen Daten kann das Muster zufällig sein."
 link.lag.label: "Verschiebung in Jahren (positiv: Wirtschaftsindikator früher, negativ: später)"
@@ -216,8 +212,6 @@ links.lag.1: "Wirtschaftsindikator 1 Jahr früher (N-1)"
 links.lag.2: "Wirtschaftsindikator 2 Jahre früher (N-2)"
 links.cell.preset: "vorab gewählte Verschiebung: N-1"
 links.preset.note: "Renditen und Preise, die auf Bewertungen beruhen, reagieren mit Verzögerung auf Zinsen. Für diese Felder legen wir ein Jahr früher (N-1) im Voraus aus ökonomischen Gründen fest. Wir haben es nicht anhand der Ergebnisse gewählt."
-link.band.legend: "Graues Band: der Bereich der Rangkorrelation, den allein der Zufall bei Verschiebung 0 und n = {n} häufig erzeugt (±{band}; jeder Balken verwendet sein eigenes n). Es ist eine grobe Orientierung, kein Signifikanztest."
-link.band.adjusted: "Quartalsveränderungen werden jeweils mit dem Vorjahr verglichen, benachbarte Quartale überlappen also. Das Band verwendet ein angepasstes n = {eff} (n ÷ 4, abgerundet)."
 links.cell.noise: "im Zufallsbereich"
 links.noise.legend: "Grau: innerhalb des Bereichs, den allein der Zufall bei dieser Zahl von Jahren häufig erzeugt."
 links.chance.note: "Bei so vielen Vergleichen sehen einige Felder allein durch Zufall stark aus. Behandeln Sie ein einzelnes starkes Feld mit Vorsicht, besonders wenn n klein ist."
@@ -240,3 +234,27 @@ kpi.transaction-volume.definition: "Der Eurowert der verkauften Immobilien, darg
 kpi.construction.definition: "Die für den Bau genehmigte Fläche. Sie erfasst Bauvorhaben im Stadium der Genehmigung, vor der Fertigstellung."
 links.lag.help_label: "Was bewirkt diese Auswahl?"
 links.lag.help: "Eine Veränderung bei einem Wirtschaftsindikator zeigt sich bei Immobilien womöglich erst später. Hier wählen Sie, wie viele Jahre früher der Wirtschaftsindikator genommen wird: das gleiche Jahr, ein Jahr früher (N-1) oder zwei Jahre früher (N-2). „Vorab gewählt“ nimmt N-1 für die als vorab gewählt markierten Felder und für alle anderen das gleiche Jahr."
+
+# Link panel: the plain-language reading under the shift chart (owner's wording)
+link.explain.heading: "Wie stark haben sich diese beiden Reihen gemeinsam entwickelt?"
+link.explain.compared.A: "Wir haben verglichen, wie sich die beiden Reihen zwischen {from} und {to} von Jahr zu Jahr verändert haben. Das ergibt {n} jährliche Vergleiche."
+link.explain.compared.Q: "Wir haben verglichen, wie sich die beiden Reihen zwischen {from} und {to} gegenüber demselben Quartal des Vorjahres verändert haben. Das ergibt {n} vierteljährliche Vergleiche. Benachbarte Quartale überlappen sich, weil jede Veränderung mit demselben Quartal des Vorjahres verglichen wird. Sie zählen daher nur wie {eff} unabhängige Vergleiche ({n} ÷ 4, abgerundet)."
+link.explain.result.lead: "Ergebnis: {rho}."
+link.explain.result: "Die Skala reicht von -1 bis +1. Der Wert -1 bedeutet, dass sich beide immer gegenläufig bewegt haben. Der Wert +1 bedeutet, dass sie sich immer gleichläufig bewegt haben. Ein Wert nahe 0 bedeutet, dass kein klarer Zusammenhang erkennbar ist. Bei {rho} {reading}"
+link.tier.none: "gibt es keine klare Tendenz, sich in die eine oder andere Richtung zu bewegen."
+link.tier.reading: "gibt es eine {tier} Tendenz, sich {dir} zu bewegen."
+link.tier.very_weak: sehr schwache
+link.tier.weak: schwache
+link.tier.moderate: mäßige
+link.tier.strong: starke
+link.dir.pos: gleichläufig
+link.dir.neg: gegenläufig
+link.meaning.lead: "Ist dieses Ergebnis aussagekräftig?"
+link.meaning.inside: "Wahrscheinlich nicht. Bei nur {n} Vergleichen erzeugt der reine Zufall oft Werte zwischen -{band} und +{band} (das graue Band in der Grafik). Unser Ergebnis liegt {where} dieses Bandes, es kann also leicht Zufall sein."
+link.meaning.outside: "Möglicherweise. Bei {n} Vergleichen erzeugt der reine Zufall nur selten Werte jenseits von -{band} und +{band} (das graue Band in der Grafik). Unser Ergebnis liegt außerhalb dieses Bandes, ist also wohl nicht allein Zufall. Ein Beweis ist das trotzdem nicht: siehe die Warnung unten."
+link.where.well_inside: weit innerhalb
+link.where.inside: innerhalb
+link.best.lead: "Achtung beim „besten“ Ergebnis."
+link.best: "Wir haben {n} verschiedene Zeitverschiebungen getestet (zum Beispiel: eine Reihe mit der anderen ein Jahr später vergleichen). Die Grafik markiert die Verschiebung mit dem stärksten Zusammenhang. Weil wir sie erst nach einem Blick auf die Daten ausgewählt haben, sieht sie wahrscheinlich stärker aus, als sie ist."
+link.not.lead: "Was das nicht aussagt."
+link.not: "Gemeinsame Bewegung heißt nicht, dass das eine das andere verursacht. Es ist auch keine Prognose."

@@ -4,7 +4,7 @@ import { indexChart, insightChart, multiplesChart, sharedDomain, overlayChart, l
 import { notesFor } from './notes';
 import { href, slug, type Lang } from './routes';
 import type { Series } from './series';
-import { effectiveN, lagFor, noiseBand, targetOf, type LinkResult } from '../link/link';
+import { effectiveN, lagFor, noiseBand, targetOf, tierOf, type LinkResult } from '../link/link';
 import { linkResult } from './links';
 import { compareLines, MIN_OBS, tone, type InsightResult } from '../insight/insight';
 import type { InsightEntry } from './manifest';
@@ -68,6 +68,23 @@ export function latestBlock(s: Series, lang: Lang): string {
 export const compactChart = (s: Series, lang: Lang) => latestBlock(s, lang) + lineChart(s, lang, 200)
   + noteHtml(notesFor(s, lang, { on: 'compact' })) + `<figcaption>${sourceBlock(s, lang)}</figcaption>`;
 
+/** The plain-language reading under a Link's charts: what was compared, the result and how strong it is, whether chance could explain it, the best-of-N warning, and the limit on what it shows. */
+function explainLink(r: Extract<LinkResult, { shown: true }>, freq: 'D' | 'M' | 'Q' | 'A', lang: Lang): string {
+  const target = targetOf(freq), n = r.headline.n, eff = effectiveN(n, target), rho = r.headline.rho!;
+  const num = (x: number) => fmt(lang, x, { maximumFractionDigits: 2 });
+  const tier = tierOf(rho), band = noiseBand(n, target), inside = Math.abs(rho) <= band;
+  const reading = tier === 'none' ? t(lang, 'link.tier.none') : t(lang, 'link.tier.reading', { tier: t(lang, `link.tier.${tier}`), dir: t(lang, rho > 0 ? 'link.dir.pos' : 'link.dir.neg') });
+  const where = t(lang, Math.abs(rho) <= band / 2 ? 'link.where.well_inside' : 'link.where.inside');
+  const meaning = inside ? t(lang, 'link.meaning.inside', { n: String(eff), band: num(band), where }) : t(lang, 'link.meaning.outside', { n: String(eff), band: num(band) });
+  const lead = (head: string, body: string) => `<p><strong>${head}</strong> ${body}</p>`;
+  return `<h4>${t(lang, 'link.explain.heading')}</h4>`
+    + `<p>${t(lang, `link.explain.compared.${target}`, { from: period(lang, r.span[0]), to: period(lang, r.span[1]), n: String(n), eff: String(eff) })}</p>`
+    + lead(t(lang, 'link.explain.result.lead', { rho: num(rho) }), t(lang, 'link.explain.result', { rho: num(rho), reading }))
+    + lead(t(lang, 'link.meaning.lead'), meaning)
+    + lead(t(lang, 'link.best.lead'), t(lang, 'link.best', { n: String(r.lags.filter((l) => l.rho !== null).length) }))
+    + lead(t(lang, 'link.not.lead'), t(lang, 'link.not'));
+}
+
 /** Link panel HTML for one KPI x indicator pair. Pure given the result, so it tests without the Link module. */
 export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang, geography = t(lang, 'geo.germany'), id?: string, preset = false): string {
   const notes = notesFor(kpi, lang, { on: 'link', indicator: ind, pairs: r.shown ? r.headline.n : undefined });
@@ -84,10 +101,7 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
     body = overlayChart(pts('kpi'), pts('indicator'), { kpiUnit: kpi.unit[lang], indicatorUnit: ind.unit[lang], title: t(lang, 'link.overlay.chart', names) }, lang)
       + `<p class="note">${t(lang, 'link.overlay.legend', { kpi: esc(names.kpi), indicator: esc(names.indicator) })}</p>`
       + lagChart(r.lags, r.strongest.lag, { lag: t(lang, 'link.lag.label'), rho: t(lang, 'link.rho.label'), mark: t(lang, 'link.strongest.mark'), bands: r.lags.filter((l) => l.rho !== null).map((l) => ({ lag: l.lag, band: noiseBand(l.n, targetOf(kpi.freq)) })), preset: preset ? { lag: lagFor(kpi.freq, 1), label: t(lang, 'link.preset.mark') } : undefined, title: t(lang, 'link.lags.label', { kpi: kpi.title[lang], indicator: ind.title[lang] }) }, lang)
-      + `<p class="note">${t(lang, 'link.band.legend', { n: String(r.headline.n), band: fmt(lang, noiseBand(r.headline.n, targetOf(kpi.freq)), { maximumFractionDigits: 2 }) })}${targetOf(kpi.freq) === 'Q' ? ' ' + t(lang, 'link.band.adjusted', { eff: String(effectiveN(r.headline.n, 'Q')) }) : ''}</p>`
-      + `<p>${t(lang, 'link.headline', { rho: fmt(lang, r.headline.rho!, { maximumFractionDigits: 2 }), n: String(r.headline.n) })}</p>`
-      + `<p>${t(lang, 'link.strongest', { n: String(N) })}</p>`
-      + `<p>${t(lang, 'link.sentence', { period: t(lang, 'link.period', { from: period(lang, r.span[0]), to: period(lang, r.span[1]) }), n: String(r.headline.n) })}</p>`;
+      + explainLink(r, kpi.freq, lang);
   }
   return `<figure class="link-panel"${id ? ` id="${esc(id)}"` : ''}>${head}${noteHtml(notes)}${body}<figcaption>${sourceBlock([kpi, ind], lang, true)}</figcaption></figure>`;
 }

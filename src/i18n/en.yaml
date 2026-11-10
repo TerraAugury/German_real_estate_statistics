@@ -31,12 +31,8 @@ note.scope.combined: "Office and retail combined; no separate office or retail f
 link.title: "{kpi} and {indicator}"
 link.scope: "National economic indicator compared with {geography}"
 geo.germany: Germany
-link.sentence: "This shows how two series moved together over {period} (n = {n}, the number of periods compared). Rank correlation runs from -1 (opposite ways) to +1 (same way). It does not show that one causes the other, and it is not a forecast."
-link.period: "{from} to {to}"
-link.headline: "Rank correlation (Spearman) of changes at shift 0: {rho} (n = {n})"
 link.not_shown: "Link not shown: too few periods to compare (n = {n})"
 link.not_shown.constant: "Link not shown: one series did not change over the period (n = {n})"
-link.strongest: "Strongest of {n} shifts tested. We chose it after looking at the data, so it is likely overstated."
 link.strongest.mark: strongest
 link.small_sample: "Based on only {n} yearly values. With so little data, the pattern may be coincidental."
 link.lag.label: "Shift in years (positive: economic indicator moved earlier, negative: later)"
@@ -216,8 +212,6 @@ links.lag.1: "Economic indicator 1 year earlier (N-1)"
 links.lag.2: "Economic indicator 2 years earlier (N-2)"
 links.cell.preset: "pre-set shift: N-1"
 links.preset.note: "Appraisal-based yields and prices react to interest rates with a delay. For these boxes, we set one year earlier (N-1) in advance, on economic grounds. We did not choose it from the results."
-link.band.legend: "Grey band: the range of rank correlation that chance alone often produces at shift 0 for n = {n} (±{band}; each bar uses its own n). It is a rough guide, not a significance test."
-link.band.adjusted: "Quarterly changes are each compared with a year earlier, so neighbouring quarters overlap. The band uses an adjusted n = {eff} (n ÷ 4, rounded down)."
 links.cell.noise: "within chance range"
 links.noise.legend: "Grey: within the range that chance alone often produces for this number of years."
 links.chance.note: "With this many comparisons, a few boxes will look strong by chance alone. Treat a single strong box with caution, especially when n is small."
@@ -240,3 +234,27 @@ kpi.transaction-volume.definition: "The euro value of property sold, shown as an
 kpi.construction.definition: "Floor space approved for construction. It records building plans at the approval stage, ahead of completion."
 links.lag.help_label: "What does this choice do?"
 links.lag.help: "A change in an economic indicator may show up in property only later. Here you choose how many years earlier the economic indicator is taken: the same year, one year earlier (N-1) or two years earlier (N-2). \"Pre-set\" uses N-1 for the boxes marked pre-set and the same year for all the others."
+
+# Link panel: the plain-language reading under the shift chart (owner's wording)
+link.explain.heading: "How closely did these two series move together?"
+link.explain.compared.A: "We compared how the two series changed from year to year between {from} and {to}. That gives {n} yearly comparisons."
+link.explain.compared.Q: "We compared how the two series changed from the same quarter a year earlier, between {from} and {to}. That gives {n} quarterly comparisons. Neighbouring quarters overlap, because each change is measured against the same quarter a year earlier. So they count as only {eff} independent comparisons ({n} ÷ 4, rounded down)."
+link.explain.result.lead: "Result: {rho}."
+link.explain.result: "The scale runs from -1 to +1. A value of -1 means they always moved in opposite directions. A value of +1 means they always moved in the same direction. A value near 0 means there is no clear link. At {rho}, {reading}"
+link.tier.none: "there is no clear tendency to move in either direction."
+link.tier.reading: "there is a {tier} tendency to move in {dir}."
+link.tier.very_weak: very weak
+link.tier.weak: weak
+link.tier.moderate: moderate
+link.tier.strong: strong
+link.dir.pos: the same direction
+link.dir.neg: opposite directions
+link.meaning.lead: "Is this result meaningful?"
+link.meaning.inside: "Probably not. With only {n} comparisons, pure chance often produces values between -{band} and +{band} (the grey band on the chart). Our result sits {where} that band, so it could easily be luck."
+link.meaning.outside: "Possibly. With {n} comparisons, pure chance only rarely produces values beyond -{band} and +{band} (the grey band on the chart). Our result sits outside that band, so it is unlikely to be luck alone. That is still not proof: see the warning below."
+link.where.well_inside: well inside
+link.where.inside: inside
+link.best.lead: "A warning about the “best” result."
+link.best: "We tested {n} different time shifts (for example, comparing one series with the other a year later). The chart marks the one with the strongest link. Because we picked it after seeing the data, it probably looks stronger than it really is."
+link.not.lead: "What this does not tell you."
+link.not: "Moving together does not mean one causes the other. This is not a forecast either."

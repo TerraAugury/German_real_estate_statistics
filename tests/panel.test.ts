@@ -8,11 +8,11 @@ import { JSDOM } from 'jsdom';
 const kpi = loadSeries('construction-permits-office');
 const ind = loadSeries('euribor-3m');
 const lag = (l: number, rho: number | null) => ({ lag: l, n: rho === null ? 5 : 14, rho });
-const shown = (n0: number): LinkResult => ({
+const shown = (n0: number, rho = 0.5): LinkResult => ({
   shown: true, span: ['2009', '2025'],
   overlay: [{ period: '2008', kpi: 1, indicator: 2 }, { period: '2009', kpi: 2, indicator: 1 }],
   lags: [lag(-1, 0.1), lag(0, 0.5), lag(1, -0.7), lag(2, null)],
-  headline: { lag: 0, n: n0, rho: 0.5 }, strongest: lag(1, -0.7),
+  headline: { lag: 0, n: n0, rho }, strongest: lag(1, -0.7),
 });
 
 // Ticket 16: every chart is a wide and a narrow SVG with the same accessible label; CSS shows one.
@@ -33,15 +33,15 @@ it('the pre-set shift label appears on a Link panel only for a pair in scope', (
 });
 
 // Ticket 11: the noise band on the bars, and n with the adjusted n for quarterly Links.
-it('the Link panel says what the band is; a quarterly Link shows n and the adjusted n', () => {
-  const annual = renderPanel(kpi, ind, shown(14), 'en');
-  expect(annual).toContain('chance alone often produces at shift 0 for n = 14');
+it('the Link panel states the band; a quarterly Link shows n and the independent count', () => {
+  const text = (h: string) => new JSDOM(h).window.document.body.textContent!.replace(/\s+/g, ' ');
+  expect(text(renderPanel(kpi, ind, shown(14), 'en'))).toContain('between -0.55 and +0.55 (the grey band on the chart)');
   const q = loadSeries('price-index-de-total-q');
-  const text = (h: string) => new JSDOM(h).window.document.body.textContent!;
   const r = { ...shown(44), lags: [lag(-1, 0.1), { lag: 0, n: 44, rho: 0.5 }, { lag: 1, n: 43, rho: 0.2 }] } as LinkResult;
-  expect(text(renderPanel(q, ind, r, 'en'))).toContain('adjusted n = 11');
-  expect(text(renderPanel(kpi, ind, shown(14), 'en'))).not.toContain('adjusted n');
-  expect(text(renderPanel(q, ind, r, 'de'))).toContain('angepasstes n = 11');
+  expect(text(renderPanel(q, ind, r, 'en'))).toContain('That gives 44 quarterly comparisons.');
+  expect(text(renderPanel(q, ind, r, 'en'))).toContain('only 11 independent comparisons (44 ÷ 4, rounded down)');
+  expect(text(renderPanel(kpi, ind, shown(14), 'en'))).not.toContain('independent comparisons');
+  expect(text(renderPanel(q, ind, r, 'de'))).toContain('nur wie 11 unabhängige Vergleiche (44 ÷ 4, abgerundet)');
 });
 
 // Ticket 13 (option A): nominal KPIs get a Note against the indicators that share inflation or are real.
@@ -107,17 +107,35 @@ describe('Link panel chart', () => {
 });
 
 describe('Link panel', () => {
-  it('EN: exact co-movement sentence with period and n, both series named, note + strongest-of-N', () => {
+  const dom = (h: string) => new JSDOM(h).window.document;
+  it('EN: plain-language reading with period, n, result, band verdict, best-of-N and the limit', () => {
     const h = renderPanel(kpi, ind, shown(14), 'en');
-    expect(h).toContain('This shows how two series moved together over 2009 to 2025 (n = 14, the number of periods compared). Rank correlation runs from -1 (opposite ways) to +1 (same way). It does not show that one causes the other, and it is not a forecast.');
+    const text = dom(h).body.textContent!.replace(/\s+/g, ' ');
+    expect(text).toContain('How closely did these two series move together?');
+    expect(text).toContain('between 2009 and 2025. That gives 14 yearly comparisons.');
+    expect(text).toContain('Result:');
+    expect(text).toContain('The scale runs from -1 to +1.');
+    expect(text).toContain('Is this result meaningful?');
+    expect(text).toContain('A warning about the “best” result. We tested 3 different time shifts');
+    expect(text).toContain('What this does not tell you. Moving together does not mean one causes the other. This is not a forecast either.');
     expect(h).toContain(kpi.title.en);
     expect(h).toContain(ind.title.en);
-    expect(h).toContain('Strongest of 3 shifts tested. We chose it after looking at the data, so it is likely overstated.');
     expect(h).toContain('<svg');
   });
-  it('DE: exact sentence', () => {
-    const h = renderPanel(kpi, ind, shown(14), 'de');
-    expect(h).toContain('Die Grafik zeigt, wie sich zwei Reihen im Zeitraum 2009 bis 2025 gemeinsam entwickelt haben (n = 14, Zahl der verglichenen Zeiträume). Die Rangkorrelation reicht von -1 (gegenläufig) bis +1 (gleichläufig). Das belegt keine Ursache-Wirkungs-Beziehung und ist keine Prognose.');
+  it('DE: the same reading in German', () => {
+    const text = dom(renderPanel(kpi, ind, shown(14), 'de')).body.textContent!.replace(/\s+/g, ' ');
+    expect(text).toContain('Wie stark haben sich diese beiden Reihen gemeinsam entwickelt?');
+    expect(text).toContain('zwischen 2009 und 2025 von Jahr zu Jahr verändert haben. Das ergibt 14 jährliche Vergleiche.');
+    expect(text).toContain('Was das nicht aussagt.');
+  });
+  it('a result inside the band reads "Probably not", one outside reads "Possibly"; strength follows the size and sign', () => {
+    const at = (rho: number) => dom(renderPanel(kpi, ind, shown(14, rho), 'en')).body.textContent!.replace(/\s+/g, ' ');
+    expect(at(0.05)).toContain('no clear tendency to move in either direction');
+    expect(at(-0.18)).toContain('very weak tendency to move in opposite directions');
+    expect(at(-0.18)).toContain('Probably not.');
+    expect(at(-0.18)).toContain('well inside that band');
+    expect(at(0.8)).toContain('strong tendency to move in the same direction');
+    expect(at(0.8)).toContain('Possibly.');
   });
   it('small sample Note only for annual n < 20 at lag 0', () => {
     expect(renderPanel(kpi, ind, shown(14), 'en')).toContain('Based on only 14 yearly values.');
