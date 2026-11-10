@@ -1,10 +1,10 @@
 ## Links
 
-A Link compares one Real estate KPI (key figure) with one economic indicator (a figure from the wider economy) over a period we state. It shows whether the two moved together. It does not show that one causes the other, and it is not a forecast.
+A Link compares one real estate KPI (key figure) with one economic indicator (a figure from the wider economy) over a period we state. It shows whether the two moved together. It does not show that one causes the other, and it is not a forecast.
 
 Each Link has three parts:
 
-- **Two series on one chart.** The chart draws the Real estate KPI and the economic indicator over the same years. The Real estate KPI uses the left axis and the economic indicator uses the right axis. Some economic indicators come out more often than the Real estate KPI, for example monthly while the Real estate KPI is quarterly. We average them to match the Real estate KPI (see Frequency). So the economic indicator line is our own calculation, not the figure the source published.
+- **Two series on one chart.** The chart draws the real estate KPI and the economic indicator over the same years. The real estate KPI uses the left axis and the economic indicator uses the right axis. Some economic indicators come out more often than the real estate KPI, for example monthly while the real estate KPI is quarterly. We average them to match the real estate KPI (see Frequency). So the economic indicator line is our own calculation, not the figure the source published.
 
   {{figure:link-overlay|Example from the site: initial yield in the 7 major cities (left axis) and the 10-year Bund yield (right axis), on the same years.}}
 - **How closely they move together.** We compare *changes*, not the values themselves. For each series, we take its change from a year earlier. For indices (series set to 100 in a base year) and money amounts, this is a percent change. For interest rates and confidence balances, it is a difference in percentage points. (A percentage point is the plain difference between two percentages.) Then we check whether the two tend to rise and fall together.
@@ -14,8 +14,8 @@ Each Link has three parts:
   We always show *n*, the number of periods compared, and the time span.
 
   We show no significance tests. A significance test usually appears as a *p-value* or as stars (\*). It tries to say how likely it is that a pattern this strong came from luck alone. We leave it out on purpose. A star can look like proof. With only a few years or quarters, and several shifts tried, a good-looking result is easy to get by chance. So we show the number itself, *n* and the time span. You can then judge how much weight it deserves.
-- **Did one move first?** Sometimes one series turns first and the other follows. To test this, we shift the economic indicator earlier or later in time and compare again each time. For quarterly Real estate KPIs, we shift by whole quarters, up to 8 either way. For yearly Real estate KPIs, we shift by whole years, up to 3 either way.
-  - A **positive shift** means the economic indicator moved earlier. We compare the economic indicator's change with the Real estate KPI's change from a later period. Example: at +2 quarters, we compare the economic indicator's change with the Real estate KPI's change two quarters later.
+- **Did one move first?** Sometimes one series turns first and the other follows. To test this, we shift the economic indicator earlier or later in time and compare again each time. For quarterly real estate KPIs, we shift by whole quarters, up to 8 either way. For yearly real estate KPIs, we shift by whole years, up to 3 either way.
+  - A **positive shift** means the economic indicator moved earlier. We compare the economic indicator's change with the real estate KPI's change from a later period. Example: at +2 quarters, we compare the economic indicator's change with the real estate KPI's change two quarters later.
   - A **negative shift** is the reverse: the economic indicator moved later.
   - The main number is the one with **no shift**. It is written above the chart. Its bar is in the middle, under the 0 mark. The other bars show how the match changes with the shift.
 
@@ -25,36 +25,36 @@ Each Link has three parts:
     {{figure:link-strongest|Example: the orange bar is the shift furthest from zero. It is the best of several tries, so it probably looks stronger than it is.}}
   - We never present a shift as a lead time or an early warning. It describes the past only.
 
-**Frequency.** A Link uses the Real estate KPI's own rhythm, quarterly or yearly. We never invent in-between values. We average monthly and quarterly economic indicators over each quarter or calendar year. We leave out any quarter or year with missing data.
+**Frequency.** A Link uses the real estate KPI's own rhythm, quarterly or yearly. We never invent in-between values. We average monthly and quarterly economic indicators over each quarter or calendar year. We leave out any quarter or year with missing data.
 
-**Minimum overlap.** A comparison over too few periods can mislead. Each shift needs at least 40 periods for quarterly Real estate KPIs and 10 for yearly Real estate KPIs. Below that, we leave the shift blank. We show a Link only if the comparison with no shift reaches that minimum and at least three shifts in all do. Otherwise the panel says "Link not shown". It gives *n* with no shift, and it says whether there were too few periods or one series did not change. For yearly Links with fewer than 20 periods, we add a note that the pattern may be chance.
+**Minimum overlap.** A comparison over too few periods can mislead. Each shift needs at least 40 periods for quarterly real estate KPIs and 10 for yearly real estate KPIs. Below that, we leave the shift blank. We show a Link only if the comparison with no shift reaches that minimum and at least three shifts in all do. Otherwise the panel says "Link not shown". It gives *n* with no shift, and it says whether there were too few periods or one series did not change. For yearly Links with fewer than 20 periods, we add a note that the pattern may be chance.
 
 **Choosing a shift on the Links page.** Above the table, you can pick one shift. It applies to every box in the table. You can choose:
 
 - "Pre-set": the choice the table opens on. Boxes with a pre-set shift (see below) show N-1; all other boxes show the same year.
-- "Same year": we compare the economic indicator and the Real estate KPI in the same year.
-- "Indicator 1 year earlier (N-1)": we compare the Real estate KPI with the economic indicator from one year before.
-- "Indicator 2 years earlier (N-2)": we compare the Real estate KPI with the economic indicator from two years before.
+- "Same year": we compare the economic indicator and the real estate KPI in the same year.
+- "Economic indicator 1 year earlier (N-1)": we compare the real estate KPI with the economic indicator from one year before.
+- "Economic indicator 2 years earlier (N-2)": we compare the real estate KPI with the economic indicator from two years before.
 
-Each box shows the same number as the matching bar on the Real estate KPI page. For a quarterly Real estate KPI, N-1 and N-2 mean 4 and 8 quarters earlier. If a box has too few periods at the chosen shift, it says "Not shown". The table opens on "Pre-set". We explain it in the next paragraph. The page address changes with your choice, so you can copy it to share your view.
+Each box shows the same number as the matching bar on the real estate KPI page. For a quarterly real estate KPI, N-1 and N-2 mean 4 and 8 quarters earlier. If a box has too few periods at the chosen shift, it says "Not shown". The table opens on "Pre-set". We explain it in the next paragraph. The page address changes with your choice, so you can copy it to share your view.
 
 {{figure:link-matrix|Example: three rows of the Links table, one for each interest rate, at each of the three shifts. An olive green box is outside the chance range: the two tended to rise and fall together, and the deeper the green, the larger the number. A grey box is inside the chance range. The pre-set shift is marked.}}
 
 **Colours of the boxes.** A coloured box is outside the chance range. Olive green means the two tended to rise and fall together. Violet means one tended to rise when the other fell. The deeper the colour, the larger the number. A grey box is inside the chance range, so its number may be random. We explain the range further down. A colour shows that the two move together. It does not show that one causes the other or predicts it.
 
-**A pre-set shift for appraisal-based Real estate KPIs.** Initial yield and the commercial property price index rest mostly on appraisals (valuations by experts). Appraisals follow interest rates with a delay. We compare these two Real estate KPIs with the 10-year Bund yield (the interest rate on 10-year German government bonds), Euribor 3 months and the loan rate. For these pairs, we chose one year earlier (N-1) in advance. We chose it for economic reasons, not from the results. On "Pre-set", these boxes are marked "pre-set shift: N-1". Pick another shift and every box shows that shift, without the mark. On the Link panels, the +1 bar has the same label, separate from the "strongest" mark. If you switch between shifts and keep the one that looks strongest, you overstate the link. This is the same problem as with the "strongest" mark.
+**A pre-set shift for appraisal-based real estate KPIs.** Initial yield and the commercial property price index rest mostly on appraisals (valuations by experts). Appraisals follow interest rates with a delay. We compare these two real estate KPIs with the 10-year Bund yield (the interest rate on 10-year German government bonds), Euribor 3 months and the loan rate. For these pairs, we chose one year earlier (N-1) in advance. We chose it for economic reasons, not from the results. On "Pre-set", these boxes are marked "pre-set shift: N-1". Pick another shift and every box shows that shift, without the mark. On the Link panels, the +1 bar has the same label, separate from the "strongest" mark. If you switch between shifts and keep the one that looks strongest, you overstate the link. This is the same problem as with the "strongest" mark.
 
 {{figure:link-preset|Example: the dashed outline marks the pre-set shift, N-1 (+1 in the bar chart). We chose it in advance.}}
 
-**Grey boxes and the band on the bars.** A correlation based on few data points can be random. The fewer the data points, the more likely it is that a strong-looking number is just luck. So we draw a band: the range of numbers that luck alone often gives. If a box's number is inside the band, the box is grey. This means the number may be random. You can still read it. The band depends on *n*, the number of data points (periods compared) in that box at the chosen shift. The smaller *n* is, the wider the band. We work it out as ±2/√(n−1). Each Link panel draws the same band as a light strip on its bars. It is a rough guide, not a significance test. Quarterly Real estate KPIs need one more step. Each change is compared with the same quarter a year earlier, so neighbouring quarters overlap. We count *n* ÷ 4 (rounded down) data points instead. The panel shows both numbers.
+**Grey boxes and the band on the bars.** A correlation based on few data points can be random. The fewer the data points, the more likely it is that a strong-looking number is just luck. So we draw a band: the range of numbers that luck alone often gives. If a box's number is inside the band, the box is grey. This means the number may be random. You can still read it. The band depends on *n*, the number of data points (periods compared) in that box at the chosen shift. The smaller *n* is, the wider the band. We work it out as ±2/√(n−1). Each Link panel draws the same band as a light strip on its bars. It is a rough guide, not a significance test. Quarterly real estate KPIs need one more step. Each change is compared with the same quarter a year earlier, so neighbouring quarters overlap. We count *n* ÷ 4 (rounded down) data points instead. The panel shows both numbers.
 
 {{figure:link-band|Example: the light grey strip is the chance range at each shift. A bar that stays inside the strip may be random.}}
 
 **Many boxes at once.** The Links page shows many comparisons together. So a few boxes will look strong by chance alone, just as several shifts tried on one Link will give a good-looking one. Be careful with a single strong box, especially when *n* is small.
 
-**Nominal and real.** Nominal means not adjusted for inflation. Real means adjusted for inflation. Rents and transaction volume are in nominal euros. So are the consumer price index and construction prices. Their Links to those two economic indicators therefore partly reflect the same inflation. Real GDP (gross domestic product, the value of all goods and services produced) is adjusted for inflation. So a Link between a nominal Real estate KPI and real GDP compares nominal with real. The rent and transaction volume rows on the Links page carry a note about this. So do their Link panels for these three economic indicators. We do not adjust any figure for inflation in a Link.
+**Nominal and real.** Nominal means not adjusted for inflation. Real means adjusted for inflation. Rents and transaction volume are in nominal euros. So are the consumer price index and construction prices. Their Links to those two economic indicators therefore partly reflect the same inflation. Real GDP (gross domestic product, the value of all goods and services produced) is adjusted for inflation. So a Link between a nominal real estate KPI and real GDP compares nominal with real. The rent and transaction volume rows on the Links page carry a note about this. So do their Link panels for these three economic indicators. We do not adjust any figure for inflation in a Link.
 
-**Rows and areas.** The rows on the Links page cover different Segments (property types) and areas. Each row starts with a tag that names its own: commercial overall or office, Germany or the 7 major cities, and for initial yield office and retail combined. Every economic indicator is national. So reading down a column compares unlike things. On a City class or Land view, the Link compares the national economic indicator with the Real estate KPI for that area.
+**Rows and areas.** The rows on the Links page cover different Segments (property types) and areas. Each row starts with a tag that names its own: commercial overall or office, Germany or the 7 major cities, and for initial yield office and retail combined. Every economic indicator is national. So reading down a column compares unlike things. On a City class or Land view, the Link compares the national economic indicator with the real estate KPI for that area.
 
 ## The eight economic indicators
 
@@ -75,8 +75,8 @@ An Insight draws several series on one chart over a period we state. It comes wi
 - **Period.** The period is the set of years that all the series cover. The average and the usual spread (the standard deviation: how much values usually vary) use all these years. An Insight needs at least 10 years. With fewer, the site says "Insight not shown" and gives the number of years it had. With fewer than 20 years, a note warns that the average rests on little data.
 - **"As of".** Each tile on the Insights page and each big number says "As of" and a year. This is the latest year of the period. The big number is the value for that year.
 - **Big number.** The big number is one of these:
-  - the gap between the main line (the Real estate KPI) and the comparison line (the reference series), in percentage points;
-  - the Real estate KPI divided by the reference series (two indices with different base years are first set to 100 in the same year);
+  - the gap between the main line (the real estate KPI) and the comparison line (the reference series), in percentage points;
+  - the real estate KPI divided by the reference series (two indices with different base years are first set to 100 in the same year);
   - the gap between the two series' percent changes from the year before;
   - the percent change from the year before of one series.
 
