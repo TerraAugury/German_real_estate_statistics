@@ -14,7 +14,7 @@ We take care in presenting the data but give no warranty that it is complete, ac
 
 ## 4. Sources and derived values
 
-The publishers of the data do not endorse this site and are not responsible for it. Values we derive, such as the averaged indicator lines and the Links, are our own calculation and not figures published by the source.
+The publishers of the data do not endorse this site and are not responsible for it. Values we derive, such as the averaged economic indicator lines and the Links, are our own calculation and not figures published by the source.
 
 ## 5. Liability
 
