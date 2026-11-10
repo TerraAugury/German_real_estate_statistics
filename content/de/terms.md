@@ -1,7 +1,7 @@
 ---
-en_hash: decbe549a1173fbf
+en_hash: df747bfc8b7e7b5b
 reviewed_by: Olivier
-reviewed_on: 2026-11-04
+reviewed_on: 2026-11-10
 ---
 ## 1. Geltungsbereich und Anbieter
 

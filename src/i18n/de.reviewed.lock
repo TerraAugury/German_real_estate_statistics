@@ -75,9 +75,9 @@ link.title:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 link.scope:
-  en_hash: 6900b52c30465e82
+  en_hash: d584139c8472422f
   reviewed_by: Olivier
-  reviewed_on: 2026-11-08
+  reviewed_on: 2026-11-10
 geo.germany:
   en_hash: 80db4ccdca106d37
   reviewed_by: Project owner
@@ -95,9 +95,9 @@ link.strongest.mark:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 link.lag.label:
-  en_hash: 128d9cfca22dc581
+  en_hash: f877a25ca8351f17
   reviewed_by: Olivier
-  reviewed_on: 2026-11-08
+  reviewed_on: 2026-11-10
 link.rho.label:
   en_hash: 7f126b8b1fb27a3f
   reviewed_by: Olivier
@@ -139,9 +139,9 @@ sources.col.attribution:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 nav.kpis:
-  en_hash: 5bfb14769ec0a645
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: dfe4b070241231c8
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
 kpi.price-index.title:
   en_hash: 6e93b0e8393cf09e
   reviewed_by: Project owner
@@ -371,25 +371,25 @@ home.segments:
   reviewed_by: Olivier
   reviewed_on: 2026-11-08
 segment.intro:
-  en_hash: 56f2f4e9a61f504e
+  en_hash: a1b7f3a5b70a70bf
   reviewed_by: Olivier
-  reviewed_on: 2026-11-08
+  reviewed_on: 2026-11-10
 segment.availability:
-  en_hash: 45f6264fed261635
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 387a120f18f6e8de
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
 availability.title:
   en_hash: 12f67f8539c46701
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 availability.intro:
-  en_hash: d3a407152b6d7194
+  en_hash: 059ebc19642845f9
   reviewed_by: Olivier
-  reviewed_on: 2026-11-08
+  reviewed_on: 2026-11-10
 availability.kpi:
-  en_hash: f2536f5b3f1d03a1
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 63473c134ffcb7d7
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
 availability.available:
   en_hash: 927933e85e36481b
   reviewed_by: Project owner
@@ -1191,9 +1191,9 @@ links.cell.n:
   reviewed_by: terra augury
   reviewed_on: 2026-11-03
 links.legend:
-  en_hash: 4fee97b1f0e7367e
+  en_hash: 61f1152b2a69a4e1
   reviewed_by: Olivier
-  reviewed_on: 2026-11-08
+  reviewed_on: 2026-11-10
 nav.insights:
   en_hash: 2a932f90172e99ea
   reviewed_by: terra augury
@@ -1315,9 +1315,9 @@ insight.shifted:
   reviewed_by: terra augury
   reviewed_on: 2026-11-03
 kpi.insights.heading:
-  en_hash: 9a3fda81f0bcb0ac
+  en_hash: ee7923caf07df00f
   reviewed_by: Olivier
-  reviewed_on: 2026-11-08
+  reviewed_on: 2026-11-10
 insight.template.price-rent:
   en_hash: 5555d1c38d5f3de9
   reviewed_by: Olivier
@@ -1439,21 +1439,21 @@ legal-notice.title:
   reviewed_by: Olivier
   reviewed_on: 2026-11-03
 links.lag.label:
-  en_hash: eb6a58ca19bf4b59
+  en_hash: f1b16824e8fc3926
   reviewed_by: Olivier
-  reviewed_on: 2026-11-08
+  reviewed_on: 2026-11-10
 links.lag.0:
   en_hash: f10eaf00e7da2c35
   reviewed_by: Olivier
   reviewed_on: 2026-11-05
 links.lag.1:
-  en_hash: 43f2ac58fc647433
+  en_hash: 0dfbb5de102065e8
   reviewed_by: Olivier
-  reviewed_on: 2026-11-05
+  reviewed_on: 2026-11-10
 links.lag.2:
-  en_hash: 9f5ad7df6f829c41
+  en_hash: 2d70c1331b2e3e0f
   reviewed_by: Olivier
-  reviewed_on: 2026-11-05
+  reviewed_on: 2026-11-10
 links.cell.preset:
   en_hash: 526fb1102a3e27ce
   reviewed_by: Olivier
@@ -1503,21 +1503,21 @@ links.row.construction:
   reviewed_by: Olivier
   reviewed_on: 2026-11-05
 links.rows.note:
-  en_hash: 9c0dcc0f193ae4ef
+  en_hash: 8eddb232b4570cbe
   reviewed_by: Olivier
-  reviewed_on: 2026-11-08
+  reviewed_on: 2026-11-10
 link.preset.mark:
   en_hash: 730aadc0f25b63b5
   reviewed_by: Olivier
   reviewed_on: 2026-11-08
 note.nominal.inflation:
-  en_hash: 22ff85f6413ac649
+  en_hash: 6fc03a78bbdadd23
   reviewed_by: Olivier
-  reviewed_on: 2026-11-08
+  reviewed_on: 2026-11-10
 note.nominal.gdp:
-  en_hash: eb54e2ebb8dd3397
+  en_hash: 6ad7248c02e74cd6
   reviewed_by: Olivier
-  reviewed_on: 2026-11-08
+  reviewed_on: 2026-11-10
 links.cell.noise:
   en_hash: 69ec55635c7db4cc
   reviewed_by: Olivier
@@ -1692,5 +1692,93 @@ links.intro.n:
   reviewed_on: 2026-11-10
 links.intro.outro:
   en_hash: b117d2ef03ae0d05
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.explain.heading:
+  en_hash: ed045309becbb108
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.explain.compared.A:
+  en_hash: b2967e831e4e9ee9
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.explain.compared.Q:
+  en_hash: 595769e4aa548760
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.explain.result.lead:
+  en_hash: 3de596f8e7166b13
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.explain.result:
+  en_hash: e3a0a10d0ab3de59
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.tier.none:
+  en_hash: a9cd5cafb1222092
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.tier.reading:
+  en_hash: f9573be40c36f6fc
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.tier.very_weak:
+  en_hash: 90873d9d248d471d
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.tier.weak:
+  en_hash: 481ba4019c9d2710
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.tier.moderate:
+  en_hash: dff22754ace5cbab
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.tier.strong:
+  en_hash: eda15ce4834ac303
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.dir.pos:
+  en_hash: c4730d12ca8b302b
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.dir.neg:
+  en_hash: 8560cddb49e03196
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.meaning.lead:
+  en_hash: c4682fd0c1ee877d
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.meaning.inside:
+  en_hash: 350474aac05d3c8c
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.meaning.outside:
+  en_hash: 15c8d3924a39fe1c
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.where.well_inside:
+  en_hash: 20a328952c28a376
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.where.inside:
+  en_hash: 106b086224a4d945
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.best.lead:
+  en_hash: a15e244459f10476
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.best:
+  en_hash: fff347bc33f1990e
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.not.lead:
+  en_hash: b46ed22a180fedf8
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-10
+link.not:
+  en_hash: 9e925d125e735c9b
   reviewed_by: Olivier
   reviewed_on: 2026-11-10
