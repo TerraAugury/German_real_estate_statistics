@@ -1,6 +1,6 @@
 # Spec: German commercial real estate statistics site
 
-Status: assembled from resolved tickets; launch gated on open tickets 08, 14, 15.
+Status: assembled from resolved tickets; launch gates 08, 14, 15 closed (2026-11-04); the production deploy waits only on the owner's switch.
 Source of truth for decisions: the tickets in `issues/`. This document synthesises them and decides nothing new. Anything a builder would need that no ticket settles is under [Open questions](#16-open-questions). Section headings carry the source ticket as `(T##)`.
 
 Ticket status at assembly:
@@ -10,14 +10,14 @@ Ticket status at assembly:
 | 01, 02, 03, 04, 07 | Research (CRE inventory, indicator inventory, share prices, second sources, core licences) | resolved |
 | 05 | Release-one KPI catalogue | resolved |
 | 06 | Economic indicator set and Link method | resolved |
-| 08 | Written permission to redisplay the Bundesbank CRE series | **open (launch gate)** |
+| 08 | Written permission to redisplay the Bundesbank CRE series | resolved (launch gate, closed) |
 | 09 | Site information architecture | resolved |
 | 10 | Bilingual workflow | resolved |
 | 11 | Trust and framing | resolved |
 | 12 | Data pipeline | resolved |
 | 13 | Legal pages content and operator identity | resolved |
-| 14 | Licences for the Economic indicator sources | **open (launch gate)** |
-| 15 | Legal review of the final legal pages | **open (launch gate)** |
+| 14 | Licences for the Economic indicator sources | resolved (launch gate, closed) |
+| 15 | Legal review of the final legal pages | resolved (launch gate, closed) |
 
 ---
 
@@ -318,13 +318,13 @@ Not legal advice. No legal text is drafted in this spec. The build phase drafts 
 
 ## 13. Launch gates
 
-They gate the production deploy, not the build or this spec. Until all three resolve, the production deploy stays disabled and the public site has no live series from the provisional list; preview builds use `INCLUDE_PROVISIONAL=1`.
+They gate the production deploy, not the build or this spec. All three are resolved (2026-11-04; see `.scratch/licence-checks/issues/01-licence-checks.md` and ticket 15). The owner holds permission for the provisional series, for non-commercial use only; monetisation needs the permissions renewed. The production deploy stays off until the owner sets `PRODUCTION_DEPLOY`; preview builds use `INCLUDE_PROVISIONAL=1`.
 
 | Ticket | Gate | Status | If refused or no reply |
 |---|---|---|---|
-| 08 | Written confirmation from the Bundesbank statistics service (and where needed bulwiengesa AG and vdp) that BBDZ1 and BBDR1 may be redisplayed publicly with attribution, including commercial use; record the BIS "Terms of permitted use of BIS statistics" verbatim | open | Affected series stay `provisional`; their cells become Not available with the licence reason; their Links drop |
-| 14 | Primary-page confirmation of redisplay terms for OECD, Bundesbank macro (BBSIS, BBIM1, BBNZ1, BBDL1) and ECB (record wording); licence name, attribution and commercial limits go into Sources & licences | open | Same treatment for the affected indicator |
-| 15 | Lawyer review (Cyprus- or EU-qualified, reads German; or Cypriot lawyer plus German-language check) of Terms, Privacy and Impressum in EN and DE. Reviewer rules on: postcode-and-city-only address, MStV section 18(2), Cypriot provider-information duties, Cloudflare transfer basis, the Terms reuse clause and any effect of 08 and 14. The owner records the review per file | open | n/a; deploy waits |
+| 08 | Written confirmation from the Bundesbank statistics service (and where needed bulwiengesa AG and vdp) that BBDZ1 and BBDR1 may be redisplayed publicly with attribution, including commercial use; record the BIS "Terms of permitted use of BIS statistics" verbatim | resolved | Affected series stay `provisional`; their cells become Not available with the licence reason; their Links drop |
+| 14 | Primary-page confirmation of redisplay terms for OECD, Bundesbank macro (BBSIS, BBIM1, BBNZ1, BBDL1) and ECB (record wording); licence name, attribution and commercial limits go into Sources & licences | resolved | Same treatment for the affected indicator |
+| 15 | Lawyer review (Cyprus- or EU-qualified, reads German; or Cypriot lawyer plus German-language check) of Terms, Privacy and Impressum in EN and DE. Reviewer rules on: postcode-and-city-only address, MStV section 18(2), Cypriot provider-information duties, Cloudflare transfer basis, the Terms reuse clause and any effect of 08 and 14. The owner records the review per file | resolved | n/a; deploy waits |
 
 Note: with every provisional series held back, the only live content would be the Destatis construction KPI with Links to Euribor, CPI and the Destatis construction price index. The tickets accept this as the pre-launch state.
 
