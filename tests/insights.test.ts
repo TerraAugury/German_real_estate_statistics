@@ -410,32 +410,25 @@ describe('Growth Insights draw year-on-year growth lines (ticket 5)', () => {
 });
 
 describe('Base-year note on rebased level charts (ticket 6)', () => {
-  it('appears on every chart that still shows two rebased levels, and on no other', () => {
+  it('is no longer shown on any chart', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
-    const withNote: string[] = [];
     for (const x of insightsPage()) {
       if (!x.result.shown) continue;
-      const en = renderInsight(x.entry, x.result, x.series, 'en'), de = renderInsight(x.entry, x.result, x.series, 'de');
-      const has = en.includes('We set both series to 2015 = 100. The size of the gap depends on this choice.');
-      if (has) { withNote.push(x.entry.key); expect(de).toContain('Wir setzen beide Reihen auf 2015 = 100. Die Größe des Abstands hängt von dieser Wahl ab.'); }
-      else expect(de).not.toContain('Wir setzen beide Reihen auf');
-      const rebasedLevels = !!x.result.lines.base && !x.result.lines.growth && x.result.lines.rebased?.kpi !== false && x.result.lines.rebased?.reference !== false;
-      expect(has).toBe(rebasedLevels);
+      expect(renderInsight(x.entry, x.result, x.series, 'en')).not.toContain('The size of the gap depends on this choice.');
+      expect(renderInsight(x.entry, x.result, x.series, 'de')).not.toContain('Die Größe des Abstands hängt von dieser Wahl ab.');
     }
-    expect(withNote.sort()).toEqual(['c', 'g']);
   });
 });
 
 describe('Insight notes (tickets 7 and 8)', () => {
-  const NEAR_ZERO = 'Interest rates were near zero until 2022, so the average over this period may not reflect normal conditions.';
   const COVERAGE = 'Prices and rents are vdp series for offices across Germany. The initial yields elsewhere on this site are bulwiengesa series for office and retail core properties in the 7 major cities. So they are not directly comparable.';
-  it('near-zero note on F and G only, coverage note on G only, in both languages', () => {
+  it('coverage note on G only, no near-zero note, in both languages', () => {
     process.env.INCLUDE_PROVISIONAL = '1';
     for (const x of insightsPage()) {
       if (!x.result.shown) continue;
       const [en, de] = (['en', 'de'] as const).map((l) => renderInsight(x.entry, x.result, x.series, l));
-      expect(en.includes(NEAR_ZERO)).toBe(['f', 'g'].includes(x.entry.key));
-      expect(de.includes('Die Zinsen lagen bis 2022 nahe null')).toBe(['f', 'g'].includes(x.entry.key));
+      expect(en.includes('Interest rates were near zero until 2022')).toBe(false);
+      expect(de.includes('Die Zinsen lagen bis 2022 nahe null')).toBe(false);
       expect(en.includes(COVERAGE)).toBe(x.entry.key === 'g');
       expect(de.includes('Preise und Mieten sind vdp-Reihen')).toBe(x.entry.key === 'g');
     }
