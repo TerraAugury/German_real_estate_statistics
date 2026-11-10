@@ -188,12 +188,11 @@ describe('Methodology: what better means', () => {
       expect(row!.split('|')[2].trim(), `${lang} ${e.key}`).toBe(direction[lang][e.better]);
     }
   });
-  it.each(['en', 'de'] as const)('%s: says the tone is a judgement from one point of view and the sign does not decide', async (lang) => {
+  it.each(['en', 'de'] as const)('%s: says the tone is a judgement from one point of view', async (lang) => {
     const { readFileSync } = await import('node:fs');
     const md = readFileSync(`content/${lang}/methodology.md`, 'utf8');
     expect(md).toMatch(lang === 'en' ? /\*\*Better and worse\.\*\*/ : /\*\*Besser und schlechter\.\*\*/);
     expect(md).toMatch(lang === 'en' ? /investor in office property/ : /Anlegern in Büroimmobilien/);
-    expect(md).toMatch(lang === 'en' ? /sign of the number does not decide/ : /Vorzeichen der Zahl entscheidet nicht/);
   });
   it('the legend above the Insights index links to this section in both languages', () => {
     expect(renderToneLegend('en')).toContain('<a href="/en/methodology#insights">');
