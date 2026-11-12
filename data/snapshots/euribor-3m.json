@@ -1,11 +1,11 @@
 {
- "retrieved_at": "2026-11-05T15:04:21.155Z",
+ "retrieved_at": "2026-11-12T09:54:17.147Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
   "M.U2.EUR.RT.MM.EURIBOR3MD_.HSTA": {
    "name": "Monthly – Euro area (changing composition) – Euro – Refinitiv – Money Market – Euribor 3-month (EURIBOR3MD_) – Historical close, average of observations through period",
-   "indexed_at": "2026-11-05T07:39:16.034Z",
+   "indexed_at": "2026-11-11T07:16:06.324Z",
    "frequency": "monthly",
    "dimensions": {
     "CURRENCY": "EUR",
