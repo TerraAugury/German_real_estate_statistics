@@ -1,7 +1,7 @@
 ---
-en_hash: cf472298c92a0e2a
+en_hash: 1618c1eece2faf58
 reviewed_by: Olivier
-reviewed_on: 2026-11-08
+reviewed_on: 2026-11-13
 ---
 ## Verknüpfungen
 
