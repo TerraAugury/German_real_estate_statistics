@@ -1,4 +1,4 @@
-site.title: Statistiken zum deutschen Gewerbeimmobilienmarkt
+site.title: "Real Estate Market Statistics & Analysis"
 nav.home: Startseite
 nav.menu: Menü
 nav.logistics: "Logistik: nicht verfügbar, siehe Verfügbarkeit"
@@ -29,17 +29,13 @@ note.scope.index: "Index (2013 = 100): Wir setzen 2013 auf 100. Er zeigt die Ent
 note.scope.city_class: "Gesamtwert für {class}, nicht für eine einzelne Stadt."
 note.scope.combined: "Büro und Einzelhandel zusammen; keine getrennten Werte."
 link.title: "{kpi} und {indicator}"
-link.scope: "Nationaler Indikator im Vergleich zu {geography}"
+link.scope: "Nationaler Wirtschaftsindikator im Vergleich zu {geography}"
 geo.germany: Deutschland
-link.sentence: "Die Grafik zeigt, wie sich zwei Reihen im Zeitraum {period} gemeinsam entwickelt haben (n = {n}, Zahl der verglichenen Zeiträume). Die Rangkorrelation reicht von -1 (gegenläufig) bis +1 (gleichläufig). Das belegt keine Ursache-Wirkungs-Beziehung und ist keine Prognose."
-link.period: "{from} bis {to}"
-link.headline: "Rangkorrelation (Spearman) der Veränderungen bei Verschiebung 0: {rho} (n = {n})"
 link.not_shown: "Verknüpfung nicht angezeigt: zu wenige Zeiträume zum Vergleich (n = {n})"
 link.not_shown.constant: "Verknüpfung nicht angezeigt: eine Reihe hat sich im Zeitraum nicht verändert (n = {n})"
-link.strongest: "Stärkste von {n} getesteten Verschiebungen. Wir haben sie nach einem Blick auf die Daten ausgewählt, daher ist sie wahrscheinlich überschätzt."
 link.strongest.mark: stärkster
 link.small_sample: "Beruht auf nur {n} Jahreswerten. Bei so wenigen Daten kann das Muster zufällig sein."
-link.lag.label: "Verschiebung in Jahren (positiv: Indikator früher, negativ: später)"
+link.lag.label: "Verschiebung in Jahren (positiv: Wirtschaftsindikator früher, negativ: später)"
 link.rho.label: "Rangkorrelation"
 link.overlay.chart: "Werte: {kpi} und {indicator}"
 link.overlay.legend: "Blaue Linie, linke Achse: {kpi}. Ockerfarbene Linie, rechte Achse: {indicator}."
@@ -52,7 +48,7 @@ sources.col.publisher: Herausgeber
 sources.col.id: Reihen-ID
 sources.col.licence: Lizenz
 sources.col.attribution: Quellenangabe
-nav.kpis: Kennzahlen
+nav.kpis: Immobilienkennzahlen
 kpi.price-index.title: Gewerbeimmobilien-Preisindex
 kpi.rent-index.title: Mietindex (Neuvermietung)
 kpi.initial-yield.title: Anfangsrendite
@@ -116,11 +112,11 @@ latest.change.pct: "{change} gegenüber {period}"
 latest.change.diff: "{change} Punkte gegenüber {period}"
 latest.unchanged: "Keine Änderung gegenüber {period}"
 home.segments: "Nach Segment (Immobilienart)"
-segment.intro: "Je Kennzahl eine Grafik für Deutschland, soweit eine Quelle sie liefert. Jede Grafik öffnet die vollständige Kennzahlseite."
-segment.availability: Welche Kombinationen aus Kennzahl und Segment es gibt und warum die übrigen nicht verfügbar sind
+segment.intro: "Je Immobilienkennzahl eine Grafik für Deutschland, soweit eine Quelle sie liefert. Jede Grafik öffnet die vollständige Seite der Immobilienkennzahl."
+segment.availability: Welche Kombinationen aus Immobilienkennzahl und Segment es gibt und warum die übrigen nicht verfügbar sind
 availability.title: Verfügbarkeit
-availability.intro: "Jede Kennzahl für jedes Segment (Immobilienart). Für jede Lücke nennen wir den Grund. Für später ist nichts geplant. Eine offene Quelle ist frei nutzbar und darf öffentlich gezeigt werden."
-availability.kpi: Kennzahl
+availability.intro: "Jede Immobilienkennzahl für jedes Segment (Immobilienart). Für jede Lücke nennen wir den Grund. Für später ist nichts geplant. Eine offene Quelle ist frei nutzbar und darf öffentlich gezeigt werden."
+availability.kpi: Immobilienkennzahl
 availability.available: "Verfügbar ({geo})"
 nav.links: Verknüpfungen
 nav.methodology: Methodik
@@ -130,7 +126,13 @@ terms.title: Nutzungsbedingungen
 privacy.title: Datenschutzerklärung
 legal-notice.title: Impressum
 links.title: Verknüpfungen
-links.intro: "Jede Zeile ist eine Kennzahl, jede Spalte ein Wirtschaftsindikator (eine Größe aus der Gesamtwirtschaft). Ein Feld zeigt, wie eng sich ihre Veränderungen gemeinsam bewegt haben. Dazu steht n, die Zahl der verglichenen Zeiträume. Wo wir die Verknüpfung nicht anzeigen können, steht im Feld „Nicht angezeigt“. Jede Kennzahl erscheint in ihrer Hauptansicht. Ein Klick auf ein Feld öffnet die vollständige Verknüpfung auf der Kennzahlseite."
+links.intro: "Verknüpfungen zeigt, wie sich Immobilienkennzahlen gemeinsam mit der Gesamtwirtschaft bewegt haben."
+links.intro.rows: "Jede Zeile ist eine Immobilienkennzahl, etwa Mieten oder Preise."
+links.intro.columns: "Jede Spalte ist ein Wirtschaftsindikator für Deutschland insgesamt, etwa Zinsen oder Inflation."
+links.intro.box: "Jedes Feld zeigt eine Zahl zwischen -1 und +1. +1 bedeutet, dass sich die Immobilienkennzahl und der Wirtschaftsindikator gleich bewegt haben. 0 bedeutet kein Muster. -1 bedeutet, dass sie sich gegenläufig bewegt haben."
+links.intro.shift: "Sie können das Jahr des Wirtschaftsindikators um ein oder zwei Jahre verschieben. So wird die Immobilienkennzahl mit dem Wirtschaftsindikator im selben Jahr, ein Jahr früher und zwei Jahre früher verglichen. Das hilft zu erkennen, ob sich zuerst die Wirtschaft oder der Immobilienmarkt bewegt und wer folgt."
+links.intro.n: "n ist die Zahl der verglichenen Jahre. Mehr Jahre machen das Ergebnis verlässlicher."
+links.intro.outro: "Gemeinsame Bewegung bedeutet nicht, dass das eine das andere verursacht. Sie können eine einzelne Verknüpfung öffnen, um mehr über die Berechnung zu erfahren."
 insight.back: Zurück zur Übersicht der Einblicke
 link.back: Zurück zur Verknüpfungstabelle
 links.heading: Verknüpfungen mit Wirtschaftsindikatoren
@@ -138,7 +140,7 @@ links.cell.n: "n = {n}"
 links.scale.neg: "-1: gegenläufig"
 links.scale.zero: "0: kein Muster"
 links.scale.pos: "+1: gleichläufig"
-links.legend: "Farbe: olivgrün bedeutet, dass beide eher gemeinsam stiegen und fielen. Bei violett stieg die eine eher, wenn die andere fiel. Je dunkler die Farbe, desto enger der Zusammenhang. Das zeigt, dass sie sich gemeinsam bewegen. Es zeigt nicht, dass eine die andere verursacht oder vorhersagt."
+links.legend: "Farbe: olivgrün bedeutet, dass beide eher gemeinsam stiegen und fielen. Bei violett stieg die eine eher, wenn die andere fiel. Je dunkler die Farbe, desto enger der Zusammenhang."
 links.cell.not_shown: "Nicht angezeigt (n = {n})"
 indicator.bund-yield-10y: Rendite zehnjähriger Bundesanleihen
 indicator.euribor-3m: Euribor 3 Monate
@@ -150,7 +152,7 @@ indicator.construction-price: Baupreisindex
 indicator.oecd-confidence: OECD-Geschäftsklima
 nav.insights: Einblicke
 insights.title: Einblicke
-insights.intro: "Ein Einblick zeigt mehrere Reihen über einen genannten Zeitraum auf einer Achse. Dazu gibt es eine feste Lesehilfe in einem Satz. Sie beschreibt, was die Linien zeigen. Sie belegt keine Ursache und ist keine Prognose. Abstände zwischen zwei Prozentwerten stehen in Prozentpunkten: von 4 % auf 5 % ist 1 Prozentpunkt."
+insights.intro: "Ein Einblick ist ein Diagramm, das mehrere Datenreihen auf einer Achse über einen genannten Zeitraum zeigt. Unter dem Diagramm erklärt eine kurze Lesehilfe in einem Satz, was die Linien zeigen. Sie beschreibt, was passiert ist. Sie erklärt nicht, warum es passiert ist, und sagt nicht voraus, was als Nächstes kommt. Wenn wir zwei Prozentwerte vergleichen, geben wir den Abstand in Prozentpunkten (PP) an."
 insights.jump: Einblicke auf dieser Seite
 insights.tone.more: So werden besser und schlechter beurteilt
 insights.tone.legend: "Hellgrün heißt: besser für Anleger in Büroimmobilien. Hellrosa heißt: schlechter. Eine Fläche ohne Farbe heißt: im Einklang mit dem Durchschnitt, oder keine Seite ist besser. Screenreader lesen zusätzlich die Wörter „besser“ und „schlechter“ vor."
@@ -176,9 +178,7 @@ insight.multiples.title: "{kpi} im Vergleich zu {reference}"
 insight.multiples.label: "{kpi} und {reference}, im Basisjahr auf 100 gesetzt"
 insight.multiples.legend: "Blaue Linie: {kpi}. Ockerfarbene Linie: {reference}. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt."
 insight.multiples.legend_dual: "Blaue Linie, linke Achse: {kpi}. Ockerfarbene Linie, rechte Achse: {reference}. Die Achsen haben unterschiedliche Einheiten, daher werden die Linien nicht nach ihrer Höhe verglichen."
-insight.note.near_zero_rates: "Die Zinsen lagen bis 2022 nahe null, daher spiegelt der Durchschnitt über diesen Zeitraum womöglich nicht die normalen Verhältnisse wider."
 insight.note.price_yield_coverage: "Preise und Mieten sind vdp-Reihen für Büros in ganz Deutschland. Die Anfangsrenditen an anderer Stelle dieser Seite sind bulwiengesa-Reihen für Core-Immobilien (Büro und Einzelhandel zusammen) in den 7 Großstädten. Sie sind daher nicht direkt vergleichbar."
-insight.multiples.base_note: "Wir setzen beide Reihen auf {year} = 100. Die Größe des Abstands hängt von dieser Wahl ab."
 insight.axis.growth: "Veränderung gegenüber dem Vorjahr, %"
 insight.multiples.label_growth: "{kpi} und {reference}, Veränderung gegenüber dem Vorjahr"
 insight.multiples.legend_growth: "Blaue Linie: Veränderung von {kpi} gegenüber dem Vorjahr. Ockerfarbene Linie: Veränderung von {reference} gegenüber dem Vorjahr. Die Schattierung ist blau, wo die blaue Linie über der ockerfarbenen liegt, und rot, wo sie darunter liegt. Der Abstand der Linien im letzten Jahr ist die große Zahl."
@@ -198,25 +198,23 @@ insight.template.completions-permits: "Die Fertigstellungen entsprachen dem {lat
 insight.unit.ratio: mal
 insight.shift.2: zwei Jahre zuvor
 insight.shifted: "{title}, {shift}"
-kpi.insights.heading: "Einblicke, die diese Kennzahl nutzen"
+kpi.insights.heading: "Einblicke, die diese Immobilienkennzahl nutzen"
 insight.template.price-rent: "Der Preisindex liegt beim {latest}-Fachen des Mietindex. Das ist {verdict} {from}-{to}-Durchschnitt von {mean}."
 insight.template.real-rents: "Die realen Büromieten haben sich {to} um {latest} % verändert. Das ist {verdict} {from}-{to}-Durchschnitt von {mean} %."
 insight.unit.growth: Prozent
 link.preset.mark: "vorab gewählte Verschiebung"
-links.lag.label: "Verschiebung des Indikators"
+links.lag.label: "Verschiebung des Wirtschaftsindikators"
 links.lag.preset: "Vorab gewählt"
 links.lag.0: "Gleiches Jahr"
-links.lag.1: "Indikator 1 Jahr früher (N-1)"
-links.lag.2: "Indikator 2 Jahre früher (N-2)"
+links.lag.1: "Wirtschaftsindikator 1 Jahr früher (N-1)"
+links.lag.2: "Wirtschaftsindikator 2 Jahre früher (N-2)"
 links.cell.preset: "vorab gewählte Verschiebung: N-1"
 links.preset.note: "Renditen und Preise, die auf Bewertungen beruhen, reagieren mit Verzögerung auf Zinsen. Für diese Felder legen wir ein Jahr früher (N-1) im Voraus aus ökonomischen Gründen fest. Wir haben es nicht anhand der Ergebnisse gewählt."
-link.band.legend: "Graues Band: der Bereich der Rangkorrelation, den allein der Zufall bei Verschiebung 0 und n = {n} häufig erzeugt (±{band}; jeder Balken verwendet sein eigenes n). Es ist eine grobe Orientierung, kein Signifikanztest."
-link.band.adjusted: "Quartalsveränderungen werden jeweils mit dem Vorjahr verglichen, benachbarte Quartale überlappen also. Das Band verwendet ein angepasstes n = {eff} (n ÷ 4, abgerundet)."
 links.cell.noise: "im Zufallsbereich"
 links.noise.legend: "Grau: innerhalb des Bereichs, den allein der Zufall bei dieser Zahl von Jahren häufig erzeugt."
 links.chance.note: "Bei so vielen Vergleichen sehen einige Felder allein durch Zufall stark aus. Behandeln Sie ein einzelnes starkes Feld mit Vorsicht, besonders wenn n klein ist."
-note.nominal.inflation: "Diese Kennzahl und dieser Indikator sind beide nominal, also nicht um die Inflation bereinigt. Daher spiegelt ihre Verknüpfung teilweise gemeinsame Inflation wider."
-note.nominal.gdp: "Diese Kennzahl ist in nominalen Euro (nicht um die Inflation bereinigt). Das reale BIP ist inflationsbereinigt. Die Verknüpfung stellt daher Nominal gegen real."
+note.nominal.inflation: "Diese Immobilienkennzahl und dieser Wirtschaftsindikator sind beide nominal, also nicht um die Inflation bereinigt. Daher spiegelt ihre Verknüpfung teilweise gemeinsame Inflation wider."
+note.nominal.gdp: "Diese Immobilienkennzahl ist in nominalen Euro (nicht um die Inflation bereinigt). Das reale BIP ist inflationsbereinigt. Die Verknüpfung stellt daher Nominal gegen real."
 links.nominal.tag: "Nominale Euro*"
 links.nominal.note: "* Nominale Euro sind nicht um die Inflation bereinigt. Mieten und Transaktionsvolumen sind in nominalen Euro. Ihre Verknüpfungen mit dem Verbraucherpreisindex und den Baupreisen spiegeln teilweise gemeinsame Inflation wider. Ihre Verknüpfung mit dem realen BIP stellt Nominal gegen real."
 links.row.kpi-price-index: "Gewerbe gesamt · Deutschland"
@@ -225,7 +223,7 @@ links.row.kpi-initial-yield: "Büro + Einzelhandel · 7 Großstädte"
 links.row.kpi-office-vacancy: "Büro · 7 Großstädte"
 links.row.kpi-transaction-volume: "Gewerbe gesamt · Deutschland"
 links.row.construction: "Büro · Deutschland"
-links.rows.note: "Die Zeilen decken unterschiedliche Segmente und Gebiete ab. Jeder Indikator gilt für ganz Deutschland."
+links.rows.note: "Die Zeilen decken unterschiedliche Segmente und Gebiete ab. Jeder Wirtschaftsindikator gilt für ganz Deutschland."
 kpi.price-index.definition: "Wie sich die Preise von Gewerbeimmobilien im Allgemeinen zu den Preisen in einem Basisjahr verhalten. Das Basisjahr ist auf 100 gesetzt."
 kpi.rent-index.definition: "Die Mieten, die in neuen Mietverträgen vereinbart werden. Sie zeigen die aktuelle Marktmiete, nicht die Mieten in älteren Verträgen."
 kpi.initial-yield.definition: "Die Miete des ersten Jahres im Verhältnis zum Kaufpreis. Sie ist die laufende Rendite, die ein Käufer vom ersten Tag an erhält."
@@ -234,3 +232,33 @@ kpi.transaction-volume.definition: "Der Eurowert der verkauften Immobilien, darg
 kpi.construction.definition: "Die für den Bau genehmigte Fläche. Sie erfasst Bauvorhaben im Stadium der Genehmigung, vor der Fertigstellung."
 links.lag.help_label: "Was bewirkt diese Auswahl?"
 links.lag.help: "Eine Veränderung bei einem Wirtschaftsindikator zeigt sich bei Immobilien womöglich erst später. Hier wählen Sie, wie viele Jahre früher der Wirtschaftsindikator genommen wird: das gleiche Jahr, ein Jahr früher (N-1) oder zwei Jahre früher (N-2). „Vorab gewählt“ nimmt N-1 für die als vorab gewählt markierten Felder und für alle anderen das gleiche Jahr."
+
+# Link panel: the plain-language reading under the shift chart (owner's wording)
+link.explain.heading: "Wie stark haben sich diese beiden Reihen gemeinsam entwickelt?"
+link.explain.compared.A: "Wir haben verglichen, wie sich die beiden Reihen zwischen {from} und {to} von Jahr zu Jahr verändert haben. Das ergibt {n} jährliche Vergleiche."
+link.explain.compared.Q: "Wir haben verglichen, wie sich die beiden Reihen zwischen {from} und {to} gegenüber demselben Quartal des Vorjahres verändert haben. Das ergibt {n} vierteljährliche Vergleiche. Benachbarte Quartale überlappen sich, weil jede Veränderung mit demselben Quartal des Vorjahres verglichen wird. Sie zählen daher nur wie {eff} unabhängige Vergleiche ({n} ÷ 4, abgerundet)."
+link.explain.result.lead: "Ergebnis: {rho}."
+link.explain.result: "Die Skala reicht von -1 bis +1. Der Wert -1 bedeutet, dass sich beide immer gegenläufig bewegt haben. Der Wert +1 bedeutet, dass sie sich immer gleichläufig bewegt haben. Ein Wert nahe 0 bedeutet, dass kein klarer Zusammenhang erkennbar ist. Bei {rho} {reading}"
+link.tier.none: "gibt es keine klare Tendenz, sich in die eine oder andere Richtung zu bewegen."
+link.tier.reading: "gibt es eine {tier} Tendenz, sich {dir} zu bewegen."
+link.tier.very_weak: sehr schwache
+link.tier.weak: schwache
+link.tier.moderate: mäßige
+link.tier.strong: starke
+link.dir.pos: gleichläufig
+link.dir.neg: gegenläufig
+link.meaning.lead: "Ist dieses Ergebnis aussagekräftig?"
+link.meaning.inside: "Wahrscheinlich nicht. Bei nur {n} Vergleichen erzeugt der reine Zufall oft Werte zwischen -{band} und +{band} (das graue Band in der Grafik). Unser Ergebnis liegt {where} dieses Bandes, es kann also leicht Zufall sein."
+link.meaning.outside: "Möglicherweise. Bei {n} Vergleichen erzeugt der reine Zufall nur selten Werte jenseits von -{band} und +{band} (das graue Band in der Grafik). Unser Ergebnis liegt außerhalb dieses Bandes, ist also wohl nicht allein Zufall. Ein Beweis ist das trotzdem nicht: siehe die Warnung unten."
+link.where.well_inside: weit innerhalb
+link.where.inside: innerhalb
+link.best.lead: "Achtung beim „besten“ Ergebnis."
+link.best: "Wir haben {n} verschiedene Zeitverschiebungen getestet (zum Beispiel: eine Reihe mit der anderen ein Jahr später vergleichen). Die Grafik markiert die Verschiebung mit dem stärksten Zusammenhang. Weil wir sie erst nach einem Blick auf die Daten ausgewählt haben, sieht sie wahrscheinlich stärker aus, als sie ist."
+link.not.lead: "Was das nicht aussagt."
+link.not: "Gemeinsame Bewegung heißt nicht, dass das eine das andere verursacht. Es ist auch keine Prognose."
+nav.skip: Zum Inhalt springen
+kpi.status: "Angezeigt: {segment}, {geo}, {freq}."
+kpi.load_failed: "Diese Ansicht konnte nicht geladen werden, daher bleibt die vorherige sichtbar. Prüfen Sie Ihre Verbindung und wählen Sie sie erneut aus."
+chart.table: Datentabelle
+chart.table.period: Zeitraum
+chart.table.value: Wert

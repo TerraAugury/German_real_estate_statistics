@@ -1,4 +1,4 @@
-site.title: German commercial real estate statistics
+site.title: "Real Estate Market Statistics & Analysis"
 nav.home: Home
 nav.menu: Menu
 nav.logistics: "Logistics: not available, see Availability"
@@ -29,17 +29,13 @@ note.scope.index: "Index (2013 = 100): we set 2013 to 100. It shows change over 
 note.scope.city_class: "Combined figure for {class}, not for one city."
 note.scope.combined: "Office and retail combined; no separate office or retail figure."
 link.title: "{kpi} and {indicator}"
-link.scope: "National indicator compared with {geography}"
+link.scope: "National economic indicator compared with {geography}"
 geo.germany: Germany
-link.sentence: "This shows how two series moved together over {period} (n = {n}, the number of periods compared). Rank correlation runs from -1 (opposite ways) to +1 (same way). It does not show that one causes the other, and it is not a forecast."
-link.period: "{from} to {to}"
-link.headline: "Rank correlation (Spearman) of changes at shift 0: {rho} (n = {n})"
 link.not_shown: "Link not shown: too few periods to compare (n = {n})"
 link.not_shown.constant: "Link not shown: one series did not change over the period (n = {n})"
-link.strongest: "Strongest of {n} shifts tested. We chose it after looking at the data, so it is likely overstated."
 link.strongest.mark: strongest
 link.small_sample: "Based on only {n} yearly values. With so little data, the pattern may be coincidental."
-link.lag.label: "Shift in years (positive: indicator moved earlier, negative: later)"
+link.lag.label: "Shift in years (positive: economic indicator moved earlier, negative: later)"
 link.rho.label: "Rank correlation"
 link.overlay.chart: "Values of {kpi} and {indicator}"
 link.overlay.legend: "Blue line, left axis: {kpi}. Ochre line, right axis: {indicator}."
@@ -52,7 +48,7 @@ sources.col.publisher: Publisher
 sources.col.id: Series id
 sources.col.licence: Licence
 sources.col.attribution: Attribution
-nav.kpis: KPIs
+nav.kpis: Real estate KPIs
 kpi.price-index.title: Commercial property price index
 kpi.rent-index.title: Rent index (new lettings)
 kpi.initial-yield.title: Initial yield
@@ -116,11 +112,11 @@ latest.change.pct: "{change} compared with {period}"
 latest.change.diff: "{change} points compared with {period}"
 latest.unchanged: "No change compared with {period}"
 home.segments: "Browse by Segment (property type)"
-segment.intro: "We show one chart for Germany per KPI (key figure) where a source has it. Each chart opens the full KPI page."
-segment.availability: Which KPI and Segment combinations exist, and why the others do not
+segment.intro: "We show one chart for Germany per real estate KPI (key figure) where a source has it. Each chart opens the full real estate KPI page."
+segment.availability: Which real estate KPI and Segment combinations exist, and why the others do not
 availability.title: Availability
-availability.intro: "Every KPI (key figure) for every Segment (property type). We give the reason for each gap. Nothing is planned for later. An Open source is a data source that is free to use and may be shown publicly."
-availability.kpi: KPI
+availability.intro: "Every real estate KPI (key figure) for every Segment (property type). We give the reason for each gap. Nothing is planned for later. An Open source is a data source that is free to use and may be shown publicly."
+availability.kpi: Real estate KPI
 availability.available: "Available ({geo})"
 nav.links: Links
 nav.methodology: Methodology
@@ -130,7 +126,13 @@ terms.title: Terms and conditions
 privacy.title: Privacy policy
 legal-notice.title: Legal notice
 links.title: Links
-links.intro: "Each row is a KPI (key figure) and each column an economic indicator (a figure from the wider economy). A box shows how closely their changes moved together. It also shows n, the number of periods compared. Where we cannot show a Link, the box says “Not shown”. Each KPI appears in its main view. Click a box to open the full Link on the KPI page."
+links.intro: "Links shows how real estate KPI moved together with the wider economy."
+links.intro.rows: "Each row is a real estate KPI, such as rents or prices."
+links.intro.columns: "Each column is an economic indicator for Germany as a whole, such as interest rates or inflation."
+links.intro.box: "Each box shows a number which ranges from -1 to +1. +1 means the real estate KPI and the economic indicator moved the same way. 0 means no pattern. -1 means they moved in opposite ways."
+links.intro.shift: "You can shift the year of the economic indicator by one or two years. This compares the real estate KPI with the economic indicator in the same year, one year earlier, and two years earlier. This helps show which of the economy or the real estate market moves first and which follows."
+links.intro.n: "n is the number of years compared. More years make the result more reliable."
+links.intro.outro: "Moving together does not mean one causes the other. You can drill into one link to see more details about the calculations."
 insight.back: Back to the Insights overview
 link.back: Back to the Links table
 links.heading: Links with economic indicators
@@ -138,7 +140,7 @@ links.cell.n: "n = {n}"
 links.scale.neg: "-1: opposite ways"
 links.scale.zero: "0: no pattern"
 links.scale.pos: "+1: same way"
-links.legend: "Colour: olive green means the two tended to rise and fall together. Violet means one tended to rise when the other fell. The deeper the colour, the closer the match. This shows that they move together. It does not show that one causes the other or predicts it."
+links.legend: "Colour: olive green means the two tended to rise and fall together. Violet means one tended to rise when the other fell. The deeper the colour, the closer the match."
 links.cell.not_shown: "Not shown (n = {n})"
 indicator.bund-yield-10y: 10-year Bund yield
 indicator.euribor-3m: Euribor 3 months
@@ -150,7 +152,7 @@ indicator.construction-price: Construction price index
 indicator.oecd-confidence: OECD business confidence
 nav.insights: Insights
 insights.title: Insights
-insights.intro: "Each Insight puts several series on one axis over a period we state. It comes with a fixed one-line reading. The reading describes what the lines show. It does not show a cause, and it is not a forecast. Gaps between two percentages are given in percentage points: from 4% to 5% is 1 percentage point."
+insights.intro: "Each Insight is a chart that shows several data series on one axis, over a given time period. Below the chart, a short one-line reading explains what the lines show. It describes what happened. It does not explain why it happened, and it does not predict what comes next. When we compare two percentages, we give the gap in percentage points (pp)."
 insights.jump: Insights on this page
 insights.tone.more: How better and worse are judged
 insights.tone.legend: "A light green background means better and a light pink background means worse, for an investor in office property. A plain background means in line with the average, or neither side is better. Screen readers also read out the words “better” and “worse”."
@@ -176,9 +178,7 @@ insight.multiples.title: "{kpi} against {reference}"
 insight.multiples.label: "{kpi} and {reference}, set to 100 in the base year"
 insight.multiples.legend: "Blue line: {kpi}. Ochre line: {reference}. The shading is blue where the blue line is above the ochre line and red where it is below."
 insight.multiples.legend_dual: "Blue line, left axis: {kpi}. Ochre line, right axis: {reference}. The axes have different units, so the lines are not compared by height."
-insight.note.near_zero_rates: "Interest rates were near zero until 2022, so the average over this period may not reflect normal conditions."
 insight.note.price_yield_coverage: "Prices and rents are vdp series for offices across Germany. The initial yields elsewhere on this site are bulwiengesa series for office and retail core properties in the 7 major cities. So they are not directly comparable."
-insight.multiples.base_note: "We set both series to {year} = 100. The size of the gap depends on this choice."
 insight.axis.growth: "change from the year before, %"
 insight.multiples.label_growth: "{kpi} and {reference}, change from the year before"
 insight.multiples.legend_growth: "Blue line: change of {kpi} from the year before. Ochre line: change of {reference} from the year before. The shading is blue where the blue line is above the ochre line and red where it is below. The gap between the lines in the latest year is the big number."
@@ -198,25 +198,23 @@ insight.template.completions-permits: "Completions were {latest} times the permi
 insight.unit.ratio: times
 insight.shift.2: two years earlier
 insight.shifted: "{title}, {shift}"
-kpi.insights.heading: "Insights that use this KPI (key figure)"
+kpi.insights.heading: "Insights that use this real estate KPI (key figure)"
 insight.template.price-rent: "The price index stands at {latest} times the rent index. This is {verdict} the {from}-{to} average of {mean}."
 insight.template.real-rents: "Real office rents changed by {latest}% in {to}. This is {verdict} the {from}-{to} average of {mean}%."
 insight.unit.growth: percent
 link.preset.mark: "pre-set shift"
-links.lag.label: "Indicator shift"
+links.lag.label: "Economic indicator shift"
 links.lag.preset: "Pre-set"
 links.lag.0: "Same year"
-links.lag.1: "Indicator 1 year earlier (N-1)"
-links.lag.2: "Indicator 2 years earlier (N-2)"
+links.lag.1: "Economic indicator 1 year earlier (N-1)"
+links.lag.2: "Economic indicator 2 years earlier (N-2)"
 links.cell.preset: "pre-set shift: N-1"
 links.preset.note: "Appraisal-based yields and prices react to interest rates with a delay. For these boxes, we set one year earlier (N-1) in advance, on economic grounds. We did not choose it from the results."
-link.band.legend: "Grey band: the range of rank correlation that chance alone often produces at shift 0 for n = {n} (±{band}; each bar uses its own n). It is a rough guide, not a significance test."
-link.band.adjusted: "Quarterly changes are each compared with a year earlier, so neighbouring quarters overlap. The band uses an adjusted n = {eff} (n ÷ 4, rounded down)."
 links.cell.noise: "within chance range"
 links.noise.legend: "Grey: within the range that chance alone often produces for this number of years."
 links.chance.note: "With this many comparisons, a few boxes will look strong by chance alone. Treat a single strong box with caution, especially when n is small."
-note.nominal.inflation: "This KPI and this indicator are both nominal, meaning not adjusted for inflation. So their Link partly reflects shared inflation."
-note.nominal.gdp: "This KPI is in nominal euros (not adjusted for inflation). Real GDP is adjusted for inflation. So this Link compares nominal with real."
+note.nominal.inflation: "This real estate KPI and this economic indicator are both nominal, meaning not adjusted for inflation. So their Link partly reflects shared inflation."
+note.nominal.gdp: "This real estate KPI is in nominal euros (not adjusted for inflation). Real GDP is adjusted for inflation. So this Link compares nominal with real."
 links.nominal.tag: "Nominal euros*"
 links.nominal.note: "* Nominal euros are not adjusted for inflation. Rents and transaction volume are in nominal euros. Their Links to the consumer price index and construction prices partly reflect shared inflation. Their Link to real GDP compares nominal with real."
 links.row.kpi-price-index: "Commercial overall · Germany"
@@ -225,7 +223,7 @@ links.row.kpi-initial-yield: "Office + retail · 7 cities"
 links.row.kpi-office-vacancy: "Office · 7 cities"
 links.row.kpi-transaction-volume: "Commercial overall · Germany"
 links.row.construction: "Office · Germany"
-links.rows.note: "Rows cover different Segments and areas. Every indicator is for Germany as a whole."
+links.rows.note: "Rows cover different Segments and areas. Every economic indicator is for Germany as a whole."
 kpi.price-index.definition: "How commercial property prices in general compare with prices in a base year. The base year is set to 100."
 kpi.rent-index.definition: "The rents agreed on new leases. They show current market rent, not rents in older contracts."
 kpi.initial-yield.definition: "First-year rent as a share of the purchase price. It is the income return a buyer gets on day one."
@@ -234,3 +232,33 @@ kpi.transaction-volume.definition: "The euro value of property sold, shown as an
 kpi.construction.definition: "Floor space approved for construction. It records building plans at the approval stage, ahead of completion."
 links.lag.help_label: "What does this choice do?"
 links.lag.help: "A change in an economic indicator may show up in property only later. Here you choose how many years earlier the economic indicator is taken: the same year, one year earlier (N-1) or two years earlier (N-2). \"Pre-set\" uses N-1 for the boxes marked pre-set and the same year for all the others."
+
+# Link panel: the plain-language reading under the shift chart (owner's wording)
+link.explain.heading: "How closely did these two series move together?"
+link.explain.compared.A: "We compared how the two series changed from year to year between {from} and {to}. That gives {n} yearly comparisons."
+link.explain.compared.Q: "We compared how the two series changed from the same quarter a year earlier, between {from} and {to}. That gives {n} quarterly comparisons. Neighbouring quarters overlap, because each change is measured against the same quarter a year earlier. So they count as only {eff} independent comparisons ({n} ÷ 4, rounded down)."
+link.explain.result.lead: "Result: {rho}."
+link.explain.result: "The scale runs from -1 to +1. A value of -1 means they always moved in opposite directions. A value of +1 means they always moved in the same direction. A value near 0 means there is no clear link. At {rho}, {reading}"
+link.tier.none: "there is no clear tendency to move in either direction."
+link.tier.reading: "there is a {tier} tendency to move in {dir}."
+link.tier.very_weak: very weak
+link.tier.weak: weak
+link.tier.moderate: moderate
+link.tier.strong: strong
+link.dir.pos: the same direction
+link.dir.neg: opposite directions
+link.meaning.lead: "Is this result meaningful?"
+link.meaning.inside: "Probably not. With only {n} comparisons, pure chance often produces values between -{band} and +{band} (the grey band on the chart). Our result sits {where} that band, so it could easily be luck."
+link.meaning.outside: "Possibly. With {n} comparisons, pure chance only rarely produces values beyond -{band} and +{band} (the grey band on the chart). Our result sits outside that band, so it is unlikely to be luck alone. That is still not proof: see the warning below."
+link.where.well_inside: well inside
+link.where.inside: inside
+link.best.lead: "A warning about the “best” result."
+link.best: "We tested {n} different time shifts (for example, comparing one series with the other a year later). The chart marks the one with the strongest link. Because we picked it after seeing the data, it probably looks stronger than it really is."
+link.not.lead: "What this does not tell you."
+link.not: "Moving together does not mean one causes the other. This is not a forecast either."
+nav.skip: Skip to content
+kpi.status: "Showing {segment}, {geo}, {freq}."
+kpi.load_failed: "This view could not be loaded, so the previous one is still shown. Check your connection and choose it again."
+chart.table: Data table
+chart.table.period: Period
+chart.table.value: Value

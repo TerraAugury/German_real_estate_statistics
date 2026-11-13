@@ -1,5 +1,5 @@
 {
- "retrieved_at": "2026-11-02T23:58:50.458Z",
+ "retrieved_at": "2026-11-12T09:54:17.147Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
@@ -435,7 +435,8 @@
     "2026-06",
     "2026-07",
     "2026-08",
-    "2026-09"
+    "2026-09",
+    "2026-10"
    ],
    "value": [
     60.5,
@@ -866,7 +867,8 @@
     124.6,
     125.6,
     125.8,
-    126.6
+    126.6,
+    126.4
    ],
    "meta": {
     "source": "Statistisches Bundesamt (Destatis)",
@@ -878,9 +880,9 @@
     "comment": null,
     "general_comment": null,
     "third_party": false,
-    "valid_from": "2026-10-12T18:02:03",
-    "retrieved_at": "2026-11-02T23:58:50.458Z",
-    "sha256": "208027765e300f8a9beaf554e2b49959e333cb05402ae4c9792fdc377ddfbf57"
+    "valid_from": "2026-11-10T18:00:58",
+    "retrieved_at": "2026-11-12T09:54:17.147Z",
+    "sha256": "1d84aaef2096b872ad23170e9d421a327698b29c0811a00bea0f838d65b8e0d1"
    }
   }
  }

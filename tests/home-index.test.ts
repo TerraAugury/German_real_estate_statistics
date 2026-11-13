@@ -50,8 +50,8 @@ describe('sparkline', () => {
 
 describe('document title', () => {
   it('Home is the site name once; other pages are page name then site name', () => {
-    expect(documentTitle('en', 'home', 'German commercial real estate statistics')).toBe('German commercial real estate statistics');
-    expect(documentTitle('en', 'links', 'Links')).toBe('Links – German commercial real estate statistics');
+    expect(documentTitle('en', 'home', 'Real Estate Market Statistics & Analysis')).toBe('Real Estate Market Statistics & Analysis');
+    expect(documentTitle('en', 'links', 'Links')).toBe('Links – Real Estate Market Statistics & Analysis');
     expect(documentTitle('de', 'links', 'Verknüpfungen')).toMatch(/^Verknüpfungen – /);
   });
 });

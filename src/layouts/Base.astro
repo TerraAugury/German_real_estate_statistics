@@ -1,8 +1,8 @@
 ---
 import { t, documentTitle } from '../lib/i18n';
-import { href, otherLang, type Lang, type PageKey } from '../lib/routes';
+import { href, otherLang, minimalChrome, type Lang, type PageKey } from '../lib/routes';
 import { KPIS, SEGMENT_PAGES } from '../lib/kpis';
-import { rootCss } from '../lib/palette';
+import { rootCss, SCHEMES } from '../lib/palette';
 // Self-hosted through the build: no request to a third-party host (spec section 7).
 import '@fontsource/ibm-plex-sans/400.css';
 import '@fontsource/ibm-plex-sans/500.css';
@@ -10,15 +10,19 @@ import '@fontsource/ibm-plex-sans/600.css';
 import '@fontsource/ibm-plex-sans-condensed/400.css';
 import '@fontsource/ibm-plex-sans-condensed/500.css';
 import '@fontsource/ibm-plex-mono/400.css';
-const { lang, page, title } = Astro.props as { lang: Lang; page: PageKey; title: string };
+const { lang, page, title, description } = Astro.props as { lang: Lang; page: PageKey; title: string; description?: string };
 const current = (p: PageKey) => (p === page ? 'page' : undefined);
 const inSegments = page.startsWith('segment-');
+const minimal = minimalChrome.includes(page);
 const inKpis = KPIS.some((k) => k.page === page);
 ---
 <!doctype html>
 <html lang={lang}>
   <head>
     <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content={SCHEMES.light.page} media="(prefers-color-scheme: light)" /><meta name="theme-color" content={SCHEMES.dark.page} media="(prefers-color-scheme: dark)" />
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{documentTitle(lang, page, title)}</title>
     <script is:inline>document.documentElement.classList.add('js');</script>
     <!-- Colours come from src/lib/palette.ts, the same module the build-time charts read. -->
@@ -33,6 +37,10 @@ const inKpis = KPIS.some((k) => k.page === page);
       body { margin: 0; background: var(--page); color: var(--ink); font: 17px/1.55 var(--sans); }
       a { color: var(--data); text-underline-offset: 3px; text-decoration-thickness: 1px; } a:hover { color: var(--ink); }
       :focus-visible { outline: 3px solid var(--data); outline-offset: 2px; }
+      a, button, summary, select { touch-action: manipulation; }
+      /* Skip link: off screen until it takes focus, then the first thing on the page. */
+      .skip { position: absolute; left: .5rem; top: -4rem; z-index: 30; padding: .6rem 1rem; background: var(--plate); color: var(--ink); border: 1px solid var(--ink); border-radius: 4px; font-weight: 500; }
+      .skip:focus { top: .5rem; }
       .wrap { max-width: 62.5rem; margin: 0 auto; padding: 0 1.5rem; }
       @media (max-width: 560px) { .wrap { padding: 0 1rem; } body { font-size: 16px; } :root { --step-3: 1.85rem; --step-2: 1.35rem; --step-1: 1.2rem; } }
 
@@ -41,6 +49,7 @@ const inKpis = KPIS.some((k) => k.page === page);
       .masthead .name { color: var(--ink); text-decoration: none; font-weight: 600; }
       nav.main { display: flex; flex-wrap: wrap; gap: 0 1.5rem; position: relative; }
       nav.main > a, nav.main summary { color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px; padding: .85rem 0; cursor: pointer; display: block; }
+      nav.main > a:hover, nav.main summary:hover { box-shadow: inset 0 -2px 0 var(--rule); }
       nav.main > a[aria-current], nav.main .on > summary { box-shadow: inset 0 -2px 0 var(--data); }
       nav.main details { position: relative; }
       nav.main details > div { position: absolute; z-index: 10; top: 100%; left: -1rem; min-width: 18rem; max-width: calc(100vw - 2rem); background: var(--plate); border: 1px solid var(--rule); border-radius: 6px; padding: .5rem 0; box-shadow: 0 6px 20px var(--shadow); }
@@ -50,6 +59,7 @@ const inKpis = KPIS.some((k) => k.page === page);
       /* Phone: one masthead row (name, language, Menu); with JavaScript the nav is a panel under it that opens from Menu and lists
          its groups inline. Without JavaScript the nav stays visible and wraps. */
       .menu-btn { display: none; min-height: 44px; padding: 0 .85rem; font: 500 15px var(--sans); color: var(--ink); background: var(--plate); border: 1px solid var(--field); border-radius: 4px; cursor: pointer; }
+      .menu-btn:hover { background: var(--page); } .menu-btn:active { border-color: var(--ink); }
       @media (max-width: 560px) {
         header.site { position: relative; }
         .masthead { flex-wrap: nowrap; align-items: center; gap: .5rem .75rem; padding-top: .5rem; padding-bottom: .5rem; }
@@ -66,6 +76,7 @@ const inKpis = KPIS.some((k) => k.page === page);
       main { padding-top: 1.5rem; padding-bottom: 4rem; }
       /* Long German compounds (Gewerbeimmobilienmarkt, Transaktionsvolumenindex) must break at 320 px instead of widening the page. */
       h1, h2, h3, .masthead .name { overflow-wrap: break-word; hyphens: auto; }
+      h1, h2, h3 { text-wrap: balance; }
       h1 { margin: 0 0 .5rem; font-size: var(--step-3); line-height: 1.15; font-weight: 600; letter-spacing: -.015em; }
       h2 { font-size: var(--step-2); line-height: 1.2; font-weight: 600; margin: 3rem 0 .75rem; }
       h3 { font-size: var(--step-1); line-height: 1.3; font-weight: 600; margin: 0 0 .25rem; }
@@ -88,21 +99,23 @@ const inKpis = KPIS.some((k) => k.page === page);
       figure { container-type: inline-size; }
       svg.narrow { display: none; width: 100%; max-width: 28rem; }
       @container (max-width: 639px) { svg.wide { display: none; } svg.narrow { display: block; } }
-      figcaption { margin-top: 1.25rem; padding-top: .75rem; border-top: 1px solid var(--hair); font-size: 13px; line-height: 1.55; color: var(--muted); }
+      figcaption { margin-top: 1.25rem; padding-top: .75rem; border-top: 1px solid var(--hair); font-size: 14px; line-height: 1.55; color: var(--muted); }
       /* Source footer, two tiers: a short citation, then the lineage in a closed disclosure. */
       .cite { display: inline; }
       details.lineage { margin-top: .4rem; }
+      details.data { margin-top: .75rem; } details.data > summary { cursor: pointer; color: var(--data); display: inline-block; padding: .25rem 0; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; font-size: 15px; }
+      details.data > summary:hover { color: var(--ink); } details.data .scroll { max-height: 22rem; overflow-y: auto; }
       details.lineage > summary { cursor: pointer; color: var(--data); display: inline-block; padding: .25rem 0; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
       details.lineage > summary:hover { color: var(--ink); }
       .lineage-item { display: block; margin: .5rem 0 0; }
-      .chip { display: inline-block; border: 1px solid var(--strong-text); color: var(--strong-text); border-radius: 999px; padding: 0 .55rem; font-size: 12px; font-weight: 500; line-height: 1.5; vertical-align: 1px; }
-      a[href*='db.nomics.world'], a[href*='genesis.destatis.de'], a[href*='api.statistiken.bundesbank.de'] { font-family: var(--mono); font-size: 12px; overflow-wrap: anywhere; }
+      .chip { display: inline-block; border: 1px solid var(--strong-text); color: var(--strong-text); border-radius: 999px; padding: 0 .55rem; font-size: 13px; font-weight: 500; line-height: 1.5; vertical-align: 1px; }
+      a[href*='db.nomics.world'], a[href*='genesis.destatis.de'], a[href*='api.statistiken.bundesbank.de'] { font-family: var(--mono); font-size: 13px; overflow-wrap: anywhere; }
       .note { font-size: 15px; margin: 1rem 0 0; max-width: 46em; }
       nav.jump h2 { font-size: var(--step-0); margin: 1.25rem 0 .75rem; }
       /* Insights index: one tile per Insight; the tile is the link, so the whole of it is the target. */
       .insight-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: 1rem; }
       .insight-grid a { display: flex; flex-direction: column; justify-content: space-between; gap: .75rem; height: 100%; padding: 1rem 1.25rem; background: var(--plate); border: 1px solid var(--rule); border-radius: 6px; color: var(--ink); text-decoration: none; }
-      .insight-grid a:hover { border-color: var(--data); }
+      .insight-grid a:hover { border-color: var(--data); box-shadow: 0 0 0 1px var(--data); }
       .insight-grid .title { font-weight: 500; line-height: 1.3; }
       .insight-grid .headline { margin: 0; }
       .insight-grid .num { font-size: var(--step-2); }
@@ -121,7 +134,9 @@ const inKpis = KPIS.some((k) => k.page === page);
       .insight .unit, .hero .unit, .insight-grid .unit { color: var(--muted); }
       .insight .tag, .hero .tag, .insight-grid .tag { border: 1px solid var(--rule); border-radius: 999px; padding: .1rem .75rem; font-size: 15px; background: var(--plate); }
       /* Insight tone: a light tint of the whole plate (tile, section, Home lead); the word for it is visually hidden. */
-      .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+      .vh, .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+      /* The tone word stays in the text for screen readers and is shown too, so the tint is never the only signal. */
+      .vh.tone-word { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: normal; font-size: 14px; font-weight: 500; color: var(--ink); border: 1px solid var(--ink); border-radius: 999px; padding: .1rem .6rem; }
       .insight-grid a.tone-better, section.tone-better { background: var(--better-tint); }
       .insight-grid a.tone-worse, section.tone-worse { background: var(--worse-tint); }
       section.tone-better, section.tone-worse { padding: 1.25rem 1.5rem; border-radius: 6px; }
@@ -146,7 +161,7 @@ const inKpis = KPIS.some((k) => k.page === page);
       .index .latest { grid-area: value; margin: 0; }
       .index .latest .num { font-size: var(--step-2); }
       .index svg { grid-area: spark; display: block; }
-      .index .note, .index .src, .index .na { grid-area: auto; grid-column: 1 / -1; margin: .5rem 0 0; font-size: 13px; color: var(--muted); }
+      .index .note, .index .src, .index .na { grid-area: auto; grid-column: 1 / -1; margin: .5rem 0 0; font-size: 14px; color: var(--muted); }
       .index .na { grid-column: 1 / -1; font-size: 15px; }
       @media (max-width: 720px) { .index .row { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'name name' 'what what' 'def def' 'value spark' 'extra extra'; padding: 1rem; } }
 
@@ -159,7 +174,10 @@ const inKpis = KPIS.some((k) => k.page === page);
       .help:hover + .tip, .help:focus + .tip { display: block; }
       @media (max-width: 560px) { .selectors label { flex: 1 1 100%; min-width: 0; } .selectors select { width: 100%; min-width: 0; } }
 
-      .scroll { overflow-x: auto; }
+      /* position: relative keeps a cell's absolutely positioned .vh text inside the scroll box; outside it, it widened the page.
+         The -4px margin (border-spacing) sits on the box, not the table, so a table that fits does not scroll by 8px. */
+      .scroll { overflow-x: auto; position: relative; margin: 0 -4px; }
+      .scroll > table { margin: 0; }
       table { border-collapse: separate; border-spacing: 4px; font-size: 15px; line-height: 1.35; margin: 0 -4px; }
       /* A table written in a prose page (the Methodology direction table): long German words wrap instead of widening the page. */
       main > table { width: 100%; } main > table th, main > table td { overflow-wrap: anywhere; hyphens: auto; }
@@ -176,6 +194,7 @@ const inKpis = KPIS.some((k) => k.page === page);
       td.lagcell { padding: 0; height: 1px; } /* 1px lets the link fill the cell's full row height */
       td.lagcell a { display: none; box-sizing: border-box; height: 100%; padding: .65rem .75rem; color: var(--ink); }
       table.matrix[data-lag="p"] a[data-pre], table.matrix[data-lag="0"] a[data-lag="0"], table.matrix[data-lag="1"] a[data-lag="1"], table.matrix[data-lag="2"] a[data-lag="2"] { display: block; }
+      td.lagcell a:hover { outline: 2px solid var(--ink); outline-offset: -2px; }
       td.lagcell a.zero { background: var(--plate); }
       td.lagcell a.neg { background: color-mix(in srgb, var(--heat-neg) var(--share), var(--plate)); }
       td.lagcell a.pos { background: color-mix(in srgb, var(--heat-pos) var(--share), var(--plate)); }
@@ -183,32 +202,39 @@ const inKpis = KPIS.some((k) => k.page === page);
       td.lagcell a.na { color: var(--muted); background: repeating-linear-gradient(135deg, var(--na) 0 6px, var(--page) 6px 12px); }
       td.lagcell .rho { display: block; font: 600 17px/1.25 var(--cond); font-variant-numeric: tabular-nums; white-space: nowrap; }
       td.lagcell .n { display: block; font-size: 13px; white-space: nowrap; }
-      td.lagcell .preset { display: none; } table.matrix[data-lag="p"] td.lagcell .preset { display: block; font-size: 12px; font-weight: 500; white-space: nowrap; border-top: 1px dashed currentColor; margin-top: .25rem; padding-top: .15rem; }
-      table.matrix td { min-width: 5.5rem; }
-      table.matrix tbody th { min-width: 8rem; max-width: 11rem; }
+      /* The pre-set label wraps: kept on one line it set three columns' width and pushed the matrix past the page. Shown only on "Pre-set". */
+      td.lagcell .preset { display: none; } table.matrix[data-lag="p"] td.lagcell .preset { display: block; font-size: 13px; line-height: 1.25; font-weight: 500; border-top: 1px dashed currentColor; margin-top: .25rem; padding-top: .15rem; }
+      /* The matrix fits the 62.5rem column: narrow cells, and long (German) headers hyphenate instead of widening a column. */
+      table.matrix th, table.matrix td.lagcell a { hyphens: auto; overflow-wrap: break-word; }
+      table.matrix thead th { padding: .5rem .6rem; }
+      table.matrix td.lagcell a { padding: .55rem .6rem; }
+      table.matrix td { min-width: 4.75rem; }
+      table.matrix tbody th { min-width: 8rem; max-width: 10rem; }
       table.matrix th:first-child { position: sticky; left: 0; z-index: 1; background: var(--page); }
       table.matrix tbody th small { font-weight: 400; color: var(--muted); }
       @media (max-width: 560px) { table.matrix tbody th { min-width: 6.5rem; max-width: 7.5rem; font-size: 14px; } }
-      .legend { display: flex; align-items: center; gap: .5rem; margin: 1rem 0 .25rem; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+      .legend { display: flex; align-items: center; gap: .5rem; margin: 1rem 0 .25rem; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
       .legend .ramp { flex: 0 1 22rem; height: .75rem; border: 1px solid var(--rule); border-radius: 2px;
         background: linear-gradient(90deg, color-mix(in srgb, var(--heat-neg) var(--heat-max), var(--plate)), var(--plate), color-mix(in srgb, var(--heat-pos) var(--heat-max), var(--plate))); }
-      .scale { display: flex; justify-content: space-between; gap: .25rem 1rem; flex-wrap: wrap; max-width: 22rem; margin: 0 0 .75rem; font-size: 13px; color: var(--muted); }
+      .scale { display: flex; justify-content: space-between; gap: .25rem 1rem; flex-wrap: wrap; max-width: 22rem; margin: 0 0 .75rem; font-size: 14px; color: var(--muted); }
       td:empty { background: none; border-color: transparent; } /* Links overview: no such pair */
       p.na { padding: .5rem .75rem; border-radius: 4px; }
 
       footer.site { background: var(--plate); border-top: 1px solid var(--rule); }
-      footer.site .wrap { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; padding-top: 1.5rem; padding-bottom: 2rem; font-size: 14px; color: var(--muted); }
-      footer.site span { margin-right: auto; }
+      footer.site .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1.5rem; padding-top: 1rem; padding-bottom: 1.25rem; font-size: 14px; color: var(--muted); }
+      footer.site span { margin-right: auto; padding: .5rem 0; }
+      footer.site a { padding: .75rem 0; }
     </style>
   </head>
   <body>
+    <a class="skip" href="#main">{t(lang, 'nav.skip')}</a>
     <header class="site">
       <div class="wrap masthead">
         <a class="name" href={href('home', lang)}>{t(lang, 'site.title')}</a>
-        <a class="sw" href={href(page, otherLang(lang))} hreflang={otherLang(lang)}>{t(lang, 'lang.switch')}</a>
-        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">{t(lang, 'nav.menu')}</button>
+        <a class="sw" href={href(page, otherLang(lang))} hreflang={otherLang(lang)} lang={otherLang(lang)}>{t(lang, 'lang.switch')}</a>
+        {!minimal && <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">{t(lang, 'nav.menu')}</button>}
       </div>
-      <nav class="wrap main" id="site-nav">
+      {!minimal && <nav class="wrap main" id="site-nav" aria-label={t(lang, 'nav.menu')}>
         <a href={href('home', lang)} aria-current={current('home')}>{t(lang, 'nav.home')}</a>
         <details class={inSegments ? 'on' : undefined}><summary>{t(lang, 'nav.segments')}</summary><div>{SEGMENT_PAGES.map((g) => <a href={href(`segment-${g}`, lang)} aria-current={current(`segment-${g}`)}>{t(lang, `segment.${g}`)}</a>)}<a class="hint" href={href('availability', lang)}>{t(lang, 'nav.logistics')}</a></div></details>
         <details class={inKpis ? 'on' : undefined}><summary>{t(lang, 'nav.kpis')}</summary><div>{KPIS.map((k) => <a href={href(k.page, lang)} aria-current={current(k.page)}>{t(lang, k.title)}</a>)}</div></details>
@@ -216,13 +242,13 @@ const inKpis = KPIS.some((k) => k.page === page);
         <a href={href('insights', lang)} aria-current={current('insights')}>{t(lang, 'nav.insights')}</a>
         <a href={href('availability', lang)} aria-current={current('availability')}>{t(lang, 'nav.availability')}</a>
         <a href={href('methodology', lang)} aria-current={current('methodology')}>{t(lang, 'nav.methodology')}</a>
-      </nav>
+      </nav>}
     </header>
     <!-- The language switch keeps the selector parameters (segment, geo, freq) unchanged; KPI pages update it on change. -->
     <!-- One dropdown open at a time: a click or focus elsewhere closes it, Escape closes it and returns to its summary. On a phone the same goes for the Menu panel. -->
     <script is:inline>
       document.querySelector('a.sw').search = location.search;
-      {
+      if (document.querySelector('nav.main')) {
         const menus = [...document.querySelectorAll('nav.main details')];
         const nav = document.querySelector('nav.main'), btn = document.querySelector('.menu-btn');
         const setMenu = (on) => { nav.classList.toggle('open', on); btn.setAttribute('aria-expanded', String(on)); };
@@ -241,7 +267,7 @@ const inKpis = KPIS.some((k) => k.page === page);
         });
       }
     </script>
-    <main class="wrap"><slot /></main>
+    <main class="wrap" id="main"><slot /></main>
     <footer class="site"><div class="wrap"><span>{t(lang, 'footer.text')}</span><a href={href('availability', lang)}>{t(lang, 'nav.availability')}</a><a href={href('sources', lang)}>{t(lang, 'nav.sources')}</a>{(['about', 'terms', 'privacy', 'legal-notice'] as const).map((k) => <a href={href(k, lang)}>{t(lang, `${k}.title`)}</a>)}</div></footer>
   </body>
 </html>
