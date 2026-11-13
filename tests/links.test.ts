@@ -98,12 +98,12 @@ describe('matrix lag selector (ticket 10)', () => {
     for (const r of o.rows) expect(o.columns.filter((n) => !r.cells.has(n)), r.kpi.page).toEqual([]);
     expect(cells()).toHaveLength(o.rows.length * o.columns.length);
   });
-  it('same year: the cells outside the noise band are these ten', () => {
+  it('same year: the cells outside the noise band are these nine (the 2026-11 data refresh moved transaction volume x OECD confidence into the band)', () => {
     const outside = cells().filter((c) => !c.lags[0].noise && c.lags[0].rho !== null).map((c) => `${c.page}|${c.pair.name}`).sort();
     expect(outside).toEqual([
       'kpi-price-index|cpi', 'kpi-rent-index|construction-price', 'kpi-initial-yield|cpi', 'kpi-initial-yield|gdp-real',
       'kpi-initial-yield|oecd-confidence', 'kpi-office-vacancy|unemployment-rate', 'kpi-office-vacancy|gdp-real',
-      'kpi-transaction-volume|gdp-real', 'kpi-transaction-volume|oecd-confidence', 'construction|oecd-confidence'].sort());
+      'kpi-transaction-volume|gdp-real', 'construction|oecd-confidence'].sort());
     expect(cells().filter((c) => c.lags[0].rho !== null)).toHaveLength(48); // 47 plus office vacancy x CPI (ticket 15)
   });
   it('the band follows the n of the selected lag', () => {
