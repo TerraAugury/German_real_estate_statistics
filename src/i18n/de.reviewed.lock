@@ -1790,3 +1790,15 @@ chart.table.value:
   en_hash: 8e37953d23daca5f
   reviewed_by: Olivier
   reviewed_on: 2026-11-10
+links.lag.preset:
+  en_hash: 2565de1236fbf1ce
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-13
+links.lag.help_label:
+  en_hash: 5ab7d7c805b793b7
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-13
+links.lag.help:
+  en_hash: 9f3cbd6d3061c3e6
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-13
