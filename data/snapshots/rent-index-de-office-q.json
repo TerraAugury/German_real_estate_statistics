@@ -1,5 +1,5 @@
 {
- "retrieved_at": "2026-11-03T11:09:10.836Z",
+ "retrieved_at": "2026-11-13T14:06:57.785Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
@@ -72,7 +72,8 @@
     "2025-Q3",
     "2025-Q4",
     "2026-Q1",
-    "2026-Q2"
+    "2026-Q2",
+    "2026-Q3"
    ],
    "value": [
     98.7,
@@ -140,7 +141,8 @@
     142.9,
     143.9,
     144.7,
-    145.8
+    145.8,
+    146.5
    ],
    "meta": {
     "source": "Deutsche Bundesbank",
@@ -156,9 +158,9 @@
      "name": "ESCB Terms of Use for the Reuse of Statistics",
      "url": "https://www.bundesbank.de/en/homepage/user-information/terms-of-use-regarding-the-reuse-of-escb-statistics-621188"
     },
-    "valid_from": "2026-09-04T08:22:42.531Z",
-    "retrieved_at": "2026-11-03T11:09:10.836Z",
-    "sha256": "4ac3d607ef6ba78c30a54fc7fc9df4a5c5c8a8515941e3159e4bd504a9871ee5"
+    "valid_from": "2026-11-12T11:03:40.967Z",
+    "retrieved_at": "2026-11-13T14:06:57.785Z",
+    "sha256": "72d2ea49da55ea28265a9372bfe36e5ee61e6e97e9bd30037df1cbdc587189df"
    }
   }
  }

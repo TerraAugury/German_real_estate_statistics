@@ -1,7 +1,7 @@
 {
- "retrieved_at": "2026-11-03T11:09:10.836Z",
+ "retrieved_at": "2026-11-13T14:06:57.785Z",
  "fetch_failed": null,
- "revised_at": "2026-11-02T23:30:49.881Z",
+ "revised_at": "2026-11-13T14:06:57.785Z",
  "parts": {
   "Q.B10.N.G020.P0120.A": {
    "name": "Price Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / Commercial property price index / total / Germany excluding cities of supra-regional importance / unadjusted figures",
@@ -60,7 +60,8 @@
     "2025-Q3",
     "2025-Q4",
     "2026-Q1",
-    "2026-Q2"
+    "2026-Q2",
+    "2026-Q3"
    ],
    "value": [
     98.9,
@@ -114,9 +115,10 @@
     166.8,
     167.7,
     169.2,
-    169.7,
-    168.8,
-    168.3
+    169.5,
+    168.6,
+    167.7,
+    167.9
    ],
    "meta": {
     "source": "Deutsche Bundesbank",
@@ -132,9 +134,9 @@
      "name": "ESCB Terms of Use for the Reuse of Statistics",
      "url": "https://www.bundesbank.de/en/homepage/user-information/terms-of-use-regarding-the-reuse-of-escb-statistics-621188"
     },
-    "valid_from": "2026-09-04T08:22:42.530Z",
-    "retrieved_at": "2026-11-03T11:09:10.836Z",
-    "sha256": "70e3a8a39fa93cafda8ebf967401558a025fb276de84e02acb170626a4846c3f"
+    "valid_from": "2026-11-12T11:03:40.966Z",
+    "retrieved_at": "2026-11-13T14:06:57.785Z",
+    "sha256": "5e3198cd403da23d313a7a0d9f71b5de4e05136e855476581c806bc438ca143d"
    }
   }
  }

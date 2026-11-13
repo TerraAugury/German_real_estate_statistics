@@ -1,5 +1,5 @@
 {
- "retrieved_at": "2026-11-03T11:09:10.836Z",
+ "retrieved_at": "2026-11-13T14:06:57.785Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
@@ -34,7 +34,7 @@
     178.3,
     167.7,
     164.7,
-    168.4
+    168.3
    ],
    "meta": {
     "source": "Deutsche Bundesbank",
@@ -50,9 +50,9 @@
      "name": "ESCB Terms of Use for the Reuse of Statistics",
      "url": "https://www.bundesbank.de/en/homepage/user-information/terms-of-use-regarding-the-reuse-of-escb-statistics-621188"
     },
-    "valid_from": "2026-09-04T08:22:42.521Z",
-    "retrieved_at": "2026-11-03T11:09:10.836Z",
-    "sha256": "42665d4b0c603e28e5fc8c0c0da62b1f24bd7e239b56e31ff34b7d6ddbdce942"
+    "valid_from": "2026-11-12T11:03:40.957Z",
+    "retrieved_at": "2026-11-13T14:06:57.785Z",
+    "sha256": "61305293b9ea6195189cbf419f2aec06d7063c26ccbcc78ed6f4dc4073cbfb3f"
    }
   }
  }

@@ -1,7 +1,7 @@
 {
- "retrieved_at": "2026-11-03T11:09:10.836Z",
+ "retrieved_at": "2026-11-13T14:06:57.785Z",
  "fetch_failed": null,
- "revised_at": null,
+ "revised_at": "2026-11-13T14:06:57.785Z",
  "parts": {
   "A.B30.N.G800.R0820.A": {
    "name": "Real Economic Indicators (As per the latest publication of the system of indicators for the German commercial real estate market) / Association of German Pfandbrief Banks (Verband deutscher Pfandbriefbanken) / commercial properties - transaction volume index: euro values / 7 major cities (A cities) / unadjusted figures",
@@ -24,7 +24,8 @@
     "2021",
     "2022",
     "2023",
-    "2024"
+    "2024",
+    "2025"
    ],
    "value": [
     247.3,
@@ -44,7 +45,8 @@
     192,
     130.4,
     46.7,
-    82.9
+    85.7,
+    74.8
    ],
    "meta": {
     "source": "Deutsche Bundesbank",
@@ -60,9 +62,9 @@
      "name": "ESCB Terms of Use for the Reuse of Statistics",
      "url": "https://www.bundesbank.de/en/homepage/user-information/terms-of-use-regarding-the-reuse-of-escb-statistics-621188"
     },
-    "valid_from": "2026-09-04T08:22:42.527Z",
-    "retrieved_at": "2026-11-03T11:09:10.836Z",
-    "sha256": "ffa991ff30e085a2f874a54ed57c38843a6882d669bbc51802f81a8845e51afc"
+    "valid_from": "2026-11-12T11:03:40.963Z",
+    "retrieved_at": "2026-11-13T14:06:57.785Z",
+    "sha256": "ccae1cbcad37cfba91ed452f1d636aa0702731a2d8a2dd6c3934e5d1bb882aa5"
    }
   }
  }
