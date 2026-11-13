@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { existsSync, readFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
 import { href, langs, slug } from '../src/lib/routes';
-import { t } from '../src/lib/i18n';
+import { loadStrings, t } from '../src/lib/i18n';
 import { KPIS } from '../src/lib/kpis';
 import { viewLinks } from '../src/lib/links';
 import { loadManifest } from '../src/lib/manifest';
@@ -87,5 +87,32 @@ describe.skipIf(built.length === 0)('Links page', () => {
   });
   it('the line reads as specified in English', () => {
     expect(t('en', 'links.chance.note')).toBe('With this many comparisons, a few boxes will look strong by chance alone. Treat a single strong box with caution, especially when n is small.');
+  });
+});
+
+describe('pre-set on the Links matrix', () => {
+  // The pre-set is a menu choice: the matrix opens on it and shows the label only there; any other choice shows that shift for every box, unlabelled.
+  it.each(langs)('%s: one label, naming N-1; the menu offers the pre-set first', (l) => {
+    const strings = loadStrings(l as 'en');
+    expect(Object.keys(strings).filter((k) => k.startsWith('links.cell.preset'))).toEqual(['links.cell.preset']);
+    expect(strings['links.cell.preset']).toContain('N-1');
+    expect(strings['links.lag.preset']).toBeTruthy();
+  });
+  it.each(built)('%s: opens on the pre-sets; a pre-set box shows N-1 and the others the same year', (l) => {
+    const doc = page(l as 'en');
+    expect(doc.querySelector('table.matrix')!.getAttribute('data-lag')).toBe('p');
+    const sel = doc.querySelector<HTMLSelectElement>('#lag')!;
+    expect([...sel.options].map((o) => o.value)).toEqual(['p', '0', '1', '2']);
+    const help = doc.querySelector('.lag-selector button.help')!;
+    expect(doc.getElementById(help.getAttribute('aria-describedby')!)!.textContent).toBe(t(l as 'en', 'links.lag.help'));
+    expect(doc.querySelector('.lag-selector label')!.getAttribute('for')).toBe('lag');
+    expect(sel.querySelector('option[selected]')!.getAttribute('value')).toBe('p');
+    for (const td of doc.querySelectorAll('td.lagcell')) {
+      const pre = [...td.querySelectorAll('a[data-pre]')];
+      expect(pre).toHaveLength(1);
+      const label = td.querySelector('.preset');
+      expect(pre[0].getAttribute('data-lag')).toBe(label ? '1' : '0');
+      if (label) expect(label.parentElement).toBe(pre[0]);
+    }
   });
 });
