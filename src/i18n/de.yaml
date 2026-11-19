@@ -231,7 +231,7 @@ kpi.office-vacancy.definition: "Der Anteil der Büroflächen, die leer stehen. D
 kpi.transaction-volume.definition: "Der Eurowert der verkauften Immobilien, dargestellt als Index. Er zeigt, wie aktiv der Markt ist und wie leicht sich Immobilien kaufen und verkaufen lassen."
 kpi.construction.definition: "Die für den Bau genehmigte Fläche. Sie erfasst Bauvorhaben im Stadium der Genehmigung, vor der Fertigstellung."
 links.lag.help_label: "Was bewirkt diese Auswahl?"
-links.lag.help: "Eine Veränderung bei einem Wirtschaftsindikator zeigt sich bei Immobilien womöglich erst später. Hier wählen Sie, wie viele Jahre früher der Wirtschaftsindikator genommen wird: das gleiche Jahr, ein Jahr früher (N-1) oder zwei Jahre früher (N-2). „Vorab gewählt“ nimmt N-1 für die als vorab gewählt markierten Felder und für alle anderen das gleiche Jahr."
+links.lag.help: "Eine Veränderung eines Wirtschaftsindikators im Jahr N zeigt sich auf den Immobilienmärkten möglicherweise erst im Jahr N+1 oder N+2. Mit der Verschiebung passen Sie die Daten an. Mit N-1 etwa werden die Immobiliendaten mit den Wirtschaftsdaten des Vorjahres verglichen. Wählen Sie „Vorab gewählt“, um die Standardwerte zu verwenden."
 
 # Link panel: the plain-language reading under the shift chart (owner's wording)
 link.explain.heading: "Wie stark haben sich diese beiden Reihen gemeinsam entwickelt?"
