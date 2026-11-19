@@ -1799,6 +1799,22 @@ links.lag.help_label:
   reviewed_by: Olivier
   reviewed_on: 2026-11-13
 links.lag.help:
-  en_hash: 9f3cbd6d3061c3e6
+  en_hash: 82c911f46c0d802d
   reviewed_by: Olivier
-  reviewed_on: 2026-11-13
+  reviewed_on: 2026-11-19
+link.view.label:
+  en_hash: 5926b3dea4eab3fb
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-19
+link.view.compared:
+  en_hash: d9b9b86eaa8dd39f
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-19
+link.view.full:
+  en_hash: 874521ba5e93186d
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-19
+link.view.band:
+  en_hash: cda9566661fa05ae
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-19
