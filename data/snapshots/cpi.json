@@ -1,5 +1,5 @@
 {
- "retrieved_at": "2026-11-12T09:54:17.147Z",
+ "retrieved_at": "2026-11-19T15:17:00.662Z",
  "fetch_failed": null,
  "revised_at": null,
  "parts": {
@@ -868,7 +868,7 @@
     125.6,
     125.8,
     126.6,
-    126.4
+    126.5
    ],
    "meta": {
     "source": "Statistisches Bundesamt (Destatis)",
@@ -880,9 +880,9 @@
     "comment": null,
     "general_comment": null,
     "third_party": false,
-    "valid_from": "2026-11-10T18:00:58",
-    "retrieved_at": "2026-11-12T09:54:17.147Z",
-    "sha256": "1d84aaef2096b872ad23170e9d421a327698b29c0811a00bea0f838d65b8e0d1"
+    "valid_from": "2026-11-17T11:30:04",
+    "retrieved_at": "2026-11-19T15:17:00.662Z",
+    "sha256": "3ad67dc6a25a1c7847b7bca1e0534eca10ab44f4239be54ea2a038138c316bae"
    }
   }
  }
