@@ -4,6 +4,7 @@ import { indexChart, insightChart, multiplesChart, sharedDomain, overlayChart, l
 import { notesFor } from './notes';
 import { href, slug, type Lang } from './routes';
 import type { Series } from './series';
+import type { Points } from '../insight/insight';
 import { effectiveN, lagFor, noiseBand, targetOf, tierOf, type LinkResult } from '../link/link';
 import { linkResult } from './links';
 import { compareLines, MIN_OBS, tone, type InsightResult } from '../insight/insight';
@@ -85,8 +86,45 @@ function explainLink(r: Extract<LinkResult, { shown: true }>, freq: 'D' | 'M' | 
     + lead(t(lang, 'link.not.lead'), t(lang, 'link.not'));
 }
 
+type LinkShown = Extract<LinkResult, { shown: true }>;
+type Labels = { kpiUnit: string; indicatorUnit: string; title: string };
+
+/** The two series of a shown Link as points, with the period both cover and the period either covers; `differ` when they are not the same. */
+function levels(r: LinkShown, kpi: Series, ind: Series, lang: Lang) {
+  const pts = (k: 'kpi' | 'indicator') => r.overlay.flatMap((o) => (o[k] === null ? [] : [{ period: o.period, value: o[k]! }]));
+  const [k, i] = [pts('kpi'), pts('indicator')];
+  const [k0, k1, i0, i1] = [k[0].period, k[k.length - 1].period, i[0].period, i[i.length - 1].period]; // periods compare as text; "2013" and "2013-Q1" never mix in one pair
+  const [from, to, lo, hi] = [k0 > i0 ? k0 : i0, k1 < i1 ? k1 : i1, k0 < i0 ? k0 : i0, k1 > i1 ? k1 : i1];
+  const names = { kpi: kpi.title[lang], indicator: ind.title[lang] };
+  const labels: Labels = { kpiUnit: kpi.unit[lang], indicatorUnit: ind.unit[lang], title: t(lang, 'link.overlay.chart', names) };
+  return { k, i, from, to, lo, hi, differ: from !== lo || to !== hi, labels, names };
+}
+
+/** The full-history chart of a Link whose two series cover different periods, with the note that explains its band; undefined when they cover the same. */
+export function fullHistory(kpi: Series, ind: Series, r: LinkResult, lang: Lang): string | undefined {
+  if (!r.shown) return undefined;
+  const v = levels(r, kpi, ind, lang);
+  return v.differ ? overlayChart(v.k, v.i, v.labels, lang, { from: v.from, to: v.to, only: false }) + `<p class="note">${t(lang, 'link.view.band')}</p>` : undefined;
+}
+
+/**
+ * The Link's level chart. When one series is shorter than the other it opens on the period both cover, with a switch to the
+ * full history; otherwise it is the plain chart. The full history is the heavier markup, so a page passes `fullSrc` and a
+ * script fetches it on first use (a KPI page is held to 300 KB); without `fullSrc` it is drawn inline.
+ */
+function overlayFigure(r: LinkShown, kpi: Series, ind: Series, lang: Lang, group: string, fullSrc?: string): string {
+  const v = levels(r, kpi, ind, lang);
+  if (!v.differ) return overlayChart(v.k, v.i, v.labels, lang);
+  const radio = (view: string, text: string) => `<label><input type="radio" name="${esc(`view-${group}`)}" value="${view}"${view === 'compared' ? ' checked' : ''}> ${text}</label>`;
+  return `<div class="overlay"><fieldset class="view-switch"><legend class="sr">${t(lang, 'link.view.label')}</legend>`
+    + radio('compared', t(lang, 'link.view.compared', { from: period(lang, v.from), to: period(lang, v.to) }))
+    + radio('full', t(lang, 'link.view.full', { from: period(lang, v.lo), to: period(lang, v.hi) }))
+    + `</fieldset><div class="view-compared">${overlayChart(v.k, v.i, v.labels, lang, { from: v.from, to: v.to, only: true })}</div>`
+    + `<div class="view-full"${fullSrc ? ` data-src="${esc(fullSrc)}"` : ''}>${fullSrc ? '' : fullHistory(kpi, ind, r, lang)}</div></div>`;
+}
+
 /** Link panel HTML for one KPI x indicator pair. Pure given the result, so it tests without the Link module. */
-export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang, geography = t(lang, 'geo.germany'), id?: string, preset = false): string {
+export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang, geography = t(lang, 'geo.germany'), id?: string, preset = false, fullSrc?: string): string {
   const notes = notesFor(kpi, lang, { on: 'link', indicator: ind, pairs: r.shown ? r.headline.n : undefined });
   const head = `<p class="back"><a href="${href('links', lang)}">← ${t(lang, 'link.back')}</a></p>
 <h3>${t(lang, 'link.title', { kpi: esc(kpi.title[lang]), indicator: esc(ind.title[lang]) })}</h3>
@@ -95,10 +133,9 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
   if (!r.shown) {
     body = `<p>${t(lang, r.reason === 'constant' ? 'link.not_shown.constant' : 'link.not_shown', { n: String(r.n0) })}</p>`;
   } else {
-    const pts = (k: 'kpi' | 'indicator') => r.overlay.flatMap((o) => (o[k] === null ? [] : [{ period: o.period, value: o[k]! }]));
     const names = { kpi: kpi.title[lang], indicator: ind.title[lang] };
     const N = r.lags.filter((l) => l.rho !== null).length;
-    body = overlayChart(pts('kpi'), pts('indicator'), { kpiUnit: kpi.unit[lang], indicatorUnit: ind.unit[lang], title: t(lang, 'link.overlay.chart', names) }, lang)
+    body = overlayFigure(r, kpi, ind, lang, id ?? `${kpi.key}-${ind.key}`, fullSrc)
       + `<p class="note">${t(lang, 'link.overlay.legend', { kpi: esc(names.kpi), indicator: esc(names.indicator) })}</p>`
       + lagChart(r.lags, r.strongest.lag, { lag: t(lang, 'link.lag.label'), rho: t(lang, 'link.rho.label'), mark: t(lang, 'link.strongest.mark'), bands: r.lags.filter((l) => l.rho !== null).map((l) => ({ lag: l.lag, band: noiseBand(l.n, targetOf(kpi.freq)) })), preset: preset ? { lag: lagFor(kpi.freq, 1), label: t(lang, 'link.preset.mark') } : undefined, title: t(lang, 'link.lags.label', { kpi: kpi.title[lang], indicator: ind.title[lang] }) }, lang)
       + explainLink(r, kpi.freq, lang);
@@ -107,8 +144,11 @@ export function renderPanel(kpi: Series, ind: Series, r: LinkResult, lang: Lang,
 }
 
 /** Compute (once per build) and render; the Link takes the KPI's frequency (spec section 6). */
-export const linkPanel = (kpi: Series, ind: Series, lang: Lang, geography?: string, id?: string, preset?: boolean) =>
-  renderPanel(kpi, ind, linkResult(kpi, ind), lang, geography, id, preset);
+export const linkPanel = (kpi: Series, ind: Series, lang: Lang, geography?: string, id?: string, preset?: boolean, fullSrc?: string) =>
+  renderPanel(kpi, ind, linkResult(kpi, ind), lang, geography, id, preset, fullSrc);
+
+/** The full-history fragment of a Link panel, for the route that serves it. */
+export const fullHistoryOf = (kpi: Series, ind: Series, lang: Lang) => fullHistory(kpi, ind, linkResult(kpi, ind), lang);
 
 type Shown = Extract<InsightResult, { shown: true }>;
 

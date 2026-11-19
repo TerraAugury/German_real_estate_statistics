@@ -72,27 +72,39 @@ function niceTicks(lo: number, hi: number): number[] {
 
 /**
  * Both series of a Link on one chart: the Real estate KPI against the left axis, the Economic indicator against the right
- * axis, over one x axis that spans both histories. Each series is scaled to its own round tick range, and each axis and its
- * unit take its line's colour (ochre text is the darker `strong-text`, which keeps 4.5:1). The scales are independent, so the
- * picture shows co-movement only.
+ * axis. Each series is scaled to its own round tick range, and each axis and its unit take its line's colour (ochre text is
+ * the darker `strong-text`, which keeps 4.5:1). The scales are independent, so the picture shows co-movement only.
+ * `compared` is the period both series cover. With `only` the chart is cut to that period and both axes scale to it, so the
+ * picture matches the coefficient; without it the chart spans both histories, the compared period on a grey band and the
+ * parts of the lines outside it lighter.
  */
-export function overlayChart(kpi: Points, indicator: Points, labels: { kpiUnit: string; indicatorUnit: string; title: string }, lang: Lang): string {
-  const scaled = (pts: Points, unit: string, anchor: 'left' | 'right', lineColour: string, axisColour: string) => {
+export function overlayChart(kpi: Points, indicator: Points, labels: { kpiUnit: string; indicatorUnit: string; title: string }, lang: Lang, compared?: { from: string; to: string; only: boolean }): string {
+  const [from, to] = compared ? [x(compared.from), x(compared.to)] : [-Infinity, Infinity];
+  const inside = (pts: Points) => pts.filter((p) => x(p.period) >= from && x(p.period) <= to);
+  const scaled = (all: Points, unit: string, anchor: 'left' | 'right', lineColour: string, axisColour: string) => {
+    const pts = compared?.only ? inside(all) : all;
     const values = pts.map((p) => p.value);
     const ticks = niceTicks(Math.min(...values), Math.max(...values));
     const [lo, hi] = [ticks[0], ticks[ticks.length - 1]];
     const at = ticks.map((v) => (v - lo) / (hi - lo));
+    const y = (p: Points[number]) => (p.value - lo) / (hi - lo);
+    const core = inside(pts);
     return [
       Plot.gridY(at),
       Plot.axisY(at, { anchor, color: axisColour, label: unit, labelArrow: 'none', tickFormat: (_: number, i: number) => fmt(lang, ticks[i]) }),
-      Plot.lineY(pts, { x: (p) => x(p.period), y: (p) => (p.value - lo) / (hi - lo), stroke: lineColour, strokeWidth: 2.25 }),
+      // Full view: the whole line faint, the compared part drawn over it at full strength.
+      ...(core.length < pts.length ? [Plot.lineY(pts, { x: (p) => x(p.period), y, stroke: lineColour, strokeWidth: 2.25, strokeOpacity: 0.4 })] : []),
+      Plot.lineY(core, { x: (p) => x(p.period), y, stroke: lineColour, strokeWidth: 2.25 }),
     ];
   };
   return render((narrow) => ({
     height: 240, marginRight: narrow ? 36 : 50, marginTop: 28,
-    x: xAxis(narrow),
+    x: { ...xAxis(narrow), ...(compared?.only ? { domain: [from, to] } : {}) },
     y: { axis: null, domain: [0, 1] },
-    marks: [...scaled(kpi, labels.kpiUnit, 'left', DATA, DATA), ...scaled(indicator, labels.indicatorUnit, 'right', STRONG, STRONG_TEXT)],
+    marks: [
+      ...(compared && !compared.only ? [Plot.rectX([{ x1: from, x2: to }], { x1: 'x1', x2: 'x2', fill: GRID, fillOpacity: 0.5 })] : []),
+      ...scaled(kpi, labels.kpiUnit, 'left', DATA, DATA), ...scaled(indicator, labels.indicatorUnit, 'right', STRONG, STRONG_TEXT),
+    ],
   }), labels.title);
 }
 

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { loadSeries } from '../src/lib/series';
 import { computeLink, type LinkResult } from '../src/link/link';
-import { renderPanel } from '../src/lib/panel';
+import { renderPanel, fullHistory } from '../src/lib/panel';
 import { lineChart } from '../src/lib/chart';
 import { JSDOM } from 'jsdom';
 
@@ -66,42 +66,70 @@ describe('Link panel chart', () => {
   });
   const dom = (h: string) => new JSDOM(h).window.document;
 
-  it('draws one chart (a wide and a narrow SVG), not one per series', () => {
+  it('draws one chart per view (a wide and a narrow SVG), not one per series', () => {
     const d = dom(renderPanel(kpi, ind, early(), 'en'));
-    expect(d.querySelectorAll('figure.link-panel svg.wide[aria-label^="Values of"]').length).toBe(1);
-    expect(d.querySelectorAll('figure.link-panel svg.narrow[aria-label^="Values of"]').length).toBe(1);
+    for (const view of ['compared', 'full']) {
+      expect(d.querySelectorAll(`figure.link-panel .view-${view} svg.wide[aria-label^="Values of"]`).length).toBe(1);
+      expect(d.querySelectorAll(`figure.link-panel .view-${view} svg.narrow[aria-label^="Values of"]`).length).toBe(1);
+    }
     expect(d.querySelector('.pair')).toBeNull();
+  });
+  it('opens on the compared period with a switch to the full history; equal histories get no switch', () => {
+    const d = dom(renderPanel(kpi, ind, early(), 'en'));
+    const radios = [...d.querySelectorAll<HTMLInputElement>('.view-switch input[type=radio]')];
+    expect(radios.map((r) => [r.value, r.checked])).toEqual([['compared', true], ['full', false]]);
+    expect([...d.querySelectorAll('.view-switch label')].map((l) => l.textContent!.trim())).toEqual(['Compared period (2000 to 2025)', 'Full history (1980 to 2025)']);
+    expect(d.querySelector('.view-switch legend')!.textContent).toBe('Period shown in the chart');
+    const xs = (view: string) => [...d.querySelectorAll(`.view-${view} svg.wide g[aria-label="x-axis tick label"] text`)].map((n) => n.textContent);
+    expect(xs('compared')).not.toContain('1980');
+    expect(xs('compared')).toContain('2000');
+    expect(d.querySelector('.view-full p.note')!.textContent).toContain('grey band');
+    expect(dom(renderPanel(kpi, ind, shown(14), 'en')).querySelector('.view-switch')).toBeNull();
+  });
+  it('a page passes a fragment URL: the full view is an empty box that names it, and the fragment holds the full chart', () => {
+    const d = dom(renderPanel(kpi, ind, early(), 'en', undefined, 'p1', false, '/en/fragments/full/x/p1/'));
+    expect(d.querySelector('.view-full')!.getAttribute('data-src')).toBe('/en/fragments/full/x/p1/');
+    expect(d.querySelector('.view-full')!.children).toHaveLength(0);
+    const f = dom(fullHistory(kpi, ind, early(), 'en')!);
+    expect(f.querySelectorAll('svg.wide, svg.narrow')).toHaveLength(2);
+    expect(f.querySelector('p.note')!.textContent).toContain('grey band');
+    expect(fullHistory(kpi, ind, shown(14), 'en')).toBeUndefined();
+  });
+  it('the compared view scales both axes to the compared period', () => {
+    const d = dom(renderPanel(kpi, ind, early(), 'en'));
+    const top = (view: string, anchor: string) => Math.max(...[...d.querySelectorAll(`.view-${view} svg.wide g[aria-label="y-axis tick label"][text-anchor="${anchor}"] text`)].map((n) => +n.textContent!.replace(/[^\d.-]/g, '')));
+    expect(top('compared', 'end')).toBeLessThanOrEqual(top('full', 'end'));
   });
   it('puts the KPI unit on the left axis and the indicator unit on the right, each axis in its line’s colour', () => {
     const d = dom(renderPanel(kpi, ind, early(), 'en'));
-    const ticks = (anchor: string) => d.querySelector(`svg.wide g[aria-label="y-axis tick label"][text-anchor="${anchor}"]`);
+    const ticks = (anchor: string) => d.querySelector(`.view-compared svg.wide g[aria-label="y-axis tick label"][text-anchor="${anchor}"]`);
     expect(ticks('end')?.getAttribute('fill')).toBe('var(--data)');
     expect(ticks('start')?.getAttribute('fill')).toBe('var(--strong-text)');
     // The unit labels: the KPI's at the top left in the data colour, the indicator's at the top right in ochre.
-    const unit = (anchor: string) => d.querySelector(`svg.wide g[aria-label="y-axis label"][text-anchor="${anchor}"]`);
+    const unit = (anchor: string) => d.querySelector(`.view-compared svg.wide g[aria-label="y-axis label"][text-anchor="${anchor}"]`);
     expect([unit('start')?.textContent, unit('start')?.getAttribute('fill')]).toEqual([kpi.unit.en, 'var(--data)']);
     expect([unit('end')?.textContent, unit('end')?.getAttribute('fill')]).toEqual([ind.unit.en, 'var(--strong-text)']);
-    const line = (colour: string) => d.querySelectorAll(`svg.wide g[aria-label="line"][stroke="${colour}"]`).length;
+    const line = (colour: string) => d.querySelectorAll(`.view-compared svg.wide g[aria-label="line"][stroke="${colour}"]`).length;
     expect([line('var(--data)'), line('var(--strong)')]).toEqual([1, 1]);
   });
-  it('spans the union of both histories: the x axis starts with the longer one', () => {
+  it('the full view spans the union of both histories: the x axis starts with the longer one', () => {
     const d = dom(renderPanel(kpi, ind, early(), 'en'));
-    const labels = [...d.querySelectorAll('svg.wide g[aria-label="x-axis tick label"] text')].map((n) => n.textContent);
+    const labels = [...d.querySelectorAll('.view-full svg.wide g[aria-label="x-axis tick label"] text')].map((n) => n.textContent);
     expect(labels).toContain('1980');
     expect(labels).toContain('2020');
   });
   it('names both series in the accessible label and the legend, in both languages', () => {
     const en = renderPanel(kpi, ind, early(), 'en');
-    expect(dom(en).querySelector('svg.wide')!.getAttribute('aria-label')).toBe(`Values of ${kpi.title.en} and ${ind.title.en}`);
+    expect(dom(en).querySelector('.view-compared svg.wide')!.getAttribute('aria-label')).toBe(`Values of ${kpi.title.en} and ${ind.title.en}`);
     expect(en).toContain(`Blue line, left axis: ${kpi.title.en}. Ochre line, right axis: ${ind.title.en}.`);
     const de = renderPanel(kpi, ind, early(), 'de');
     // German is a draft until reviewed, so the label may carry the [DRAFT] marker.
-    expect(dom(de).querySelector('svg.wide')!.getAttribute('aria-label')).toContain(`Werte: ${kpi.title.de} und ${ind.title.de}`);
+    expect(dom(de).querySelector('.view-compared svg.wide')!.getAttribute('aria-label')).toContain(`Werte: ${kpi.title.de} und ${ind.title.de}`);
     expect(de).toContain(`Blaue Linie, linke Achse: ${kpi.title.de}. Ockerfarbene Linie, rechte Achse: ${ind.title.de}.`);
   });
   it('a series that starts later has no line before it starts', () => {
     const d = dom(renderPanel(kpi, ind, early(), 'en'));
-    const startX = (colour: string) => +/^M([\d.]+)/.exec(d.querySelector(`svg.wide g[aria-label="line"][stroke="${colour}"] path`)!.getAttribute('d')!)![1];
+    const startX = (colour: string) => +/^M([\d.]+)/.exec(d.querySelector(`.view-full svg.wide g[aria-label="line"][stroke="${colour}"] path`)!.getAttribute('d')!)![1];
     expect(startX('var(--data)')).toBeGreaterThan(startX('var(--strong)') + 100);
   });
 });

@@ -1,0 +1,18 @@
+---
+// The full-history chart of a Link panel whose two series cover different periods, fetched by the panel's switch the first time
+// "Full history" is picked. A KPI page holds only the compared-period chart so it stays under its size limit.
+import { langs } from '../../../../../lib/routes';
+import { KPIS } from '../../../../../lib/kpis';
+import { kpiPage } from '../../../../../lib/pages';
+import { getSeries } from '../../../../../lib/series';
+import { fullHistoryOf } from '../../../../../lib/panel';
+
+export function getStaticPaths() {
+  return langs.flatMap((lang) => KPIS.flatMap((kpi) => kpiPage(kpi).panels.flatMap((p) => {
+    const html = fullHistoryOf(getSeries(p.pair.kpi, p.pair.land), getSeries(p.pair.indicator), lang);
+    return html ? [{ params: { lang, page: kpi.page, id: p.id }, props: { html } }] : [];
+  })));
+}
+const { html } = Astro.props;
+---
+<Fragment set:html={html} />
