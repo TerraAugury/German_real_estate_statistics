@@ -39,6 +39,10 @@ link.lag.label: "Shift in years (positive: economic indicator moved earlier, neg
 link.rho.label: "Rank correlation"
 link.overlay.chart: "Values of {kpi} and {indicator}"
 link.overlay.legend: "Blue line, left axis: {kpi}. Ochre line, right axis: {indicator}."
+link.view.label: "Period shown in the chart"
+link.view.compared: "Compared period ({from} to {to})"
+link.view.full: "Full history ({from} to {to})"
+link.view.band: "The grey band marks the compared period; the lighter parts of the lines lie outside it."
 link.lags.label: "Rank correlation at each shift: {kpi} and {indicator}"
 nav.sources: Sources and licences
 sources.title: Sources and licences

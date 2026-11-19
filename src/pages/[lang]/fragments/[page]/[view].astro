@@ -16,8 +16,8 @@ export function getStaticPaths() {
     }));
   }));
 }
-const { lang } = Astro.params as { lang: Lang };
+const { lang, page } = Astro.params as { lang: Lang; page: string };
 const { view, links, panels } = Astro.props;
 ---
 <KpiView view={view} links={links} lang={lang} />
-{panels.map(({ p, order }) => <KpiPanel panel={p} order={order} lang={lang} />)}
+{panels.map(({ p, order }) => <KpiPanel panel={p} order={order} lang={lang} page={page} />)}

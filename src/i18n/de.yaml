@@ -39,6 +39,10 @@ link.lag.label: "Verschiebung in Jahren (positiv: Wirtschaftsindikator früher, 
 link.rho.label: "Rangkorrelation"
 link.overlay.chart: "Werte: {kpi} und {indicator}"
 link.overlay.legend: "Blaue Linie, linke Achse: {kpi}. Ockerfarbene Linie, rechte Achse: {indicator}."
+link.view.label: "Im Diagramm gezeigter Zeitraum"
+link.view.compared: "Verglichener Zeitraum ({from} bis {to})"
+link.view.full: "Gesamter Zeitverlauf ({from} bis {to})"
+link.view.band: "Das graue Band markiert den verglichenen Zeitraum; die helleren Linienteile liegen außerhalb davon."
 link.lags.label: "Rangkorrelation bei jeder Verschiebung: {kpi} und {indicator}"
 nav.sources: Quellen und Lizenzen
 sources.title: Quellen und Lizenzen
