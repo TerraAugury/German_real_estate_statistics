@@ -45,7 +45,12 @@ describe('hero', () => {
     expect(doc.querySelector('section.hero > p:not(.headline)')!.textContent).toMatch(/^The latest spread of the 7-city initial yield over the 10-year Bund yield is /);
     expect(doc.querySelectorAll('svg.wide')).toHaveLength(1);
     expect(doc.querySelectorAll('.multiples')).toHaveLength(0);
-    expect(doc.querySelectorAll('.cite').length).toBeGreaterThan(0);
+    expect(doc.querySelectorAll('.cite')).toHaveLength(2); // the drawn 7-city series and the Bund yield, not the 127-towns series
+  });
+  it.each([['en', '7 major cities', '127 towns'], ['de', '7 Großstädte', '127 Städte']] as const)('%s: notes only the drawn 7-city series, not the 127-towns one', (lang, drawn, undrawn) => {
+    const notes = [...hero(lang).querySelectorAll('.note')].map((n) => n.textContent).join('\n');
+    expect(notes).toContain(drawn);
+    expect(notes).not.toContain(undrawn);
   });
   it('links to the Insight on the Insights page', () => {
     expect(hero().querySelector('a[href="/en/insights#a"]')).not.toBeNull();
