@@ -935,9 +935,9 @@ manifest:transaction-volume-7.attribution:
   reviewed_by: terra augury
   reviewed_on: 2026-11-03
 manifest:construction-bbk-permits-office.title:
-  en_hash: d6cf8d3f349ba48d
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 8e4a2adeaa57c2aa
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-20
 manifest:construction-bbk-permits-office.unit:
   en_hash: 536ec6351349d8e0
   reviewed_by: Project owner
@@ -947,9 +947,9 @@ manifest:construction-bbk-permits-office.attribution:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:construction-bbk-permits-wholesale-warehouse.title:
-  en_hash: 035b826ba48c7c02
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: d41e95f07afb09ef
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-20
 manifest:construction-bbk-permits-wholesale-warehouse.unit:
   en_hash: 536ec6351349d8e0
   reviewed_by: Project owner
@@ -959,9 +959,9 @@ manifest:construction-bbk-permits-wholesale-warehouse.attribution:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:construction-bbk-completions-office.title:
-  en_hash: 71d60aa23087f08c
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 2155c5580823aeec
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-20
 manifest:construction-bbk-completions-office.unit:
   en_hash: 536ec6351349d8e0
   reviewed_by: Project owner
@@ -971,9 +971,9 @@ manifest:construction-bbk-completions-office.attribution:
   reviewed_by: Project owner
   reviewed_on: 2026-11-02
 manifest:construction-bbk-completions-wholesale-warehouse.title:
-  en_hash: dd17f2aa98946cec
-  reviewed_by: Project owner
-  reviewed_on: 2026-11-02
+  en_hash: 642522bc19d4d2ec
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-20
 manifest:construction-bbk-completions-wholesale-warehouse.unit:
   en_hash: 536ec6351349d8e0
   reviewed_by: Project owner
@@ -1799,9 +1799,9 @@ links.lag.help_label:
   reviewed_by: Olivier
   reviewed_on: 2026-11-13
 links.lag.help:
-  en_hash: 82c911f46c0d802d
+  en_hash: 87ead4adb4861589
   reviewed_by: Olivier
-  reviewed_on: 2026-11-19
+  reviewed_on: 2026-11-20
 link.view.label:
   en_hash: 5926b3dea4eab3fb
   reviewed_by: Olivier
@@ -1818,3 +1818,15 @@ link.view.band:
   en_hash: cda9566661fa05ae
   reviewed_by: Olivier
   reviewed_on: 2026-11-19
+kpi.source.label:
+  en_hash: 548c5b4d99727c76
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-20
+kpi.source.option:
+  en_hash: 6c5244f3283b22f0
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-20
+sources.col.last:
+  en_hash: 39e14d1919011657
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-20
