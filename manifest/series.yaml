@@ -855,7 +855,7 @@
   attribution: &bbk_attribution { en: "Source: Deutsche Bundesbank", de: "Quelle: Deutsche Bundesbank" }
   provisional: false
   cleared: *permission
-  title: { en: "Building permits: office and administrative buildings, Germany (Bundesbank)", de: "Baugenehmigungen: Büro- und Verwaltungsgebäude, Deutschland (Bundesbank)" }
+  title: { en: "Building permits: office and administrative buildings, Germany", de: "Baugenehmigungen: Büro- und Verwaltungsgebäude, Deutschland" }
   unit: { en: "million m² floor space", de: "Mio. m² Nutzfläche" }
   frequency: annual
   change: pct
@@ -874,7 +874,7 @@
   attribution: *bbk_attribution
   provisional: false
   cleared: *permission
-  title: { en: "Building permits: wholesale, retail and warehouse buildings, Germany (Bundesbank)", de: "Baugenehmigungen: Großhandels-, Einzelhandels- und Lagergebäude, Deutschland (Bundesbank)" }
+  title: { en: "Building permits: wholesale, retail and warehouse buildings, Germany", de: "Baugenehmigungen: Großhandels-, Einzelhandels- und Lagergebäude, Deutschland" }
   unit: { en: "million m² floor space", de: "Mio. m² Nutzfläche" }
   frequency: annual
   change: pct
@@ -893,7 +893,7 @@
   attribution: *bbk_attribution
   provisional: false
   cleared: *permission
-  title: { en: "Building completions: office and administrative buildings, Germany (Bundesbank)", de: "Baufertigstellungen: Büro- und Verwaltungsgebäude, Deutschland (Bundesbank)" }
+  title: { en: "Building completions: office and administrative buildings, Germany", de: "Baufertigstellungen: Büro- und Verwaltungsgebäude, Deutschland" }
   unit: { en: "million m² floor space", de: "Mio. m² Nutzfläche" }
   frequency: annual
   change: pct
@@ -912,7 +912,7 @@
   attribution: *bbk_attribution
   provisional: false
   cleared: *permission
-  title: { en: "Building completions: wholesale, retail and warehouse buildings, Germany (Bundesbank)", de: "Baufertigstellungen: Großhandels-, Einzelhandels- und Lagergebäude, Deutschland (Bundesbank)" }
+  title: { en: "Building completions: wholesale, retail and warehouse buildings, Germany", de: "Baufertigstellungen: Großhandels-, Einzelhandels- und Lagergebäude, Deutschland" }
   unit: { en: "million m² floor space", de: "Mio. m² Nutzfläche" }
   frequency: annual
   change: pct

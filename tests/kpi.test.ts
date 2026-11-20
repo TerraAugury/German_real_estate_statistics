@@ -47,19 +47,23 @@ describe('KPI catalogue (spec section 4)', () => {
     }
     expect(kpi('construction').views.filter((x) => x.segment === 'office')).toHaveLength(17);
   });
-  it('Construction: Destatis beside Bundesbank at Germany, Destatis only per Land; commercial overall keeps two building types', () => {
-    expect(keys('construction', 'office', 'germany')).toEqual([
-      'construction-permits-office', 'construction-bbk-permits-office', 'construction-completions-office', 'construction-bbk-completions-office']);
+  it('Construction: Destatis is the main source; at Germany its office series carries the Bundesbank series as `alt`, Destatis only per Land', () => {
+    const view = (seg: string, geo: string) => kpi('construction').views.find((x) => x.segment === seg && x.geo === geo)!.series;
+    expect(view('office', 'germany')).toEqual([
+      { key: 'construction-permits-office', alt: 'construction-bbk-permits-office' }, { key: 'construction-completions-office', alt: 'construction-bbk-completions-office' }]);
     expect(keys('construction', 'logistics', 'de-by')).toEqual(['construction-permits-warehouse@09', 'construction-completions-warehouse@09']);
-    expect(keys('construction', 'commercial-overall', 'germany')).toEqual([
-      'construction-permits-office', 'construction-permits-commercial', 'construction-bbk-permits-office', 'construction-bbk-permits-wholesale-warehouse',
-      'construction-completions-office', 'construction-completions-commercial', 'construction-bbk-completions-office', 'construction-bbk-completions-wholesale-warehouse']);
+    expect(view('office', 'de-by').every((s) => !s.alt)).toBe(true);
+    // commercial overall: two building types, never summed; the lumped Bundesbank wholesale/retail/warehouse series is a chart of its own
+    expect(view('commercial-overall', 'germany')).toEqual([
+      { key: 'construction-permits-office', alt: 'construction-bbk-permits-office' }, { key: 'construction-permits-commercial' }, { key: 'construction-bbk-permits-wholesale-warehouse' },
+      { key: 'construction-completions-office', alt: 'construction-bbk-completions-office' }, { key: 'construction-completions-commercial' }, { key: 'construction-bbk-completions-wholesale-warehouse' }]);
   });
   it('withheld Bundesbank series: Bundesbank-only KPIs have no live view; Construction keeps Destatis', () => {
     const live = loadManifest(false).filter((m) => m.dbnomics_provider !== 'BUBA'); // as if the Bundesbank licence were withdrawn
     expect(liveViews(kpi('kpi-price-index'), live)).toEqual([]);
     expect(liveViews(kpi('construction'), live).find((x) => x.segment === 'office' && x.geo === 'germany')!.series.map((s) => s.key))
       .toEqual(['construction-permits-office', 'construction-completions-office']);
+    expect(liveViews(kpi('construction'), live).find((x) => x.segment === 'office' && x.geo === 'germany')!.series.some((s) => 'alt' in s)).toBe(false); // no switch without the Bundesbank series
   });
 });
 

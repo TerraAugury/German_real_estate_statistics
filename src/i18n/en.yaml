@@ -42,6 +42,8 @@ link.overlay.legend: "Blue line, left axis: {kpi}. Ochre line, right axis: {indi
 link.view.label: "Period shown in the chart"
 link.view.compared: "Compared period ({from} to {to})"
 link.view.full: "Full history ({from} to {to})"
+kpi.source.label: "Data source"
+kpi.source.option: "{publisher}, {from} to {to}"
 link.view.band: "The grey band marks the compared period; the lighter parts of the lines lie outside it."
 link.lags.label: "Rank correlation at each shift: {kpi} and {indicator}"
 nav.sources: Sources and licences
@@ -51,6 +53,7 @@ sources.col.series: Series
 sources.col.publisher: Publisher
 sources.col.id: Series id
 sources.col.licence: Licence
+sources.col.last: Data to
 sources.col.attribution: Attribution
 nav.kpis: Real estate KPIs
 kpi.price-index.title: Commercial property price index
@@ -235,7 +238,7 @@ kpi.office-vacancy.definition: "The share of office space that is empty. It is u
 kpi.transaction-volume.definition: "The euro value of property sold, shown as an index. It shows how active the market is and how easy it is to buy and sell."
 kpi.construction.definition: "Floor space approved for construction. It records building plans at the approval stage, ahead of completion."
 links.lag.help_label: "What does this choice do?"
-links.lag.help: "A change in an economic indicator in year N might only show in the real estate markets in year N+1 or N+2. The shift lets you adjust the data. For example, N-1 compares the real estate data with the economic data of the previous year. Select \"Pre-set\" to use the default values."
+links.lag.help: "A change in an economic indicator in year N might only be reflected in the real estate market in year N+1 or N+2. The shift lets you adjust the data. For example, N-1 compares the real estate data with the economic data of the previous year. Select \"Pre-set\" to use the default values."
 
 # Link panel: the plain-language reading under the shift chart (owner's wording)
 link.explain.heading: "How closely did these two series move together?"
