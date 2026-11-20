@@ -209,18 +209,21 @@ function multipleUnits(l: Shown['lines'], plan: { growth: boolean; dual: boolean
 }
 
 /** What leads an Insight, shared by its section and the Home hero: headline number with verdict tag, the reading, the chart, its Notes. */
-function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, now: Date) {
+function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, now: Date, headlineOnly = false) {
   const one = headlineNumber(e, lang);
   const reading = t(lang, `insight.template.${e.template}`, {
     measure: esc(e.measure[lang]), latest: one(r.latest.value), verdict: t(lang, `insight.verdict.${r.verdict}`), from: r.from, to: r.to, mean: one(r.mean),
   });
-  const notes = [...notesFor(series[0], lang, { on: 'insight', rest: series.slice(1), short: r.short ? { from: r.from, to: r.to, n: r.n } : undefined }, now),
+  // The hero draws only the headline's two series (first KPI, first reference), so only they get Notes and a citation; the Insight page also draws the other KPI series.
+  const refIdx = e.series.findIndex((x) => x.role === 'reference');
+  const noted = headlineOnly ? [series[0], series[refIdx]] : series;
+  const notes = [...notesFor(noted[0], lang, { on: 'insight', rest: noted.slice(1), short: r.short ? { from: r.from, to: r.to, n: r.n } : undefined }, now),
     ...(e.notes ?? []).map((k) => `${t(lang, 'note.prefix')}: ${t(lang, k)}`)];
   const title = t(lang, 'insight.chart.label', { title: e.title[lang], measure: e.measure[lang] });
   const chart = insightChart(r, { unit: t(lang, `insight.unit.${e.headline}`), average: t(lang, 'insight.average', { value: one(r.mean) }), title }, lang);
-  const reference = series[e.series.findIndex((x) => x.role === 'reference')];
+  const reference = series[refIdx];
   return {
-    reading, notes, chart, reference, plate: toneOf(e, r, lang).plate,
+    reading, notes, chart, reference, drawn: noted, plate: toneOf(e, r, lang).plate,
     definition: e.definition ? `<p class="definition">${esc(e.definition[lang])}</p>` : '',
     headlineHtml: `<p class="headline">${headlineSpans(e, r, lang)} <span class="when">${t(lang, 'insight.tile.as_of', { year: r.latest.period })}</span></p>`,
   };
@@ -229,9 +232,9 @@ function insightLead(e: InsightEntry, r: Shown, series: Series[], lang: Lang, no
 /** The Home hero: the lead Insight's headline, reading, chart and citation, with a link to the full Insight. Empty when it is not shown. */
 export function renderHero(e: InsightEntry, r: InsightResult, series: Series[], lang: Lang, now = new Date()): string {
   if (!r.shown) return '';
-  const { headlineHtml, reading, definition, chart, notes, plate } = insightLead(e, r, series, lang, now);
+  const { headlineHtml, reading, definition, chart, notes, drawn, plate } = insightLead(e, r, series, lang, now, true);
   return `<section class="hero${plate && ` ${plate}`}"><h2>${esc(e.title[lang])}</h2>${headlineHtml}<p>${reading}</p>${definition}`
-    + `<figure>${chart}${noteHtml(notes)}<figcaption>${sourceBlock(series, lang, true)}<br><a href="${href('insights', lang)}#${esc(e.key)}">${t(lang, 'home.hero.more')}</a></figcaption></figure></section>`;
+    + `<figure>${chart}${noteHtml(notes)}<figcaption>${sourceBlock(drawn, lang, true)}<br><a href="${href('insights', lang)}#${esc(e.key)}">${t(lang, 'home.hero.more')}</a></figcaption></figure></section>`;
 }
 
 /** The real index of an Insight with a `base`: heading, number, reading, chart and its Notes on the plain plate of a figure of its own, whatever tone the Insight's verdict gives the rest. It carries no verdict. */
