@@ -1,31 +1,43 @@
 ---
 // One KPI selector state: a section per series. The page renders the first; the rest are fetched as fragments (ticket 12).
-import { getSeries } from '../lib/series';
+import { getSeries, type Series } from '../lib/series';
 import { lineChart } from '../lib/chart';
 import { notesFor } from '../lib/notes';
-import { latestBlock, sourceBlock } from '../lib/panel';
+import { latestBlock, sourceBlock, esc } from '../lib/panel';
 import { t, fmt, period, valueFormat } from '../lib/i18n';
 import type { View } from '../lib/kpis';
 import type { Lang } from '../lib/routes';
 const { view: v, links, lang } = Astro.props as { view: View; links: string[]; lang: Lang };
+const geography = t(lang, `geo.${v.geo}`);
+// A series with an `alt` (the Bundesbank's longer series of the same figure) is one chart with a source switch: the main source first.
+const spans = (x: Series) => ({ publisher: esc(x.publisher), from: period(lang, x.obs[0].period), to: period(lang, x.lastPeriod) });
 ---
 <section class="view" data-segment={v.segment} data-geo={v.geo} data-freq={v.freq} data-links={links.join(' ')}>
-  {v.series.map((r) => getSeries(r.key, r.land)).map((x) => (
-    <figure>
+  {v.series.map((r) => [getSeries(r.key, r.land), r.alt ? getSeries(r.alt) : undefined] as const).map(([x, alt]) => {
+    const name = esc(`source-${v.segment}-${v.geo}-${x.key}`);
+    const radio = (value: string, s: Series) => `<label><input type="radio" name="${name}" value="${value}"${value === 'main' ? ' checked' : ''}> ${t(lang, 'kpi.source.option', spans(s))}</label>`;
+    return (
+    <figure class={alt ? 'pair' : undefined}>
       <h2>{x.title[lang]}</h2>
-      <Fragment set:html={latestBlock(x, lang) + lineChart(x, lang)} />
-      {/* The chart's numbers as text: the SVG itself has no values a screen reader or keyboard can reach. */}
-      <details class="data">
-        <summary>{t(lang, 'chart.table')}</summary>
-        <div class="scroll" tabindex="0" role="region" aria-label={`${x.title[lang]}: ${t(lang, 'chart.table')}`}>
-          <table>
-            <thead><tr><th scope="col">{t(lang, 'chart.table.period')}</th><th scope="col">{t(lang, 'chart.table.value')} ({x.unit[lang]})</th></tr></thead>
-            <tbody>{x.obs.map((o) => <tr><th scope="row">{period(lang, o.period)}</th><td>{fmt(lang, o.value, valueFormat(x))}</td></tr>)}</tbody>
-          </table>
+      {alt && <fieldset class="view-switch"><legend class="sr">{t(lang, 'kpi.source.label')}</legend><Fragment set:html={radio('main', x) + radio('alt', alt)} /></fieldset>}
+      {[x, ...(alt ? [alt] : [])].map((s, i) => (
+        <div class={alt ? (i ? 'src-alt' : 'src-main') : undefined}>
+          <Fragment set:html={latestBlock(s, lang) + lineChart(s, lang)} />
+          {/* The chart's numbers as text: the SVG itself has no values a screen reader or keyboard can reach. */}
+          <details class="data">
+            <summary>{t(lang, 'chart.table')}</summary>
+            <div class="scroll" tabindex="0" role="region" aria-label={`${s.title[lang]}: ${t(lang, 'chart.table')}`}>
+              <table>
+                <thead><tr><th scope="col">{t(lang, 'chart.table.period')}</th><th scope="col">{t(lang, 'chart.table.value')} ({s.unit[lang]})</th></tr></thead>
+                <tbody>{s.obs.map((o) => <tr><th scope="row">{period(lang, o.period)}</th><td>{fmt(lang, o.value, valueFormat(s))}</td></tr>)}</tbody>
+              </table>
+            </div>
+          </details>
+          {notesFor(s, lang, { on: 'kpi', geography }).map((n) => <p class="note">{n}</p>)}
+          <figcaption set:html={sourceBlock(s, lang)} />
         </div>
-      </details>
-      {notesFor(x, lang, { on: 'kpi', geography: t(lang, `geo.${v.geo}`) }).map((n) => <p class="note">{n}</p>)}
-      <figcaption set:html={sourceBlock(x, lang)} />
+      ))}
     </figure>
-  ))}
+    );
+  })}
 </section>

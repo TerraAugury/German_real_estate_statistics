@@ -150,6 +150,8 @@ const inKpis = KPIS.some((k) => k.page === page);
       .view-switch { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin: 0 0 .5rem; padding: 0; border: 0; font-size: 15px; }
       .view-switch label { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; cursor: pointer; }
       .view-switch input { width: 1.1rem; height: 1.1rem; accent-color: var(--data); }
+      figure.pair:has(input[value="alt"]:checked) .src-main, figure.pair:not(:has(input[value="alt"]:checked)) .src-alt { display: none; }
+      figure.pair > .view-switch { margin-top: .25rem; }
       .overlay:has(input[value="full"]:checked) .view-compared, .overlay:not(:has(input[value="full"]:checked)) .view-full { display: none; }
 
       /* Home hero: the lead Insight, the only headline number above the fold. */

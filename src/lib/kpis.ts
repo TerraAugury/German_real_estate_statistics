@@ -7,7 +7,7 @@ import { href, type Lang, type PageKey } from './routes';
 export type Segment = 'office' | 'retail' | 'logistics' | 'commercial-overall';
 export type Freq = 'annual' | 'quarterly';
 /** One selector state; `land` picks one Land of a Destatis series (absent = Germany, the sum of the Länder). */
-export interface View { segment: Segment; geo: string; freq: Freq; series: { key: string; land?: string }[] }
+export interface View { segment: Segment; geo: string; freq: Freq; series: { key: string; land?: string; alt?: string }[] }
 /** `title` and `definition` are interface string keys; the definition says what the KPI measures, in general terms. */
 export interface Kpi { page: PageKey; title: string; definition: string; views: View[] }
 
@@ -56,9 +56,11 @@ const construction = Object.entries(CONSTRUCTION).flatMap(([seg, { destatis, bbk
   // sorted: integer-like keys ('10') would otherwise come before '01'
   ['germany', ...Object.keys(LAENDER).sort()].map((land): View => {
     const germany = land === 'germany';
+    // Destatis is the main source. Where the Bundesbank has the same building type (office) with a longer history, it is the
+    // series' `alt`, one chart with a switch; the rest of the Bundesbank series (wholesale/retail/warehouse) are charts of their own.
     const series = ['permits', 'completions'].flatMap((w) => [
-      ...destatis.map((b) => ({ key: `construction-${w}-${b}`, ...(germany ? {} : { land }) })),
-      ...(germany ? bbk.map((b) => ({ key: `construction-bbk-${w}-${b}` })) : []),
+      ...destatis.map((b) => ({ key: `construction-${w}-${b}`, ...(germany ? {} : { land }), ...(germany && bbk.includes(b) ? { alt: `construction-bbk-${w}-${b}` } : {}) })),
+      ...(germany ? bbk.filter((b) => !destatis.includes(b)).map((b) => ({ key: `construction-bbk-${w}-${b}` })) : []),
     ]);
     return { segment: seg as Segment, geo: germany ? 'germany' : landKey(land), freq: 'annual', series };
   }));
@@ -76,7 +78,7 @@ export const KPIS: Kpi[] = [
 /** Views whose series survive the provisional gate; a view with none left is dropped. Empty = licence not confirmed. */
 export function liveViews(kpi: Kpi, live: ManifestEntry[] = loadManifest()): View[] {
   const keys = new Set(live.map((m) => m.key));
-  return kpi.views.map((vw) => ({ ...vw, series: vw.series.filter((s) => keys.has(s.key)) })).filter((vw) => vw.series.length);
+  return kpi.views.map((vw) => ({ ...vw, series: vw.series.filter((s) => keys.has(s.key)).map(({ alt, ...s }) => (alt && keys.has(alt) ? { ...s, alt } : s)) })).filter((vw) => vw.series.length);
 }
 
 /** Availability grid columns; Logistics has a column but no Segment page (spec section 8). */

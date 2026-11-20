@@ -107,6 +107,7 @@ it('Sources table has one row per live series with publisher, id, licence, attri
     expect(html).toContain(live[0].attribution[lang].replace(/&/g, '&amp;'));
     expect(html).toContain('31111LJ001/{01–16}');
     expect(html).toContain('BBDZ1');
+    expect(html.match(/<td>(Q[1-4] \d{4}|\d{4}|[^<]*\d{4})<\/td>/g)!.length).toBeGreaterThanOrEqual(live.length); // a "Data to" cell per row
   }
 });
 
