@@ -1830,3 +1830,7 @@ sources.col.last:
   en_hash: 39e14d1919011657
   reviewed_by: Olivier
   reviewed_on: 2026-11-20
+home.intro:
+  en_hash: 6535853961bdcf2a
+  reviewed_by: Olivier
+  reviewed_on: 2026-11-20

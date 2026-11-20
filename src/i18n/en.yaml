@@ -4,6 +4,7 @@ nav.menu: Menu
 nav.logistics: "Logistics: not available, see Availability"
 lang.switch: Deutsch
 home.purpose: Open statistics on German commercial real estate.
+home.intro: "In the real estate markets (like many others), analysts and commentators use economic data to explain how and why the market is doing what it is doing. Depending on the data you select, the starting point and the end point, you can explain every possible point of view. As the saying goes, if you cannot convince them, baffle them with numbers. Here you will find all the data which is available, unfiltered. And you can judge for yourself."
 kpi.construction.title: Construction (permits, completions)
 source.cite: "Source: {publisher} / Licence: {licence} / Data to {period}"
 source.cite.credit: "Source: {original}, published by {publisher} / Licence: {licence} / Data to {period}"

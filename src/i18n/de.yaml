@@ -4,6 +4,7 @@ nav.menu: Menü
 nav.logistics: "Logistik: nicht verfügbar, siehe Verfügbarkeit"
 lang.switch: English
 home.purpose: Offene Statistiken zum deutschen Gewerbeimmobilienmarkt.
+home.intro: "Auf den Immobilienmärkten (wie in vielen anderen Märkten) erklären Analysten und Kommentatoren anhand von Wirtschaftsdaten, wie und warum sich der Markt so entwickelt, wie er sich entwickelt. Je nachdem, welche Daten, welchen Startpunkt und welchen Endpunkt man wählt, lässt sich jede denkbare Sichtweise begründen. Wie das Sprichwort sagt: Wer sie nicht überzeugen kann, verwirrt sie mit Zahlen. Hier finden Sie alle verfügbaren Daten ungefiltert. Und Sie können sich selbst ein Urteil bilden."
 kpi.construction.title: Bautätigkeit (Genehmigungen, Fertigstellungen)
 source.cite: "Quelle: {publisher} / Lizenz: {licence} / Daten bis {period}"
 source.cite.credit: "Quelle: {original}, Veröffentlichung: {publisher} / Lizenz: {licence} / Daten bis {period}"

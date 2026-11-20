@@ -56,6 +56,7 @@ const description = page === 'home' ? t(lang, 'home.purpose') : kpi ? t(lang, kp
     <>
       <h1 class="vh">{t(lang, 'site.title')}</h1>
       <p>{t(lang, 'home.purpose')}</p>
+      <p>{t(lang, 'home.intro')}</p>
       {lead && <Fragment set:html={renderHero(lead.entry, lead.result, lead.series, lang)} />}
       <ul class="index">
         {homeRows.map(({ kpi: k, view: v, series: x }) => (
