@@ -44,7 +44,7 @@ const vacancy = CLASSES.map(([geo, n]) => v('office', geo, 'annual', `office-vac
 const transactions = ([['germany', 'de'], ['127-districts', '127'], ['7-cities', '7']] as const)
   .map(([geo, g]) => v('commercial-overall', geo, 'annual', `transaction-volume-${g}`));
 
-// Construction: Destatis per Land or summed for Germany, with the Bundesbank G650 Germany series beside it (spec section 4).
+// Construction: Destatis per Land or summed for Germany, with the Bundesbank G650 Germany series as a source switch on the same chart (`alt`, spec section 4).
 // Commercial overall shows office and commercial buildings as two series, never summed; the lumped Bundesbank
 // wholesale/retail/warehouse series appears only there.
 const CONSTRUCTION: Record<'office' | 'logistics' | 'commercial-overall', { destatis: string[]; bbk: string[] }> = {

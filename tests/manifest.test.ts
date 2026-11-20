@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { period, t } from '../src/lib/i18n';
+import { getSeries } from '../src/lib/series';
 import { checkEntries, loadAllManifest, loadManifest, gate, publicLinks, seriesId, type ManifestEntry } from '../src/lib/manifest';
 
 const all = loadAllManifest();
@@ -107,7 +109,9 @@ it('Sources table has one row per live series with publisher, id, licence, attri
     expect(html).toContain(live[0].attribution[lang].replace(/&/g, '&amp;'));
     expect(html).toContain('31111LJ001/{01–16}');
     expect(html).toContain('BBDZ1');
-    expect(html.match(/<td>(Q[1-4] \d{4}|\d{4}|[^<]*\d{4})<\/td>/g)!.length).toBeGreaterThanOrEqual(live.length); // a "Data to" cell per row
+    expect(html).toContain(`<th>${t(lang, 'sources.col.last')}</th>`);
+    const row = html.split('<tr>').find((r) => r.includes('31111LJ001/{01–16}.BAUART1.BTK-GEB.GBD-NW-BV.FLC002'))!; // construction-permits-office
+    expect(row).toContain(`<td>${period(lang, getSeries('construction-permits-office').lastPeriod)}</td>`);
   }
 });
 
