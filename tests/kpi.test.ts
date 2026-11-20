@@ -29,7 +29,7 @@ describe('KPI catalogue (spec section 4)', () => {
   it('six KPI pages in catalogue order, every series in the manifest', () => {
     expect(KPIS.map((k) => k.page)).toEqual(['kpi-price-index', 'kpi-rent-index', 'kpi-initial-yield', 'kpi-office-vacancy', 'kpi-transaction-volume', 'construction']);
     const all = new Set(loadAllManifest().map((m) => m.key));
-    for (const k of KPIS) for (const x of k.views) for (const s of x.series) expect(all.has(s.key), s.key).toBe(true);
+    for (const k of KPIS) for (const x of k.views) for (const s of x.series) for (const k of [s.key, ...(s.alt ? [s.alt] : [])]) expect(all.has(k), k).toBe(true);
   });
   it('maps Segment, geography and frequency to the spec series', () => {
     expect(keys('kpi-price-index', 'commercial-overall', 'supra-regional', 'quarterly')).toEqual(['price-index-cities-total-q']);

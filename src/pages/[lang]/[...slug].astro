@@ -194,7 +194,7 @@ const description = page === 'home' ? t(lang, 'home.purpose') : kpi ? t(lang, kp
       {views.length === 0 ? <p class="na">{t(lang, 'kpi.not_available.licence')}</p> : (
         <>
           {/* Without JavaScript the selectors cannot switch views: hide them and say so. */}
-          <noscript><style>.selectors, .view-switch { display: none; }</style><p class="note">{t(lang, 'kpi.noscript')}</p></noscript>
+          <noscript><style>.selectors, .overlay .view-switch { display: none; }</style><p class="note">{t(lang, 'kpi.noscript')}</p></noscript>
           <form class="selectors">
             <label>{t(lang, 'select.segment')} <select name="segment">{model!.selectors.segment.map((x) => <option value={x}>{t(lang, `segment.${x}`)}</option>)}</select></label>
             <label>{t(lang, 'select.geo')} <select name="geo">{model!.selectors.geo.map((g) => {
